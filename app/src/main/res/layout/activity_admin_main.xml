@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="@id/imageView" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/adminuserBtn"
         android:layout_width="340dp"
         android:layout_height="70dp"
         android:layout_marginTop="50dp"
@@ -47,13 +47,13 @@
         android:text="회원 관리"
         android:textColor="#333333"
         android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton2"
-        app:layout_constraintStart_toStartOf="@+id/imageButton2"
-        app:layout_constraintTop_toTopOf="@+id/imageButton2" />
+        app:layout_constraintBottom_toBottomOf="@+id/adminuserBtn"
+        app:layout_constraintEnd_toEndOf="@+id/adminuserBtn"
+        app:layout_constraintStart_toStartOf="@+id/adminuserBtn"
+        app:layout_constraintTop_toTopOf="@+id/adminuserBtn" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/adminfoodBtn"
         android:layout_width="340dp"
         android:layout_height="70dp"
         android:layout_marginTop="40dp"
@@ -61,7 +61,7 @@
         android:src="@drawable/roundsquare2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
+        app:layout_constraintTop_toBottomOf="@+id/adminuserBtn" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,10 +70,10 @@
         android:text="음식 관리"
         android:textColor="#333333"
         android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton3"
-        app:layout_constraintStart_toStartOf="@+id/imageButton3"
-        app:layout_constraintTop_toTopOf="@+id/imageButton3" />
+        app:layout_constraintBottom_toBottomOf="@+id/adminfoodBtn"
+        app:layout_constraintEnd_toEndOf="@+id/adminfoodBtn"
+        app:layout_constraintStart_toStartOf="@+id/adminfoodBtn"
+        app:layout_constraintTop_toTopOf="@+id/adminfoodBtn" />
 
     <ImageButton
         android:id="@+id/imageButton4"
@@ -84,7 +84,7 @@
         android:src="@drawable/roundsquare2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
+        app:layout_constraintTop_toBottomOf="@+id/adminfoodBtn" />
 
     <TextView
         android:layout_width="wrap_content"
