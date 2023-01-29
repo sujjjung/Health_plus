@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FoodAddActivity"
+    tools:context=".FoodAddInputActivity"
     android:background="#FFF5B3">
 
     <ImageView
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:fontFamily="@font/a10093"
-        android:text="식단 추가"
+        android:text="나만의 식단 추가"
         android:textColor="#2E2E2E"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -138,28 +138,17 @@
         android:layout_width="320dp"
         android:layout_height="34dp"
         android:background="#DBDBDB"
-        android:hint="　음식 이름 검색"
+        android:hint="　음식 이름 입력"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup"
         android:layout_marginTop="20dp"/>
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#DBDBDB"
-        android:src="@drawable/search_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/editText1"
-        app:layout_constraintEnd_toEndOf="@+id/editText1"
-        app:layout_constraintStart_toStartOf="@+id/editText1"
-        app:layout_constraintTop_toTopOf="@+id/editText1"
-        android:layout_marginStart="288dp"/>
-
     <TextView
         android:id="@+id/textView25"
         android:layout_width="54dp"
         android:layout_height="20dp"
-        android:layout_marginStart="66dp"
+        android:layout_marginStart="110dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/a10092"
         android:text="칼로리"
@@ -170,35 +159,12 @@
 
     <EditText
         android:id="@+id/editText2"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="36dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView25"
         app:layout_constraintStart_toEndOf="@+id/textView25"
         app:layout_constraintTop_toTopOf="@+id/textView25" />
-
-    <ImageButton
-        android:id="@+id/food_input_btn"
-        android:layout_width="100dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="30dp"
-        android:background="#00000000"
-        android:src="@drawable/roundsquare3"
-        app:layout_constraintBottom_toBottomOf="@+id/editText2"
-        app:layout_constraintStart_toEndOf="@+id/editText2"
-        app:layout_constraintTop_toTopOf="@+id/editText2" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/a10092"
-        android:text="직접 입력"
-        android:textColor="#535353"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/food_input_btn"
-        app:layout_constraintEnd_toEndOf="@+id/food_input_btn"
-        app:layout_constraintStart_toStartOf="@+id/food_input_btn"
-        app:layout_constraintTop_toTopOf="@+id/food_input_btn" />
 
     <TextView
         android:id="@+id/textView26"

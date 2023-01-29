@@ -98,6 +98,7 @@
         android:layout_height="22dp"
         android:background="@color/white"
         android:src="@drawable/ic_action_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/healthView"
         app:layout_constraintStart_toEndOf="@+id/healthView"
         app:layout_constraintTop_toTopOf="@+id/healthView" />
 
@@ -105,7 +106,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="58dp"
+        android:layout_marginStart="72dp"
         android:layout_marginTop="18dp"
         android:fontFamily="@font/a10092"
         android:text="소모 칼로리"
@@ -115,31 +116,32 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="62dp"
         android:fontFamily="@font/a10092"
-        android:gravity="center_horizontal|center_vertical"
         android:text="159"
         android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView4"
         app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/textView4"
-        android:layout_marginStart="62dp"/>
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
         android:fontFamily="@font/a10092"
         android:text="kcal"
         android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toTopOf="@+id/textView5"
-        android:layout_marginStart="28dp"/>
+        app:layout_constraintTop_toTopOf="@+id/textView5" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="58dp"
+        android:layout_marginStart="72dp"
         android:layout_marginTop="18dp"
         android:fontFamily="@font/a10092"
         android:text="소요 시간"
@@ -149,22 +151,22 @@
 
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
         android:fontFamily="@font/a10092"
-        android:gravity="center_horizontal|center_vertical"
         android:text="1440"
         android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView6"
         app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toTopOf="@+id/textView6"
-        android:layout_marginStart="80dp"/>
+        app:layout_constraintTop_toTopOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/healthView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="40dp"
         android:fontFamily="@font/a10093"
         android:text="운동"
         android:textColor="#FF3B3B3B"
@@ -175,18 +177,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
         android:fontFamily="@font/a10092"
         android:text="분"
         android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView7"
         app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toTopOf="@+id/textView7"
-        android:layout_marginStart="28dp"/>
+        app:layout_constraintTop_toTopOf="@+id/textView7" />
 
     <ImageButton
         android:layout_width="0dp"
         android:layout_height="22dp"
         android:background="@color/white"
         android:src="@drawable/ic_action_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/textView8"
         app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toTopOf="@+id/textView8"
         tools:ignore="MissingConstraints" />
@@ -195,7 +199,7 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="58dp"
+        android:layout_marginStart="72dp"
         android:layout_marginTop="18dp"
         android:fontFamily="@font/a10092"
         android:text="섭취 칼로리"
@@ -205,31 +209,32 @@
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="62dp"
         android:fontFamily="@font/a10092"
-        android:gravity="center_horizontal|center_vertical"
         android:text="10000"
         android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView9"
         app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="@+id/textView9"
-        android:layout_marginStart="62dp" />
+        app:layout_constraintTop_toTopOf="@+id/textView9" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
         android:fontFamily="@font/a10092"
         android:text="kcal"
         android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView10"
         app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toTopOf="@+id/textView10"
-        android:layout_marginStart="28dp"/>
+        app:layout_constraintTop_toTopOf="@+id/textView10" />
 
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="58dp"
+        android:layout_marginStart="72dp"
         android:layout_marginTop="18dp"
         android:fontFamily="@font/a10092"
         android:text="물"
@@ -239,25 +244,28 @@
 
     <TextView
         android:id="@+id/textView12"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="138dp"
         android:fontFamily="@font/a10092"
         android:gravity="center_horizontal|center_vertical"
         android:text="2500"
         android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView11"
         app:layout_constraintStart_toEndOf="@+id/textView11"
-        app:layout_constraintTop_toTopOf="@+id/textView11"
-        android:layout_marginStart="138dp"/>
+        app:layout_constraintTop_toTopOf="@+id/textView11" />
 
     <TextView
+        android:id="@+id/textView54"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
         android:fontFamily="@font/a10092"
         android:text="ml"
         android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView12"
         app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toTopOf="@+id/textView12"
-        android:layout_marginStart="28dp"/>
+        app:layout_constraintTop_toTopOf="@+id/textView12" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -265,6 +273,7 @@
         android:layout_height="22dp"
         android:background="@color/white"
         android:src="@drawable/ic_action_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/textView13"
         app:layout_constraintStart_toEndOf="@+id/textView13"
         app:layout_constraintTop_toTopOf="@+id/textView13" />
 
@@ -279,30 +288,31 @@
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@+id/textView11"
         tools:ignore="MissingConstraints"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="28dp"/>
 
     <TextView
         android:id="@+id/textView14"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="126dp"
         android:fontFamily="@font/a10092"
-        android:gravity="center_horizontal|center_vertical"
         android:text="15000"
         android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
         app:layout_constraintStart_toEndOf="@+id/imageButton"
-        app:layout_constraintTop_toTopOf="@+id/imageButton"
-        android:layout_marginStart="126dp"/>
+        app:layout_constraintTop_toTopOf="@+id/imageButton" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
         android:fontFamily="@font/a10092"
         android:text="걸음"
         android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView14"
         app:layout_constraintStart_toEndOf="@+id/textView14"
-        app:layout_constraintTop_toTopOf="@+id/textView14"
-        android:layout_marginStart="28dp"/>
+        app:layout_constraintTop_toTopOf="@+id/textView14" />
 
     <TextView
         android:id="@+id/textView8"
@@ -314,7 +324,7 @@
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@+id/textView6"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="28dp"/>
 
     <View
