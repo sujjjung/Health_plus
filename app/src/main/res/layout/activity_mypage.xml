@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mypage">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="408dp"
+        android:layout_height="114dp"
+        android:layout_marginBottom="644dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/logo3"
+        tools:layout_editor_absoluteX="1dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/frofil"
+        android:layout_width="97dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/speech_bubble"
+        android:layout_width="247dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="56dp"
+        android:src="@drawable/speech_bubble"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/name_textView"
+        android:layout_width="130dp"
+        android:layout_height="41dp"
+        android:fontFamily="@font/a10092"
+        android:text="이수정님"
+        android:textColor="#444444"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.402"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.147" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="257dp"
+        android:layout_height="44dp"
+        android:fontFamily="@font/a10092"
+        android:text="DJ쑤 화이팅"
+        android:textColor="#444444"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.757"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.217" />
+
+    <Button
+        android:id="@+id/change_btn"
+        android:layout_width="146dp"
+        android:layout_height="34dp"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/a10092"
+        android:text="회원정보 변경"
+        android:textColor="#444444"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.292" />
+
+    <Button
+        android:id="@+id/secession_btn"
+        android:layout_width="141dp"
+        android:layout_height="36dp"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/a10092"
+        android:text="회원탈퇴"
+        android:textColor="#444444"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.29" />
+
+    <TextView
+        android:id="@+id/weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/a10092"
+        android:gravity="center"
+        android:text="체중 그래프"
+        android:textColor="#444444"
+        android:textSize="25dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="239dp"
+        tools:ignore="MissingConstraints" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/weight_chart"
+        android:layout_width="match_parent"
+        android:layout_height="173dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="239dp" />
+
+    <TextView
+        android:id="@+id/muscles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/a10092"
+        android:gravity="center"
+        android:text="골격근량 그래프"
+        android:textColor="#444444"
+        android:textSize="25dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="412dp" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/muscles_chart"
+        android:layout_width="match_parent"
+        android:layout_height="173dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="412dp" />
+
+    <TextView
+        android:id="@+id/fat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/a10092"
+        android:gravity="center"
+        android:text="체지방률 그래프"
+        android:textColor="#444444"
+        android:textSize="25dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="585dp" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/fat_chart"
+        android:layout_width="match_parent"
+        android:layout_height="173dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-2dp"
+        tools:layout_editor_absoluteY="585dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
