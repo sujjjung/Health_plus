@@ -13,14 +13,32 @@
         android:theme="@style/Theme.DJSU"
         tools:targetApi="31">
         <activity
-            android:name=".map"
+            android:name=".HamburgerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminFoodListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminUserListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExerciseRecordActivity"
+            android:exported="false"></activity>
+        <activity
+            android:name=".WeightActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FoodAddInputActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FoodAddActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".mypage"
+            android:name=".HealthAddActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

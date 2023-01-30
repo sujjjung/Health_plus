@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
+    android:shape="rectangle">
+    <solid android:color="#FFFFF5B3"/>
+    <!-- 모서리 곡선 설정 -->
+    <corners
+        android:topLeftRadius="10dp"
+        android:topRightRadius="10dp"
+        android:bottomLeftRadius="10dp"
+        android:bottomRightRadius="10dp"/>
+    <!-- 선 크기 및 색 지정 -->
+    <stroke
+        android:width="0dp"
+        android:color="#FFFF" />
+</shape>
