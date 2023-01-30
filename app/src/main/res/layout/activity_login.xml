@@ -13,7 +13,8 @@
         android:layout_marginBottom="644dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/logo3"
-        tools:layout_editor_absoluteX="1dp" />
+        tools:layout_editor_absoluteX="1dp"
+        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/email_editText"
