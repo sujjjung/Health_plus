@@ -61,18 +61,18 @@ public class CalendarActivity extends AppCompatActivity {
         if(fabMain_status) {
             // 플로팅 액션 버튼 닫기
             // 애니메이션 추가
-            ObjectAnimator fc_animation = ObjectAnimator.ofFloat(fabHealth, "translationY", 0f);
+            ObjectAnimator fc_animation = ObjectAnimator.ofFloat(fabFood, "translationY", 0f);
             fc_animation.start();
-            ObjectAnimator fe_animation = ObjectAnimator.ofFloat(fabFood, "translationY", 0f);
+            ObjectAnimator fe_animation = ObjectAnimator.ofFloat(fabHealth, "translationY", 0f);
             fe_animation.start();
             // 메인 플로팅 이미지 변경
             fabMain.setImageResource(R.drawable.ic_action_plus);
 
         }else {
             // 플로팅 액션 버튼 열기
-            ObjectAnimator fc_animation = ObjectAnimator.ofFloat(fabHealth, "translationY", -200f);
+            ObjectAnimator fc_animation = ObjectAnimator.ofFloat(fabFood, "translationY", -200f);
             fc_animation.start();
-            ObjectAnimator fe_animation = ObjectAnimator.ofFloat(fabFood, "translationY", -400f);
+            ObjectAnimator fe_animation = ObjectAnimator.ofFloat(fabHealth, "translationY", -400f);
             fe_animation.start();
             // 메인 플로팅 이미지 변경
             fabMain.setImageResource(R.drawable.ic_action_plus);
