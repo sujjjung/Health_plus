@@ -13,20 +13,6 @@
         android:theme="@style/Theme.DJSU"
         tools:targetApi="31">
         <activity
-            android:name=".drawer_test"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".user_main"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".friend_invite"
             android:exported="false">
             <meta-data
@@ -102,10 +88,10 @@
             android:name=".HamburgerActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminFoodListActivity"
+            android:name=".admin.AdminFoodListActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminUserListActivity"
+            android:name=".admin.AdminUserListActivity"
             android:exported="false" />
         <activity
             android:name=".ExerciseRecordActivity"
@@ -194,7 +180,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".AdminMainActivity"
+            android:name=".admin.AdminMainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

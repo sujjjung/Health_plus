@@ -5,6 +5,14 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.djsu.Fragment.Fragment1;
+import com.example.djsu.Fragment.Fragment2;
+import com.example.djsu.Fragment.Fragment3;
+import com.example.djsu.Fragment.Fragment4;
+import com.example.djsu.Fragment.Fragment5;
+import com.example.djsu.Fragment.Fragment6;
+import com.example.djsu.Fragment.Fragment7;
+import com.example.djsu.Fragment.Fragment8;
 import com.google.android.material.tabs.TabLayout;
 
 public class HealthAddActivity extends AppCompatActivity {

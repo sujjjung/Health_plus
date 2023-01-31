@@ -66,6 +66,7 @@ public class signup extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     move();
                                     Toast.makeText(signup.this, "회원가입에 성공했습니다." ,Toast.LENGTH_SHORT).show();
+
                                     Intent intent = new Intent(signup.this, login.class);
                                     startActivity(intent);
                                 } else {
