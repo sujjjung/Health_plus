@@ -43,7 +43,7 @@ public class HamburgerActivity extends AppCompatActivity {
         snsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HamburgerActivity.this, main_user.class);
+                Intent intent = new Intent(HamburgerActivity.this, community.class);
                 startActivity(intent);
             }
         });
@@ -51,7 +51,7 @@ public class HamburgerActivity extends AppCompatActivity {
         mypageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HamburgerActivity.this, main_user.class);
+                Intent intent = new Intent(HamburgerActivity.this, mypage.class);
                 startActivity(intent);
             }
         });
@@ -59,7 +59,7 @@ public class HamburgerActivity extends AppCompatActivity {
         mapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HamburgerActivity.this, main_user.class);
+                Intent intent = new Intent(HamburgerActivity.this, map.class);
                 startActivity(intent);
             }
         });
@@ -75,7 +75,7 @@ public class HamburgerActivity extends AppCompatActivity {
         noticeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HamburgerActivity.this, main_user.class);
+                Intent intent = new Intent(HamburgerActivity.this, annoucement.class);
                 startActivity(intent);
             }
         });
