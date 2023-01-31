@@ -1,14 +1,14 @@
 package com.example.djsu;
 
-import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-public class UserMainActivity extends AppCompatActivity {
+import android.os.Bundle;
+
+public class main_user extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_main);
+        setContentView(R.layout.activity_main_user);
     }
 }

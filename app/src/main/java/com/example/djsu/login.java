@@ -44,19 +44,6 @@ public class login extends AppCompatActivity {
                 }
             }
         });
-
-        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    Intent intent = new Intent(login.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                }
-            }
-        };
     }
 
     public void loginUser(String email, String password) {
@@ -69,9 +56,9 @@ public class login extends AppCompatActivity {
                             Toast.makeText(login.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                             firebaseAuth.addAuthStateListener(firebaseAuthListener);
 
-                            Intent intent = new Intent(getApplicationContext(),UserMainActivity.class);
-                            startActivity(intent);
 
+                            Intent intent = new Intent(login.this, main_user.class);
+                            startActivity(intent);
                         } else {
                             // 로그인 실패
                             Toast.makeText(login.this, "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
