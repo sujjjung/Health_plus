@@ -22,4 +22,14 @@
         android:title="공지사항">
     </item>
 
+=======
+    <item
+        android:id="@+id/item1"
+        android:title="홈"
+        />
+    <item
+        android:id="@+id/item2"
+        android:title="공지사항"
+        />
+>>>>>>> 4ee98c4bc47e5c1b94950a164e4cbb76a949dcb5
 </menu>

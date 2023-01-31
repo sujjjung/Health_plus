@@ -13,12 +13,14 @@
         android:background="@color/white"
         app:srcCompat="@drawable/logo3" />
 
+    <!--
     <RelativeLayout
         android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="616dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp" />
+    -->
 
 </RelativeLayout>
 	
