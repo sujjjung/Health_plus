@@ -274,33 +274,51 @@
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabHealth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/dumbbell"
-        app:fabSize="mini"
-        android:backgroundTint="#FFCBCB"
-        app:layout_constraintTop_toTopOf="@id/fabMain"
-        app:layout_constraintBottom_toBottomOf="@id/fabMain"
-        app:layout_constraintStart_toStartOf="@id/fabMain"
-        app:layout_constraintEnd_toEndOf="@id/fabMain"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabFood"
+        android:id="@+id/floatingFood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:src="@drawable/food"
-        app:fabSize="mini"
+        app:fabSize="normal"
+        app:maxImageSize="56dp"
         android:backgroundTint="#FFCBCB"
-        app:layout_constraintTop_toTopOf="@id/fabMain"
-        app:layout_constraintBottom_toBottomOf="@id/fabMain"
-        app:layout_constraintStart_toStartOf="@id/fabMain"
-        app:layout_constraintEnd_toEndOf="@id/fabMain"/>
+        app:layout_constraintTop_toTopOf="@id/floatingMain"
+        app:layout_constraintBottom_toBottomOf="@id/floatingMain"
+        app:layout_constraintStart_toStartOf="@id/floatingMain"
+        app:layout_constraintEnd_toEndOf="@id/floatingMain"
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabMain"
+        android:id="@+id/floatingKg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/kg"
+        app:fabSize="normal"
+        app:maxImageSize="56dp"
+        android:backgroundTint="#FFCBCB"
+        app:layout_constraintTop_toTopOf="@id/floatingMain"
+        app:layout_constraintBottom_toBottomOf="@id/floatingMain"
+        app:layout_constraintStart_toStartOf="@id/floatingMain"
+        app:layout_constraintEnd_toEndOf="@id/floatingMain"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingHealth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/exercise"
+        app:fabSize="normal"
+        app:maxImageSize="56dp"
+        android:backgroundTint="#FFCBCB"
+        app:layout_constraintTop_toTopOf="@id/floatingMain"
+        app:layout_constraintBottom_toBottomOf="@id/floatingMain"
+        app:layout_constraintStart_toStartOf="@id/floatingMain"
+        app:layout_constraintEnd_toEndOf="@id/floatingMain"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"

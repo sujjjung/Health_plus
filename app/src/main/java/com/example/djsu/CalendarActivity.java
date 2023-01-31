@@ -18,15 +18,18 @@ public class CalendarActivity extends AppCompatActivity {
     private FloatingActionButton fabHealth;
     private FloatingActionButton fabFood;
 
+    private FloatingActionButton fabKg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        fabMain = findViewById(R.id.fabMain);
-        fabHealth = findViewById(R.id.fabHealth);
-        fabFood = findViewById(R.id.fabFood);
+        fabMain = findViewById(R.id.floatingMain);
+        fabHealth = findViewById(R.id.floatingHealth);
+        fabFood = findViewById(R.id.floatingFood);
+        fabKg = findViewById(R.id.floatingKg);
 
         // 메인플로팅 버튼 클릭
         fabMain.setOnClickListener(new View.OnClickListener() {
@@ -36,7 +39,7 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
         // 식단 플로팅 버튼 클릭
-        fabHealth.setOnClickListener(new View.OnClickListener() {
+        fabFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarActivity.this, FoodAddActivity.class);
@@ -45,10 +48,18 @@ public class CalendarActivity extends AppCompatActivity {
         });
 
         // 운동 플로팅 버튼 클릭
-        fabFood.setOnClickListener(new View.OnClickListener() {
+        fabHealth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarActivity.this, HealthAddActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        fabKg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CalendarActivity.this, WeightActivity.class);
                 startActivity(intent);
             }
         });
@@ -59,6 +70,8 @@ public class CalendarActivity extends AppCompatActivity {
         if(fabMain_status) {
             // 플로팅 액션 버튼 닫기
             // 애니메이션 추가
+            ObjectAnimator fk_animation = ObjectAnimator.ofFloat(fabKg, "translationY", 0f);
+            fk_animation.start();
             ObjectAnimator fc_animation = ObjectAnimator.ofFloat(fabFood, "translationY", 0f);
             fc_animation.start();
             ObjectAnimator fe_animation = ObjectAnimator.ofFloat(fabHealth, "translationY", 0f);
@@ -72,6 +85,8 @@ public class CalendarActivity extends AppCompatActivity {
             fc_animation.start();
             ObjectAnimator fe_animation = ObjectAnimator.ofFloat(fabHealth, "translationY", -400f);
             fe_animation.start();
+            ObjectAnimator fk_animation = ObjectAnimator.ofFloat(fabKg, "translationY", -600f);
+            fk_animation.start();
             // 메인 플로팅 이미지 변경
             fabMain.setImageResource(R.drawable.ic_action_plus);
         }
