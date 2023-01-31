@@ -1,12 +1,6 @@
 package com.example.djsu;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
-
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +23,6 @@ public class login extends AppCompatActivity {
     private EditText editTextPassword;
     private Button buttonLogIn;
     private Button buttonSignUp;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +68,10 @@ public class login extends AppCompatActivity {
                             // 로그인 성공
                             Toast.makeText(login.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                             firebaseAuth.addAuthStateListener(firebaseAuthListener);
+
+                            Intent intent = new Intent(getApplicationContext(),UserMainActivity.class);
+                            startActivity(intent);
+
                         } else {
                             // 로그인 실패
                             Toast.makeText(login.this, "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();

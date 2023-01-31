@@ -1,9 +1,9 @@
 package com.example.djsu;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
-import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 
