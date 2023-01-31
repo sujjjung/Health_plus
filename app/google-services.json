@@ -1,69 +1,76 @@
 {
   "project_info": {
-    "project_number": "1004222552905",
-    "project_id": "health-plus-b4821",
-    "storage_bucket": "health-plus-b4821.appspot.com"
+    "project_number": "576553006591",
+    "firebase_url": "https://djsu-73b7b-default-rtdb.firebaseio.com",
+    "project_id": "djsu-73b7b",
+    "storage_bucket": "djsu-73b7b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1004222552905:android:1e300e5e9efdf0b58ad898",
+        "mobilesdk_app_id": "1:576553006591:android:99c43e01b02a3fd967e3ca",
         "android_client_info": {
           "package_name": "com.example.djsu"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1004222552905-518eiulriijjcghrm438v1kqk268v95d.apps.googleusercontent.com",
+          "client_id": "576553006591-cgm1dm9gb5ef61ffcuuslb81hff20e1l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.djsu",
+            "certificate_hash": "6c6cb64ce7e8da106ab649513918d98d13fdd480"
+          }
+        },
+        {
+          "client_id": "576553006591-v007qr6at7r2e7u3nue0pnmeoarf8edl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAoQyC3P24RShZuZ9w_Fu5X0aEWRn90ZbY"
+          "current_key": "AIzaSyDR8PuOe2o9qHtWBe4nqI0_T53utRjceUM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1004222552905-518eiulriijjcghrm438v1kqk268v95d.apps.googleusercontent.com",
+              "client_id": "576553006591-v007qr6at7r2e7u3nue0pnmeoarf8edl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
         }
       }
-
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1004222552905:android:60759cd8f2fa19c78ad898",
+        "mobilesdk_app_id": "1:576553006591:android:671e540d97fc7fae67e3ca",
         "android_client_info": {
-          "package_name": "com.example.djsu_jung"
+          "package_name": "com.example.jongha"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1004222552905-518eiulriijjcghrm438v1kqk268v95d.apps.googleusercontent.com",
+          "client_id": "576553006591-v007qr6at7r2e7u3nue0pnmeoarf8edl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAoQyC3P24RShZuZ9w_Fu5X0aEWRn90ZbY"
+          "current_key": "AIzaSyDR8PuOe2o9qHtWBe4nqI0_T53utRjceUM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1004222552905-518eiulriijjcghrm438v1kqk268v95d.apps.googleusercontent.com",
+              "client_id": "576553006591-v007qr6at7r2e7u3nue0pnmeoarf8edl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
         }
       }
-
     }
   ],
   "configuration_version": "1"
