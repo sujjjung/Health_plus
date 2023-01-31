@@ -1,8 +1,10 @@
-package com.example.djsu;
+package com.example.djsu.admin;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.djsu.R;
 
 public class AdminFoodListActivity extends AppCompatActivity {
 
