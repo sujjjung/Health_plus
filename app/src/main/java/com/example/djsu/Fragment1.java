@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class Fragment1 extends Fragment {

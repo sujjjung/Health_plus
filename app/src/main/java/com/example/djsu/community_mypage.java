@@ -1,9 +1,8 @@
 package com.example.djsu;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class community_mypage extends AppCompatActivity {
 
