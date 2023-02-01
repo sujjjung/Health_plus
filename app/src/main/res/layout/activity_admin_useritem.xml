@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="20dp">
+
+        <!--프로필 사진-->
+        <ImageView
+            android:id="@+id/profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/user"/>
+
+        <!--이름-->
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:text="김수빈"
+            android:fontFamily="@font/a10092"
+            android:textSize="24sp"
+            android:textColor="#000"/>
+
+        <Button
+            android:id="@+id/adminBtn"
+            android:layout_width="65dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="130dp"
+            android:backgroundTint="#ff9898"
+            android:fontFamily="@font/a10091"
+            android:gravity="left"
+            android:text="관리"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+</LinearLayout>
