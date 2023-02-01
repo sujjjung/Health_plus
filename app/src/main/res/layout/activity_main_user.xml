@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+<com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/hamburger"
+        />
+<androidx.constraintlayout.widget.ConstraintLayout
     tools:context=".main_user"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -70,8 +81,8 @@
 
     <View
         android:id="@+id/view"
-        android:layout_width="0dp"
-        android:layout_height="360dp"
+        android:layout_width="384dp"
+        android:layout_height="371dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/roundsquare"
@@ -94,6 +105,7 @@
         app:layout_constraintTop_toTopOf="@+id/view" />
 
     <ImageButton
+        android:id="@+id/view_exercise"
         android:layout_width="0dp"
         android:layout_height="22dp"
         android:background="@color/white"
@@ -186,6 +198,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView7" />
 
     <ImageButton
+        android:id="@+id/view_food"
         android:layout_width="0dp"
         android:layout_height="22dp"
         android:background="@color/white"
@@ -337,18 +350,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
-    <TextView
-        android:id="@+id/textView15"
+    <Button
+        android:id="@+id/announcement_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
         android:layout_marginTop="14dp"
         android:fontFamily="@font/a10094"
         android:text="오늘의 공지사항"
+        android:backgroundTint="#00000000"
         android:textColor="#FF3B3B3B"
         android:textSize="23dp"
         app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2" />
+        app:layout_constraintTop_toTopOf="@+id/view2"
+        style="?android:attr/borderlessButtonStyle"/>
 
     <TextView
         android:layout_width="350dp"
@@ -358,8 +373,9 @@
         android:text="ver 1 UI 업데이트"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintHorizontal_bias="0.411"
         app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toBottomOf="@+id/textView15"
-        android:layout_marginTop="10dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/announcement_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

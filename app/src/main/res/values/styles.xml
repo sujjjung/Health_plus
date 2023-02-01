@@ -4,6 +4,10 @@
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/a1009_2</item>
     </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+    <style name="Theme.NavigationDrawer" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    </style>
     <style name="NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

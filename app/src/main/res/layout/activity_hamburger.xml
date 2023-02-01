@@ -104,4 +104,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/runBtn" />
 
+    <Button
+        android:id="@+id/friendsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="92dp"
+        android:background="#00000000"
+        android:fontFamily="@font/a10093"
+        android:text="친구"
+        android:textColor="#393939"
+        android:textSize="26dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/runBtn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
