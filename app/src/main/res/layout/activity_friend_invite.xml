@@ -11,10 +11,13 @@
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
-        app:srcCompat="@drawable/logo3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintVertical_bias="0.001"
+        app:srcCompat="@drawable/logo3" />
 
     <ImageButton
         android:id="@+id/menu"
@@ -44,12 +47,18 @@
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="91dp"
+        android:layout_marginEnd="82dp"
         android:backgroundTint="#FFFFFF"
         android:fontFamily="@font/a10092"
         android:text="취소"
         android:textColor="@color/black"
-        tools:layout_editor_absoluteX="91dp"
-        tools:layout_editor_absoluteY="667dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -60,8 +69,12 @@
         android:fontFamily="@font/a10092"
         android:text="만들기"
         android:textColor="@color/black"
-        tools:layout_editor_absoluteX="269dp"
-        tools:layout_editor_absoluteY="667dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.792"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
