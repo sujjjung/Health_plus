@@ -1,15 +1,23 @@
 package com.example.djsu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 public class main_user extends AppCompatActivity {
-
+    private ImageView imageView;
+    private DrawerLayout drawer_Layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,5 +58,8 @@ public class main_user extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        imageView = findViewById(R.id.menu);
+        drawer_Layout = findViewById(R.id.drawerLayout);
+        imageView.setOnClickListener(view -> drawer_Layout.openDrawer(Gravity.LEFT));
     }
 }
