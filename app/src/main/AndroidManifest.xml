@@ -13,7 +13,19 @@
         android:theme="@style/Theme.DJSU"
         tools:targetApi="31">
         <activity
-            android:name=".friends_remove"
+            android:name=".AdminUserDialog"
+            android:exported="false" />
+        <activity
+            android:name=".ItemAdminUser"
+            android:exported="false" />
+        <activity
+            android:name=".admin.AdminUserListViewAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".admin.AdminUseritem"
+            android:exported="false" />
+        <activity
+            android:name=".main_user"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -78,8 +90,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -96,7 +106,13 @@
             android:exported="false" />
         <activity
             android:name=".admin.AdminUserListActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ExerciseRecordActivity"
             android:exported="false" />
@@ -192,15 +208,10 @@
         </activity>
         <activity
             android:name=".CalendarActivity"
-            android:exported="true">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".admin.AdminMainActivity"

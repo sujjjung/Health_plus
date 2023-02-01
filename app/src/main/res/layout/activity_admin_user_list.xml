@@ -29,15 +29,23 @@
         app:layout_constraintTop_toTopOf="@id/imageView" />
 
     <TextView
+        android:id="@+id/userlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:fontFamily="@font/a10093"
         android:text="회원 목록"
         android:textColor="#2E2E2E"
         android:textSize="26dp"
-        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="580dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userlist"></ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
