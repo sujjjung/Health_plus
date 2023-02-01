@@ -261,15 +261,18 @@
         app:layout_constraintStart_toEndOf="@+id/textView41"
         app:layout_constraintTop_toTopOf="@+id/textView41" />
 
-    <TextView
+    <Button
+        android:id="@+id/btn_exercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:background="#00000000"
         android:fontFamily="@font/a10093"
+        android:paddingLeft="0dp"
         android:text="- 운동"
         android:textColor="#393939"
         android:textSize="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="@+id/imageView5"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 

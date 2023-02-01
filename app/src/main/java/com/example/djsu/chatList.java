@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class chatList extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,17 +19,17 @@ public class chatList extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), friendAdd.class);
+                Intent intent = new Intent(getApplicationContext(), friend_invite.class);
                 startActivity(intent);
             }
         });
 
-        Button imageButton2 = (Button) findViewById(R.id.btn_new_message);
+        Button imageButton2 = (Button) findViewById(R.id.btn_friend_list);
         imageButton2.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), friendList.class);
+                Intent intent = new Intent(getApplicationContext(), friendAdd.class);
                 startActivity(intent);
             }
         });
