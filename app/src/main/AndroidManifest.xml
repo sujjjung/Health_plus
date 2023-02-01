@@ -13,10 +13,7 @@
         android:theme="@style/Theme.DJSU"
         tools:targetApi="31">
         <activity
-            android:name=".AdminUserDialog"
-            android:exported="false" />
-        <activity
-            android:name=".ItemAdminUser"
+            android:name=".admin.AdminUserDialog"
             android:exported="false" />
         <activity
             android:name=".admin.AdminUserListViewAdapter"
@@ -24,13 +21,7 @@
         <activity
             android:name=".admin.AdminUseritem"
             android:exported="false" />
-        <activity
-            android:name=".main_user"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <activity
             android:name=".map"
             android:exported="false">

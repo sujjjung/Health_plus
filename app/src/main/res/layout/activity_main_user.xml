@@ -6,13 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-<com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/hamburger"
-        />
 <androidx.constraintlayout.widget.ConstraintLayout
     tools:context=".main_user"
     android:layout_width="match_parent"
@@ -29,17 +22,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageButton
-        android:id="@+id/menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:src="@drawable/ic_action_hamburger"
-        android:layout_marginStart="8dp"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/imageView" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -84,9 +66,10 @@
         android:layout_width="384dp"
         android:layout_height="371dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/roundsquare"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
         tools:ignore="MissingConstraints" />
@@ -175,10 +158,10 @@
 
     <TextView
         android:id="@+id/healthView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
         android:layout_marginStart="40dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/a10093"
         android:text="운동"
         android:textColor="#FF3B3B3B"
@@ -378,4 +361,20 @@
         app:layout_constraintTop_toBottomOf="@+id/announcement_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar" />
+    </LinearLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:id="@+id/navigationView"
+        android:layout_gravity="left"
+        app:menu="@menu/hamburger"
+        tools:ignore="MissingConstraints" />
 </androidx.drawerlayout.widget.DrawerLayout>
