@@ -6,7 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-
+    <ScrollView
+        android:id="@+id/bio_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,20 +21,184 @@
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         app:srcCompat="@drawable/logo3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:id="@+id/topDateLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/yellow"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        <ImageButton
+            android:id="@+id/beforeIB"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ripple_effect"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="@id/dateTV"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@id/dateTV"
+            app:srcCompat="@drawable/ic_previous" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/dateSelectLL"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/yellow"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/calenderIB"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_calendar_black" />
+
+            <TextView
+                android:id="@+id/dateTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:gravity="start|center_vertical"
+                android:paddingTop="@dimen/report_title_margin_vertical"
+                android:paddingBottom="@dimen/report_title_margin_vertical"
+                android:text="date"
+                android:textColor="@color/black"
+                android:textSize="@dimen/global_text_size" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:id="@+id/afterIB"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ripple_effect"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_next" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/margin_global"
+        android:id="@+id/caldalLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topDateLL">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/color_transparent"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/content_gray"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="-1.1dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_border_right"
+                android:gravity="center"
+                android:text="@string/short_sunday" />
+
+            <TextView
+                style="@style/content_gray"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="-1.1dp"
+                android:background="@drawable/background_border_right"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/short_monday" />
+
+            <TextView
+                style="@style/content_gray"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="-1.1dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_border_right"
+                android:gravity="center"
+                android:text="@string/short_tueday" />
+
+            <TextView
+                style="@style/content_gray"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="-1.1dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_border_right"
+                android:gravity="center"
+                android:text="@string/short_wedday" />
+
+            <TextView
+                style="@style/content_gray"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="-1.1dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_border_right"
+                android:gravity="center"
+                android:text="@string/short_thuday" />
+
+            <TextView
+                style="@style/content_gray"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="-1.1dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_border_right"
+                android:gravity="center"
+                android:text="@string/short_friday" />
+
+            <TextView
+                style="@style/content_gray"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/short_satday" />
+        </LinearLayout>
+        <!--달력뷰-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/calendarRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:spanCount="7" />
+
+    </LinearLayout>
+
 
     <View
         android:id="@+id/view3"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_width="417dp"
+        android:layout_height="1dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="20dp"
-        android:background="#FFCBCB"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.58" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -326,12 +493,16 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/toolbar" />
+        <include
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
@@ -341,4 +512,5 @@
         android:layout_gravity="left"
         app:menu="@menu/hamburger"
         tools:ignore="MissingConstraints" />
+
 </androidx.drawerlayout.widget.DrawerLayout>
