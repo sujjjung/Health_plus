@@ -18,4 +18,122 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <TextView
+        android:id="@+id/HealthNameInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="운동명"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/HealthNameEdit"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="운동명"
+        android:textSize="22dp"
+        app:layout_constraintStart_toStartOf="@+id/HealthNameInput"
+        app:layout_constraintTop_toBottomOf="@+id/HealthNameInput" />
+
+    <TextView
+        android:id="@+id/HealthExplanationInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="운동설명"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HealthNameEdit" />
+
+    <EditText
+        android:id="@+id/HealthExplanationEdit"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textSize="22dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="운동 설명"
+        app:layout_constraintStart_toStartOf="@+id/HealthExplanationInput"
+        app:layout_constraintTop_toBottomOf="@+id/HealthExplanationInput" />
+
+<!--    아하.. 이미지..-->
+
+    <TextView
+        android:id="@+id/HealthKcalInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="소비칼로리"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HealthExplanationEdit" />
+
+    <EditText
+        android:id="@+id/FHealthKcalEdit"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="소비칼로리"
+        android:textSize="22dp"
+        app:layout_constraintStart_toStartOf="@+id/HealthKcalInput"
+        app:layout_constraintTop_toBottomOf="@+id/HealthKcalInput" />
+
+    <TextView
+        android:id="@+id/HealthunitInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="단위"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FHealthKcalEdit" />
+
+    <EditText
+        android:id="@+id/HealthunitEdit"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="단위"
+        android:textSize="22dp"
+        app:layout_constraintStart_toStartOf="@+id/HealthunitInput"
+        app:layout_constraintTop_toBottomOf="@+id/HealthunitInput" />
+
+    <ImageButton
+        android:id="@+id/addBtn"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:background="#00000000"
+        android:src="@drawable/roundsquare3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HealthunitEdit"
+        android:layout_marginTop="48dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/a10093"
+        android:text="추가하기"
+        android:textColor="#2E2E2E"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/addBtn"
+        app:layout_constraintEnd_toEndOf="@+id/addBtn"
+        app:layout_constraintStart_toStartOf="@+id/addBtn"
+        app:layout_constraintTop_toTopOf="@+id/addBtn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
