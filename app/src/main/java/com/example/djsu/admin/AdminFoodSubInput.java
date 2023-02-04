@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.djsu.R;
 
-public class AdminFoodsubInput extends AppCompatActivity {
+public class AdminFoodSubInput extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_foodsub_input);
+        setContentView(R.layout.activity_admin_food_sub_input);
     }
 }

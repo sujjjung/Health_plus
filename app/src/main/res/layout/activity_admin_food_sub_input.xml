@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".admin.AdminFoodSubInput"
+    android:background="#FFF5B3">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:srcCompat="@drawable/logo3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/FoodNameInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="음식명"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:layout_marginTop="58dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/FoodNameEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="  음식명"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodNameInput"
+        app:layout_constraintStart_toEndOf="@+id/FoodNameInput"
+        app:layout_constraintTop_toTopOf="@+id/FoodNameInput" />
+
+    <TextView
+        android:id="@+id/FoodKcalInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="칼로리"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FoodNameInput" />
+
+    <EditText
+        android:id="@+id/FoodKcalEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="  칼로리"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodKcalInput"
+        app:layout_constraintStart_toEndOf="@+id/FoodKcalInput"
+        app:layout_constraintTop_toTopOf="@+id/FoodKcalInput" />
+
+    <TextView
+        android:id="@+id/FoodCarbohydrateInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="탄수화물"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FoodKcalInput" />
+
+    <EditText
+        android:id="@+id/FoodCarbohydrateEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="  탄수화물"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodCarbohydrateInput"
+        app:layout_constraintStart_toEndOf="@+id/FoodCarbohydrateInput"
+        app:layout_constraintTop_toTopOf="@+id/FoodCarbohydrateInput" />
+
+    <TextView
+        android:id="@+id/FoodProteinInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="71dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="단백질"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FoodCarbohydrateInput" />
+
+    <EditText
+        android:id="@+id/FoodProteinEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="  단백질"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodProteinInput"
+        app:layout_constraintStart_toEndOf="@+id/FoodProteinInput"
+        app:layout_constraintTop_toTopOf="@+id/FoodProteinInput" />
+
+    <TextView
+        android:id="@+id/FoodFatInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="94dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="지방"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FoodProteinInput" />
+
+    <EditText
+        android:id="@+id/FoodFatEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="  지방"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodFatInput"
+        app:layout_constraintStart_toEndOf="@+id/FoodFatInput"
+        app:layout_constraintTop_toTopOf="@+id/FoodFatInput" />
+
+    <TextView
+        android:id="@+id/FoodSodiumInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="나트륨"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FoodFatInput" />
+
+    <EditText
+        android:id="@+id/FoodSodiumEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="  나트륨"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodSodiumInput"
+        app:layout_constraintStart_toEndOf="@+id/FoodSodiumInput"
+        app:layout_constraintTop_toTopOf="@+id/FoodSodiumInput" />
+
+    <TextView
+        android:id="@+id/FoodSugarInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="116dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="당"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FoodSodiumInput" />
+
+    <EditText
+        android:id="@+id/FoodSugarEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="  당"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodSugarInput"
+        app:layout_constraintStart_toEndOf="@+id/FoodSugarInput"
+        app:layout_constraintTop_toTopOf="@+id/FoodSugarInput" />
+
+    <ImageButton
+        android:id="@+id/addBtn"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:background="#00000000"
+        android:src="@drawable/roundsquare3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FoodSugarEdit"
+        android:layout_marginTop="48dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/a10093"
+        android:text="저장하기"
+        android:textColor="#2E2E2E"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/addBtn"
+        app:layout_constraintEnd_toEndOf="@+id/addBtn"
+        app:layout_constraintStart_toStartOf="@+id/addBtn"
+        app:layout_constraintTop_toTopOf="@+id/addBtn" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

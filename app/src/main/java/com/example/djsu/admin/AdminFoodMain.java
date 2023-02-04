@@ -36,7 +36,7 @@ public class AdminFoodMain extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(AdminFoodMain.this, AdminFoodsubInput.class);
+                Intent intent = new Intent(AdminFoodMain.this, AdminFoodSub.class);
                 startActivity(intent);
             }
         });
