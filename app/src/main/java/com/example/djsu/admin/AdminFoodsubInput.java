@@ -1,16 +1,16 @@
 package com.example.djsu.admin;
 
-import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
 
 import com.example.djsu.R;
 
-public class AdminFoodListActivity extends AppCompatActivity {
+public class AdminFoodsubInput extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_food_list);
+        setContentView(R.layout.activity_admin_foodsub_input);
     }
 }

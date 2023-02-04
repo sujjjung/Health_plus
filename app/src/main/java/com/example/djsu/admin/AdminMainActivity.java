@@ -23,7 +23,7 @@ public class AdminMainActivity extends AppCompatActivity {
         food_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminMainActivity.this, AdminFoodListActivity.class);
+                Intent intent = new Intent(AdminMainActivity.this, AdminFoodMain.class);
                 startActivity(intent);
             }
         });
