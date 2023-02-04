@@ -13,6 +13,9 @@
         android:theme="@style/Theme.DJSU"
         tools:targetApi="31">
         <activity
+            android:name=".admin.AdminFoodAdd"
+            android:exported="false" />
+        <activity
             android:name=".admin.AdminFoodSubInput"
             android:exported="false" />
         <activity
@@ -20,7 +23,7 @@
             android:exported="false" />
         <activity
             android:name=".admin.AdminFoodMain"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".HealthAddList.HealthAddMainActivity"
             android:exported="true" />
