@@ -21,12 +21,12 @@
         android:id="@+id/FoodNameInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/a1009_2"
         android:text="음식명"
         android:textColor="@color/black"
         android:textSize="24dp"
-        android:layout_marginTop="58dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -34,8 +34,9 @@
         android:id="@+id/FoodNameEdit"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="  음식명"
         android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="음식명"
         app:layout_constraintBottom_toBottomOf="@+id/FoodNameInput"
         app:layout_constraintStart_toEndOf="@+id/FoodNameInput"
         app:layout_constraintTop_toTopOf="@+id/FoodNameInput" />
@@ -57,8 +58,9 @@
         android:id="@+id/FoodKcalEdit"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="  칼로리"
         android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="칼로리"
         app:layout_constraintBottom_toBottomOf="@+id/FoodKcalInput"
         app:layout_constraintStart_toEndOf="@+id/FoodKcalInput"
         app:layout_constraintTop_toTopOf="@+id/FoodKcalInput" />
@@ -80,8 +82,9 @@
         android:id="@+id/FoodCarbohydrateEdit"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="  탄수화물"
         android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="탄수화물"
         app:layout_constraintBottom_toBottomOf="@+id/FoodCarbohydrateInput"
         app:layout_constraintStart_toEndOf="@+id/FoodCarbohydrateInput"
         app:layout_constraintTop_toTopOf="@+id/FoodCarbohydrateInput" />
@@ -103,8 +106,9 @@
         android:id="@+id/FoodProteinEdit"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="  단백질"
         android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="단백질"
         app:layout_constraintBottom_toBottomOf="@+id/FoodProteinInput"
         app:layout_constraintStart_toEndOf="@+id/FoodProteinInput"
         app:layout_constraintTop_toTopOf="@+id/FoodProteinInput" />
@@ -126,8 +130,9 @@
         android:id="@+id/FoodFatEdit"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="  지방"
         android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="지방"
         app:layout_constraintBottom_toBottomOf="@+id/FoodFatInput"
         app:layout_constraintStart_toEndOf="@+id/FoodFatInput"
         app:layout_constraintTop_toTopOf="@+id/FoodFatInput" />
@@ -149,8 +154,9 @@
         android:id="@+id/FoodSodiumEdit"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="  나트륨"
         android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="나트륨"
         app:layout_constraintBottom_toBottomOf="@+id/FoodSodiumInput"
         app:layout_constraintStart_toEndOf="@+id/FoodSodiumInput"
         app:layout_constraintTop_toTopOf="@+id/FoodSodiumInput" />
@@ -159,7 +165,7 @@
         android:id="@+id/FoodSugarInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
+        android:layout_marginStart="117dp"
         android:fontFamily="@font/a1009_2"
         android:text="당"
         android:textColor="@color/black"
@@ -172,11 +178,36 @@
         android:id="@+id/FoodSugarEdit"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="  당"
         android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="당"
         app:layout_constraintBottom_toBottomOf="@+id/FoodSugarInput"
         app:layout_constraintStart_toEndOf="@+id/FoodSugarInput"
         app:layout_constraintTop_toTopOf="@+id/FoodSugarInput" />
+
+    <TextView
+        android:id="@+id/FoodgInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="기준(무게)"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FoodSugarInput" />
+
+    <EditText
+        android:id="@+id/FoodgEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="기준(무게)"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodgInput"
+        app:layout_constraintStart_toEndOf="@+id/FoodgInput"
+        app:layout_constraintTop_toTopOf="@+id/FoodgInput" />
 
     <ImageButton
         android:id="@+id/addBtn"
@@ -186,7 +217,7 @@
         android:src="@drawable/roundsquare3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FoodSugarEdit"
+        app:layout_constraintTop_toBottomOf="@+id/FoodgEdit"
         android:layout_marginTop="48dp"
         />
 

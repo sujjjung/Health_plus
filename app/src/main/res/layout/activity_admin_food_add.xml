@@ -26,19 +26,20 @@ android:background="#FFF5B3">
     android:text="음식명"
     android:textColor="@color/black"
     android:textSize="24dp"
-    android:layout_marginTop="58dp"
+    android:layout_marginTop="50dp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-<EditText
-    android:id="@+id/FoodNameEdit"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content"
-    android:hint="  음식명"
-    android:layout_marginStart="10dp"
-    app:layout_constraintBottom_toBottomOf="@+id/FoodNameAdd"
-    app:layout_constraintStart_toEndOf="@+id/FoodNameAdd"
-    app:layout_constraintTop_toTopOf="@+id/FoodNameAdd" />
+    <EditText
+        android:id="@+id/FoodNameEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="음식명"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodNameAdd"
+        app:layout_constraintStart_toEndOf="@+id/FoodNameAdd"
+        app:layout_constraintTop_toTopOf="@+id/FoodNameAdd" />
 
 <TextView
     android:id="@+id/FoodKcalAdd"
@@ -53,15 +54,16 @@ android:background="#FFF5B3">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/FoodNameAdd" />
 
-<EditText
-    android:id="@+id/FoodKcalEdit"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content"
-    android:hint="  칼로리"
-    android:layout_marginStart="10dp"
-    app:layout_constraintBottom_toBottomOf="@+id/FoodKcalAdd"
-    app:layout_constraintStart_toEndOf="@+id/FoodKcalAdd"
-    app:layout_constraintTop_toTopOf="@+id/FoodKcalAdd" />
+    <EditText
+        android:id="@+id/FoodKcalEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="칼로리"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodKcalAdd"
+        app:layout_constraintStart_toEndOf="@+id/FoodKcalAdd"
+        app:layout_constraintTop_toTopOf="@+id/FoodKcalAdd" />
 
 <TextView
     android:id="@+id/FoodCarbohydrateAdd"
@@ -76,15 +78,16 @@ android:background="#FFF5B3">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/FoodKcalAdd" />
 
-<EditText
-    android:id="@+id/FoodCarbohydrateEdit"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content"
-    android:hint="  탄수화물"
-    android:layout_marginStart="10dp"
-    app:layout_constraintBottom_toBottomOf="@+id/FoodCarbohydrateAdd"
-    app:layout_constraintStart_toEndOf="@+id/FoodCarbohydrateAdd"
-    app:layout_constraintTop_toTopOf="@+id/FoodCarbohydrateAdd" />
+    <EditText
+        android:id="@+id/FoodCarbohydrateEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="탄수화물"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodCarbohydrateAdd"
+        app:layout_constraintStart_toEndOf="@+id/FoodCarbohydrateAdd"
+        app:layout_constraintTop_toTopOf="@+id/FoodCarbohydrateAdd" />
 
 <TextView
     android:id="@+id/FoodProteinAdd"
@@ -99,15 +102,16 @@ android:background="#FFF5B3">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/FoodCarbohydrateAdd" />
 
-<EditText
-    android:id="@+id/FoodProteinEdit"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content"
-    android:hint="  단백질"
-    android:layout_marginStart="10dp"
-    app:layout_constraintBottom_toBottomOf="@+id/FoodProteinAdd"
-    app:layout_constraintStart_toEndOf="@+id/FoodProteinAdd"
-    app:layout_constraintTop_toTopOf="@+id/FoodProteinAdd" />
+    <EditText
+        android:id="@+id/FoodProteinEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="단백질"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodProteinAdd"
+        app:layout_constraintStart_toEndOf="@+id/FoodProteinAdd"
+        app:layout_constraintTop_toTopOf="@+id/FoodProteinAdd" />
 
 <TextView
     android:id="@+id/FoodFatAdd"
@@ -122,15 +126,16 @@ android:background="#FFF5B3">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/FoodProteinAdd" />
 
-<EditText
-    android:id="@+id/FoodFatEdit"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content"
-    android:hint="  지방"
-    android:layout_marginStart="10dp"
-    app:layout_constraintBottom_toBottomOf="@+id/FoodFatAdd"
-    app:layout_constraintStart_toEndOf="@+id/FoodFatAdd"
-    app:layout_constraintTop_toTopOf="@+id/FoodFatAdd" />
+    <EditText
+        android:id="@+id/FoodFatEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="지방"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodFatAdd"
+        app:layout_constraintStart_toEndOf="@+id/FoodFatAdd"
+        app:layout_constraintTop_toTopOf="@+id/FoodFatAdd" />
 
 <TextView
     android:id="@+id/FoodSodiumAdd"
@@ -145,21 +150,22 @@ android:background="#FFF5B3">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/FoodFatAdd" />
 
-<EditText
-    android:id="@+id/FoodSodiumEdit"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content"
-    android:hint="  나트륨"
-    android:layout_marginStart="10dp"
-    app:layout_constraintBottom_toBottomOf="@+id/FoodSodiumAdd"
-    app:layout_constraintStart_toEndOf="@+id/FoodSodiumAdd"
-    app:layout_constraintTop_toTopOf="@+id/FoodSodiumAdd" />
+    <EditText
+        android:id="@+id/FoodSodiumEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="나트륨"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodSodiumAdd"
+        app:layout_constraintStart_toEndOf="@+id/FoodSodiumAdd"
+        app:layout_constraintTop_toTopOf="@+id/FoodSodiumAdd" />
 
 <TextView
     android:id="@+id/FoodSugarAdd"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="116dp"
+    android:layout_marginStart="117dp"
     android:fontFamily="@font/a1009_2"
     android:text="당"
     android:textColor="@color/black"
@@ -168,15 +174,40 @@ android:background="#FFF5B3">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/FoodSodiumAdd" />
 
-<EditText
-    android:id="@+id/FoodSugarEdit"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content"
-    android:hint="  당"
-    android:layout_marginStart="10dp"
-    app:layout_constraintBottom_toBottomOf="@+id/FoodSugarAdd"
-    app:layout_constraintStart_toEndOf="@+id/FoodSugarAdd"
-    app:layout_constraintTop_toTopOf="@+id/FoodSugarAdd" />
+    <EditText
+        android:id="@+id/FoodSugarEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="당"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodSugarAdd"
+        app:layout_constraintStart_toEndOf="@+id/FoodSugarAdd"
+        app:layout_constraintTop_toTopOf="@+id/FoodSugarAdd" />
+
+    <TextView
+        android:id="@+id/FoodgAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="기준(무게)"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FoodSugarAdd" />
+
+    <EditText
+        android:id="@+id/FoodgEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="기준(무게)"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodgAdd"
+        app:layout_constraintStart_toEndOf="@+id/FoodgAdd"
+        app:layout_constraintTop_toTopOf="@+id/FoodgAdd" />
 
 <ImageButton
     android:id="@+id/addBtn"
@@ -186,7 +217,7 @@ android:background="#FFF5B3">
     android:src="@drawable/roundsquare3"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/FoodSugarAdd"
+    app:layout_constraintTop_toBottomOf="@+id/FoodgAdd"
     android:layout_marginTop="48dp"
     />
 

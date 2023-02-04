@@ -13,6 +13,21 @@
         android:theme="@style/Theme.DJSU"
         tools:targetApi="31">
         <activity
+            android:name=".AdminExerciseSubInput"
+            android:exported="false" />
+        <activity
+            android:name=".AdminExerciseSubAdd"
+            android:exported="false" />
+        <activity
+            android:name=".admin.AdminExerciseMain"
+            android:exported="false" />
+        <activity
+            android:name=".admin.AdminUserSub"
+            android:exported="false" />
+        <activity
+            android:name=".admin.AdminUseritem"
+            android:exported="false" />
+        <activity
             android:name=".admin.AdminFoodAdd"
             android:exported="false" />
         <activity
@@ -28,13 +43,7 @@
             android:name=".HealthAddList.HealthAddMainActivity"
             android:exported="true" />
         <activity
-            android:name=".admin.AdminUserDialog"
-            android:exported="false" />
-        <activity
             android:name=".admin.AdminUserListViewAdapter"
-            android:exported="false" />
-        <activity
-            android:name=".admin.AdminUseritem"
             android:exported="false" />
         <activity
             android:name=".map"
@@ -102,7 +111,7 @@
         <activity android:name=".chatList" />
         <activity
             android:name=".HealthAddActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".HamburgerActivity"
             android:exported="false" />
@@ -212,15 +221,15 @@
         <activity
             android:name=".admin.AdminMainActivity"
             android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
     </application>
 

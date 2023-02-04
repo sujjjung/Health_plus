@@ -1,6 +1,11 @@
 package com.example.djsu.admin;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+
+import com.example.djsu.R;
 
 public class AdminUseritem {
     private Drawable iconDrawable;

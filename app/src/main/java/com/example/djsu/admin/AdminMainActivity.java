@@ -11,7 +11,7 @@ import com.example.djsu.R;
 
 public class AdminMainActivity extends AppCompatActivity {
 
-    ImageButton food_list, user_list;
+    ImageButton food_list, user_list, exercise_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,16 @@ public class AdminMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminMainActivity.this, AdminUserListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        exercise_list = (ImageButton)findViewById(R.id.exerciseBtn);
+
+        exercise_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminMainActivity.this, AdminExerciseMain.class);
                 startActivity(intent);
             }
         });
