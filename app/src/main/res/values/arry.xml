@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="resId">
+        <item>@drawable/lunges</item>
+        <item>@drawable/lunges</item>
+
+    </integer-array>
+
+    <string-array name="title">
+        <item>런지</item>
+        <item>런지여</item>
+    </string-array>
+</resources>

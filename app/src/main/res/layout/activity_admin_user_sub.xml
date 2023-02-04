@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".admin.AdminUserSub"
+    android:background="#FFF5B3"
+    >
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:srcCompat="@drawable/logo3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="닉네임"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/editText6"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/a1009_2"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="ex) 간석동냥냥펀치"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/username"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
+
+    <TextView
+        android:id="@+id/useryear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/a1009_2"
+        android:layout_marginTop="44dp"
+        android:text="생년월일"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText6" />
+
+    <EditText
+        android:id="@+id/editText7"
+        android:layout_width="350dp"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/a1009_2"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="ex) 20011017"
+        app:layout_constraintStart_toStartOf="@+id/useryear"
+        app:layout_constraintTop_toBottomOf="@+id/useryear" />
+
+    <TextView
+        android:id="@+id/useremail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/a1009_2"
+        android:layout_marginTop="44dp"
+        android:text="이메일"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText7" />
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/a1009_2"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="ex) health@naver.com"
+        app:layout_constraintStart_toStartOf="@+id/useremail"
+        app:layout_constraintTop_toBottomOf="@+id/useremail" />
+
+    <TextView
+        android:id="@+id/userpasswd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="비밀번호"
+        android:layout_marginTop="44dp"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText4" />
+
+    <EditText
+        android:id="@+id/passwdInput"
+        android:layout_width="350dp"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/a1009_2"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="비밀번호...?"
+        app:layout_constraintStart_toStartOf="@+id/userpasswd"
+        app:layout_constraintTop_toBottomOf="@+id/userpasswd" />
+
+    <ImageButton
+        android:id="@+id/changeBtn"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:background="#00000000"
+        android:src="@drawable/roundsquare3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwdInput"
+        android:layout_marginTop="48dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/a10093"
+        android:text="정보 수정"
+        android:textColor="#2E2E2E"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/changeBtn"
+        app:layout_constraintEnd_toEndOf="@+id/changeBtn"
+        app:layout_constraintStart_toStartOf="@+id/changeBtn"
+        app:layout_constraintTop_toTopOf="@+id/changeBtn" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

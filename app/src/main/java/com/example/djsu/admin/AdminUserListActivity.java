@@ -1,5 +1,6 @@
 package com.example.djsu.admin;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
         import android.os.Bundle;
         import android.view.View;
@@ -34,15 +35,8 @@ public class AdminUserListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                AdminUseritem item = (AdminUseritem) parent.getItemAtPosition(position);
-
-                Drawable icon = item.getIcon();
-                String title = item.getTitle();
-
-                String str = "id : " + Long.toString(id) + "\r\ntitle : " + title;
-
-                Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AdminUserListActivity.this, AdminUserSub.class);
+                startActivity(intent);
             }
         });
     }

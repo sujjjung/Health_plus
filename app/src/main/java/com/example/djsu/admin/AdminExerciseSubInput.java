@@ -6,12 +6,11 @@ import android.os.Bundle;
 
 import com.example.djsu.R;
 
-public class AdminUserDialog extends AppCompatActivity {
+public class AdminExerciseSubInput extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_user_dialog);
+        setContentView(R.layout.activity_admin_exercise_sub_input);
     }
 }
-

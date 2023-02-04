@@ -18,12 +18,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-
     <TextView
         android:id="@+id/foodname"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
+        android:layout_marginStart="50dp"
         android:fontFamily="@font/a1009_2"
         android:layout_marginTop="48dp"
         android:gravity="center_horizontal|center_vertical"
@@ -44,7 +43,7 @@
         android:textSize="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/foodname"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="40dp"
         />
 
     <TextView
@@ -196,6 +195,33 @@
         app:layout_constraintStart_toEndOf="@+id/FoodSugar"
         app:layout_constraintTop_toTopOf="@+id/FoodSugar" />
 
+    <TextView
+        android:id="@+id/FoodgAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:fontFamily="@font/a1009_2"
+        android:text="기준(무게)"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FoodSugar" />
+
+    <TextView
+        android:id="@+id/FoodgTxt"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/a1009_2"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="230"
+        android:layout_marginStart="30dp"
+        android:textColor="#8A8A8A"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/FoodgAdd"
+        app:layout_constraintStart_toEndOf="@+id/FoodgAdd"
+        app:layout_constraintTop_toTopOf="@+id/FoodgAdd" />
+
     <ImageButton
         android:id="@+id/changeBtn"
         android:layout_width="130dp"
@@ -204,7 +230,7 @@
         android:src="@drawable/roundsquare3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SugarTxt"
+        app:layout_constraintTop_toBottomOf="@+id/FoodgTxt"
         android:layout_marginTop="48dp"
         />
 
