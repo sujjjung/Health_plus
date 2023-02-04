@@ -13,10 +13,13 @@
         android:theme="@style/Theme.DJSU"
         tools:targetApi="31">
         <activity
-            android:name=".AdminExerciseSubInput"
+            android:name=".admin.AdminExerciseSub"
             android:exported="false" />
         <activity
-            android:name=".AdminExerciseSubAdd"
+            android:name=".admin.AdminExerciseSubInput"
+            android:exported="false" />
+        <activity
+            android:name=".admin.AdminExerciseSubAdd"
             android:exported="false" />
         <activity
             android:name=".admin.AdminExerciseMain"

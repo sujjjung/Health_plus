@@ -18,6 +18,8 @@ import java.util.List;
 
 public class AdminExerciseMain extends AppCompatActivity {
 
+    ImageButton ExerciseAddBtn;
+
     private AdminExerciseAdapter adapter;
     private ListView listView;
 
@@ -36,10 +38,21 @@ public class AdminExerciseMain extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(AdminExerciseMain.this, AdminFoodSub.class);
+                Intent intent = new Intent(AdminExerciseMain.this, AdminExerciseSub.class);
                 startActivity(intent);
             }
         });
+
+        ExerciseAddBtn = (ImageButton)findViewById(R.id.exerciseaddBtn);
+
+        ExerciseAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminExerciseMain.this, AdminExerciseSubAdd.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     // 보통 ListView는 통신을 통해 가져온 데이터를 보여줍니다.
