@@ -43,7 +43,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="590dp"
+        android:layout_height="640dp"
         android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@+id/textView15"
         android:orientation="vertical"
@@ -53,6 +53,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/foodaddBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_for_circle_button"
+        android:text="+"
+        android:src="@drawable/ic_action_plus"
+        android:layout_marginTop="680dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 
 
