@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="38dp"
         android:fontFamily="@font/a1009_2"
         android:text="음식명"
         android:textColor="@color/black"
@@ -210,6 +210,28 @@
         app:layout_constraintTop_toTopOf="@+id/FoodgInput" />
 
     <ImageButton
+        android:id="@+id/ImgaddBtn"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:background="#75B8B8B8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FoodgEdit"
+        android:layout_marginTop="30dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="사진 불러오기"
+        android:textColor="#2E2E2E"
+        android:textSize="22dp"
+        android:fontFamily="@font/a1009_2"
+        app:layout_constraintBottom_toBottomOf="@+id/ImgaddBtn"
+        app:layout_constraintEnd_toEndOf="@+id/ImgaddBtn"
+        app:layout_constraintStart_toStartOf="@+id/ImgaddBtn"
+        app:layout_constraintTop_toTopOf="@+id/ImgaddBtn" />
+
+    <ImageButton
         android:id="@+id/addBtn"
         android:layout_width="130dp"
         android:layout_height="40dp"
@@ -217,7 +239,7 @@
         android:src="@drawable/roundsquare3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FoodgEdit"
+        app:layout_constraintTop_toBottomOf="@+id/ImgaddBtn"
         android:layout_marginTop="48dp"
         />
 

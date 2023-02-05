@@ -19,6 +19,9 @@
             android:name=".admin.AdminExerciseSubAdd"
             android:exported="false" />
         <activity
+            android:name=".admin.AdminExerciseSub"
+            android:exported="false" />
+        <activity
             android:name=".admin.AdminExerciseMain"
             android:exported="false" />
         <activity
