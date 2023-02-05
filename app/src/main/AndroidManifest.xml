@@ -46,7 +46,13 @@
             android:exported="false" />
         <activity
             android:name=".admin.AdminFoodAdd"
-            android:exported="false" />
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".admin.AdminFoodSubInput"
             android:exported="false" />
@@ -55,10 +61,10 @@
             android:exported="false" />
         <activity
             android:name=".admin.AdminFoodMain"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".HealthAddList.HealthAddMainActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".admin.AdminUserListViewAdapter"
             android:exported="false" />
@@ -71,7 +77,7 @@
         </activity>
         <activity
             android:name=".main_user"
-            android:exported="true">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -120,7 +126,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="false">
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -128,7 +135,7 @@
         <activity android:name=".chatList" />
         <activity
             android:name=".HealthAddActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".HamburgerActivity"
             android:exported="false" />
@@ -237,13 +244,7 @@
         </activity>
         <activity
             android:name=".admin.AdminMainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

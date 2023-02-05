@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.djsu.admin.AdminMainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -52,13 +53,20 @@ public class login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // 로그인 성공
-                            Toast.makeText(login.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                            firebaseAuth.addAuthStateListener(firebaseAuthListener);
+                            if (email.equals("admin@test.com")) {
+                                Toast.makeText(login.this, "관리자 로그인 성공", Toast.LENGTH_SHORT).show();
+                                firebaseAuth.addAuthStateListener(firebaseAuthListener);
 
+                                Intent intent = new Intent(login.this, AdminMainActivity.class);
+                                startActivity(intent);
+                            } else{
+                                // 로그인 성공
+                                Toast.makeText(login.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                            firebaseAuth.addAuthStateListener(firebaseAuthListener);
 
                             Intent intent = new Intent(login.this, main_user.class);
                             startActivity(intent);
+                            }
                         } else {
                             // 로그인 실패
                             Toast.makeText(login.this, "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();

@@ -146,12 +146,14 @@
         android:layout_marginTop="58dp"
         />
 
-    <TextView
+    <Button
+        android:id="@+id/SaveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/a10093"
         android:text="추가하기"
         android:textColor="#2E2E2E"
+        android:backgroundTint="#ff9898"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/addBtn"
         app:layout_constraintEnd_toEndOf="@+id/addBtn"
