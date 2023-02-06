@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView android:id="@+id/bio_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".admin.AdminExerciseSubAdd"
-    android:background="#FFF5B3"
-    >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".admin.AdminFoodAdd"
+        android:background="#FFF5B3">
 
     <ImageView
         android:id="@+id/imageView"
@@ -18,16 +21,94 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/HealthNameEdit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.629">
+
+
+        <RadioButton
+            android:id="@+id/lower_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/a10093"
+            android:text="하체"
+            android:textColor="#303030"
+            android:textSize="14dp" />
+
+        <RadioButton
+            android:id="@+id/chest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/a10093"
+            android:text="가슴"
+            android:textColor="#303030"
+            android:textSize="14dp" />
+
+        <RadioButton
+            android:id="@+id/etc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/a10093"
+            android:text="등"
+            android:textColor="#303030"
+            android:textSize="14dp" />
+
+        <RadioButton
+            android:id="@+id/Abs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/a10093"
+            android:text="복근"
+            android:textColor="#303030"
+            android:textSize="14dp" />
+
+        <RadioButton
+            android:id="@+id/shoulder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/a10093"
+            android:text="어깨"
+            android:textColor="#303030"
+            android:textSize="14dp" />
+
+        <RadioButton
+            android:id="@+id/eight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/a10093"
+            android:text="팔"
+            android:textColor="#303030"
+            android:textSize="14dp" />
+
+        <RadioButton
+            android:id="@+id/aerobic"
+            android:layout_width="78dp"
+            android:layout_height="34dp"
+            android:fontFamily="@font/a10093"
+            android:text="유산소"
+            android:textColor="#303030"
+            android:textSize="14dp" />
+
+    </RadioGroup>
+
     <TextView
         android:id="@+id/HealthNameAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="92dp"
         android:fontFamily="@font/a1009_2"
         android:text="운동명"
         android:textColor="@color/black"
         android:textSize="24dp"
-        android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -150,14 +231,17 @@
         android:id="@+id/SaveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#ff9898"
         android:fontFamily="@font/a10093"
         android:text="추가하기"
         android:textColor="#2E2E2E"
-        android:backgroundTint="#ff9898"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/addBtn"
         app:layout_constraintEnd_toEndOf="@+id/addBtn"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="@+id/addBtn"
-        app:layout_constraintTop_toTopOf="@+id/addBtn" />
+        app:layout_constraintTop_toTopOf="@+id/addBtn"
+        app:layout_constraintVertical_bias="1.0" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

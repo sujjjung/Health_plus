@@ -90,8 +90,12 @@ public class AdminFoodAdd extends AppCompatActivity {
                                 }
                             }
                         });
+                Intent intent = new Intent(AdminFoodAdd.this, AdminFoodAdd.class);
+                startActivity(intent);
             }
+
         });
+
     }
 
 }
