@@ -51,14 +51,14 @@ public class AdminFoodAdd extends AppCompatActivity {
                 String fSugar=((EditText)findViewById(R.id.FoodSugarEdit)).getText().toString();
                 String fKg=((EditText)findViewById(R.id.FoodgEdit)).getText().toString();
                 Map<String, Object> Food = new HashMap<>();
-                Food.put("1.이름", fName);
-                Food.put("2.칼로리", fKcal);
-                Food.put("3.탄수화물", fCarbohydrate);
-                Food.put("4.단백질", fProtein);
-                Food.put("5.지방", fFat);
-                Food.put("6.나트륨", fSodium);
-                Food.put("7.당", fSugar);
-                Food.put("8.무게", fKg);
+                Food.put("FoodName", fName);
+                Food.put("FoodKcal", fKcal);
+                Food.put("FoodCarbohydrate", fCarbohydrate);
+                Food.put("FoodProtein", fProtein);
+                Food.put("FoodFat", fFat);
+                Food.put("FoodSodium", fSodium);
+                Food.put("FoodSugar", fSugar);
+                Food.put("FoodKg", fKg);
 
 
 
@@ -77,19 +77,7 @@ public class AdminFoodAdd extends AppCompatActivity {
                                 Log.w(TAG, "Error adding document", e);
                             }
                         });
-                db.collection("Food").get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.d(TAG, document.getId() + " => " + document.getData());
-                                    }
-                                } else {
-                                    Log.w(TAG, "Error getting documents.", task.getException());
-                                }
-                            }
-                        });
+
                 Intent intent = new Intent(AdminFoodAdd.this, AdminFoodAdd.class);
                 startActivity(intent);
             }

@@ -44,6 +44,7 @@ public class FoodAddActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
