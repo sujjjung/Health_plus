@@ -5,14 +5,20 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.djsu.R;
+import com.example.djsu.login;
+import com.example.djsu.signup;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,11 +34,35 @@ import java.util.Map;
 public class AdminExerciseSubAdd extends AppCompatActivity {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Button saveBtn;
+    String s;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_exercise_sub_add);
         saveBtn = findViewById(R.id.SaveBtn);
+
+        RadioGroup radioGroup = (RadioGroup)findViewById(R.id.radioGroup);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int id) {
+                if(id == R.id.lower_body)
+                {        s = "하체";
+                }else if(id == R.id.chest)
+                {        s = "가슴";
+                }else if(id == R.id.etc)
+                {        s = "등";
+                }else if(id == R.id.Abs)
+                {        s = "복근";
+                } else if(id == R.id.shoulder)
+                {        s = "어깨";
+                }else if(id == R.id.eight)
+                {        s = "팔";
+                }else if(id == R.id.aerobic)
+                {        s = "유산소";
+                }
+            }
+        });
+        // 클릭이벤트
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,7 +78,7 @@ public class AdminExerciseSubAdd extends AppCompatActivity {
                 Exercise.put("4.단위", hunit);
 
                 // Add a new document with a generated ID
-                db.collection("Exercise")
+                db.collection(s)
                         .add(Exercise)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
@@ -62,7 +92,7 @@ public class AdminExerciseSubAdd extends AppCompatActivity {
                                 Log.w(TAG, "Error adding document", e);
                             }
                         });
-                db.collection("Exercise").get()
+                db.collection(s).get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -75,7 +105,10 @@ public class AdminExerciseSubAdd extends AppCompatActivity {
                                 }
                             }
                         });
+                Intent intent = new Intent(AdminExerciseSubAdd.this, AdminExerciseSubAdd.class);
+                startActivity(intent);
             }
+
         });
 
     }
