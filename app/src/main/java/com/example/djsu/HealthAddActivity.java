@@ -43,42 +43,6 @@ public class HealthAddActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
 
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()){
-                    case R.id.home:
-                        Intent homeintent = new Intent(getApplicationContext(), main_user.class);
-                        startActivity(homeintent);
-                        return true;
-                    case R.id.calender:
-                        Intent calenderintent = new Intent(getApplicationContext(), CalendarActivity.class);
-                        startActivity(calenderintent);
-                        return true;
-                    case R.id.communety:
-                        Intent communetyintent = new Intent(getApplicationContext(), community.class);
-                        startActivity(communetyintent);
-                        return true;
-                    case R.id.mypage:
-                        Intent mypageintent = new Intent(getApplicationContext(), mypage.class);
-                        startActivity(mypageintent);
-                        return true;
-                    case R.id.map:
-                        Intent mapintent = new Intent(getApplicationContext(), map.class);
-                        startActivity(mapintent);
-                        return true;
-                   /* case R.id.manbogi:
-                        Intent manbogiintent = new Intent(getApplicationContext(), .class);
-                        startActivity(manbogiintent);
-                        return true;*/
-                    case R.id.annoucement:
-                        Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
-                        startActivity(annoucementintent);
-                        return true;
-                }
-                return false;
-            }
-        });
         fragment1 = new Fragment1();
         fragment2 = new Fragment2();
         fragment3 = new Fragment3();
@@ -144,6 +108,43 @@ public class HealthAddActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch(menuItem.getItemId()){
+                    case R.id.home:
+                        Intent homeintent = new Intent(getApplicationContext(), main_user.class);
+                        startActivity(homeintent);
+                        return true;
+                    case R.id.calender:
+                        Intent calenderintent = new Intent(getApplicationContext(), CalendarActivity.class);
+                        startActivity(calenderintent);
+                        return true;
+                    case R.id.communety:
+                        Intent communetyintent = new Intent(getApplicationContext(), community.class);
+                        startActivity(communetyintent);
+                        return true;
+                    case R.id.mypage:
+                        Intent mypageintent = new Intent(getApplicationContext(), mypage.class);
+                        startActivity(mypageintent);
+                        return true;
+                    case R.id.map:
+                        Intent mapintent = new Intent(getApplicationContext(), map.class);
+                        startActivity(mapintent);
+                        return true;
+                   /* case R.id.manbogi:
+                        Intent manbogiintent = new Intent(getApplicationContext(), .class);
+                        startActivity(manbogiintent);
+                        return true;*/
+                    case R.id.annoucement:
+                        Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
+                        startActivity(annoucementintent);
+                        return true;
+                }
+                return false;
             }
         });
     }

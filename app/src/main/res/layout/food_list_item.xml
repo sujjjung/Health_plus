@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="20dp">
 
         <!--프로필 사진
@@ -96,13 +96,27 @@
             android:textSize="12sp"
             android:textColor="#444"
             android:maxLines="1"/>
-    </LinearLayout>
 
-    <!--구분선-->
-    <View
+        <!--구분선-->
+
+
+        <Button
+            android:id="@+id/fBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+
+            android:backgroundTint="#ff9898"
+            android:fontFamily="@font/a10091"
+            android:gravity="left"
+            android:text="삭제"
+            android:textColor="@color/black" />
+
+        <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginHorizontal="10dp"
         android:background="#aaa"/>
+
+        </LinearLayout>
 
 </LinearLayout>

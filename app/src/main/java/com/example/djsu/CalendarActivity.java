@@ -134,7 +134,7 @@ public class CalendarActivity extends AppCompatActivity {
         fabFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CalendarActivity.this, FoodAddActivity.class);
+                Intent intent = new Intent(CalendarActivity.this, Food_List.class);
                 startActivity(intent);
             }
         });
