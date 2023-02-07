@@ -72,10 +72,10 @@ public class AdminExerciseSubAdd extends AppCompatActivity {
                 String hKcal=((EditText)findViewById(R.id.FHealthKcalEdit)).getText().toString();
                 String hunit=((EditText)findViewById(R.id.HealthunitEdit)).getText().toString();
                 Map<String, Object> Exercise = new HashMap<>();
-                Exercise.put("1.이름", hName);
-                Exercise.put("2.운동설명", hExplanation);
-                Exercise.put("3.소비칼로리", hKcal);
-                Exercise.put("4.단위", hunit);
+                Exercise.put("exerciseName", hName);
+                Exercise.put("exerciseExplanation", hExplanation);
+                Exercise.put("exerciseCalorie", hKcal);
+                Exercise.put("exerciseUnit", hunit);
 
                 // Add a new document with a generated ID
                 db.collection(s)

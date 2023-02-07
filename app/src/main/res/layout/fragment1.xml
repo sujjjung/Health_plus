@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="641dp"
+        android:id="@+id/recyclerView1"
+        android:layout_width="407dp"
+        android:layout_height="727dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="-2dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
