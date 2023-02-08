@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,7 +46,51 @@ public class FoodAddActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        String Name = "";
+        String Kcal = "";
+        String Carbohydrate = "";
+        String Protein = "";
+        String Fat = "";
+        String Sodium = "";
+        String Sugar = "";
+        String Kg = "";
+        Bundle extras = getIntent().getExtras();
 
+        Name = extras.getString("FoodName");
+        Kcal = extras.getString("FoodKcal");
+        Carbohydrate = extras.getString("FoodCarbohydrate");
+        Protein = extras.getString("FoodProtein");
+        Fat = extras.getString("FoodFat");
+        Sodium = extras.getString("FoodSodium");
+        Sugar = extras.getString("FoodSugar");
+        Kg = extras.getString("FoodKg");
+
+        EditText NameText = (EditText) findViewById(R.id.nametext);
+        EditText KcalText = (EditText) findViewById(R.id.kcaltext);
+        EditText CarbohydratText = (EditText) findViewById(R.id.Carbohydratetext);
+        EditText ProteinText = (EditText) findViewById(R.id.Protintext);
+        EditText FatText = (EditText) findViewById(R.id.Fattext);
+        EditText SodiumText = (EditText) findViewById(R.id.Sodiumtext);
+        EditText SugarText = (EditText) findViewById(R.id.Sugartext);
+        EditText KgText = (EditText) findViewById(R.id.Kgtext);
+
+        String Namestr = Name;
+        String Kcalstr = Kcal;
+        String Carbohydratestr = Carbohydrate;
+        String Proteinstr = Protein;
+        String Fatstr = Fat;
+        String Sodiumstr = Sodium;
+        String Sugarstr = Sugar;
+        String Kgstr = Kg;
+
+        NameText.setText(Namestr);
+        KcalText.setText(Kcalstr);
+        CarbohydratText.setText(Carbohydratestr);
+        ProteinText.setText(Proteinstr);
+        FatText.setText(Fatstr);
+        SodiumText.setText(Sodiumstr);
+        SugarText.setText(Sugarstr);
+        KgText.setText(Kgstr);
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -89,30 +135,7 @@ public class FoodAddActivity extends AppCompatActivity {
                 return false;
             }
         });
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                db.collection("Food")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                Toast.makeText(FoodAddActivity.this, "음식등록 성공.", Toast.LENGTH_SHORT).show();
-                                // 데이터를 가져오는 작업이 잘 동작했을 떄
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.d(TAG, document.getId() + " => " + document.getData());
-                                    }
-                                }
-                                // 데이터를 가져오는 작업이 에러났을 때
-                                else {
-                                    Log.w(TAG, "Error => ", task.getException());
-                                }
-                            }
-                        });
 
-            }
-        });
 
     }
     @Override
