@@ -114,6 +114,10 @@ public class CalendarActivity extends AppCompatActivity {
                         Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
                         startActivity(annoucementintent);
                         return true;
+                    case R.id.friend:
+                        Intent friend = new Intent(getApplicationContext(), friend_list.class);
+                        startActivity(friend);
+                        return true;
                 }
                 return false;
             }

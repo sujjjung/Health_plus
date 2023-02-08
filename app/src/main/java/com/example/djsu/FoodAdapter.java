@@ -26,6 +26,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     @Override
     public FoodAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_list_item,parent,false);
+
         return new ViewHolder(v);
     }
 
@@ -50,7 +51,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
         // returning the size of our array list.
         return FoodArrayList.size();
     }
-
+    public void setItems(ArrayList<Food> list){
+        FoodArrayList = list;
+        notifyDataSetChanged();
+    }
     class ViewHolder extends RecyclerView.ViewHolder {
         // creating variables for our text views.
         private final TextView fname,fkcal,fcarbohydrate,fprotein,ffat,fsodium,fsugar,fkg;
@@ -69,4 +73,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
         }
     }
+
+
+
 }

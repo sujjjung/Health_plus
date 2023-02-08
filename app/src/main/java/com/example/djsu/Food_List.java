@@ -7,10 +7,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,13 +48,48 @@ public class Food_List extends AppCompatActivity {
     private ArrayList<Food> foodArrayList;
     private FoodAdapter foodAdapter;
     private FirebaseFirestore db;
+    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
-
         db = FirebaseFirestore.getInstance();
+        ArrayList<Food> search_list = new ArrayList<>();
+        editText = findViewById(R.id.searchtext);
+        // editText 리스터 작성
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String searchText = editText.getText().toString();
+                search_list.clear();
+
+                if(searchText.equals("")){
+                    foodAdapter.setItems(foodArrayList);
+                }
+                else {
+                    // 검색 단어를 포함하는지 확인
+                    for (int a = 0; a < foodArrayList.size(); a++) {
+                        if (foodArrayList.get(a).getFoodName().toLowerCase().contains(searchText.toLowerCase())) {
+                            search_list.add(foodArrayList.get(a));
+                        }
+                        foodAdapter.setItems(search_list);
+                    }
+                }
+            }
+
+        });
+
 
         foodArrayList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
@@ -146,4 +184,5 @@ public class Food_List extends AppCompatActivity {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         }
     }
+
 }
