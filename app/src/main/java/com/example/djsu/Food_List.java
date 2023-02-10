@@ -44,11 +44,13 @@ public class Food_List extends AppCompatActivity {
     // creating variables for our recycler view,
     // array list, adapter, firebase firestore
     // and our progress bar.
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView,recyclerView1;
     private ArrayList<Food> foodArrayList;
     private FoodAdapter foodAdapter;
+    private ButtonAdapter buttonAdapter;
     private FirebaseFirestore db;
     private EditText editText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,18 +92,23 @@ public class Food_List extends AppCompatActivity {
 
         });
 
-
+       // recyclerView1.bringToFront();
         foodArrayList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        recyclerView1 = findViewById(R.id.recyclerView1);
+        recyclerView1.setHasFixedSize(true);
+        recyclerView1.setLayoutManager(new LinearLayoutManager(this));
         foodAdapter = new FoodAdapter(foodArrayList);
-
+        buttonAdapter = new ButtonAdapter(foodArrayList,this);
+        recyclerView1.setAdapter(buttonAdapter);
         recyclerView.setAdapter(foodAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
+
                 Food food = foodArrayList.get(position);
                 Toast.makeText(getApplicationContext(), food.getFoodName()+' '+food.getFoodKcal()+' '+food.getFoodCarbohydrate()+' '+food.getFoodProtein()+' '+food.getFoodFat()
                         +' '+ food.getFoodSodium()+' '+food.getFoodSugar()+' '+food.getFoodKg(),Toast.LENGTH_LONG).show();
@@ -132,8 +139,10 @@ public class Food_List extends AppCompatActivity {
                         for(DocumentSnapshot d:list){
                             Food object=d.toObject(Food.class);
                             foodArrayList.add(object);
+
                         }
                         foodAdapter.notifyDataSetChanged();
+
                     }
                 });
 

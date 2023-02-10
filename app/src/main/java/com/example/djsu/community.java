@@ -35,7 +35,7 @@ public class community extends AppCompatActivity {
             }
         });
 
-        Button plusBtn = (Button) findViewById(R.id.button2);
+        ImageButton plusBtn = (ImageButton) findViewById(R.id.button2);
         plusBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override

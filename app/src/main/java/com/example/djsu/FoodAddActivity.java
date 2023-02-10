@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -31,12 +32,14 @@ public class FoodAddActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    private Button addButton;
     ImageButton food_input,searchBtn;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_add);
+
+        addButton = findViewById(R.id.addBtn);
         searchBtn = (ImageButton)findViewById(R.id.SearchBtn);
         food_input = (ImageButton)findViewById(R.id.food_input_btn);
         food_input.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +49,7 @@ public class FoodAddActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         String Name = "";
         String Kcal = "";
         String Carbohydrate = "";
@@ -91,6 +95,7 @@ public class FoodAddActivity extends AppCompatActivity {
         SodiumText.setText(Sodiumstr);
         SugarText.setText(Sugarstr);
         KgText.setText(Kgstr);
+
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
