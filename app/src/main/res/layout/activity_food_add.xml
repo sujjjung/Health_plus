@@ -395,6 +395,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
     <Button
+        android:id="@+id/addBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/a10093"
