@@ -9,26 +9,55 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="20dp">
+        android:padding="12dp">
 
         <!--프로필 사진-->
-        <ImageView
+        <!--        <ImageView-->
+        <!--            android:id="@+id/profile"-->
+        <!--            android:layout_width="50dp"-->
+        <!--            android:layout_height="50dp"-->
+        <!--            android:src="@drawable/user"/>-->
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/user"/>
+            android:layout_width="66dp"
+            android:layout_height="66dp"
+            android:background="#00000000"
+            android:src="@drawable/profile"
+            />
 
         <!--이름-->
         <TextView
             android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="김수빈"
-            android:fontFamily="@font/a10092"
-            android:textSize="24sp"
+            android:layout_marginLeft="20dp"
+            android:text="닉네임"
+            android:textSize="20dp"
             android:textColor="#000"/>
 
+        <!--상태 메시지
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:text="상태메시지"
+            android:textSize="12sp"
+            android:textColor="#444"
+            android:maxLines="1"/>
+        -->
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="97dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="18dp"
+            android:backgroundTint="#ff9898"
+            android:fontFamily="@font/a10091"
+            android:gravity="left"
+            android:text="회원관리"
+            android:textColor="@color/black" />
     </LinearLayout>
 
 </LinearLayout>
