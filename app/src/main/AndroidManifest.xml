@@ -49,9 +49,6 @@
             android:name=".admin.AdminUserSub"
             android:exported="false" />
         <activity
-            android:name=".admin.AdminUseritem"
-            android:exported="false" />
-        <activity
             android:name=".admin.AdminFoodAdd"
             android:exported="false">
         </activity>
@@ -66,9 +63,6 @@
             android:exported="false" />
         <activity
             android:name=".HealthAddList.HealthAddMainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".admin.AdminUserListViewAdapter"
             android:exported="false" />
         <activity
             android:name=".map"
@@ -94,7 +88,8 @@
         </activity>
         <activity
             android:name=".friendAdd"
-            android:exported="false">
+            android:exported="true">
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -130,14 +125,14 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
         </activity>
         <activity android:name=".chatList" />
         <activity
@@ -149,7 +144,8 @@
             android:exported="false" />
         <activity
             android:name=".admin.AdminUserListActivity"
-            android:exported="false" />
+            android:exported="true" >
+        </activity>
         <activity
             android:name=".ExerciseRecordActivity"
             android:exported="false" />
@@ -252,7 +248,7 @@
         </activity>
         <activity
             android:name=".admin.AdminMainActivity"
-            android:exported="false">
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
