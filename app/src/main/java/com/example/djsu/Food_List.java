@@ -57,6 +57,7 @@ public class Food_List extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
         db = FirebaseFirestore.getInstance();
+
         ArrayList<Food> search_list = new ArrayList<>();
         editText = findViewById(R.id.searchtext);
         // editText 리스터 작성
@@ -92,7 +93,7 @@ public class Food_List extends AppCompatActivity {
 
         });
 
-       // recyclerView1.bringToFront();
+        // recyclerView1.bringToFront();
         foodArrayList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
