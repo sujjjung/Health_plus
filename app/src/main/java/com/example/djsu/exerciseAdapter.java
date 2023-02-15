@@ -1,5 +1,7 @@
 package com.example.djsu;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.checkerframework.checker.units.qual.C;
+
 import java.util.ArrayList;
 
 public class exerciseAdapter extends RecyclerView.Adapter<exerciseAdapter.ViewHolder> {
@@ -16,7 +20,9 @@ public class exerciseAdapter extends RecyclerView.Adapter<exerciseAdapter.ViewHo
     private ArrayList<exerciseLsit> exArrayList;
 
 
+
     // creating constructor for our adapter class
+
     public exerciseAdapter(ArrayList<exerciseLsit> exArrayList, FragmentActivity activity) {
         this.exArrayList = exArrayList;
 
@@ -50,7 +56,7 @@ public class exerciseAdapter extends RecyclerView.Adapter<exerciseAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
         // creating variables for our text views.
         private final TextView Name,Explanation,Calorie,Unit;
-
+        int position;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // initializing our text views.
@@ -58,6 +64,20 @@ public class exerciseAdapter extends RecyclerView.Adapter<exerciseAdapter.ViewHo
             Explanation = itemView.findViewById(R.id.exExplanation);
             Calorie = itemView.findViewById(R.id.exCalorie);
             Unit = itemView.findViewById(R.id.exUnit);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    exerciseLsit exeLsit = exArrayList.get(position);
+                    Intent intent = new Intent(view.getContext(), ExerciseRecordActivity.class);
+                    intent.putExtra("exName", exeLsit.getExerciseName());
+                    view.getContext().startActivity(intent);
+                }
+            });
         }
+    }
+    public interface OnItemClickListener{
+        //클릭시 동작할 함수
+        void onItemClick(View v, int pos);
     }
 }

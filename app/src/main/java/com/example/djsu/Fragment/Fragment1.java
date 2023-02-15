@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.djsu.Food;
 import com.example.djsu.R;
+import com.example.djsu.exButtonAdapter;
 import com.example.djsu.exerciseAdapter;
 import com.example.djsu.exerciseLsit;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -50,8 +51,8 @@ import java.util.List;
 
 public class Fragment1 extends Fragment {
     private FirebaseFirestore db;
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private RecyclerView recyclerView,recyclerView1;
+    private RecyclerView.Adapter adapter,buttonAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList arrayList;
     private View view;
@@ -62,12 +63,19 @@ public class Fragment1 extends Fragment {
         View view = inflater.inflate(R.layout.fragment1, container, false);
 
 
-        recyclerView = view.findViewById(R.id.recyclerView1);
+        recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         arrayList = new ArrayList<exerciseLsit>();
 
+        recyclerView1 = view.findViewById(R.id.recyclerView1);
+        recyclerView1.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView1.setLayoutManager(layoutManager);
+
+        buttonAdapter = new exButtonAdapter(arrayList,getActivity(),getActivity());
+        recyclerView1.setAdapter(buttonAdapter);
         db = FirebaseFirestore.getInstance();
 
         adapter = new exerciseAdapter(arrayList,getActivity());
