@@ -1,14 +1,14 @@
 package com.example.djsu;
 
-import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Add_Friend extends AppCompatActivity {
+import android.os.Bundle;
+
+public class dialog_statusMessage extends main_user {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_friend);
+        setContentView(R.layout.activity_dialog_status_message);
     }
 }

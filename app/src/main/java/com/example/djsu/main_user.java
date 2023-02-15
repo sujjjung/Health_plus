@@ -1,5 +1,7 @@
 package com.example.djsu;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,37 +9,53 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class main_user extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    EditText Status_message_text;
+    Button Status_message_btn;
+
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_user);
 
-        ImageButton view_exercise = (ImageButton) findViewById(R.id.view_exercise);
-        view_exercise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), HealthAddActivity.class);
-                startActivity(intent);
-            }
-        });
 
         ImageButton view_food = (ImageButton) findViewById(R.id.view_food);
         view_food.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +124,46 @@ public class main_user extends AppCompatActivity {
                 return false;
             }
         });
+        final Button Status_message_btn = (Button) findViewById(R.id.Status_message_btn);
+        Status_message_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                final EditText editText = new EditText(main_user.this);
+
+                AlertDialog.Builder dlg = new AlertDialog.Builder(main_user.this);
+                dlg.setView(editText);
+                dlg.setPositiveButton("변경",new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(main_user.this,"변경되었습니다.",Toast.LENGTH_SHORT).show();
+                        String statusMessage =((EditText)findViewById(R.id.editText)).getText().toString();
+
+//                        Map<String, Object> member = new HashMap<>();
+//                        member.put("statusMessage", statusMessage);
+//
+//                        String uid= mAuth.getCurrentUser().getUid();
+//                        Database.getReference().child("member").child(uid).updateChildren(commentMap);
+//
+//                        // Add a new document with a generated ID
+//                        db.collection("Food")
+//                                .add(member)
+//                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                                    @Override
+//                                    public void onSuccess(DocumentReference documentReference) {
+//                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+//                                    }
+//                                })
+//                                .addOnFailureListener(new OnFailureListener() {
+//                                    @Override
+//                                    public void onFailure(@NonNull Exception e) {
+//                                        Log.w(TAG, "Error adding document", e);
+//                                    }
+//                                });
+                    }
+                });
+                dlg.show();
+            }
+        });
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -115,7 +173,6 @@ public class main_user extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
