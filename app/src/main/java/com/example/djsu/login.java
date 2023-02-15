@@ -1,5 +1,6 @@
 package com.example.djsu;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +16,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class login extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -24,10 +24,16 @@ public class login extends AppCompatActivity {
     private EditText editTextPassword;
     private Button buttonLogIn;
     private Button buttonSignUp;
+
+    public static Context context_email;
+    public String email;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        context_email = this;
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -65,6 +71,7 @@ public class login extends AppCompatActivity {
                             firebaseAuth.addAuthStateListener(firebaseAuthListener);
 
                             Intent intent = new Intent(login.this, main_user.class);
+                            intent.putExtra("email",email);
                             startActivity(intent);
                             }
                         } else {
