@@ -49,25 +49,26 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/a1009_4"
         android:gravity="center_horizontal|center_vertical"
         android:text="김수빈"
         android:textColor="@color/black"
         android:textSize="24dp"
-        android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
     <TextView
+        android:id="@+id/textView52"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:fontFamily="@font/a1009_4"
         android:gravity="center_horizontal|center_vertical"
         android:text="님"
         android:textColor="@color/black"
         android:textSize="24dp"
-        android:layout_marginStart="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="@+id/textView"
@@ -392,6 +393,35 @@
         app:layout_constraintHorizontal_bias="0.411"
         app:layout_constraintStart_toStartOf="@+id/view2"
         app:layout_constraintTop_toBottomOf="@+id/announcement_btn" />
+
+    <TextView
+        android:id="@+id/Status_message_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/a10092"
+        android:text="상태메시지를 입력해주세요."
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <Button
+        android:id="@+id/Status_message_btn"
+        android:layout_width="146dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/yellow"
+        android:fontFamily="@font/a10092"
+        android:text="상태메시지 수정"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.759"
+        app:layout_constraintStart_toEndOf="@+id/textView52"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:ignore="MissingConstraints" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
