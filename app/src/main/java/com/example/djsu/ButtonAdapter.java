@@ -49,7 +49,6 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ViewHolder
         holder.DetailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View itemView) {
-                show();
                 new AlertDialog.Builder(mContext)
                         .setTitle(food.getFoodName() + " 상세성분")
                         .setMessage("칼로리 : " + food.getFoodKcal() + "\n" + "탄수화물 : " + food.getFoodCarbohydrate()
@@ -58,11 +57,11 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ViewHolder
                         .setNeutralButton("닫기", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dlg, int sumthin) {
                             }
-                        })
-                        .show(); // 팝업창 보여줌
+                        }).show();
             }
 
         });
+
     }
 
     @Override
@@ -96,7 +95,5 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ViewHolder
             DetailBtn = (Button)itemView.findViewById(R.id.Detail);
         }
     }
-public void show(){
 
-}
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:gravity="center_vertical"
+        android:padding="20dp">
+
+        <!--이름-->
+        <TextView
+            android:id="@+id/setnumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="55dp"
+            android:fontFamily="@font/a10092"
+            android:text="셋트 수"
+            android:textColor="#323232"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:fontFamily="@font/a10092"
+            android:text="단위"
+            android:textColor="#323232"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="55dp"
+            android:fontFamily="@font/a10092"
+            android:inputType="number"
+            android:text="몇회"
+            android:textColor="#323232"
+            android:textSize="20dp" />
+
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="90dp" />
+    </LinearLayout>
+
+</LinearLayout>

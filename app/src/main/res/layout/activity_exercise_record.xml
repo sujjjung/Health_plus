@@ -6,303 +6,334 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ExerciseRecordActivity" >
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        app:srcCompat="@drawable/logo3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ExerciseRecordActivity" >
 
-    <ImageButton
-        android:id="@+id/menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:src="@drawable/ic_action_hamburger"
-        android:layout_marginStart="8dp"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/imageView" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="0dp"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                app:srcCompat="@drawable/logo3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-    <TextView
-        android:id="@+id/textView43"
-        android:layout_width="36dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/a1009_3"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="10"
-        android:textColor="#2E2E2E"
-        android:textSize="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            <ImageButton
+                android:id="@+id/menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:src="@drawable/ic_action_hamburger"
+                android:layout_marginStart="8dp"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageView" />
 
-    <TextView
-        android:id="@+id/textView44"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/a1009_3"
-        android:text="월"
-        android:textColor="#2E2E2E"
-        android:textSize="32dp"
-        android:layout_marginStart="6dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView43"
-        app:layout_constraintStart_toEndOf="@+id/textView43"
-        app:layout_constraintTop_toTopOf="@+id/textView43" />
+            <TextView
+                android:id="@+id/textView43"
+                android:layout_width="36dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/a1009_3"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="10"
+                android:textColor="#2E2E2E"
+                android:textSize="32dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <TextView
-        android:id="@+id/textView45"
-        android:layout_width="42dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:fontFamily="@font/a1009_3"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="17"
-        android:textColor="#2E2E2E"
-        android:textSize="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView44"
-        app:layout_constraintStart_toEndOf="@+id/textView44"
-        app:layout_constraintTop_toTopOf="@+id/textView44" />
+            <TextView
+                android:id="@+id/textView44"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/a1009_3"
+                android:text="월"
+                android:textColor="#2E2E2E"
+                android:textSize="32dp"
+                android:layout_marginStart="6dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView43"
+                app:layout_constraintStart_toEndOf="@+id/textView43"
+                app:layout_constraintTop_toTopOf="@+id/textView43" />
 
-    <TextView
-        android:id="@+id/textView47"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:fontFamily="@font/a1009_3"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="일"
-        android:textColor="#2E2E2E"
-        android:textSize="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView45"
-        app:layout_constraintStart_toEndOf="@+id/textView45"
-        app:layout_constraintTop_toTopOf="@+id/textView45" />
+            <TextView
+                android:id="@+id/textView45"
+                android:layout_width="42dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:fontFamily="@font/a1009_3"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="17"
+                android:textColor="#2E2E2E"
+                android:textSize="32dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView44"
+                app:layout_constraintStart_toEndOf="@+id/textView44"
+                app:layout_constraintTop_toTopOf="@+id/textView44" />
 
-    <View
-        android:id="@+id/view4"
-        android:layout_width="0dp"
-        android:layout_height="4dp"
-        android:layout_marginTop="16dp"
-        android:background="#FFFFDE00"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView43" />
+            <TextView
+                android:id="@+id/textView47"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:fontFamily="@font/a1009_3"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="일"
+                android:textColor="#2E2E2E"
+                android:textSize="32dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView45"
+                app:layout_constraintStart_toEndOf="@+id/textView45"
+                app:layout_constraintTop_toTopOf="@+id/textView45" />
 
-    <TextView
-        android:id="@+id/textView46"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="26dp"
-        android:fontFamily="@font/a10092"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="상체"
-        android:textColor="#323232"
-        android:textSize="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4" />
+            <View
+                android:id="@+id/view4"
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:layout_marginTop="16dp"
+                android:background="#FFFFDE00"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView43" />
 
-    <View
-        android:id="@+id/view5"
-        android:layout_width="4dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="10dp"
-        android:background="#323232"
-        app:layout_constraintBottom_toBottomOf="@+id/textView46"
-        app:layout_constraintStart_toEndOf="@+id/textView46"
-        app:layout_constraintTop_toTopOf="@+id/textView46" />
+            <TextView
+                android:id="@+id/textView46"
+                android:layout_width="5dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="26dp"
+                android:fontFamily="@font/a10092"
+                android:gravity="center_horizontal|center_vertical"
+                android:textColor="#323232"
+                android:textSize="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view4" />
 
-    <TextView
-        android:id="@+id/textView48"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:fontFamily="@font/a10092"
-        android:text="랫풀다운"
-        android:textColor="#323232"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view5"
-        app:layout_constraintStart_toEndOf="@+id/view5"
-        app:layout_constraintTop_toTopOf="@+id/view5" />
+            <View
+                android:id="@+id/view5"
+                android:layout_width="4dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="10dp"
+                android:background="#00000000"
+                app:layout_constraintBottom_toBottomOf="@+id/textView46"
+                app:layout_constraintStart_toEndOf="@+id/textView46"
+                app:layout_constraintTop_toTopOf="@+id/textView46" />
 
-    <ImageButton
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:background="#00000000"
-        android:src="@drawable/delete_xml"
-        android:layout_marginStart="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView48"
-        app:layout_constraintStart_toEndOf="@+id/textView48"
-        app:layout_constraintTop_toTopOf="@+id/textView48" />
+            <TextView
+                android:id="@+id/exname"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/a10092"
+                android:textColor="#323232"
+                android:textSize="24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/view5"
+                app:layout_constraintStart_toEndOf="@+id/view5"
+                app:layout_constraintTop_toTopOf="@+id/view5"
+                app:layout_constraintVertical_bias="0.666" />
 
-    <TextView
-        android:id="@+id/textView49"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/a10091"
-        android:text="총"
-        android:textColor="#323232"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView46" />
+            <ImageButton
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="#00000000"
+                android:src="@drawable/delete_xml"
+                android:layout_marginStart="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/exname"
+                app:layout_constraintStart_toEndOf="@+id/exname"
+                app:layout_constraintTop_toTopOf="@+id/exname" />
 
-    <TextView
-        android:id="@+id/textView50"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:fontFamily="@font/a10092"
-        android:text="1350"
-        android:textColor="#323232"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView49"
-        app:layout_constraintStart_toEndOf="@+id/textView49"
-        app:layout_constraintTop_toTopOf="@+id/textView49" />
+            <TextView
+                android:id="@+id/textView49"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="42dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/a10091"
+                android:text="총"
+                android:textColor="#323232"
+                android:textSize="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView46" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/a10092"
-        android:text="kg"
-        android:textColor="#323232"
-        android:textSize="20dp"
-        android:layout_marginStart="6dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView50"
-        app:layout_constraintStart_toEndOf="@+id/textView50"
-        app:layout_constraintTop_toTopOf="@+id/textView50" />
+            <TextView
+                android:id="@+id/textView50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/a10092"
+                android:text="1350"
+                android:textColor="#323232"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView49"
+                app:layout_constraintStart_toEndOf="@+id/textView49"
+                app:layout_constraintTop_toTopOf="@+id/textView49" />
 
-    <EditText
-        android:id="@+id/editText5"
-        android:layout_width="340dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:background="#FFFFF5B3"
-        android:hint="  MEMO"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView49" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/a10092"
+                android:text="kg"
+                android:textColor="#323232"
+                android:textSize="20dp"
+                android:layout_marginStart="6dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView50"
+                app:layout_constraintStart_toEndOf="@+id/textView50"
+                app:layout_constraintTop_toTopOf="@+id/textView50" />
 
-    <TextView
-        android:id="@+id/textView51"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="34dp"
-        android:fontFamily="@font/a10092"
-        android:text="세트"
-        android:textColor="#323232"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText5" />
+            <EditText
+                android:id="@+id/editText5"
+                android:layout_width="340dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
+                android:background="#FFFFF5B3"
+                android:hint="  MEMO"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView49" />
 
-    <TextView
-        android:id="@+id/textView52"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:fontFamily="@font/a10092"
-        android:text="kg"
-        android:textColor="#323232"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView51"
-        app:layout_constraintStart_toEndOf="@+id/textView51"
-        app:layout_constraintTop_toTopOf="@+id/textView51" />
-
-    <TextView
-        android:id="@+id/textView53"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:fontFamily="@font/a10092"
-        android:text="회"
-        android:textColor="#323232"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView52"
-        app:layout_constraintStart_toEndOf="@+id/textView52"
-        app:layout_constraintTop_toTopOf="@+id/textView52" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/a10092"
-        android:text="완료"
-        android:textColor="#323232"
-        android:textSize="20dp"
-        android:layout_marginStart="68dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView53"
-        app:layout_constraintStart_toEndOf="@+id/textView53"
-        app:layout_constraintTop_toTopOf="@+id/textView53" />
-
-    <ImageButton
-        android:id="@+id/imageButton9"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="62dp"
-        android:layout_marginBottom="30dp"
-        android:background="#00000000"
-        android:src="@drawable/roundsquare4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/a10092"
-        android:text="세트 추가"
-        android:textColor="#393939"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton9"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton9"
-        app:layout_constraintStart_toStartOf="@+id/imageButton9"
-        app:layout_constraintTop_toTopOf="@+id/imageButton9" />
-
-    <ImageButton
-        android:id="@+id/imageButton11"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="30dp"
-        android:background="#00000000"
-        android:src="@drawable/roundsquare4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageButton9" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/a10092"
-        android:text="세트 삭제"
-        android:textColor="#393939"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton11"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton11"
-        app:layout_constraintStart_toStartOf="@+id/imageButton11"
-        app:layout_constraintTop_toTopOf="@+id/imageButton11" />
+            <TextView
+                android:id="@+id/textView51"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/a10092"
+                android:text="세트"
+                android:textColor="#323232"
+                android:textSize="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText5" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+            <ImageButton
+                android:id="@+id/unitBtn"
+                android:layout_width="57dp"
+                android:layout_height="39dp"
+                android:layout_marginStart="44dp"
+                android:background="#00000000"
+                android:src="@drawable/background_card_round_white"
+                app:layout_constraintBottom_toBottomOf="@+id/textView51"
+                app:layout_constraintStart_toEndOf="@+id/textView51"
+                app:layout_constraintTop_toTopOf="@+id/textView51"
+                app:layout_constraintVertical_bias="0.437" />
 
-        <include layout="@layout/toolbar" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/unittext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/a10092"
+                android:text="kg"
+                android:textColor="#323232"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/unitBtn"
+                app:layout_constraintEnd_toEndOf="@+id/unitBtn"
+                app:layout_constraintHorizontal_bias="0.833"
+                app:layout_constraintStart_toEndOf="@+id/textView51"
+                app:layout_constraintTop_toTopOf="@+id/unitBtn"
+                app:layout_constraintVertical_bias="0.437" />
+
+            <TextView
+                android:id="@+id/textView53"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:fontFamily="@font/a10092"
+                android:text="회"
+                android:textColor="#323232"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/unittext"
+                app:layout_constraintStart_toEndOf="@+id/unittext"
+                app:layout_constraintTop_toTopOf="@+id/unittext" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/a10092"
+                android:text="완료"
+                android:textColor="#323232"
+                android:textSize="20dp"
+                android:layout_marginStart="68dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView53"
+                app:layout_constraintStart_toEndOf="@+id/textView53"
+                app:layout_constraintTop_toTopOf="@+id/textView53" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="413dp"
+                android:layout_height="306dp"
+                android:layout_marginTop="104dp"
+                android:scrollbarFadeDuration="0"
+                android:scrollbarSize="5dp"
+                android:scrollbarThumbVertical="@android:color/darker_gray"
+                android:scrollbars="vertical"
+                app:layout_constraintTop_toTopOf="@+id/editText5"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <ImageButton
+                android:id="@+id/add"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="62dp"
+                android:layout_marginBottom="30dp"
+                android:background="#00000000"
+                android:src="@drawable/roundsquare4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/a10092"
+                android:text="세트 추가"
+                android:textColor="#393939"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/add"
+                app:layout_constraintEnd_toEndOf="@+id/add"
+                app:layout_constraintStart_toStartOf="@+id/add"
+                app:layout_constraintTop_toTopOf="@+id/add" />
+
+
+            <ImageButton
+                android:id="@+id/delete"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginBottom="28dp"
+                android:background="#00000000"
+                android:src="@drawable/roundsquare4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/add" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/a10092"
+                android:text="세트 삭제"
+                android:textColor="#393939"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/delete"
+                app:layout_constraintEnd_toEndOf="@+id/delete"
+                app:layout_constraintStart_toStartOf="@+id/delete"
+                app:layout_constraintTop_toTopOf="@+id/delete" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/toolbar" />
+        </LinearLayout>
+
     <com.google.android.material.navigation.NavigationView
+
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
@@ -310,4 +341,5 @@
         android:layout_gravity="left"
         app:menu="@menu/hamburger"
         tools:ignore="MissingConstraints" />
+
 </androidx.drawerlayout.widget.DrawerLayout>
