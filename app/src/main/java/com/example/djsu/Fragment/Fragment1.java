@@ -5,11 +5,14 @@ import static android.content.ContentValues.TAG;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -52,23 +55,24 @@ import java.util.List;
 public class Fragment1 extends Fragment {
     private FirebaseFirestore db;
     private RecyclerView recyclerView,recyclerView1;
-    private RecyclerView.Adapter adapter,buttonAdapter;
+    private RecyclerView.Adapter buttonAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList arrayList;
-    private View view;
+    private ArrayList<exerciseLsit> arrayList;
+    private ArrayList<exerciseLsit> search_list;
 
+    private View view;
+    private EditText editText;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment1, container, false);
-
-
+        search_list = new ArrayList<>();
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        arrayList = new ArrayList<exerciseLsit>();
-
+        arrayList = new ArrayList<>();
+        editText = view.findViewById(R.id.searchtext);
         recyclerView1 = view.findViewById(R.id.recyclerView1);
         recyclerView1.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -78,10 +82,117 @@ public class Fragment1 extends Fragment {
         recyclerView1.setAdapter(buttonAdapter);
         db = FirebaseFirestore.getInstance();
 
-        adapter = new exerciseAdapter(arrayList,getActivity());
+        exerciseAdapter adapter = new exerciseAdapter(arrayList,getActivity());
         recyclerView.setAdapter(adapter);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String searchText = editText.getText().toString();
+                search_list.clear();
+
+                if(searchText.equals("")){
+                    adapter.setItems(arrayList);
+                }
+                else {
+                    // 검색 단어를 포함하는지 확인
+                    for (int a = 0; a < arrayList.size(); a++) {
+                        if (arrayList.get(a).getExerciseName().toLowerCase().contains(searchText.toLowerCase())) {
+                            search_list.add(arrayList.get(a));
+                        }
+                        adapter.setItems(search_list);
+                    }
+                }
+            }
+
+        });
         db.collection("하체")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> list= queryDocumentSnapshots.getDocuments();
+                        for(DocumentSnapshot d:list){
+                            exerciseLsit object=d.toObject(exerciseLsit.class);
+                            arrayList.add(object);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+        db.collection("가슴")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> list= queryDocumentSnapshots.getDocuments();
+                        for(DocumentSnapshot d:list){
+                            exerciseLsit object=d.toObject(exerciseLsit.class);
+                            arrayList.add(object);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+        db.collection("등")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> list= queryDocumentSnapshots.getDocuments();
+                        for(DocumentSnapshot d:list){
+                            exerciseLsit object=d.toObject(exerciseLsit.class);
+                            arrayList.add(object);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+        db.collection("복근")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> list= queryDocumentSnapshots.getDocuments();
+                        for(DocumentSnapshot d:list){
+                            exerciseLsit object=d.toObject(exerciseLsit.class);
+                            arrayList.add(object);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+        db.collection("어깨")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> list= queryDocumentSnapshots.getDocuments();
+                        for(DocumentSnapshot d:list){
+                            exerciseLsit object=d.toObject(exerciseLsit.class);
+                            arrayList.add(object);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+        db.collection("팔")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> list= queryDocumentSnapshots.getDocuments();
+                        for(DocumentSnapshot d:list){
+                            exerciseLsit object=d.toObject(exerciseLsit.class);
+                            arrayList.add(object);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+        db.collection("유산소")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -98,6 +209,7 @@ public class Fragment1 extends Fragment {
         return view;
 
     }
+
 }
 
 

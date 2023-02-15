@@ -52,7 +52,10 @@ public class exerciseAdapter extends RecyclerView.Adapter<exerciseAdapter.ViewHo
         // returning the size of our array list.
         return exArrayList.size();
     }
-
+    public void setItems(ArrayList<exerciseLsit> list) {
+        exArrayList = list;
+        notifyDataSetChanged();
+    }
     class ViewHolder extends RecyclerView.ViewHolder {
         // creating variables for our text views.
         private final TextView Name,Explanation,Calorie,Unit;
