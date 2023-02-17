@@ -92,7 +92,7 @@ public class WeightActivity extends AppCompatActivity {
             }
         });
 
-        savebtn = findViewById(R.id.add_btn);
+        savebtn = findViewById(R.id.imageButton10);
 
         e_mail = String.valueOf(((login)login.context_email));
 
