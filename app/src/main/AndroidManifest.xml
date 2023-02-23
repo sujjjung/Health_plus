@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <application
+        android:name=".user_information"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,7 +13,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DJSU"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".userFood"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".Food_List"
             android:exported="false">
@@ -38,7 +48,7 @@
             android:exported="false" />
         <activity
             android:name=".admin.AdminExerciseSubAdd"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".admin.AdminExerciseSub"
             android:exported="false" />
@@ -50,8 +60,7 @@
             android:exported="false" />
         <activity
             android:name=".admin.AdminFoodAdd"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".admin.AdminFoodSubInput"
             android:exported="false" />
@@ -74,7 +83,6 @@
         <activity
             android:name=".main_user"
             android:exported="false">
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -88,8 +96,7 @@
         </activity>
         <activity
             android:name=".friendAdd"
-            android:exported="true">
-
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -128,6 +135,7 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -137,18 +145,10 @@
         <activity android:name=".chatList" />
         <activity
             android:name=".HealthAddActivity"
-            android:exported="false" >
-    </activity>
-        <activity
-            android:name=".HamburgerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".admin.AdminUserListActivity"
-            android:exported="true" >
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".ExerciseRecordActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".WeightActivity"
             android:exported="false" />
@@ -178,13 +178,6 @@
         </activity>
         <activity
             android:name=".make_room"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Add_Friend"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -248,7 +241,7 @@
         </activity>
         <activity
             android:name=".admin.AdminMainActivity"
-            android:exported="true">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

@@ -262,7 +262,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <TextView
-        android:id="@+id/textView37"
+        android:id="@+id/carbohydrateSum"
         android:layout_width="60dp"
         android:layout_height="24dp"
         android:layout_marginStart="13dp"
@@ -287,7 +287,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <TextView
-        android:id="@+id/textView39"
+        android:id="@+id/ProteinSum"
         android:layout_width="60dp"
         android:layout_height="24dp"
         android:layout_marginStart="28dp"
@@ -312,7 +312,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
     <TextView
-        android:id="@+id/textView42"
+        android:id="@+id/fatSum"
         android:layout_width="60dp"
         android:layout_height="24dp"
         android:layout_marginStart="43dp"
@@ -337,7 +337,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
-        android:id="@+id/textView38"
+        android:id="@+id/SodiumSum"
         android:layout_width="60dp"
         android:layout_height="24dp"
         android:layout_marginStart="16dp"
@@ -357,22 +357,23 @@
         android:textColor="#393939"
         android:textSize="16dp"
         android:layout_marginStart="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView37"
-        app:layout_constraintStart_toEndOf="@+id/textView37"
-        app:layout_constraintTop_toTopOf="@+id/textView37" />
+        app:layout_constraintBottom_toBottomOf="@+id/carbohydrateSum"
+        app:layout_constraintStart_toEndOf="@+id/carbohydrateSum"
+        app:layout_constraintTop_toTopOf="@+id/carbohydrateSum" />
 
     <TextView
-        android:id="@+id/textView40"
+        android:id="@+id/sugarSum"
         android:layout_width="60dp"
         android:layout_height="24dp"
-        android:layout_marginStart="29dp"
+        android:layout_marginStart="28dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="130"
         android:textColor="#393939"
         android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView20"
         app:layout_constraintStart_toEndOf="@+id/textView20"
-        app:layout_constraintTop_toTopOf="@+id/textView20" />
+        app:layout_constraintTop_toTopOf="@+id/textView20"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView21"
@@ -382,9 +383,9 @@
         android:text="물"
         android:textColor="#393939"
         android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView39"
-        app:layout_constraintStart_toEndOf="@+id/textView39"
-        app:layout_constraintTop_toTopOf="@+id/textView39" />
+        app:layout_constraintBottom_toBottomOf="@+id/ProteinSum"
+        app:layout_constraintStart_toEndOf="@+id/ProteinSum"
+        app:layout_constraintTop_toTopOf="@+id/ProteinSum" />
 
     <TextView
         android:layout_width="60dp"
@@ -406,8 +407,8 @@
         android:textColor="#393939"
         android:textSize="16dp"
         android:layout_marginStart="36dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView42"
-        app:layout_constraintStart_toEndOf="@+id/textView42" />
+        app:layout_constraintBottom_toBottomOf="@+id/fatSum"
+        app:layout_constraintStart_toEndOf="@+id/fatSum" />
 
     <TextView
         android:layout_width="60dp"

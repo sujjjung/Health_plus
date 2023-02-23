@@ -48,6 +48,7 @@ public class main_user extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     EditText Status_message_text;
     Button Status_message_btn;
+    private TextView user1;
 
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -56,7 +57,9 @@ public class main_user extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_user);
 
-
+        user1 = findViewById(R.id.username);
+        user_information user = new user_information();
+        user1.setText (((user_information)getApplication()).getId());
         ImageButton view_food = (ImageButton) findViewById(R.id.view_food);
         view_food.setOnClickListener(new View.OnClickListener() {
             @Override

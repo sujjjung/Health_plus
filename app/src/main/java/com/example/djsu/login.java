@@ -26,7 +26,7 @@ public class login extends AppCompatActivity {
     private Button buttonSignUp;
 
     public static Context context_email;
-    public String email;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +53,13 @@ public class login extends AppCompatActivity {
         });
     }
 
-    public void loginUser(String email, String password) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
+    public void loginUser(String id, String password) {
+        firebaseAuth.signInWithEmailAndPassword(id, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            if (email.equals("admin@test.com")) {
+                            if (id.equals("admin@test.com")) {
                                 Toast.makeText(login.this, "관리자 로그인 성공", Toast.LENGTH_SHORT).show();
                                 firebaseAuth.addAuthStateListener(firebaseAuthListener);
 
@@ -69,9 +69,10 @@ public class login extends AppCompatActivity {
                                 // 로그인 성공
                                 Toast.makeText(login.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                             firebaseAuth.addAuthStateListener(firebaseAuthListener);
+                                ((user_information)getApplication()).setId(id);
 
                             Intent intent = new Intent(login.this, main_user.class);
-                            intent.putExtra("email",email);
+                            intent.putExtra("email",id);
                             startActivity(intent);
                             }
                         } else {

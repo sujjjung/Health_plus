@@ -1,6 +1,7 @@
 package com.example.djsu;
 
 public class Food {
+    private String id;
     private String profile;
     private String FoodName;
     private String FoodKcal;
@@ -10,8 +11,16 @@ public class Food {
     private String FoodSodium;
     private String FoodSugar;
     private String FoodKg;
+    private String writeDate;
 
     public void Food(){};
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getProfile() {
         return profile;
@@ -84,4 +93,14 @@ public class Food {
     public void setFoodKg(String foodKg) {
         FoodKg = foodKg;
     }
+
+    public String getWriteDate() {
+        return writeDate;
+    }
+
+    public void setWriteDate(String writeDate) {
+        this.writeDate = writeDate;
+    }
+
 }
+

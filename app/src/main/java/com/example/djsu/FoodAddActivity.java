@@ -50,6 +50,7 @@ public class FoodAddActivity extends AppCompatActivity {
             }
         });
 
+
         String Name = "";
         String Kcal = "";
         String Carbohydrate = "";
@@ -96,6 +97,22 @@ public class FoodAddActivity extends AppCompatActivity {
         SugarText.setText(Sugarstr);
         KgText.setText(Kgstr);
 
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FoodSum foodSum = new FoodSum();
+
+                foodSum.setSumKcal(foodSum.sumKcal( Integer.parseInt(Kcalstr)));
+                foodSum.setSumCarbohydrate(foodSum.sumCarbohydrate( Integer.parseInt(Carbohydratestr)));
+                foodSum.setSumProtein(foodSum.sumProtein( Integer.parseInt(Proteinstr)));
+                foodSum.setSumFat(foodSum.sumFat( Integer.parseInt(Fatstr)));
+                foodSum.setSumSodium(foodSum.sumSodium( Integer.parseInt(Sodiumstr)));
+                foodSum.setSumSugar(foodSum.sumSugar( Integer.parseInt(Sugarstr)));
+                foodSum.setSumKg(foodSum.sumKg( Integer.parseInt(Kgstr)));
+                Intent intent = new Intent(FoodAddActivity.this, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();

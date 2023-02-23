@@ -38,7 +38,7 @@ public class CalendarActivity extends AppCompatActivity {
     private Date selectedDateTime = null;
     private ImageButton beforeIB;
     private ImageButton afterIB;
-    private TextView dateTV;
+    private TextView dateTV,kcalSum,carbohydrateSum,proteinSum,fatSum,SodiumSum,sugarSum;
 
 
     public RecyclerView calendarRecyclerView;
@@ -73,6 +73,34 @@ public class CalendarActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        FoodSum foodSum = new FoodSum();
+
+        foodSum.getSumKcal();
+        foodSum.getSumCarbohydrate();
+        foodSum.getSumProtein();
+        foodSum.getSumFat();
+        foodSum.getSumSodium();
+        foodSum.getSumSugar();
+        foodSum.getSumKg();
+
+        kcalSum = findViewById(R.id.kcalSum);
+        kcalSum.setText(String.valueOf(foodSum.getSumKcal()));
+
+        carbohydrateSum = findViewById(R.id.carbohydrateSum);
+        carbohydrateSum.setText(String.valueOf(foodSum.getSumCarbohydrate()));
+
+        proteinSum = findViewById(R.id.ProteinSum);
+        proteinSum.setText(String.valueOf(foodSum.getSumProtein()));
+
+        fatSum = findViewById(R.id.fatSum);
+        fatSum.setText(String.valueOf(foodSum.getSumFat()));
+
+        SodiumSum = findViewById(R.id.SodiumSum);
+        SodiumSum.setText(String.valueOf(foodSum.getSumSodium()));
+
+        sugarSum = findViewById(R.id.sugarSum);
+        sugarSum.setText(String.valueOf(foodSum.getSumSugar()));
+
 
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);

@@ -17,13 +17,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -96,6 +100,23 @@ public class WeightActivity extends AppCompatActivity {
 
         e_mail = String.valueOf(((login)login.context_email));
 
+        user_information user = new user_information();
+        DocumentReference docRef = db.collection("member").document("test@test.com");
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getDate("Email"));
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
         savebtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -105,7 +126,7 @@ public class WeightActivity extends AppCompatActivity {
                 String muscle=((EditText)findViewById(R.id.muscles_text)).getText().toString();
                 String fat=((EditText)findViewById(R.id.fat_text)).getText().toString();
                 Map<String, Object> my_page = new HashMap<>();
-                my_page.put("email", e_mail);
+                my_page.put("email",  (((user_information)getApplication()).getId()));
                 my_page.put("date", currentTime);
                 my_page.put("fat", fat);
                 my_page.put("muscle", muscle);

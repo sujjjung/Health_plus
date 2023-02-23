@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,89 +27,62 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class signup extends AppCompatActivity {
-    private FirebaseAuth mAuth;
-    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private EditText et_id, et_pass, et_name, et_age;
+    private Button btn_register;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        mAuth = FirebaseAuth.getInstance();
-        findViewById(R.id.signup_btn).setOnClickListener(onClickListener);
-    }
+        et_id = findViewById(R.id.email_editText);
+        et_pass = findViewById(R.id.password_editText);
+        et_name = findViewById(R.id.name_editText);
+        et_age = findViewById(R.id.birth_editText);
 
-
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.signup_btn:
-                    signUp();
-                    break;
-            }
-        }
-    };
-
-
-    private void signUp(){
-        String id=((EditText)findViewById(R.id.email_editText)).getText().toString();
-        String password=((EditText)findViewById(R.id.password_editText)).getText().toString();
-        String name=((EditText)findViewById(R.id.name_editText)).getText().toString();
-        String birth=((EditText)findViewById(R.id.birth_editText)).getText().toString();
-        String passwordCheck=((EditText)findViewById(R.id.password_editText2)).getText().toString();
-
-        if(id.length()>0 && password.length()>0 && passwordCheck.length()>0 && name.length()>0 && birth.length()>0){
-            if(password.equals(passwordCheck)){
-                mAuth.createUserWithEmailAndPassword(id, password)
-                        .addOnCompleteListener(signup.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    move();
-                                    Toast.makeText(signup.this, "회원가입에 성공했습니다." ,Toast.LENGTH_SHORT).show();
-
-                                    Intent intent = new Intent(signup.this, login.class);
-                                    startActivity(intent);
-                                } else {
-                                    if(task.getException().toString() !=null){
-                                        Toast.makeText(signup.this, "회원가입에 실패했습니다." ,Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }
-                        });
-            }
-            else{
-                Toast.makeText(signup.this, "비밀번호가 일치하지 않습니다." ,Toast.LENGTH_SHORT).show();
-            }
-        }
-        else{
-            Toast.makeText(signup.this, "입력을 안한 정보가 있습니다." ,Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void move() {
-        String id=((EditText)findViewById(R.id.email_editText)).getText().toString();
-        String password=((EditText)findViewById(R.id.password_editText)).getText().toString();
-        String name=((EditText)findViewById(R.id.name_editText)).getText().toString();
-        String birth=((EditText)findViewById(R.id.birth_editText)).getText().toString();
-        // Create a new user with a first and last name
-        Map<String, Object> member = new HashMap<>();
-        member.put("Email", id);
-        member.put("Password", password);
-        member.put("Name", name);
-        member.put("Birth", birth);
-
-        db.collection("member").document(id).set(member).addOnCompleteListener(new OnCompleteListener<Void>() {
+        // 회원가입 버튼 클릭 시 수행
+        btn_register = findViewById(R.id.signup_btn);
+        btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(signup.this, "회원가입에 성공했습니다." ,Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
+                String userID = et_id.getText().toString();
+                String userPass = et_pass.getText().toString();
+                String userName = et_name.getText().toString();
+                String userAge = et_age.getText().toString();
+
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if (success) { // 회원등록에 성공한 경우
+                                Toast.makeText(getApplicationContext(),"회원 등록에 성공하였습니다.",Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(signup.this, login.class);
+                                startActivity(intent);
+                            } else { // 회원등록에 실패한 경우
+                                Toast.makeText(getApplicationContext(),"회원 등록에 실패하였습니다.",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                };
+                // 서버로 Volley를 이용해서 요청을 함.
+                signupRequest signupRequest1 = new signupRequest(userID,userPass,userName,userAge,responseListener);
+                RequestQueue queue = Volley.newRequestQueue(signup.this);
+                queue.add(signupRequest1);
+
             }
         });
-
-
 
     }
 }
