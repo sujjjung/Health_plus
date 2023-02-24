@@ -48,7 +48,7 @@ public class main_user extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     EditText Status_message_text;
     Button Status_message_btn;
-    private TextView user1;
+    private TextView user1,name;
 
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -77,6 +77,12 @@ public class main_user extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        name = findViewById(R.id.username);
+        Intent intent = getIntent();
+        String userName = intent.getStringExtra("name");
+        name.setText(userName + "님");
+
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
