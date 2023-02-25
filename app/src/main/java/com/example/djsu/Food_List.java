@@ -6,14 +6,18 @@ import static android.media.CamcorderProfile.get;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +38,16 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
@@ -41,24 +55,17 @@ import java.util.List;
 
 public class Food_List extends AppCompatActivity {
 
-    // creating variables for our recycler view,
-    // array list, adapter, firebase firestore
-    // and our progress bar.
-    private RecyclerView recyclerView,recyclerView1;
-    private ArrayList<Food> foodArrayList;
+    private List<Food>foodArrayList;
     private FoodAdapter foodAdapter;
-    private ButtonAdapter buttonAdapter;
-    private FirebaseFirestore db;
     private EditText editText;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
-        db = FirebaseFirestore.getInstance();
-
+        Intent intent = getIntent();
         ArrayList<Food> search_list = new ArrayList<>();
+        foodArrayList = new ArrayList<Food>();
         editText = findViewById(R.id.searchtext);
         // editText 리스터 작성
         editText.addTextChangedListener(new TextWatcher() {
@@ -77,10 +84,9 @@ public class Food_List extends AppCompatActivity {
                 String searchText = editText.getText().toString();
                 search_list.clear();
 
-                if(searchText.equals("")){
-                    foodAdapter.setItems(foodArrayList);
-                }
-                else {
+                if (searchText.equals("")) {
+                    foodAdapter.setItems((ArrayList<Food>) foodArrayList);
+                } else {
                     // 검색 단어를 포함하는지 확인
                     for (int a = 0; a < foodArrayList.size(); a++) {
                         if (foodArrayList.get(a).getFoodName().toLowerCase().contains(searchText.toLowerCase())) {
@@ -94,105 +100,39 @@ public class Food_List extends AppCompatActivity {
         });
 
         // recyclerView1.bringToFront();
-        foodArrayList = new ArrayList<>();
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        foodArrayList =new ArrayList<>();
 
-        recyclerView1 = findViewById(R.id.recyclerView1);
-        recyclerView1.setHasFixedSize(true);
-        recyclerView1.setLayoutManager(new LinearLayoutManager(this));
-        foodAdapter = new FoodAdapter(foodArrayList);
-        buttonAdapter = new ButtonAdapter(foodArrayList,this);
-        recyclerView1.setAdapter(buttonAdapter);
-        recyclerView.setAdapter(foodAdapter);
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
+        foodAdapter = new FoodAdapter(this,foodArrayList);
 
-                Food food = foodArrayList.get(position);
-                Toast.makeText(getApplicationContext(), food.getFoodName()+' '+food.getFoodKcal()+' '+food.getFoodCarbohydrate()+' '+food.getFoodProtein()+' '+food.getFoodFat()
-                        +' '+ food.getFoodSodium()+' '+food.getFoodSugar()+' '+food.getFoodKg(),Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getBaseContext(), FoodAddActivity.class);
+        ListView foodListView = (ListView) findViewById(R.id.FoodView);
+        foodListView.setAdapter(foodAdapter);
 
-                intent.putExtra("FoodName", food.getFoodName());
-                intent.putExtra( "FoodKcal", food.getFoodKcal());
-                intent.putExtra("FoodCarbohydrate", food.getFoodCarbohydrate());
-                intent.putExtra("FoodProtein", food.getFoodProtein());
-                intent.putExtra("FoodFat", food.getFoodFat());
-                intent.putExtra( "FoodSodium", food.getFoodSodium());
-                intent.putExtra("FoodSugar", food.getFoodSugar());
-                intent.putExtra( "FoodKg", food.getFoodKg());
+        try {
+            foodAdapter.notifyDataSetChanged();
+            JSONObject jsonObject = new JSONObject(intent.getStringExtra("food"));
+            JSONArray jsonArray = jsonObject.getJSONArray("response");
+            int count = 0;
+            String FoodName;
+            //JSON 배열 길이만큼 반복문을 실행
+            while (count < jsonArray.length()) {
+                //count는 배열의 인덱스를 의미
+                JSONObject object = jsonArray.getJSONObject(count);
 
-                startActivity(intent);
+                FoodName = object.getString("FoodName");
+
+                //값들을 User클래스에 묶어줍니다
+                Food food = new Food();
+                foodArrayList.add(food.setFoodName(FoodName));//리스트뷰에 값을 추가해줍니다
+                count++;
+
             }
 
-            @Override
-            public void onLongClick(View view, int position) {
-            }
-        }));
-        db.collection("Food")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        List<DocumentSnapshot> list= queryDocumentSnapshots.getDocuments();
-                        for(DocumentSnapshot d:list){
-                            Food object=d.toObject(Food.class);
-                            foodArrayList.add(object);
 
-                        }
-                        foodAdapter.notifyDataSetChanged();
-
-                    }
-                });
-
-    }
-    public interface ClickListener {
-        void onClick(View view, int position);
-
-        void onLongClick(View view, int position);
-    }
-
-    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
-
-        private GestureDetector gestureDetector;
-        private Food_List.ClickListener clickListener;
-
-        public RecyclerTouchListener(Context context, RecyclerView recyclerView, ClickListener clickListener) {
-            this.clickListener = clickListener;
-            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && clickListener != null) {
-                        clickListener.onLongClick(child, recyclerView.getChildAdapterPosition(child));
-                    }
-                }
-            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-            View child = rv.findChildViewUnder(e.getX(), e.getY());
-            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
-                clickListener.onClick(child, rv.getChildAdapterPosition(child));
-            }
-            return false;
-        }
-
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-        }
     }
 
 }
+

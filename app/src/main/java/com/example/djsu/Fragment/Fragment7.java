@@ -14,8 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.djsu.ButtonAdapter;
-import com.example.djsu.Food;
 import com.example.djsu.R;
 import com.example.djsu.exButtonAdapter;
 import com.example.djsu.exerciseAdapter;

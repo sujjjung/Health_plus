@@ -16,6 +16,11 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.example.djsu.EerciseRequest;
+import com.example.djsu.FoodRequest;
 import com.example.djsu.R;
 import com.example.djsu.login;
 import com.example.djsu.signup;
@@ -27,6 +32,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,49 +74,37 @@ public class AdminExerciseSubAdd extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AdminExerciseSubAdd.this, "운동등록 성공.", Toast.LENGTH_SHORT).show();
                 String hName=((EditText)findViewById(R.id.HealthNameEdit)).getText().toString();
                 String hExplanation=((EditText)findViewById(R.id.HealthExplanationEdit)).getText().toString();
                 String hKcal=((EditText)findViewById(R.id.FHealthKcalEdit)).getText().toString();
                 String hunit=((EditText)findViewById(R.id.HealthunitEdit)).getText().toString();
-                Map<String, Object> Exercise = new HashMap<>();
-                Exercise.put("exerciseName", hName);
-                Exercise.put("exerciseExplanation", hExplanation);
-                Exercise.put("exerciseCalorie", hKcal);
-                Exercise.put("exerciseUnit", hunit);
 
-                // Add a new document with a generated ID
-                db.collection(s)
-                        .add(Exercise)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if (success) { // 회원등록에 성공한 경우
+                                Toast.makeText(getApplicationContext(),"운동 등록에 성공하였습니다.",Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(AdminExerciseSubAdd.this, AdminExerciseSubAdd.class);
+                                startActivity(intent);
+                            } else { // 회원등록에 실패한 경우
+                                Toast.makeText(getApplicationContext(),"운동 등록에 실패하였습니다.",Toast.LENGTH_SHORT).show();
+                                return;
                             }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                            }
-                        });
-                db.collection(s).get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.d(TAG, document.getId() + " => " + document.getData());
-                                    }
-                                } else {
-                                    Log.w(TAG, "Error getting documents.", task.getException());
-                                }
-                            }
-                        });
-                Intent intent = new Intent(AdminExerciseSubAdd.this, AdminExerciseSubAdd.class);
-                startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                };
+                // 서버로 Volley를 이용해서 요청을 함.
+                EerciseRequest eerciseRequest = new EerciseRequest(s,hName,hExplanation,hKcal,hunit,responseListener);
+                RequestQueue queue = Volley.newRequestQueue(AdminExerciseSubAdd.this);
+                queue.add(eerciseRequest);
+
             }
-
         });
 
     }
