@@ -2,7 +2,7 @@ package com.example.djsu;
 
 public class User {
     private String profile;
-    private String Name;
+    static private String Name;
 
     public User() {}
 
@@ -14,11 +14,11 @@ public class User {
         this.profile = profile;
     }
 
-    public String getName() {
+    public static String getName() {
         return Name;
     }
 
-    public void setName(String name) {
+    public static void setName(String name) {
         Name = name;
     }
 }

@@ -62,7 +62,7 @@ public class login extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
                             if (success && id.equals("admin")) { // 로그인에 성공한 경우
-                                String userName = jsonObject.getString("username");
+                                //String userName = jsonObject.getString("username");
                                 Toast.makeText(getApplicationContext(), "관리자로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 new BackgroundTask2().execute();
                             }
@@ -71,7 +71,8 @@ public class login extends AppCompatActivity {
                                 String name = jsonObject.getString("name");
                                 Toast.makeText(getApplicationContext(), "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(login.this, main_user.class);
-                                intent.putExtra("name", name);
+                                User user = new User();
+                                user.setName(name);
                                 startActivity(intent);
                             }
                         } catch (JSONException e) {

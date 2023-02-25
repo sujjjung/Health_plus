@@ -1,73 +1,84 @@
 package com.example.djsu;
 
-
-import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
+import android.app.Activity;
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-        import androidx.recyclerview.widget.RecyclerView;
+import com.android.volley.Response;
 
-        import java.util.ArrayList;
+import org.json.JSONObject;
 
-public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
-    // creating variables for our ArrayList and context
-    private ArrayList<Food> FoodArrayList;
+import java.util.ArrayList;
+import java.util.List;
+public class FoodAdapter extends BaseAdapter {
+    private Context context;
+    private List<Food> foodList;
+    private Activity parentActivity;
 
-    // creating constructor for our adapter class
-    public FoodAdapter(ArrayList<Food> FoodArrayList) {
-        this.FoodArrayList = FoodArrayList;
+    public FoodAdapter(Context context, List<Food> foodList) {
+        this.context = context;
+        this.foodList = foodList;
+        this.parentActivity = parentActivity;
     }
-
-    @NonNull
     @Override
-    public FoodAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_list_item, parent, false);
-        return new ViewHolder(v);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // setting data to our text views from our modal class.
-        Food food = FoodArrayList.get(position);
-        holder.fname.setText(food.getFoodName());
-        holder.fkcal.setText(food.getFoodKcal());
-        holder.fcarbohydrate.setText(food.getFoodCarbohydrate());
-        holder.fprotein.setText(food.getFoodProtein());
-        holder.ffat.setText(food.getFoodFat());
-        holder.fsodium.setText(food.getFoodSodium());
-        holder.fsugar.setText(food.getFoodSugar());
-        holder.fkg.setText(food.getFoodKg());
+    public int getCount () {
+        return foodList.size();//리스트뷰의 총 갯수
     }
 
     @Override
-    public int getItemCount() {
-        // returning the size of our array list.
-        return FoodArrayList.size();
+    public Object getItem (int position){
+        return foodList.get(position);//해당 위치의 값을 리스트뷰에 뿌려줌
     }
-
+    @Override
+    public long getItemId (int position){
+        return position;
+    }
     public void setItems(ArrayList<Food> list) {
-        FoodArrayList = list;
+        foodList = list;
         notifyDataSetChanged();
     }
+    //리스트뷰에서 실질적으로 뿌려주는 부분임
+    @Override
+    public View getView (final int position, View convertView, ViewGroup parent){
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        // creating variables for our text views.
-        private final TextView fname, fkcal, fcarbohydrate, fprotein, ffat, fsodium, fsugar, fkg;
+        View v = View.inflate(context, R.layout.food_list_item, null);
+       // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
+        TextView FoodName = (TextView) v.findViewById(R.id.FoodName);
+        FoodName.setText(foodList.get(position).getFoodName());
+        v.setTag(foodList.get(position).getFoodName());
+        Button selectBtn = (Button) v.findViewById(R.id.select);
+        selectBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            //받아온 값이 success면 정상적으로 서버로부터 값을 받은 것을 의미함
+                            if (success) {
+                                Toast.makeText(context.getApplicationContext(), "삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                foodList.remove(position);//리스트에서 해당부분을 지워줌
+                                notifyDataSetChanged();//데이터가 변경된 것을 어댑터에 알려줌
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+               // DeleteRequest deleteRequest = new DeleteRequest(noticeText.getText().toString(), responseListener);
+              //  RequestQueue queue = Volley.newRequestQueue(parentActivity);
+               // queue.add(deleteRequest);
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            // initializing our text views.
-            fname = itemView.findViewById(R.id.name);
-            fkcal = itemView.findViewById(R.id.Kcal);
-            fcarbohydrate = itemView.findViewById(R.id.Carbohydrate);
-            fprotein = itemView.findViewById(R.id.Protein);
-            ffat = itemView.findViewById(R.id.Fat);
-            fsodium = itemView.findViewById(R.id.Sodium);
-            fsugar = itemView.findViewById(R.id.Sugar);
-            fkg = itemView.findViewById(R.id.Kg);
+            }
+        });
+        return v;
 
-        }
     }
 }

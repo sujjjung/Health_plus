@@ -13,8 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.example.djsu.FoodRequest;
 import com.example.djsu.R;
+import com.example.djsu.login;
 import com.example.djsu.signup;
+import com.example.djsu.signupRequest;
 import com.example.djsu.target;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,6 +31,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +50,6 @@ public class AdminFoodAdd extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AdminFoodAdd.this, "음식등록 성공.", Toast.LENGTH_SHORT).show();
                 String fName=((EditText)findViewById(R.id.FoodNameEdit)).getText().toString();
                 String fKcal=((EditText)findViewById(R.id.FoodKcalEdit)).getText().toString();
                 String fCarbohydrate=((EditText)findViewById(R.id.FoodCarbohydrateEdit)).getText().toString();
@@ -50,40 +58,34 @@ public class AdminFoodAdd extends AppCompatActivity {
                 String fSodium=((EditText)findViewById(R.id.FoodSodiumEdit)).getText().toString();
                 String fSugar=((EditText)findViewById(R.id.FoodSugarEdit)).getText().toString();
                 String fKg=((EditText)findViewById(R.id.FoodgEdit)).getText().toString();
-                Map<String, Object> Food = new HashMap<>();
-                Food.put("FoodName", fName);
-                Food.put("FoodKcal", fKcal);
-                Food.put("FoodCarbohydrate", fCarbohydrate);
-                Food.put("FoodProtein", fProtein);
-                Food.put("FoodFat", fFat);
-                Food.put("FoodSodium", fSodium);
-                Food.put("FoodSugar", fSugar);
-                Food.put("FoodKg", fKg);
 
-
-
-                // Add a new document with a generated ID
-                db.collection("Food")
-                        .add(Food)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if (success) { // 회원등록에 성공한 경우
+                                Toast.makeText(getApplicationContext(),"음식 등록에 성공하였습니다.",Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(AdminFoodAdd.this, AdminFoodAdd.class);
+                                startActivity(intent);
+                            } else { // 회원등록에 실패한 경우
+                                Toast.makeText(getApplicationContext(),"음식 등록에 실패하였습니다.",Toast.LENGTH_SHORT).show();
+                                return;
                             }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                            }
-                        });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-                Intent intent = new Intent(AdminFoodAdd.this, AdminFoodAdd.class);
-                startActivity(intent);
+                    }
+                };
+                // 서버로 Volley를 이용해서 요청을 함.
+                FoodRequest foodRequest = new FoodRequest(fName,fKcal,fCarbohydrate,fProtein,fFat,fSodium,fSugar,fKg,responseListener);
+                RequestQueue queue = Volley.newRequestQueue(AdminFoodAdd.this);
+                queue.add(foodRequest);
+
             }
-
         });
 
     }
-
 }

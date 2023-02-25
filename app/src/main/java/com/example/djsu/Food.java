@@ -3,7 +3,7 @@ package com.example.djsu;
 public class Food {
     private String id;
     private String profile;
-    private String FoodName;
+    static public String FoodName;
     private String FoodKcal;
     private String FoodCarbohydrate;
     private String FoodProtein;
@@ -30,12 +30,13 @@ public class Food {
         this.profile = profile;
     }
 
-    public String getFoodName() {
+    public static String getFoodName() {
         return FoodName;
     }
 
-    public void setFoodName(String foodName) {
+    public static Food setFoodName(String foodName) {
         FoodName = foodName;
+        return null;
     }
 
     public String getFoodKcal() {
