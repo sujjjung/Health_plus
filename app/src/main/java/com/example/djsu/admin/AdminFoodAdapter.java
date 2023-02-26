@@ -1,4 +1,4 @@
-package com.example.djsu;
+package com.example.djsu.admin;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,47 +10,50 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
+import com.example.djsu.Food;
+import com.example.djsu.R;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-public class exerciseAdapter extends BaseAdapter {
+
+public class AdminFoodAdapter extends BaseAdapter {
     private Context context;
-    private List<exerciseLsit> exList;
+    private List<Food> foodList;
     private Activity parentActivity;
 
-    public exerciseAdapter(Context context, List<exerciseLsit> exList) {
+    public AdminFoodAdapter(Context context, List<Food> foodList) {
         this.context = context;
-        this.exList = exList;
+        this.foodList = foodList;
         this.parentActivity = parentActivity;
     }
     @Override
     public int getCount () {
-        return exList.size();//리스트뷰의 총 갯수
+        return foodList.size();//리스트뷰의 총 갯수
     }
 
     @Override
     public Object getItem (int position){
-        return exList.get(position);//해당 위치의 값을 리스트뷰에 뿌려줌
+        return foodList.get(position);//해당 위치의 값을 리스트뷰에 뿌려줌
     }
     @Override
     public long getItemId (int position){
         return position;
     }
-    public void setItems(ArrayList<exerciseLsit> list) {
-        exList = list;
+    public void setItems(ArrayList<Food> list) {
+        foodList = list;
         notifyDataSetChanged();
     }
     //리스트뷰에서 실질적으로 뿌려주는 부분임
     @Override
     public View getView (final int position, View convertView, ViewGroup parent){
 
-        View v = View.inflate(context, R.layout.frag_item, null);
+        View v = View.inflate(context, R.layout.admin_food_item, null);
         // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
-        TextView ExName = (TextView) v.findViewById(R.id.ExName);
-        ExName.setText(exList.get(position).getExerciseName());
-        v.setTag(exList.get(position).getExerciseName());
+        TextView FoodName = (TextView) v.findViewById(R.id.FoodName);
+        FoodName.setText(foodList.get(position).getFoodName());
+        v.setTag(foodList.get(position).getFoodName());
         Button selectBtn = (Button) v.findViewById(R.id.select);
         selectBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -64,7 +67,7 @@ public class exerciseAdapter extends BaseAdapter {
                             //받아온 값이 success면 정상적으로 서버로부터 값을 받은 것을 의미함
                             if (success) {
                                 Toast.makeText(context.getApplicationContext(), "삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                                exList.remove(position);//리스트에서 해당부분을 지워줌
+                                foodList.remove(position);//리스트에서 해당부분을 지워줌
                                 notifyDataSetChanged();//데이터가 변경된 것을 어댑터에 알려줌
                             }
                         } catch (Exception e) {

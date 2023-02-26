@@ -121,8 +121,8 @@ public class Food_List extends AppCompatActivity {
                 FoodName = object.getString("FoodName");
 
                 //값들을 User클래스에 묶어줍니다
-                Food food = new Food();
-                foodArrayList.add(food.setFoodName(FoodName));//리스트뷰에 값을 추가해줍니다
+                Food food = new Food(FoodName);
+                foodArrayList.add(food);//리스트뷰에 값을 추가해줍니다
                 count++;
 
             }
