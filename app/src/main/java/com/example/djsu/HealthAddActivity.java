@@ -1,6 +1,7 @@
 package com.example.djsu;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -11,6 +12,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.djsu.Fragment.Fragment1;
 import com.example.djsu.Fragment.Fragment2;
@@ -23,8 +26,15 @@ import com.example.djsu.Fragment.Fragment8;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-public class HealthAddActivity extends AppCompatActivity {
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
+public class HealthAddActivity extends AppCompatActivity {
+    String target;
+    int a;
     Fragment fragment1, fragment2, fragment3, fragment4, fragment5, fragment6, fragment7, fragment8;
     private Toolbar toolbar;
     private NavigationView navigationView;
@@ -43,16 +53,7 @@ public class HealthAddActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
 
 
-        fragment1 = new Fragment1();
-        fragment2 = new Fragment2();
-        fragment3 = new Fragment3();
-        fragment4 = new Fragment4();
-        fragment5 = new Fragment5();
-        fragment6 = new Fragment6();
-        fragment7 = new Fragment7();
-        fragment8 = new Fragment8();
-
-        getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment1).commit();
+        new ExBackgroundTask(a= 0,target = "http://119.197.11.177/exlist.php").execute();
 
         TabLayout tabs = (TabLayout)findViewById(R.id.tabs);
 
@@ -61,43 +62,34 @@ public class HealthAddActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
 
                 int position = tab.getPosition();
-
-                Fragment selected = null;
                 if(position == 0){
-
-                    selected = fragment1;
-
+                    new ExBackgroundTask(a= 0,target = "http://119.197.11.177/exlist.php").execute();
                 }else if (position == 1){
 
-                    selected = fragment2;
+                    new ExBackgroundTask(a= 1,target = "http://119.197.11.177/rowexlist.php").execute();
 
                 }else if (position == 2){
-
-                    selected = fragment3;
+                    new ExBackgroundTask(a= 2,target = "http://119.197.11.177/chestexlist.php").execute();
 
                 }else if (position == 3){
-
-                    selected = fragment4;
+                    new ExBackgroundTask(a= 3,target = "http://119.197.11.177/etcexlist.php").execute();
                 }
                 else if (position == 4){
-
-                    selected = fragment5;
+                    new ExBackgroundTask(a= 4,target = "http://119.197.11.177/Absexlist.php").execute();
                 }
                 else if (position == 5){
 
-                    selected = fragment6;
+                    new ExBackgroundTask(a= 5,target = "http://119.197.11.177/shoulderexlist.php").execute();
                 }
                 else if (position == 6){
 
-                    selected = fragment7;
+                    new ExBackgroundTask(a= 6,target = "http://119.197.11.177/eightexlist.php").execute();
                 }
                 else if (position == 7){
 
-                    selected = fragment8;
+                    new ExBackgroundTask(a= 7,target = "http://119.197.11.177/aerobicexlist.php").execute();
                 }
 
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame, selected).commit();
             }
 
             @Override
@@ -162,5 +154,104 @@ public class HealthAddActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    class ExBackgroundTask extends AsyncTask<Void, Void, String> {
+        String target;
+        int a;
+        public ExBackgroundTask(int i,String target) {
+            this.a = i;
+            this.target = target;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            //List.php은 파싱으로 가져올 웹페이지
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);//URL 객체 생성
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
+                }
+
+                //사용했던 것도 다 닫아줌
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        protected void onPostExecute(String result) {
+            Bundle bundle = new Bundle();
+            //2. 데이터 담기
+            bundle.putString("exercise",result);
+            switch (a){
+                case 0:  fragment1 = new Fragment1();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment1.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment1).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment1).commit();
+                    break;
+                case 1:  fragment2 = new Fragment2();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment2.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment2).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment2).commit();
+                    break;
+                case 2:  fragment3 = new Fragment3();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment3.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment3).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment3).commit();
+                    break;
+                case 3:  fragment4 = new Fragment4();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment4.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment4).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment4).commit();
+                    break;
+                case 4:  fragment5 = new Fragment5();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment5.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment5).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment5).commit();
+                    break;
+                case 5:  fragment6 = new Fragment6();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment6.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment6).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment6).commit();
+                    break;
+                case 6:  fragment7 = new Fragment7();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment7.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment7).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment7).commit();
+                    break;
+                case 7:  fragment8 = new Fragment8();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment8.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment8).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment8).commit();
+                    break;
+            }
+
+        }
     }
 }

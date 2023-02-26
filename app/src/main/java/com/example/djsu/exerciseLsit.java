@@ -7,6 +7,10 @@ public class exerciseLsit {
     private String exerciseCalorie;
     private String exerciseUnit;
 
+    public exerciseLsit(String exerciseName) {
+        this.exerciseName = exerciseName;
+    }
+
     public  exerciseLsit(){};
     public String getProfile() {
         return profile;

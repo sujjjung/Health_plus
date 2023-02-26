@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -25,7 +25,7 @@
 
 
         <TextView
-            android:id="@+id/ExName"
+            android:id="@+id/FoodName"
             android:layout_width="118dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -40,17 +40,17 @@
             android:layout_margin="5dp"
             android:backgroundTint="#ff9898"
             android:fontFamily="@font/a10091"
-            android:text="선택"
+            android:text="수정"
             android:textColor="@color/black" />
 
         <Button
             android:id="@+id/Detail"
-            android:layout_width="92dp"
-            android:layout_height="46dp"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:backgroundTint="#ff9898"
             android:fontFamily="@font/a10091"
-            android:text="운동설명"
+            android:text="삭제"
             android:textColor="@color/black"
             android:textSize="13dp" />
 
