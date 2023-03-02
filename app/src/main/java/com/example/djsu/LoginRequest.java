@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class LoginRequest extends StringRequest {
     // 서버 URL 설정 ( PHP 파일 연동 )
-    final static private String URL = "http://119.197.11.177/login.php";
+    final static private String URL = "http://enejd0613.ivyro.net/login.php";
     private Map<String, String> map;
 
 
@@ -29,4 +29,3 @@ public class LoginRequest extends StringRequest {
     }
 
 }
-

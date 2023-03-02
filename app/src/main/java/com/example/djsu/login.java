@@ -93,7 +93,7 @@ public class login extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             //List.php은 파싱으로 가져올 웹페이지
-            target = "http://119.197.11.177/userlist.php";
+            target = "http://enejd0613.ivyro.net/userlist.php";
         }
 
         @Override

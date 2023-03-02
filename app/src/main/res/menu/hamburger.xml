@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
  <item android:id="@+id/home"
-     android:title="홈">
+     android:title="홈"
+     >
  </item>
     <item android:id="@+id/calender"
-        android:title="캘린더">
+        android:title="캘린더"
+        style="@style/menu">
     </item>
     <item android:id="@+id/communety"
         android:title="커뮤니티">

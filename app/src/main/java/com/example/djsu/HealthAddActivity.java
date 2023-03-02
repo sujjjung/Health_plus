@@ -53,7 +53,7 @@ public class HealthAddActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
 
 
-        new ExBackgroundTask(a= 0,target = "http://119.197.11.177/exlist.php").execute();
+        new ExBackgroundTask(a= 0,target = "http://enejd0613.ivyro.net/exlist.php").execute();
 
         TabLayout tabs = (TabLayout)findViewById(R.id.tabs);
 
