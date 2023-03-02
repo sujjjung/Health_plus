@@ -64,9 +64,6 @@ public class main_user extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_user);
 
-        user1 = findViewById(R.id.username);
-        user_information user = new user_information();
-        user1.setText (((user_information)getApplication()).getId());
         ImageButton view_food = (ImageButton) findViewById(R.id.view_food);
         view_food.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,8 +83,8 @@ public class main_user extends AppCompatActivity {
         });
 
         name = findViewById(R.id.username);
-        User user1 = new User();
-        name.setText(user1.getName());
+        User user = new User();
+        name.setText(user.getName());
 
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);

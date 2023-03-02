@@ -43,7 +43,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 String writeDate = cursor.getString(cursor.getColumnIndexOrThrow("writeDate"));
 
                 Food food = new Food();
-                food.setId(id);
                 food.setFoodName(FoodName);
                 food.setFoodKcal(FoodKcal);
                 food.setWriteDate(writeDate);
