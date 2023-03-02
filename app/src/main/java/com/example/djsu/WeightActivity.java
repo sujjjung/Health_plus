@@ -40,6 +40,7 @@ public class WeightActivity extends AppCompatActivity {
     private ImageButton savebtn;
     public String e_mail;
 
+
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
