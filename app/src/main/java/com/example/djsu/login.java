@@ -66,14 +66,13 @@ public class login extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "관리자로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 new BackgroundTask2().execute();
                             }
-
-                            else  if (success && UserID.equals("test") == false) {
-                                String name = jsonObject.getString("name");
+                            else  if (success) {
+                                String name = jsonObject.getString("UserName");
                                 Toast.makeText(getApplicationContext(), "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(login.this, main_user.class);
                                 User user = new User();
                                 user.setName(name);
-                                user.setId(id);
+                                user.setId(UserID);
                                 startActivity(intent);
                             }
                         } catch (JSONException e) {
