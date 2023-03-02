@@ -87,21 +87,22 @@ public class Fragment8 extends Fragment {
             JSONObject jsonObject = new JSONObject(this.getArguments().getString("exercise"));
             JSONArray jsonArray = jsonObject.getJSONArray("response");
             int count = 0;
-            String ExName;
+            String ExName,ExExplanation,ExCalorie,ExUnit;
             //JSON 배열 길이만큼 반복문을 실행
             while (count < jsonArray.length()) {
                 //count는 배열의 인덱스를 의미
                 JSONObject object = jsonArray.getJSONObject(count);
 
                 ExName = object.getString("ExName");
-
+                ExExplanation = object.getString("ExExplanation");
+                ExCalorie = object.getString("ExCalorie");
+                ExUnit = object.getString("ExUnit");
                 //값들을 User클래스에 묶어줍니다
-                exerciseLsit exlist = new exerciseLsit(ExName);
+                exerciseLsit exlist = new exerciseLsit(ExName,ExExplanation,ExCalorie,ExUnit);
                 exerciseLsits.add(exlist);//리스트뷰에 값을 추가해줍니다
                 count++;
 
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();

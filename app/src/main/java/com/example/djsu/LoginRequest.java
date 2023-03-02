@@ -19,7 +19,7 @@ public class LoginRequest extends StringRequest {
 
         map = new HashMap<>();
         map.put("UserID",UserID);
-        map.put("UserID",UserPassword);
+        map.put("UserPassword", UserPassword);
     }
 
     @Override

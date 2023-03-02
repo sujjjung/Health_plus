@@ -20,6 +20,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.example.djsu.admin.AdminFoodAdd;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +29,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class FoodAddActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -59,6 +65,7 @@ public class FoodAddActivity extends AppCompatActivity {
         String Sodium = "";
         String Sugar = "";
         String Kg = "";
+        int Cood;
         Bundle extras = getIntent().getExtras();
 
         Name = extras.getString("FoodName");
@@ -69,6 +76,7 @@ public class FoodAddActivity extends AppCompatActivity {
         Sodium = extras.getString("FoodSodium");
         Sugar = extras.getString("FoodSugar");
         Kg = extras.getString("FoodKg");
+        Cood = extras.getInt("FoodCood");
 
         EditText NameText = (EditText) findViewById(R.id.nametext);
         EditText KcalText = (EditText) findViewById(R.id.kcaltext);
@@ -109,6 +117,12 @@ public class FoodAddActivity extends AppCompatActivity {
                 foodSum.setSumSodium(foodSum.sumSodium( Integer.parseInt(Sodiumstr)));
                 foodSum.setSumSugar(foodSum.sumSugar( Integer.parseInt(Sugarstr)));
                 foodSum.setSumKg(foodSum.sumKg( Integer.parseInt(Kgstr)));
+                Date currentTime = Calendar.getInstance().getTime();
+                User user = new User();
+                user.getId();
+                CalendatRequest calendatRequest= new CalendatRequest( user.getId(),currentTime,extras.getInt("FoodCood"));
+                RequestQueue queue = Volley.newRequestQueue(FoodAddActivity.this);
+                queue.add(calendatRequest);
                 Intent intent = new Intent(FoodAddActivity.this, CalendarActivity.class);
                 startActivity(intent);
             }

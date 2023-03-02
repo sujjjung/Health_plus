@@ -1,7 +1,7 @@
 package com.example.djsu;
 
 public class Food {
-    private String id;
+    private int FoodCood;
     private String profile;
     private String FoodName;
     private String FoodKcal;
@@ -13,6 +13,29 @@ public class Food {
     private String FoodKg;
     private String writeDate;
 
+    public Food(int foodCood, String foodName, String foodKcal, String foodCarbohydrate, String foodProtein, String foodFat, String foodSodium, String foodSugar, String foodKg) {
+        FoodCood = foodCood;
+        FoodName = foodName;
+        FoodKcal = foodKcal;
+        FoodCarbohydrate = foodCarbohydrate;
+        FoodProtein = foodProtein;
+        FoodFat = foodFat;
+        FoodSodium = foodSodium;
+        FoodSugar = foodSugar;
+        FoodKg = foodKg;
+    }
+
+    public Food(String foodName, String foodKcal, String foodCarbohydrate, String foodProtein, String foodFat, String foodSodium, String foodSugar, String foodKg) {
+        FoodName = foodName;
+        FoodKcal = foodKcal;
+        FoodCarbohydrate = foodCarbohydrate;
+        FoodProtein = foodProtein;
+        FoodFat = foodFat;
+        FoodSodium = foodSodium;
+        FoodSugar = foodSugar;
+        FoodKg = foodKg;
+    }
+
     public Food(String foodName) {
         FoodName = foodName;
     }
@@ -20,12 +43,12 @@ public class Food {
 
     }
 
-    public String getId() {
-        return id;
+    public int getFoodCood() {
+        return FoodCood;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setFoodCood(int foodCood) {
+        FoodCood = foodCood;
     }
 
     public String getProfile() {
