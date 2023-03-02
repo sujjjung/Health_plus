@@ -7,6 +7,13 @@ public class exerciseLsit {
     private String exerciseCalorie;
     private String exerciseUnit;
 
+    public exerciseLsit(String exerciseName, String exerciseExplanation, String exerciseCalorie, String exerciseUnit) {
+        this.exerciseName = exerciseName;
+        this.exerciseExplanation = exerciseExplanation;
+        this.exerciseCalorie = exerciseCalorie;
+        this.exerciseUnit = exerciseUnit;
+    }
+
     public exerciseLsit(String exerciseName) {
         this.exerciseName = exerciseName;
     }
