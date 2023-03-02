@@ -51,10 +51,10 @@ public class signup extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
-                String userID = et_id.getText().toString();
-                String userPass = et_pass.getText().toString();
-                String userName = et_name.getText().toString();
-                String userAge = et_age.getText().toString();
+                String UserID = et_id.getText().toString();
+                String UserPass = et_pass.getText().toString();
+                String UserName = et_name.getText().toString();
+                String UserAge = et_age.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -73,16 +73,13 @@ public class signup extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 };
                 // 서버로 Volley를 이용해서 요청을 함.
-                signupRequest signupRequest1 = new signupRequest(userID,userPass,userName,userAge,responseListener);
+                signupRequest signupRequest1 = new signupRequest(UserID,UserPass,UserName,UserAge,responseListener);
                 RequestQueue queue = Volley.newRequestQueue(signup.this);
                 queue.add(signupRequest1);
-
             }
         });
-
     }
 }
