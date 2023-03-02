@@ -32,7 +32,7 @@ import java.net.URL;
 
 public class login extends AppCompatActivity {
     private EditText et_id, et_pass;
-    private Button btn_login, btn_register;
+    private Button login_btn, btn_register;
 
     public static Context context_email;
 
@@ -44,14 +44,14 @@ public class login extends AppCompatActivity {
 
         et_id = findViewById(R.id.email_editText);
         et_pass = findViewById(R.id.password_editText);
-        btn_login = findViewById(R.id.login_btn);
+        login_btn = findViewById(R.id.login_btn);
 
-        btn_login.setOnClickListener(new View.OnClickListener() {
+        login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
-                String id = et_id.getText().toString();
-                String pw = et_pass.getText().toString();
+                String UserID = et_id.getText().toString();
+                String UserPassword = et_pass.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -61,13 +61,13 @@ public class login extends AppCompatActivity {
                             System.out.println("hongchul" + response);
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
-                            if (success && id.equals("admin")) { // 로그인에 성공한 경우
+                            if (success && UserID.equals("admin")) { // 로그인에 성공한 경우
                                 //String userName = jsonObject.getString("username");
                                 Toast.makeText(getApplicationContext(), "관리자로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 new BackgroundTask2().execute();
                             }
 
-                            else  if (success && id.equals("test") == false) {
+                            else  if (success && UserID.equals("test") == false) {
                                 String name = jsonObject.getString("name");
                                 Toast.makeText(getApplicationContext(), "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(login.this, main_user.class);
@@ -81,7 +81,7 @@ public class login extends AppCompatActivity {
                         }
                     }
                 };
-                LoginRequest loginrequest = new LoginRequest(id, pw, responseListener);
+                LoginRequest loginrequest = new LoginRequest(UserID, UserPassword, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(login.this);
                 queue.add(loginrequest);
             }
@@ -94,7 +94,7 @@ public class login extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             //List.php은 파싱으로 가져올 웹페이지
-            target = "http://enejd0613.ivyro.net/userlist.php";
+            target = "http://enejd0613.dothome.co.kr/userlist.php";
         }
 
         @Override
