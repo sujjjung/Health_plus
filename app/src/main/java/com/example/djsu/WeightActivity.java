@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,19 +37,14 @@ public class WeightActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private ImageButton savebtn;
-    public String e_mail;
 
-
-    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private Button savebtn;
+    private EditText et_weight, et_muscle, et_fat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight);
-
-        Date currentTime = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat("MM-dd");
 
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
@@ -97,60 +92,31 @@ public class WeightActivity extends AppCompatActivity {
             }
         });
 
-        savebtn = findViewById(R.id.imageButton10);
+        et_weight = findViewById(R.id.weight_text);
+        et_fat = findViewById(R.id.muscles_text);
+        et_muscle = findViewById(R.id.fat_text);
 
-        e_mail = String.valueOf(((login)login.context_email));
+        User user = new User();
+        String id = user.getName();
 
-        user_information user = new user_information();
-        DocumentReference docRef = db.collection("member").document("test@test.com");
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getDate("Email"));
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
+        savebtn = (Button)findViewById(R.id.SaveBtn);
         savebtn.setOnClickListener(new View.OnClickListener() {
-
             @Override
-            public void onClick(View view) {
-                Toast.makeText(WeightActivity.this, "체중 추가 성공", Toast.LENGTH_SHORT).show();
-                String weight=((EditText)findViewById(R.id.weight_text)).getText().toString();
-                String muscle=((EditText)findViewById(R.id.muscles_text)).getText().toString();
-                String fat=((EditText)findViewById(R.id.fat_text)).getText().toString();
-                Map<String, Object> my_page = new HashMap<>();
-                my_page.put("email",  (((user_information)getApplication()).getId()));
-                my_page.put("date", currentTime);
-                my_page.put("fat", fat);
-                my_page.put("muscle", muscle);
-                my_page.put("weight", weight);
-
-                db.collection("my_page")
-                        .add(my_page)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                            }
-                        });
-
-                Intent intent = new Intent(WeightActivity.this, CalendarActivity.class);
-                startActivity(intent);
+            public void onClick(View v) {
+                String userId = id;
+                String date = getTime();
+                String fat = et_fat.getText().toString();
+                String muscle = et_muscle.getText().toString();
+                String weight = et_weight.getText().toString();
             }
         });
+    }
+    private String getTime() {
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String getTime = dateFormat.format(date);
+
+        return getTime;
     }
 }
