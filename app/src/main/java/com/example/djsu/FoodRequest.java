@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FoodRequest extends StringRequest {
-    final static private String URL = "http://enejd0613.ivyro.net/food.php";
+    final static private String URL = "http://enejd0613.dothome.co.kr/food.php";
     private Map<String, String> map;
 
     public FoodRequest(String FoodName, String FoodKcal, String FoodCarbohydrate, String FoodProtein, String FoodFat

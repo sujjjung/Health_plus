@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EerciseRequest extends StringRequest {
-    final static private String URL = "http://enejd0613.ivyro.net/exercise.php";
+    final static private String URL = "http://enejd0613.dothome.co.kr/exercise.php";
     private Map<String, String> map;
 
     public EerciseRequest(String ExPart,String ExName, String ExExplanation, String ExCalorie, String ExUnit, Response.Listener<String> listener) {

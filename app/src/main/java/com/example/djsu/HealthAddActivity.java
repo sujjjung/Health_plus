@@ -53,7 +53,7 @@ public class HealthAddActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
 
 
-        new ExBackgroundTask(a= 0,target = "http://enejd0613.ivyro.net/exlist.php").execute();
+        new ExBackgroundTask(a= 0,target = "http://enejd0613.dothome.co.kr/exlist.php").execute();
 
         TabLayout tabs = (TabLayout)findViewById(R.id.tabs);
 
@@ -63,31 +63,31 @@ public class HealthAddActivity extends AppCompatActivity {
 
                 int position = tab.getPosition();
                 if(position == 0){
-                    new ExBackgroundTask(a= 0,target = "http://119.197.11.177/exlist.php").execute();
+                    new ExBackgroundTask(a= 0,target = "http://enejd0613.dothome.co.kr/exlist.php").execute();
                 }else if (position == 1){
 
-                    new ExBackgroundTask(a= 1,target = "http://119.197.11.177/rowexlist.php").execute();
+                    new ExBackgroundTask(a= 1,target = "http://enejd0613.dothome.co.kr/rowexlist.php").execute();
 
                 }else if (position == 2){
-                    new ExBackgroundTask(a= 2,target = "http://119.197.11.177/chestexlist.php").execute();
+                    new ExBackgroundTask(a= 2,target = "http://enejd0613.dothome.co.kr/chestexlist.php").execute();
 
                 }else if (position == 3){
-                    new ExBackgroundTask(a= 3,target = "http://119.197.11.177/etcexlist.php").execute();
+                    new ExBackgroundTask(a= 3,target = "http://enejd0613.dothome.co.kr/etcexlist.php").execute();
                 }
                 else if (position == 4){
-                    new ExBackgroundTask(a= 4,target = "http://119.197.11.177/Absexlist.php").execute();
+                    new ExBackgroundTask(a= 4,target = "http://enejd0613.dothome.co.kr/Absexlist.php").execute();
                 }
                 else if (position == 5){
 
-                    new ExBackgroundTask(a= 5,target = "http://119.197.11.177/shoulderexlist.php").execute();
+                    new ExBackgroundTask(a= 5,target = "http://enejd0613.dothome.co.kr/shoulderexlist.php").execute();
                 }
                 else if (position == 6){
 
-                    new ExBackgroundTask(a= 6,target = "http://119.197.11.177/eightexlist.php").execute();
+                    new ExBackgroundTask(a= 6,target = "http://enejd0613.dothome.co.kr/eightexlist.php").execute();
                 }
                 else if (position == 7){
 
-                    new ExBackgroundTask(a= 7,target = "http://119.197.11.177/aerobicexlist.php").execute();
+                    new ExBackgroundTask(a= 7,target = "http://enejd0613.dothome.co.kr/aerobicexlist.php").execute();
                 }
 
             }
