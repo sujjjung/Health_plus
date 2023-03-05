@@ -1,9 +1,10 @@
 package com.example.djsu;
 
 public class User {
-    private String profile;
+    private String profile,Date;
     static private String Id;
     static private String Name;
+    int FoodCode;
 
     public User() {}
 
@@ -29,5 +30,21 @@ public class User {
 
     public static void setName(String name) {
         Name = name;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public int getFoodCode() {
+        return FoodCode;
+    }
+
+    public void setFoodCode(int foodCode) {
+        FoodCode = foodCode;
     }
 }
