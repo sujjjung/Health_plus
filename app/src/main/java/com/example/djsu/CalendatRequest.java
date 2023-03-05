@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CalendatRequest extends StringRequest{
-    final static private String URL = "http://119.197.11.177/foodcalendar.php";
+    final static private String URL = "http://enejd0613.dothome.co.kr/foodcalendar.php";
     private Map<String, String> map;
 
     public CalendatRequest(String userId, Date date,int FoodCood) {

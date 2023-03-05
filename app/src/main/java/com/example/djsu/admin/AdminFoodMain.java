@@ -51,7 +51,7 @@ public class AdminFoodMain extends AppCompatActivity {
 
         try {
             foodAdapter.notifyDataSetChanged();
-            JSONObject jsonObject = new JSONObject(intent.getStringExtra("food"));
+            JSONObject jsonObject = new JSONObject(intent.getStringExtra("Food"));
             JSONArray jsonArray = jsonObject.getJSONArray("response");
             int count = 0;
             String FoodName;

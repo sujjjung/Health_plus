@@ -61,7 +61,7 @@ public class AdminMainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             //List.php은 파싱으로 가져올 웹페이지
-            target = "http://119.197.11.177/foodlist.php";
+            target = "http://enejd0613.dothome.co.kr/foodlist.php";
         }
 
         @Override
@@ -95,7 +95,7 @@ public class AdminMainActivity extends AppCompatActivity {
 
         protected void onPostExecute(String result) {
             Intent intent = new Intent(getApplication(), AdminFoodMain.class);
-            intent.putExtra("food",result);
+            intent.putExtra("Food",result);
             startActivity(intent);
             getApplication().startActivity(intent);
         }
