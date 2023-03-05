@@ -17,6 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,6 +29,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,10 +40,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WeightActivity extends AppCompatActivity {
-    private Toolbar toolbar;
-    private NavigationView navigationView;
-    private DrawerLayout drawerLayout;
-
     private Button savebtn;
     private EditText et_weight, et_muscle, et_fat;
 
@@ -46,68 +48,45 @@ public class WeightActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight);
 
-        toolbar = findViewById(R.id.toolBar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        //뒤로가기버튼 이미지 적용
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
-        navigationView = findViewById(R.id.navigationView);
-        drawerLayout = findViewById(R.id.drawerLayout);
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.home:
-                        Intent homeintent = new Intent(getApplicationContext(), main_user.class);
-                        startActivity(homeintent);
-                        return true;
-                    case R.id.calender:
-                        Intent calenderintent = new Intent(getApplicationContext(), CalendarActivity.class);
-                        startActivity(calenderintent);
-                        return true;
-                    case R.id.communety:
-                        Intent communetyintent = new Intent(getApplicationContext(), community.class);
-                        startActivity(communetyintent);
-                        return true;
-                    case R.id.mypage:
-                        Intent mypageintent = new Intent(getApplicationContext(), mypage.class);
-                        startActivity(mypageintent);
-                        return true;
-                    case R.id.map:
-                        Intent mapintent = new Intent(getApplicationContext(), map.class);
-                        startActivity(mapintent);
-                        return true;
-                   /* case R.id.manbogi:
-                        Intent manbogiintent = new Intent(getApplicationContext(), .class);
-                        startActivity(manbogiintent);
-                        return true;*/
-                    case R.id.annoucement:
-                        Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
-                        startActivity(annoucementintent);
-                        return true;
-                }
-                return false;
-            }
-        });
-
         et_weight = findViewById(R.id.weight_text);
         et_fat = findViewById(R.id.muscles_text);
         et_muscle = findViewById(R.id.fat_text);
 
         User user = new User();
-        String id = user.getName();
+        String id = user.getId();
+        String date = getTime();
 
-        savebtn = (Button)findViewById(R.id.SaveBtn);
+        savebtn = findViewById(R.id.SaveBtn);
         savebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userId = id;
-                String date = getTime();
                 String fat = et_fat.getText().toString();
                 String muscle = et_muscle.getText().toString();
                 String weight = et_weight.getText().toString();
+
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if (success) { // 회원등록에 성공한 경우
+                                Toast.makeText(getApplicationContext(),"오늘의 체중이 등록되었습니다.",Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(WeightActivity.this, login.class);
+                                startActivity(intent);
+                            } else { // 회원등록에 실패한 경우
+                                Toast.makeText(getApplicationContext(),"체중 등록에 실패했습니다.",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                // 서버로 Volley를 이용해서 요청을 함.
+                weightRequest weightRequest1 = new weightRequest(id, date, fat, muscle, weight, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(WeightActivity.this);
+                queue.add(weightRequest1);
             }
         });
     }

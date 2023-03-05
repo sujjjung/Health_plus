@@ -4,6 +4,7 @@ public class User {
     private String profile;
     static private String Id;
     static private String Name;
+    static private String State;
 
     public User() {}
 
@@ -29,5 +30,13 @@ public class User {
 
     public static void setName(String name) {
         Name = name;
+    }
+
+    public static String getState() {
+        return State;
+    }
+
+    public static void setState(String name) {
+        State = State;
     }
 }
