@@ -15,16 +15,6 @@
         tools:layout_editor_absoluteY="16dp"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/foodtime"
-        android:layout_width="106dp"
-        android:layout_height="24dp"
-        android:text="섭취시기"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="58dp" />
 
     <TextView
         android:id="@+id/foodDate"

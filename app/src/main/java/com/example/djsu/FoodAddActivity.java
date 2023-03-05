@@ -3,6 +3,7 @@ package com.example.djsu;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -30,6 +31,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,15 +45,16 @@ public class FoodAddActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private Button addButton;
-    ImageButton food_input,searchBtn;
+    ImageButton food_input, searchBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_add);
 
         addButton = findViewById(R.id.addBtn);
-        searchBtn = (ImageButton)findViewById(R.id.SearchBtn);
-        food_input = (ImageButton)findViewById(R.id.food_input_btn);
+        searchBtn = (ImageButton) findViewById(R.id.SearchBtn);
+        food_input = (ImageButton) findViewById(R.id.food_input_btn);
         food_input.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,17 +117,17 @@ public class FoodAddActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FoodSum foodSum = new FoodSum();
 
-                foodSum.setSumKcal(foodSum.sumKcal( Integer.parseInt(Kcalstr)));
-                foodSum.setSumCarbohydrate(foodSum.sumCarbohydrate( Integer.parseInt(Carbohydratestr)));
-                foodSum.setSumProtein(foodSum.sumProtein( Integer.parseInt(Proteinstr)));
-                foodSum.setSumFat(foodSum.sumFat( Integer.parseInt(Fatstr)));
-                foodSum.setSumSodium(foodSum.sumSodium( Integer.parseInt(Sodiumstr)));
-                foodSum.setSumSugar(foodSum.sumSugar( Integer.parseInt(Sugarstr)));
-                foodSum.setSumKg(foodSum.sumKg( Integer.parseInt(Kgstr)));
+                foodSum.setSumKcal(foodSum.sumKcal(Integer.parseInt(Kcalstr)));
+                foodSum.setSumCarbohydrate(foodSum.sumCarbohydrate(Integer.parseInt(Carbohydratestr)));
+                foodSum.setSumProtein(foodSum.sumProtein(Integer.parseInt(Proteinstr)));
+                foodSum.setSumFat(foodSum.sumFat(Integer.parseInt(Fatstr)));
+                foodSum.setSumSodium(foodSum.sumSodium(Integer.parseInt(Sodiumstr)));
+                foodSum.setSumSugar(foodSum.sumSugar(Integer.parseInt(Sugarstr)));
+                foodSum.setSumKg(foodSum.sumKg(Integer.parseInt(Kgstr)));
                 Date currentTime = Calendar.getInstance().getTime();
                 User user = new User();
                 user.getId();
-                CalendatRequest calendatRequest= new CalendatRequest( user.getId(),currentTime,extras.getInt("FoodCood"));
+                CalendatRequest calendatRequest = new CalendatRequest(user.getId(), currentTime, extras.getInt("FoodCood"));
                 RequestQueue queue = Volley.newRequestQueue(FoodAddActivity.this);
                 queue.add(calendatRequest);
                 Intent intent = new Intent(FoodAddActivity.this, CalendarActivity.class);
@@ -138,7 +145,7 @@ public class FoodAddActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.home:
                         Intent homeintent = new Intent(getApplicationContext(), main_user.class);
                         startActivity(homeintent);
@@ -178,15 +185,64 @@ public class FoodAddActivity extends AppCompatActivity {
 
 
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+        class FoodBackgroundTask extends AsyncTask<Void, Void, String> {
+            String target;
+
+            @Override
+            protected void onPreExecute() {
+                //List.php은 파싱으로 가져올 웹페이지
+                //List.php은 파싱으로 가져올 웹페이지
+                target = "http://enejd0613.dothome.co.kr/foodcalendarlist.php";
+            }
+
+            @Override
+            protected String doInBackground(Void... voids) {
+
+                try {
+                    URL url = new URL(target);//URL 객체 생성
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                    String temp;
+                    StringBuilder stringBuilder = new StringBuilder();
+                    while ((temp = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
+                    }
+
+                    //사용했던 것도 다 닫아줌
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+            }
+
+            protected void onPostExecute(String result) {
+                Intent intent = new Intent(FoodAddActivity.this, userFood.class);
+                intent.putExtra("Food", result);
+                startActivity(intent);
+                FoodAddActivity.this.startActivity(intent);
+            }
+        }
     }
 }
