@@ -6,90 +6,105 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".friendAdd">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        app:srcCompat="@drawable/logo3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".friendAdd">
 
-    <ImageButton
-        android:id="@+id/menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:src="@drawable/ic_action_hamburger"
-        android:layout_marginStart="8dp"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/imageView" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo3" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:fontFamily="@font/a10092"
-        android:text="친구 목록"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        tools:ignore="MissingConstraints" />
+        <ImageButton
+            android:id="@+id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@color/white"
+            android:padding="8dp"
+            android:src="@drawable/ic_action_hamburger"
+            app:layout_constraintBottom_toBottomOf="@id/imageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/imageView" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="390dp"
-        android:layout_height="551dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchtext"
-        tools:listitem="@layout/item_friends_remove" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:fontFamily="@font/a10092"
+            android:text="친구 목록"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/searchtext"
-        android:layout_width="273dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="12dp"
-        android:background="@null"
-        android:ems="10"
-        android:layout_marginStart="40dp"
-        android:fontFamily="@font/a1009_2"
-        android:hint="검색할 닉네임"
-        android:inputType="textPersonName"
-        android:paddingLeft="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:ignore="MissingConstraints" />
+        <!--    <androidx.recyclerview.widget.RecyclerView-->
+        <!--        android:id="@+id/UserListView"-->
+        <!--        android:layout_width="390dp"-->
+        <!--        android:layout_height="551dp"-->
+        <!--        android:layout_marginStart="20dp"-->
+        <!--        android:layout_marginTop="30dp"-->
+        <!--        android:layout_marginEnd="20dp"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintTop_toBottomOf="@+id/searchtext"-->
+        <!--        tools:listitem="@layout/item_friends_remove" />-->
 
-    <ImageButton
-        android:id="@+id/button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="@color/white"
-        android:scaleType="centerInside"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/searchtext"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/searchtext"
-        app:layout_constraintTop_toTopOf="@+id/searchtext"
-        app:srcCompat="@drawable/search"
-        tools:ignore="MissingConstraints" />
+        <ListView
+            android:id="@+id/UserList"
+            android:layout_width="390dp"
+            android:layout_height="551dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchtext"
+            app:layout_constraintVertical_bias="1.0"
+            tools:listitem="@layout/item_friends_remove" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/searchtext"
+            android:layout_width="273dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="12dp"
+            android:background="@null"
+            android:ems="10"
+            android:fontFamily="@font/a1009_2"
+            android:hint="검색할 닉네임"
+            android:inputType="textPersonName"
+            android:paddingLeft="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            tools:ignore="MissingConstraints" />
+
+        <ImageButton
+            android:id="@+id/button"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@color/white"
+            android:scaleType="centerInside"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="@+id/searchtext"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/searchtext"
+            app:layout_constraintTop_toTopOf="@+id/searchtext"
+            app:srcCompat="@drawable/search"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 <LinearLayout
 android:layout_width="match_parent"
