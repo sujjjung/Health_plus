@@ -140,7 +140,7 @@
 
 
         <ImageButton
-            android:id="@+id/imageButton10"
+            android:id="@+id/SaveBtn"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginStart="68dp"
@@ -157,10 +157,10 @@
             android:text="추가하기"
             android:textColor="#2E2E2E"
             android:textSize="18dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton10"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton10"
-            app:layout_constraintStart_toStartOf="@+id/imageButton10"
-            app:layout_constraintTop_toTopOf="@+id/imageButton10" />
+            app:layout_constraintBottom_toBottomOf="@+id/SaveBtn"
+            app:layout_constraintEnd_toEndOf="@+id/SaveBtn"
+            app:layout_constraintStart_toStartOf="@+id/SaveBtn"
+            app:layout_constraintTop_toTopOf="@+id/SaveBtn" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

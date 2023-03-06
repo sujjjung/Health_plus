@@ -13,10 +13,11 @@ public class weightRequest extends StringRequest {
     final static private String URL = "http://enejd0613.dothome.co.kr/fat.php";
     private Map<String, String> map;
 
-    public weightRequest(String id, String date, String fat, String muscle, String weight, Response.Listener<String> listener) {
+    public weightRequest(String userId, String date, String fat, String muscle, String weight, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
         map = new HashMap<>();
-        map.put("userId",id);
+        map.put("fatKey", "0");
+        map.put("userId", userId);
         map.put("date", date);
         map.put("fat", fat);
         map.put("muscle", muscle);
