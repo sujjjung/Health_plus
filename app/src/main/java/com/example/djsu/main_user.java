@@ -10,6 +10,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
@@ -19,14 +20,21 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.djsu.admin.AdminMainActivity;
@@ -41,6 +49,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -53,9 +64,15 @@ public class main_user extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+
     EditText Status_message_text;
     Button Status_message_btn;
-    private TextView user1,name;
+    private TextView name;
+
+    private String ID;
+    private EditText et_status;
+
+    Dialog dialog_status;
 
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -64,9 +81,6 @@ public class main_user extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_user);
 
-        user1 = findViewById(R.id.username);
-        user_information user = new user_information();
-        user1.setText (((user_information)getApplication()).getId());
         ImageButton view_food = (ImageButton) findViewById(R.id.view_food);
         view_food.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,8 +100,10 @@ public class main_user extends AppCompatActivity {
         });
 
         name = findViewById(R.id.username);
-        User user1 = new User();
-        name.setText(user1.getName());
+        User user = new User();
+        name.setText(user.getName());
+
+        ID = user.getId();
 
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
@@ -102,7 +118,7 @@ public class main_user extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.home:
                         Intent homeintent = new Intent(getApplicationContext(), main_user.class);
                         startActivity(homeintent);
@@ -139,46 +155,24 @@ public class main_user extends AppCompatActivity {
                 return false;
             }
         });
-        final Button Status_message_btn = (Button) findViewById(R.id.Status_message_btn);
-        Status_message_btn.setOnClickListener(new View.OnClickListener(){
+
+        TextView text1 = findViewById(R.id.Status_message_text);
+        text1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                final EditText editText = new EditText(main_user.this);
-
-                AlertDialog.Builder dlg = new AlertDialog.Builder(main_user.this);
-                dlg.setView(editText);
-                dlg.setPositiveButton("변경",new DialogInterface.OnClickListener(){
+            public void onClick(View view) {
+                String text = text1.getText().toString();
+                dialog_status alert = new dialog_status(main_user.this,text);
+                alert.callFunction();
+                alert.setModifyReturnListener(new dialog_status.ModifyReturnListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(main_user.this,"변경되었습니다.",Toast.LENGTH_SHORT).show();
-                        String statusMessage =((EditText)findViewById(R.id.editText)).getText().toString();
-
-//                        Map<String, Object> member = new HashMap<>();
-//                        member.put("statusMessage", statusMessage);
-//
-//                        String uid= mAuth.getCurrentUser().getUid();
-//                        Database.getReference().child("member").child(uid).updateChildren(commentMap);
-//
-//                        // Add a new document with a generated ID
-//                        db.collection("Food")
-//                                .add(member)
-//                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                                    @Override
-//                                    public void onSuccess(DocumentReference documentReference) {
-//                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-//                                    }
-//                                })
-//                                .addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                        Log.w(TAG, "Error adding document", e);
-//                                    }
-//                                });
+                    public void afterModify(String text) {
+                        text1.setText(text);
+                        System.out.println("!!!!!!!!!!!!!: " +text);
                     }
                 });
-                dlg.show();
             }
         });
+
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

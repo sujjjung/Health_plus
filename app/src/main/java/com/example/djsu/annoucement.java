@@ -132,8 +132,9 @@ public class annoucement extends AppCompatActivity {
             progressDialog.dismiss();
             Log.d(TAG, "response  - " + result);
 
-            mJsonString = result;
-            showResult();
+                mJsonString = result;
+                showResult();
+
         }
 
 

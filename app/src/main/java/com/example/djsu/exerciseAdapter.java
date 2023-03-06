@@ -1,7 +1,9 @@
 package com.example.djsu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -45,11 +47,14 @@ public class exerciseAdapter extends BaseAdapter {
     //리스트뷰에서 실질적으로 뿌려주는 부분임
     @Override
     public View getView (final int position, View convertView, ViewGroup parent){
-
+        String ExExplanation,ExCalorie,ExUnit;
         View v = View.inflate(context, R.layout.frag_item, null);
         // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
         TextView ExName = (TextView) v.findViewById(R.id.ExName);
         ExName.setText(exList.get(position).getExerciseName());
+        ExExplanation = exList.get(position).getExerciseExplanation();
+        ExCalorie = exList.get(position).getExerciseCalorie();
+        ExUnit = exList.get(position).getExerciseUnit();
         v.setTag(exList.get(position).getExerciseName());
         Button selectBtn = (Button) v.findViewById(R.id.select);
         selectBtn.setOnClickListener(new View.OnClickListener(){
@@ -78,6 +83,25 @@ public class exerciseAdapter extends BaseAdapter {
 
             }
         });
+
+        Button DetailBtn = (Button) v.findViewById(R.id.Detail);
+        DetailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dlg = new AlertDialog.Builder(context);
+                dlg.setTitle( String.valueOf(ExName.getText()) + "설명"); //제목
+                dlg.setMessage("설명:"+ExExplanation);
+                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int which) {
+                        //토스트 메시지
+                        Toast.makeText(context,"확인을 눌르셨습니다.",Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dlg.show();
+            }
+
+        });
+
         return v;
 
     }

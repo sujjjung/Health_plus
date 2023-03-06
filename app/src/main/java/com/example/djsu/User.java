@@ -1,12 +1,18 @@
 package com.example.djsu;
 
 public class User {
+    public String getId;
     private String profile,Date;
     static private String Id;
     static private String Name;
     int FoodCode;
 
     public User() {}
+
+    public User(String date, int foodCode) {
+        Date = date;
+        FoodCode = foodCode;
+    }
 
     public String getProfile() {
         return profile;
@@ -47,4 +53,5 @@ public class User {
     public void setFoodCode(int foodCode) {
         FoodCode = foodCode;
     }
+
 }

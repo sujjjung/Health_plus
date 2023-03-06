@@ -16,6 +16,13 @@ public class friend_list extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+
+    private static final String TAG_JSON="webnautes";
+    private static final String TAG_DATE="date";
+    private static final String TAG_TITLE="title";
+    private static final String TAG_DETAIL="detail";
+    private static final String TAG_EMOTE="emote";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

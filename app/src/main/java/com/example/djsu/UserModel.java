@@ -6,6 +6,7 @@ public class UserModel
     public String Name;
     public String Password;
     public String profile;
-    public String birth;
+    public String Birth;
     public String statusComment;
+    public String uid;
 }
