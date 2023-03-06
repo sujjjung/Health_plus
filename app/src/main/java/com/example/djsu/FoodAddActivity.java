@@ -126,7 +126,6 @@ public class FoodAddActivity extends AppCompatActivity {
                 foodSum.setSumKg(foodSum.sumKg(Integer.parseInt(Kgstr)));
                 Date currentTime = Calendar.getInstance().getTime();
                 User user = new User();
-                user.getId();
                 CalendatRequest calendatRequest = new CalendatRequest(user.getId(), currentTime, extras.getInt("FoodCood"));
                 RequestQueue queue = Volley.newRequestQueue(FoodAddActivity.this);
                 queue.add(calendatRequest);
@@ -196,53 +195,5 @@ public class FoodAddActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-        class FoodBackgroundTask extends AsyncTask<Void, Void, String> {
-            String target;
-
-            @Override
-            protected void onPreExecute() {
-                //List.php은 파싱으로 가져올 웹페이지
-                //List.php은 파싱으로 가져올 웹페이지
-                target = "http://enejd0613.dothome.co.kr/foodcalendarlist.php";
-            }
-
-            @Override
-            protected String doInBackground(Void... voids) {
-
-                try {
-                    URL url = new URL(target);//URL 객체 생성
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                    InputStream inputStream = httpURLConnection.getInputStream();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                    String temp;
-                    StringBuilder stringBuilder = new StringBuilder();
-                    while ((temp = bufferedReader.readLine()) != null) {
-                        stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
-                    }
-
-                    //사용했던 것도 다 닫아줌
-                    bufferedReader.close();
-                    inputStream.close();
-                    httpURLConnection.disconnect();
-                    return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onProgressUpdate(Void... values) {
-                super.onProgressUpdate(values);
-            }
-
-            protected void onPostExecute(String result) {
-                Intent intent = new Intent(FoodAddActivity.this, userFood.class);
-                intent.putExtra("Food", result);
-                startActivity(intent);
-                FoodAddActivity.this.startActivity(intent);
-            }
-        }
     }
 }
