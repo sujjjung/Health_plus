@@ -211,12 +211,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
 
+    <Button
+        android:id="@+id/FoodGoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#ff9898"
+        android:fontFamily="@font/a10091"
+        android:gravity="left"
+        android:text="당일 음식목록"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/SodiumSum"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        tools:ignore="MissingConstraints" />
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/a10093"
         android:text="- 섭취"
         android:textColor="#393939"

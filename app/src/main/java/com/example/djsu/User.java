@@ -1,12 +1,18 @@
 package com.example.djsu;
 
 public class User {
-    private String profile;
+    public String getId;
+    private String profile,Date;
     static private String Id;
     static private String Name;
-    static private String State;
+    int FoodCode;
 
     public User() {}
+
+    public User(String date, int foodCode) {
+        Date = date;
+        FoodCode = foodCode;
+    }
 
     public String getProfile() {
         return profile;
@@ -32,11 +38,19 @@ public class User {
         Name = name;
     }
 
-    public static String getState() {
-        return State;
+    public String getDate() {
+        return Date;
     }
 
-    public static void setState(String name) {
-        State = State;
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public int getFoodCode() {
+        return FoodCode;
+    }
+
+    public void setFoodCode(int foodCode) {
+        FoodCode = foodCode;
     }
 }
