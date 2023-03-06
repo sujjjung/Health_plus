@@ -67,29 +67,14 @@ public class WeightActivity extends AppCompatActivity {
                 String muscle = et_muscle.getText().toString();
                 String weight = et_weight.getText().toString();
 
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
-                            if (success) { // 회원등록에 성공한 경우
-                                Toast.makeText(getApplicationContext(),"오늘의 체중이 등록되었습니다.",Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(WeightActivity.this, CalendarActivity.class);
-                                startActivity(intent);
-                            } else { // 회원등록에 실패한 경우
-                                Toast.makeText(getApplicationContext(),"체중 등록에 실패했습니다.",Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
+
                 // 서버로 Volley를 이용해서 요청을 함.
-                weightRequest weightRequest1 = new weightRequest(userId, date, fat, muscle, weight, responseListener);
+                weightRequest weightRequest1 = new weightRequest(userId, date, fat, muscle, weight);
                 RequestQueue queue = Volley.newRequestQueue(WeightActivity.this);
                 queue.add(weightRequest1);
+                Toast.makeText(getApplicationContext(),"오늘의 체중이 등록되었습니다.",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(WeightActivity.this, CalendarActivity.class);
+                startActivity(intent);
             }
         });
     }
