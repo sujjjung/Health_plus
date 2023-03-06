@@ -134,6 +134,7 @@ public class annoucement extends AppCompatActivity {
 
                 mJsonString = result;
                 showResult();
+
         }
 
 

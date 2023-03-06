@@ -53,4 +53,5 @@ public class User {
     public void setFoodCode(int foodCode) {
         FoodCode = foodCode;
     }
+
 }
