@@ -55,9 +55,9 @@ public class UserFoodAdapter extends BaseAdapter {
         TextView Date = (TextView) v.findViewById(R.id.foodDate);
         TextView FoodCood = (TextView) v.findViewById(R.id.foodname);
         Date.setText(userList.get(position).getDate());
-        FoodCood.setText(userList.get(position).getFoodCode());
+        //FoodCood.setText(userList.get(position).getFoodCode());
         //UserId = userList.get(position).getId();
-        v.setTag(userList.get(position).getDate());
+        v.setTag(userList.get(position).getId());
         return v;
 
     }

@@ -19,6 +19,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -69,8 +71,15 @@ public class CalendarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-
         Button imageButton = (Button) findViewById(R.id.btn_exercise);
+        Button UserFoodBtn = (Button) findViewById(R.id.FoodGoBtn);
+        UserFoodBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                new UserFoodBackgroundTask().execute();
+            }
+        });
         imageButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -440,6 +449,57 @@ public class CalendarActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Intent intent = new Intent(CalendarActivity.this, Food_List.class);
             intent.putExtra("Food",result);
+            startActivity(intent);
+            CalendarActivity.this.startActivity(intent);
+        }
+    }
+    class UserFoodBackgroundTask extends AsyncTask<Void, Void, String> {
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            //List.php은 파싱으로 가져올 웹페이지
+            target = "http://enejd0613.dothome.co.kr/foodcalendarlist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);//URL 객체 생성
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
+                }
+
+                //사용했던 것도 다 닫아줌
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        protected void onPostExecute(String result) {
+            User user1 = new User();
+            UserRequest userRequest = new UserRequest(user1.getId());
+            RequestQueue queue = Volley.newRequestQueue(CalendarActivity.this);
+            queue.add(userRequest);
+            Intent intent = new Intent(CalendarActivity.this, userFood.class);
+            intent.putExtra("UserFood", result);
             startActivity(intent);
             CalendarActivity.this.startActivity(intent);
         }
