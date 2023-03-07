@@ -16,6 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.djsu.admin.AdminMainActivity;
+import com.example.djsu.admin.AdminNoticeMain;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -73,6 +74,9 @@ public class login extends AppCompatActivity {
                                 User user = new User();
                                 user.setName(name);
                                 user.setId(UserID);
+                                UserRequest userRequest = new UserRequest(user.getId());
+                                RequestQueue queue = Volley.newRequestQueue(login.this);
+                                queue.add(userRequest);
                                 startActivity(intent);
                             }
                         } catch (JSONException e) {

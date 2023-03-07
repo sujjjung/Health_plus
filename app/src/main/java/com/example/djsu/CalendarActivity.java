@@ -156,8 +156,8 @@ public class CalendarActivity extends AppCompatActivity {
                         startActivity(manbogiintent);
                         return true;*/
                     case R.id.annoucement:
-                        Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
-                        startActivity(annoucementintent);
+                        NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask( CalendarActivity.this);
+                        noticeBackgroundTask.execute();
                         return true;
                     case R.id.friend:
                         Intent friend = new Intent(getApplicationContext(), friend_list.class);
@@ -495,9 +495,6 @@ public class CalendarActivity extends AppCompatActivity {
 
         protected void onPostExecute(String result) {
             User user1 = new User();
-            UserRequest userRequest = new UserRequest(user1.getId());
-            RequestQueue queue = Volley.newRequestQueue(CalendarActivity.this);
-            queue.add(userRequest);
             Intent intent = new Intent(CalendarActivity.this, userFood.class);
             intent.putExtra("UserFood", result);
             startActivity(intent);

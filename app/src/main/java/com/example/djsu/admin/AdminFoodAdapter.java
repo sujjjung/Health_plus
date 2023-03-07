@@ -9,8 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.djsu.Food;
+import com.example.djsu.FoodDelete;
+import com.example.djsu.NoticeDelete;
 import com.example.djsu.R;
 
 import org.json.JSONObject;
@@ -54,8 +58,8 @@ public class AdminFoodAdapter extends BaseAdapter {
         TextView FoodName = (TextView) v.findViewById(R.id.FoodName);
         FoodName.setText(foodList.get(position).getFoodName());
         v.setTag(foodList.get(position).getFoodName());
-        Button selectBtn = (Button) v.findViewById(R.id.select);
-        selectBtn.setOnClickListener(new View.OnClickListener(){
+        Button deleteBtn = (Button) v.findViewById(R.id.delete);
+        deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -75,9 +79,9 @@ public class AdminFoodAdapter extends BaseAdapter {
                         }
                     }
                 };
-                // DeleteRequest deleteRequest = new DeleteRequest(noticeText.getText().toString(), responseListener);
-                //  RequestQueue queue = Volley.newRequestQueue(parentActivity);
-                // queue.add(deleteRequest);
+                FoodDelete deleteRequest = new FoodDelete(FoodName.getText().toString(), responseListener);
+                RequestQueue queue = Volley.newRequestQueue(context);
+                queue.add(deleteRequest);
 
             }
         });
