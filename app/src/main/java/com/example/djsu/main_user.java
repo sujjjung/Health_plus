@@ -144,8 +144,8 @@ public class main_user extends AppCompatActivity {
                         startActivity(manbogiintent);
                         return true;*/
                     case R.id.annoucement:
-                        Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
-                        startActivity(annoucementintent);
+                        NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(main_user.this);
+                        noticeBackgroundTask.execute();
                         return true;
                     case R.id.friend:
                         Intent friend = new Intent(getApplicationContext(), friend_list.class);

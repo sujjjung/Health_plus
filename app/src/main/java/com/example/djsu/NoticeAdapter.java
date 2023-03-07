@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,51 +12,56 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
-import com.example.djsu.admin.AdminMainActivity;
+import com.example.djsu.Food;
+import com.example.djsu.Notice;
+import com.example.djsu.R;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-public class UserFoodAdapter extends BaseAdapter {
+
+public class NoticeAdapter extends BaseAdapter {
     private Context context;
-    private List<User> userList;
+    private List<Notice> NoticeList;
     private Activity parentActivity;
 
-    public UserFoodAdapter(Context context, List<User> userList) {
+    public NoticeAdapter(Context context, List<Notice> NoticeList) {
         this.context = context;
-        this.userList = userList;
+        this.NoticeList = NoticeList;
         this.parentActivity = parentActivity;
     }
     @Override
     public int getCount () {
-        return userList.size();//리스트뷰의 총 갯수
+        return NoticeList.size();//리스트뷰의 총 갯수
     }
 
     @Override
     public Object getItem (int position){
-        return userList.get(position);//해당 위치의 값을 리스트뷰에 뿌려줌
+        return NoticeList.get(position);//해당 위치의 값을 리스트뷰에 뿌려줌
     }
     @Override
     public long getItemId (int position){
         return position;
     }
-    public void setItems(ArrayList<User> list) {
-        userList = list;
+    public void setItems(ArrayList<Notice> list) {
+        NoticeList = list;
         notifyDataSetChanged();
     }
     //리스트뷰에서 실질적으로 뿌려주는 부분임
     @Override
     public View getView (final int position, View convertView, ViewGroup parent){
-        String UserId;
-        View v = View.inflate(context, R.layout.userfood_item_list, null);
+
+        View v = View.inflate(context, R.layout.item_annoucement, null);
         // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
-        TextView Date = (TextView) v.findViewById(R.id.foodDate);
-        //TextView FoodCood = (TextView) v.findViewById(R.id.foodname);
-        Date.setText(userList.get(position).getDate());
-        //FoodCood.setText(userList.get(position).getFoodCode());
-        //UserId = userList.get(position).getId();
-        v.setTag(userList.get(position).getId());
+        TextView date = (TextView) v.findViewById(R.id.date);
+        TextView title = (TextView) v.findViewById(R.id.title);
+        date.setText(NoticeList.get(position).getDate());
+        title.setText(NoticeList.get(position).getTitle());
+        String content = NoticeList.get(position).getContent();
+        v.setTag(NoticeList.get(position).getDate());
+
+
         return v;
 
     }

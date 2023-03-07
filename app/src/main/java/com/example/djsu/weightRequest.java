@@ -13,15 +13,14 @@ public class weightRequest extends StringRequest {
     final static private String URL = "http://enejd0613.dothome.co.kr/fat.php";
     private Map<String, String> map;
 
-    public weightRequest(String userId, String date, String fat, String muscle, String weight, Response.Listener<String> listener) {
-        super(Method.POST, URL, listener, null);
+    public weightRequest(String userId, String date, String fat, String muscle, String weight) {
+        super(Method.POST, URL, null, null);
         map = new HashMap<>();
-        map.put("fatKey", "0");
         map.put("userId", userId);
         map.put("date", date);
-        map.put("fat", fat);
-        map.put("muscle", muscle);
-        map.put("weight", weight);
+        map.put("fat", fat + "");
+        map.put("muscle", muscle+ "");
+        map.put("weight", weight+ "");
     }
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {

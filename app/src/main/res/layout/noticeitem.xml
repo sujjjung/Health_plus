@@ -10,49 +10,48 @@
         android:layout_height="100dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="20dp">
-
-
-        <ImageView
-            android:id="@+id/profile"
-            android:layout_width="64dp"
-            android:layout_height="59dp"
-            android:src="@drawable/ic_man" />-->
-
-        <!--이름-->
-
-        <!--상태 메시지-->
+        android:padding="10dp">
 
 
         <TextView
-            android:id="@+id/FoodName"
-            android:layout_width="118dp"
+            android:id="@+id/title"
+            android:layout_width="92dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="이름"
+            android:layout_marginLeft="10dp"
+            android:text="제목"
             android:textColor="#000"
             android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="날짜"
+            android:textColor="#000"
+            android:textSize="15sp" />
+
         <Button
-            android:id="@+id/select"
+            android:id="@+id/Detail"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:backgroundTint="#ff9898"
+            android:fontFamily="@font/a10091"
+            android:text="내용"
+            android:textColor="@color/black"
+            android:textSize="13dp" />
+
+        <Button
+            android:id="@+id/delete"
             android:layout_width="65dp"
             android:layout_height="46dp"
             android:layout_margin="5dp"
             android:backgroundTint="#ff9898"
             android:fontFamily="@font/a10091"
-            android:text="수정"
+            android:text="삭제"
             android:textColor="@color/black" />
 
-        <Button
-            android:id="@+id/delete"
-            android:layout_width="64dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:backgroundTint="#ff9898"
-            android:fontFamily="@font/a10091"
-            android:text="삭제"
-            android:textColor="@color/black"
-            android:textSize="13dp" />
 
         <!--구분선-->
 

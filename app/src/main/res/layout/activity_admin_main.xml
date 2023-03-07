@@ -122,13 +122,14 @@
         app:layout_constraintTop_toTopOf="@+id/imageButton5" />
 
     <ImageButton
-        android:id="@+id/imageButton6"
+        android:id="@+id/NoticeBtn"
         android:layout_width="340dp"
         android:layout_height="70dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="36dp"
         android:background="#FFF5B3"
         android:src="@drawable/roundsquare2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton5" />
 
@@ -140,10 +141,10 @@
         android:textColor="#333333"
         android:textSize="30dp"
 
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton6"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton6"
-        app:layout_constraintStart_toStartOf="@+id/imageButton6"
-        app:layout_constraintTop_toTopOf="@+id/imageButton6" />
+        app:layout_constraintBottom_toBottomOf="@+id/NoticeBtn"
+        app:layout_constraintEnd_toEndOf="@+id/NoticeBtn"
+        app:layout_constraintStart_toStartOf="@+id/NoticeBtn"
+        app:layout_constraintTop_toTopOf="@+id/NoticeBtn" />
 
 
 
