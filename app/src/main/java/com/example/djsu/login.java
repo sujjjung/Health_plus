@@ -69,11 +69,13 @@ public class login extends AppCompatActivity {
                             }
                             else  if (success) {
                                 String name = jsonObject.getString("UserName");
+                                String state = jsonObject.getString("State");
                                 Toast.makeText(getApplicationContext(), "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(login.this, main_user.class);
                                 User user = new User();
                                 user.setName(name);
                                 user.setId(UserID);
+                                user.setState(state);
                                 UserRequest userRequest = new UserRequest(user.getId());
                                 RequestQueue queue = Volley.newRequestQueue(login.this);
                                 queue.add(userRequest);

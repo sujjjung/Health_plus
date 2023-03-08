@@ -67,7 +67,7 @@ public class main_user extends AppCompatActivity {
 
     EditText Status_message_text;
     Button Status_message_btn;
-    private TextView name;
+    private TextView name, state;
 
     private String ID;
     private EditText et_status;
@@ -102,8 +102,11 @@ public class main_user extends AppCompatActivity {
         name = findViewById(R.id.username);
         User user = new User();
         name.setText(user.getName());
+        state = findViewById(R.id.Status_message_text);
+        state.setText(user.getState());
 
         ID = user.getId();
+
 
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);

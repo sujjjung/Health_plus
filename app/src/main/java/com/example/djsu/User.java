@@ -1,10 +1,11 @@
 package com.example.djsu;
 
 public class User {
-    public String getId;
+    public String getId, getState;
     private String profile,Date;
     static private String Id;
     static private String Name;
+    static private String State;
     int FoodCode;
 
     public User() {}
@@ -37,6 +38,10 @@ public class User {
     public static void setName(String name) {
         Name = name;
     }
+
+    public static String getState() { return State; }
+
+    public static void setState(String state) { State = state; }
 
     public String getDate() {
         return Date;
