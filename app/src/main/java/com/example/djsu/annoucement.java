@@ -106,7 +106,7 @@ public class annoucement extends AppCompatActivity {
                 return false;
             }
         });
-
+        noticeList = new ArrayList<>();
 
         noticeAdapter = new NoticeAdapter(this,noticeList);
 
