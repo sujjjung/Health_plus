@@ -2,7 +2,7 @@ package com.example.djsu;
 
 public class User {
     public String getId, getState;
-    private String profile,Date;
+    private String profile,Date,FoodName;
     static private String Id;
     static private String Name;
     static private String State;
@@ -10,9 +10,17 @@ public class User {
 
     public User() {}
 
-    public User(String date, int foodCode) {
+    public User(String date, String foodName) {
         Date = date;
-        FoodCode = foodCode;
+        FoodName = foodName;
+    }
+
+    public String getFoodName() {
+        return FoodName;
+    }
+
+    public void setFoodName(String foodName) {
+        FoodName = foodName;
     }
 
     public String getProfile() {
