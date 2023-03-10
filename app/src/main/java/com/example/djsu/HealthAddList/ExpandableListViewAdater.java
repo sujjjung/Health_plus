@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 import com.example.djsu.R;
 
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -66,7 +64,7 @@ public class ExpandableListViewAdater extends BaseExpandableListAdapter {
 
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.chapter_list, null);
+            convertView = inflater.inflate(R.layout.item_chapter_list, null);
         }
         TextView chapterTv = convertView.findViewById(R.id.chapter_tv);
         chapterTv.setText(chapterTitle);
@@ -80,7 +78,7 @@ public class ExpandableListViewAdater extends BaseExpandableListAdapter {
 
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.topics_list, null);
+            convertView = inflater.inflate(R.layout.item_topics_list, null);
         }
         TextView topicTv = convertView.findViewById(R.id.itemText);
         topicTv.setText(topicTitle);

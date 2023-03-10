@@ -32,25 +32,26 @@
         android:id="@+id/userlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/a10093"
         android:text="회원 목록"
         android:textColor="#2E2E2E"
         android:textSize="26dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="390dp"
-        android:layout_height="551dp"
+        android:layout_width="388dp"
+        android:layout_height="616dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userlist"
-        tools:listitem="@layout/activity_admin_useritem" />
+        tools:listitem="@layout/item_admin_useritem" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

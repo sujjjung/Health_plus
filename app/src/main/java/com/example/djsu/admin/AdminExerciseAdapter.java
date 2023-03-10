@@ -13,9 +13,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.djsu.ExDelete;
-import com.example.djsu.Food;
-import com.example.djsu.FoodDelete;
-import com.example.djsu.NoticeDelete;
 import com.example.djsu.R;
 import com.example.djsu.exerciseLsit;
 
@@ -55,7 +52,7 @@ public class AdminExerciseAdapter extends BaseAdapter {
     @Override
     public View getView (final int position, View convertView, ViewGroup parent){
 
-        View v = View.inflate(context, R.layout.admin_ex_item, null);
+        View v = View.inflate(context, R.layout.item_admin_ex, null);
         // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
         TextView ExName = (TextView) v.findViewById(R.id.ExName);
         ExName.setText(exerciseLsit.get(position).getExerciseName());

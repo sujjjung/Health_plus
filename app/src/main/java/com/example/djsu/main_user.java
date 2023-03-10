@@ -56,7 +56,9 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,11 +70,14 @@ public class main_user extends AppCompatActivity {
     EditText Status_message_text;
     Button Status_message_btn;
     private TextView name, state;
+    private String profile;
 
     private String ID;
     private EditText et_status;
 
     Dialog dialog_status;
+
+    private ImageView ivImage;
 
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -106,7 +111,6 @@ public class main_user extends AppCompatActivity {
         state.setText(user.getState());
 
         ID = user.getId();
-
 
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
@@ -142,10 +146,10 @@ public class main_user extends AppCompatActivity {
                         Intent mapintent = new Intent(getApplicationContext(), map.class);
                         startActivity(mapintent);
                         return true;
-                   /* case R.id.manbogi:
-                        Intent manbogiintent = new Intent(getApplicationContext(), .class);
+                    case R.id.manbogi:
+                        Intent manbogiintent = new Intent(getApplicationContext(), pedometer.class);
                         startActivity(manbogiintent);
-                        return true;*/
+                        return true;
                     case R.id.annoucement:
                         NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(main_user.this);
                         noticeBackgroundTask.execute();
@@ -175,6 +179,14 @@ public class main_user extends AppCompatActivity {
                 });
             }
         });
+
+        profile = user.getProfile();
+
+        ivImage = findViewById(R.id.imageView2);
+
+        // Glide로 이미지 표시하기
+        String imageUrl = profile;
+        Glide.with(this).load(imageUrl).into(ivImage);
 
     }
     @Override

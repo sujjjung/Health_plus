@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,7 +65,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                 if(setcount == 1) {
                     // 2. 레이아웃 파일 edit_box.xml 을 불러와서 화면에 다이얼로그를 보여줍니다.
                     AlertDialog.Builder builder = new AlertDialog.Builder(ExerciseRecordActivity.this);
-                    View view = LayoutInflater.from(ExerciseRecordActivity.this).inflate(R.layout.edit_box, null, false);
+                    View view = LayoutInflater.from(ExerciseRecordActivity.this).inflate(R.layout.dialog_edit_box, null, false);
                     builder.setView(view);
                     final Button ButtonSubmit = (Button) view.findViewById(R.id.button_dialog_submit);
                     final EditText editTextID = (EditText) view.findViewById(R.id.num);

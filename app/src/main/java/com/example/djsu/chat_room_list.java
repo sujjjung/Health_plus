@@ -22,8 +22,8 @@ public class chat_room_list extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_room_list);
-        Button friendButton=findViewById(R.id.friend_lsit_btn);
+        setContentView(R.layout.activity_chat_list);
+        Button friendButton=findViewById(R.id.btn_friend_list);
         //findViewById(R.id.button4) : 버튼의 text가 아니라 Id값을 넣어줘야한다.
         friendButton.setOnClickListener(new View.OnClickListener() {
             @Override

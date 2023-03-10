@@ -6,6 +6,7 @@ public class User {
     static private String Id;
     static private String Name;
     static private String State;
+    static private String Profile;
     int FoodCode;
 
     public User() {}
@@ -22,15 +23,6 @@ public class User {
     public void setFoodName(String foodName) {
         FoodName = foodName;
     }
-
-    public String getProfile() {
-        return profile;
-    }
-
-    public void setProfile(String profile) {
-        this.profile = profile;
-    }
-
     public static String getId() {
         return Id;
     }
@@ -50,6 +42,10 @@ public class User {
     public static String getState() { return State; }
 
     public static void setState(String state) { State = state; }
+
+    public static String getProfile() { return Profile; }
+
+    public static void setProfile(String profile) { Profile = profile; }
 
     public String getDate() {
         return Date;

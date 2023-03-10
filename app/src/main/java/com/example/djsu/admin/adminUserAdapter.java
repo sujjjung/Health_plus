@@ -1,6 +1,5 @@
 package com.example.djsu.admin;
 
-        import android.content.Context;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
@@ -12,9 +11,6 @@ package com.example.djsu.admin;
 
         import com.bumptech.glide.Glide;
         import com.example.djsu.R;
-        import com.google.firebase.firestore.auth.User;
-
-        import org.w3c.dom.Text;
 
         import java.util.ArrayList;
 
@@ -32,7 +28,7 @@ public class adminUserAdapter extends RecyclerView.Adapter<com.example.djsu.admi
     @NonNull
     @Override
     public com.example.djsu.admin.adminUserAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_admin_useritem,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_admin_useritem,parent,false);
 
         return new com.example.djsu.admin.adminUserAdapter.ViewHolder(v);
     }
