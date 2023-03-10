@@ -31,7 +31,34 @@
             android:padding="10dp"
             android:textSize="20dp"
             android:textColor="#2E2E2E"
-            android:text="제목" />
+            android:text="그림"
+            android:fontFamily="@font/a10092"/>
+
+        <EditText
+            android:id="@+id/Notice_emoji_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="이모티콘을 입력하세요."
+            android:padding="12dp"
+            android:textColorHint="@color/black"
+            android:fontFamily="@font/a1009_2"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="20dp"
+            android:textColor="#2E2E2E"
+            android:text="제목"
+            android:fontFamily="@font/a10092" />
 
         <EditText
             android:id="@+id/Notice_title_et"
@@ -40,7 +67,8 @@
             android:layout_weight="1"
             android:hint="제목을 입력하세요."
             android:padding="12dp"
-            android:textColorHint="@color/black" />
+            android:textColorHint="@color/black"
+            android:fontFamily="@font/a1009_2" />
     </LinearLayout>
 
     <TextView
@@ -49,7 +77,8 @@
         android:padding="10dp"
         android:text="내용"
         android:textColor="#2E2E2E"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:fontFamily="@font/a10092" />
 
     <EditText
         android:id="@+id/Notice_content_et"
@@ -58,16 +87,18 @@
         android:layout_weight="1"
         android:hint="내용을 입력하세요."
         android:padding="16dp"
-        android:textColorHint="@color/black" />
+        android:textColorHint="@color/black"
+        android:fontFamily="@font/a1009_2" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/NoticeUpBtn"
-        android:layout_width="216dp"
-        android:layout_height="71dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="80dp"
-        android:backgroundTint="#ff9898"
+        android:background="@drawable/shape_yes_btn"
+        android:fontFamily="@font/a10092"
         android:text="등록하기"
         android:textColor="#2E2E2E"
         android:textSize="19dp" />

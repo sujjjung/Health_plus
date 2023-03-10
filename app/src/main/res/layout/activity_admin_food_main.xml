@@ -32,7 +32,7 @@
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/a10093"
         android:text="음식 목록"
         android:textColor="#2E2E2E"
@@ -44,15 +44,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="640dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        android:layout_marginTop="12dp"
         android:orientation="vertical"
-        android:padding="8dp" >
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        tools:layout_editor_absoluteX="0dp">
 
         <ListView
             android:id="@+id/FoodView"
             android:layout_width="wrap_content"
-            android:layout_height="520dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"

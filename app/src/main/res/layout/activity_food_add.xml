@@ -14,7 +14,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FoodAddActivity"
-    android:background="#FFF5B3">
+    android:background="#FFF5B3"
+    android:paddingBottom="30dp"
+    >
 
     <ImageView
         android:id="@+id/imageView"

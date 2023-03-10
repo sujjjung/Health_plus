@@ -1,21 +1,11 @@
 package com.example.djsu;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Response;
-import com.example.djsu.admin.AdminMainActivity;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +40,7 @@ public class UserFoodAdapter extends BaseAdapter {
     @Override
     public View getView (final int position, View convertView, ViewGroup parent){
         String UserId;
-        View v = View.inflate(context, R.layout.userfood_item_list, null);
+        View v = View.inflate(context, R.layout.item_userfood_list, null);
         // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
         TextView Date = (TextView) v.findViewById(R.id.foodDate);
         //TextView FoodCood = (TextView) v.findViewById(R.id.foodname);

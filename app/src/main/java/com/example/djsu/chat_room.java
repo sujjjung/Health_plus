@@ -14,7 +14,7 @@ public class chat_room extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
 
-        Button BattleButton=findViewById(R.id.Battle_btn);
+        Button BattleButton=findViewById(R.id.battle_btn);
         //findViewById(R.id.button4) : 버튼의 text가 아니라 Id값을 넣어줘야한다.
         BattleButton.setOnClickListener(new View.OnClickListener() {
             @Override

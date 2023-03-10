@@ -48,7 +48,7 @@ public class exerciseAdapter extends BaseAdapter {
     @Override
     public View getView (final int position, View convertView, ViewGroup parent){
         String ExExplanation,ExCalorie,ExUnit;
-        View v = View.inflate(context, R.layout.frag_item, null);
+        View v = View.inflate(context, R.layout.item_frag, null);
         // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
         TextView ExName = (TextView) v.findViewById(R.id.ExName);
         ExName.setText(exList.get(position).getExerciseName());

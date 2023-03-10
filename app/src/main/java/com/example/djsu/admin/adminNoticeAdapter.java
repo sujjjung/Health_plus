@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.djsu.Food;
 import com.example.djsu.Notice;
 import com.example.djsu.NoticeDelete;
 import com.example.djsu.R;
@@ -55,7 +54,7 @@ public class adminNoticeAdapter extends BaseAdapter {
     @Override
     public View getView (final int position, View convertView, ViewGroup parent){
 
-        View v = View.inflate(context, R.layout.noticeitem, null);
+        View v = View.inflate(context, R.layout.item_notice, null);
         // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
         TextView date = (TextView) v.findViewById(R.id.date);
         TextView title = (TextView) v.findViewById(R.id.title);

@@ -54,6 +54,7 @@ public class AdminNoticeMain extends AppCompatActivity {
                 //count는 배열의 인덱스를 의미
                 JSONObject object = jsonArray.getJSONObject(count);
 
+                //emote = object.getString("emote");
                 date = object.getString("date");
                 title = object.getString("title");
                 detail = object.getString("detail");
