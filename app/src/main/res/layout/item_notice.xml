@@ -31,23 +31,24 @@
             android:textColor="#000"
             android:textSize="15sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@drawable/shape_no_btn"
             android:id="@+id/Detail"
-            android:layout_width="66dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:backgroundTint="#ff9898"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
             android:fontFamily="@font/a10091"
             android:text="내용"
             android:textColor="@color/black"
             android:textSize="13dp" />
 
-        <Button
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@drawable/shape_yes_btn"
             android:id="@+id/delete"
-            android:layout_width="65dp"
-            android:layout_height="46dp"
-            android:layout_margin="5dp"
-            android:backgroundTint="#ff9898"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
             android:fontFamily="@font/a10091"
             android:text="삭제"
             android:textColor="@color/black" />

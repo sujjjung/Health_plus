@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -13,6 +16,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,12 +25,24 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class pedometer extends AppCompatActivity {
 
     SensorManager sensorManager;
     Sensor stepCountSensor;
     TextView stepCountView;
     Button resetButton;
+
+    public int getCurrentSteps() {
+        return currentSteps;
+    }
+
+    public void setCurrentSteps(int currentSteps) {
+        this.currentSteps = currentSteps;
+    }
 
     // 현재 걸음 수
     int currentSteps = 0;
@@ -39,7 +55,7 @@ public class pedometer extends AppCompatActivity {
         setContentView(R.layout.activity_pedometer);
 
         ImageView walk = (ImageView)findViewById(R.id.walk_lion);
-        Glide.with(this).load(R.raw.rion).into(walk);
+        Glide.with(this).load(R.raw.girl).into(walk);
 
         stepCountView = findViewById(R.id.stepCountView);
         resetButton = findViewById(R.id.resetButton);
@@ -99,10 +115,34 @@ public class pedometer extends AppCompatActivity {
                 // 센서 이벤트가 발생할때 마다 걸음수 증가
                 currentSteps++;
                 stepCountView.setText(String.valueOf(currentSteps));
+                // User user = new User();
+                // user.setCurrentSteps(currentSteps);
             }
 
         }
 
+    }
+
+    public static void resetAlarm(Context context){
+        AlarmManager resetAlarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        Intent resetIntent = new Intent(context, pedometer.class);
+        PendingIntent resetSender = PendingIntent.getBroadcast(context, 0, resetIntent, 0);
+
+        // 자정 시간
+        Calendar resetCal = Calendar.getInstance();
+        resetCal.setTimeInMillis(System.currentTimeMillis());
+        resetCal.set(Calendar.HOUR_OF_DAY, 0);
+        resetCal.set(Calendar.MINUTE,0);
+        resetCal.set(Calendar.SECOND, 0);
+
+        //다음날 0시에 맞추기 위해 24시간을 뜻하는 상수인 AlarmManager.INTERVAL_DAY를 더해줌.
+        resetAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, resetCal.getTimeInMillis()
+                +AlarmManager.INTERVAL_DAY, AlarmManager.INTERVAL_DAY, resetSender);
+
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd kk:mm:ss");
+        String setResetTime = format.format(new Date(resetCal.getTimeInMillis()+AlarmManager.INTERVAL_DAY));
+
+        Log.d("resetAlarm", "ResetHour : " + setResetTime);
     }
 
 }

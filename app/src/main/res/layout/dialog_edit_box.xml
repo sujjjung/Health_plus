@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="무게를 입력하세요."
-        android:textSize="23dp" />
+        android:textSize="23dp"
+        android:fontFamily="@font/a10092"/>
 
     <EditText
         android:id="@+id/num"
@@ -24,12 +25,12 @@
         android:inputType="number"/>
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_dialog_submit"
         android:layout_width="104dp"
         android:layout_height="34dp"
         android:layout_gravity="center"
-        android:background="#00000000"
+        android:background="@drawable/shape_yes_btn"
         android:backgroundTint="@color/yellow"
         android:fontFamily="@font/a10092"
         android:text="확인"

@@ -68,7 +68,8 @@
         app:layout_constraintTop_toTopOf="@+id/imageView"
         tools:listitem="@layout/item_friend_add" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+
         android:id="@+id/button2"
         android:layout_width="50dp"
         android:layout_height="50dp"
