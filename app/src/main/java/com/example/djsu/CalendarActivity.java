@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -20,9 +21,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+
+import org.checkerframework.checker.units.qual.C;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -79,6 +85,7 @@ public class CalendarActivity extends AppCompatActivity {
             public void onClick(View view) {
                 new UserFoodBackgroundTask().execute();
             }
+
         });
         imageButton.setOnClickListener(new View.OnClickListener() {
 
@@ -453,6 +460,7 @@ public class CalendarActivity extends AppCompatActivity {
             CalendarActivity.this.startActivity(intent);
         }
     }
+
     class UserFoodBackgroundTask extends AsyncTask<Void, Void, String> {
         String target;
 
@@ -494,11 +502,11 @@ public class CalendarActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-            User user1 = new User();
             Intent intent = new Intent(CalendarActivity.this, userFood.class);
             intent.putExtra("UserFood", result);
-            startActivity(intent);
             CalendarActivity.this.startActivity(intent);
+
         }
     }
+
 }
