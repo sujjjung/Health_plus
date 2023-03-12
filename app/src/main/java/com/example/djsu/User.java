@@ -7,6 +7,7 @@ public class User {
     static private String Name;
     static private String State;
     static private String Profile;
+    static private int CurrentSteps;
     int FoodCode;
 
     public User() {}
@@ -61,6 +62,14 @@ public class User {
 
     public void setFoodCode(int foodCode) {
         FoodCode = foodCode;
+    }
+
+    public int getCurrentSteps() {
+        return CurrentSteps;
+    }
+
+    public void setCurrentSteps(int currentSteps) {
+        CurrentSteps = currentSteps;
     }
 
 }

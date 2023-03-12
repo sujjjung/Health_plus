@@ -21,8 +21,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo3" />
 
-    <ImageView
-        android:id="@+id/frofil"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile"
         android:layout_width="97dp"
         android:layout_height="93dp"
         android:layout_marginStart="16dp"
@@ -57,7 +57,7 @@
         app:layout_constraintVertical_bias="0.104" />
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/Status_message_text"
         android:layout_width="257dp"
         android:layout_height="44dp"
         android:fontFamily="@font/a10092"

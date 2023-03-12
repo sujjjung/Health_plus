@@ -71,13 +71,13 @@
                 tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/noBtn"
             android:layout_width="130dp"
             android:layout_height="39dp"
             android:onClick="shutDownClick"
             android:text="취소"
-            android:backgroundTint="#FFFFFF"
+            android:background="@drawable/shape_no_btn"
             android:textColor="@color/black"
             android:fontFamily="@font/a10091"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -86,13 +86,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/yesBtn"
             android:layout_width="130dp"
             android:layout_height="39dp"
             android:onClick="shutDownClick"
             android:text="확인"
-            android:backgroundTint="#ff9999"
+            android:background="@drawable/shape_yes_btn"
             android:textColor="@color/black"
             android:fontFamily="@font/a10091"
             app:layout_constraintBottom_toBottomOf="parent"

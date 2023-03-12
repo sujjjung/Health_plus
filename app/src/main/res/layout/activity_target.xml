@@ -46,12 +46,12 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/setting_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:backgroundTint="@color/white"
+            android:background="@drawable/shape_yes_btn"
             android:fontFamily="@font/a10092"
             android:text="목표설정"
             android:textColor="#444444"
