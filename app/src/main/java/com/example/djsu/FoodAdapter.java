@@ -84,7 +84,7 @@ public class FoodAdapter extends BaseAdapter {
             public void onClick(View view) {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(context);
                 dlg.setTitle( String.valueOf(FoodName.getText()) + "상세성분"); //제목
-                dlg.setMessage("칼로리:"+Date+"\n탄수화물:"+FoodCarbohydrate+"\n단백질:"+FoodProtein+"\n지방:"+FoodFat
+                dlg.setMessage("칼로리:"+FoodKcal+"\n탄수화물:"+FoodCarbohydrate+"\n단백질:"+FoodProtein+"\n지방:"+FoodFat
                 +"\n나트륨:"+FoodSodium+"\n당:"+FoodSugar+"\n무게:"+FoodKg);
                 dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int which) {

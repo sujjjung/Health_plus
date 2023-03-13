@@ -48,7 +48,8 @@ public class userFood extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserFood"));
             JSONArray jsonArray = jsonObject.getJSONArray("response");
             int count = 0;
-            String Date,UserID,FoodName;
+            FoodSum foodSum = new FoodSum();
+            String Date,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
             //JSON 배열 길이만큼 반복문을 실행
             while (count < jsonArray.length()) {
                 //count는 배열의 인덱스를 의미
@@ -56,12 +57,27 @@ public class userFood extends AppCompatActivity {
                 System.out.println(object);
                 Date = object.getString("Date");
                 FoodName = object.getString("FoodName");
+                FoodKcal = object.getString("FoodKcal");
+                FoodCarbohydrate = object.getString("FoodCarbohydrate");
+                FoodProtein = object.getString("FoodProtein");
+                FoodFat = object.getString("FoodFat");
+                FoodSodium = object.getString("FoodSodium");
+                FoodSugar = object.getString("FoodSugar");
+                FoodKg = object.getString("FoodKg");
                 //값들을 User클래스에 묶어줍니다
                 User user = new User(Date,FoodName);
                     UserID = object.getString("UserID");
                     if(UserID.equals(user1.getId())) {
                         if(date.equals(Date)) {
                             userList.add(user);//리스트뷰에 값을 추가해줍니다
+                            foodSum.setSumKcal(foodSum.sumKcal(Integer.parseInt(FoodKcal)));
+                            System.out.println(foodSum.getSumKcal());
+                            foodSum.setSumCarbohydrate(foodSum.sumCarbohydrate(Integer.parseInt(FoodCarbohydrate)));
+                            foodSum.setSumProtein(foodSum.sumProtein(Integer.parseInt(FoodProtein)));
+                            foodSum.setSumFat(foodSum.sumFat(Integer.parseInt(FoodFat)));
+                            foodSum.setSumSodium(foodSum.sumSodium(Integer.parseInt(FoodSodium)));
+                            foodSum.setSumSugar(foodSum.sumSugar(Integer.parseInt(FoodSugar)));
+                            foodSum.setSumKg(foodSum.sumKg(Integer.parseInt(FoodKg)));
                         }
                     }
                 count++;

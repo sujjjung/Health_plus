@@ -60,7 +60,7 @@ public class CalendarActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     public CalendarView calendarView;
     public TextView diaryTextView;
-    public int year1, month1, dayOfMonth1;
+    public int count = 0;
     String Year,Month,DayOfMonth,Date = "",date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +68,9 @@ public class CalendarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calendar);
         Button imageButton = (Button) findViewById(R.id.btn_exercise);
         Button UserFoodBtn = (Button) findViewById(R.id.FoodGoBtn);
+
+
+        overridePendingTransition(0, 0);
         UserFoodBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -84,8 +87,12 @@ public class CalendarActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        FoodSum foodSum = new FoodSum();
-
+        TextView KcalSum = findViewById(R.id.kcalSum);
+        TextView CarbohydrateSum = findViewById(R.id.carbohydrateSum);
+        TextView proteinSum = findViewById(R.id.ProteinSum);
+        TextView FatSum = findViewById(R.id.fatSum);
+        TextView sodiumSum = findViewById(R.id.SodiumSum);
+        TextView SugarSum = findViewById(R.id.sugarSum);
         calendarView = findViewById(R.id.calendarView);
         diaryTextView = findViewById(R.id.diaryTextView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
@@ -93,13 +100,65 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth)
             {
+                KcalSum.setText("");
+                CarbohydrateSum.setText("");
+                proteinSum.setText("");
+                FatSum.setText("");
+                sodiumSum.setText("");
+                SugarSum.setText("");
+                int KcalNum = 0,CarbohydrateNum = 0,proteinNum = 0,FatNum = 0,sodiumNum = 0,SugarNum = 0;;
+                Intent intent = getIntent();
+                User user1 = new User();
                 Year = String.valueOf(year);
                 Month = String.valueOf(month + 1);
                 DayOfMonth = String.valueOf(dayOfMonth);
                 Date = Year + "-" + Month + "-" + DayOfMonth;
                 diaryTextView.setVisibility(View.VISIBLE);
+                KcalSum.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(), String.format("%d - %d - %d", year, month + 1, dayOfMonth), Toast.LENGTH_SHORT).show();
                 diaryTextView.setText(Date);
+                try {
+                    JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserFood"));
+                    JSONArray jsonArray = jsonObject.getJSONArray("response");
+                    int count = 0;
+                    String Date1,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
+                    //JSON 배열 길이만큼 반복문을 실행
+                    while (count < jsonArray.length()) {
+                        //count는 배열의 인덱스를 의미
+                        JSONObject object = jsonArray.getJSONObject(count);
+                        Date1 = object.getString("Date");
+                        FoodName = object.getString("FoodName");
+                        FoodKcal = object.getString("FoodKcal");
+                        FoodCarbohydrate = object.getString("FoodCarbohydrate");
+                        FoodProtein = object.getString("FoodProtein");
+                        FoodFat = object.getString("FoodFat");
+                        FoodSodium = object.getString("FoodSodium");
+                        FoodSugar = object.getString("FoodSugar");
+                        FoodKg = object.getString("FoodKg");
+                        //값들을 User클래스에 묶어줍니다
+                        UserID = object.getString("UserID");
+                        if(UserID.equals(user1.getId())) {
+                            if(Date.equals(Date1)) {
+                                KcalNum += Integer.parseInt(FoodKcal);
+                                CarbohydrateNum += Integer.parseInt(FoodCarbohydrate);
+                                proteinNum += Integer.parseInt(FoodProtein);
+                                FatNum += Integer.parseInt(FoodFat);
+                                sodiumNum += Integer.parseInt(FoodSodium);
+                                SugarNum += Integer.parseInt(FoodSugar);
+                                KcalSum.setText(String.valueOf(KcalNum));
+                                CarbohydrateSum.setText(String.valueOf(CarbohydrateNum));
+                                proteinSum.setText(String.valueOf(proteinNum));
+                                FatSum.setText(String.valueOf(FatNum));
+                                sodiumSum.setText(String.valueOf(sodiumNum));
+                                SugarSum.setText(String.valueOf(SugarNum));
+                            }
+                        }
+                        count++;
+                    };
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -117,72 +176,7 @@ public class CalendarActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
-        Intent intent = getIntent();
-        User user1 = new User();
-        try {
-            System.out.println(intent.getStringExtra("UserFood"));
-            JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserFood"));
-            JSONArray jsonArray = jsonObject.getJSONArray("response");
-            int count = 0;
-            String Date1,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
-            //JSON 배열 길이만큼 반복문을 실행
-            while (count < jsonArray.length()) {
-                //count는 배열의 인덱스를 의미
-                JSONObject object = jsonArray.getJSONObject(count);
-                System.out.println(object);
-                Date1 = object.getString("Date");
-                FoodName = object.getString("FoodName");
-                FoodKcal = object.getString("FoodKcal");
-                FoodCarbohydrate = object.getString("FoodCarbohydrate");
-                FoodProtein = object.getString("FoodProtein");
-                FoodFat = object.getString("FoodFat");
-                FoodSodium = object.getString("FoodSodium");
-                FoodSugar = object.getString("FoodSugar");
-                FoodKg = object.getString("FoodKg");
-                //값들을 User클래스에 묶어줍니다
-                UserID = object.getString("UserID");
-                if(UserID.equals(user1.getId())) {
-                    if(Date.equals(Date1)) {
-                        foodSum.setSumKcal(foodSum.sumKcal(Integer.parseInt(FoodKcal)));
-                        foodSum.setSumCarbohydrate(foodSum.sumCarbohydrate(Integer.parseInt(FoodCarbohydrate)));
-                        foodSum.setSumProtein(foodSum.sumProtein(Integer.parseInt(FoodProtein)));
-                        foodSum.setSumFat(foodSum.sumFat(Integer.parseInt(FoodFat)));
-                        foodSum.setSumSodium(foodSum.sumSodium(Integer.parseInt(FoodSodium)));
-                        foodSum.setSumSugar(foodSum.sumSugar(Integer.parseInt(FoodSugar)));
-                        foodSum.setSumKg(foodSum.sumKg(Integer.parseInt(FoodKg)));
-                    }
-                }
-                count++;
-            };
 
-            foodSum.getSumKcal();
-            foodSum.getSumCarbohydrate();
-            foodSum.getSumProtein();
-            foodSum.getSumFat();
-            foodSum.getSumSodium();
-            foodSum.getSumSugar();
-            foodSum.getSumKg();
-
-            kcalSum = findViewById(R.id.kcalSum);
-            kcalSum.setText(String.valueOf(foodSum.getSumKcal()));
-
-            carbohydrateSum = findViewById(R.id.carbohydrateSum);
-            carbohydrateSum.setText(String.valueOf(foodSum.getSumCarbohydrate()));
-
-            proteinSum = findViewById(R.id.ProteinSum);
-            proteinSum.setText(String.valueOf(foodSum.getSumProtein()));
-
-            fatSum = findViewById(R.id.fatSum);
-            fatSum.setText(String.valueOf(foodSum.getSumFat()));
-
-            SodiumSum = findViewById(R.id.SodiumSum);
-            SodiumSum.setText(String.valueOf(foodSum.getSumSodium()));
-
-            sugarSum = findViewById(R.id.sugarSum);
-            sugarSum.setText(String.valueOf(foodSum.getSumSugar()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

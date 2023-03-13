@@ -118,21 +118,14 @@ public class FoodAddActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FoodSum foodSum = new FoodSum();
 
-                foodSum.setSumKcal(foodSum.sumKcal(Integer.parseInt(Kcalstr)));
-                foodSum.setSumCarbohydrate(foodSum.sumCarbohydrate(Integer.parseInt(Carbohydratestr)));
-                foodSum.setSumProtein(foodSum.sumProtein(Integer.parseInt(Proteinstr)));
-                foodSum.setSumFat(foodSum.sumFat(Integer.parseInt(Fatstr)));
-                foodSum.setSumSodium(foodSum.sumSodium(Integer.parseInt(Sodiumstr)));
-                foodSum.setSumSugar(foodSum.sumSugar(Integer.parseInt(Sugarstr)));
-                foodSum.setSumKg(foodSum.sumKg(Integer.parseInt(Kgstr)));
                 User user = new User();
-                CalendatRequest calendatRequest = new CalendatRequest(user.getId(), Date, extras.getInt("FoodCood"));
+                CalendatRequest calendatRequest = new CalendatRequest(user.getId(), Date, extras.getInt("FoodCood"),NameText.getText().toString(),KcalText.getText().toString(),CarbohydratText.getText().toString(),ProteinText.getText().toString()
+                ,FatText.getText().toString(),SodiumText.getText().toString(),SugarText.getText().toString(),KgText.getText().toString());
                 RequestQueue queue = Volley.newRequestQueue(FoodAddActivity.this);
                 queue.add(calendatRequest);
-                Intent intent = new Intent(FoodAddActivity.this, CalendarActivity.class);
-                startActivity(intent);
+                UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(FoodAddActivity.this);
+                userFoodListBackgroundTask.execute();
             }
         });
         toolbar = findViewById(R.id.toolBar);
@@ -152,8 +145,8 @@ public class FoodAddActivity extends AppCompatActivity {
                         startActivity(homeintent);
                         return true;
                     case R.id.calender:
-                        Intent calenderintent = new Intent(getApplicationContext(), CalendarActivity.class);
-                        startActivity(calenderintent);
+                        UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(FoodAddActivity.this);
+                        userFoodListBackgroundTask.execute();
                         return true;
                     case R.id.communety:
                         Intent communetyintent = new Intent(getApplicationContext(), community.class);
