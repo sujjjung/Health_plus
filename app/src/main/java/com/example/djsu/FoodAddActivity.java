@@ -1,18 +1,14 @@
 package com.example.djsu;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -23,22 +19,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.example.djsu.admin.AdminFoodAdd;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class FoodAddActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -46,7 +29,7 @@ public class FoodAddActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Button addButton;
     ImageButton food_input, searchBtn;
-    String Date;
+    String Date,s;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +46,7 @@ public class FoodAddActivity extends AppCompatActivity {
             }
         });
 
-
+        s = getDT();
         String Name = "";
         String Kcal = "";
         String Carbohydrate = "";
@@ -115,19 +98,40 @@ public class FoodAddActivity extends AppCompatActivity {
         SugarText.setText(Sugarstr);
         KgText.setText(Kgstr);
         DateText.setText(Datestr);
-        addButton.setOnClickListener(new View.OnClickListener() {
+        RadioGroup radioGroup = (RadioGroup)findViewById(R.id.radioGroup);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-
-                User user = new User();
-                CalendatRequest calendatRequest = new CalendatRequest(user.getId(), Date, extras.getInt("FoodCood"),NameText.getText().toString(),KcalText.getText().toString(),CarbohydratText.getText().toString(),ProteinText.getText().toString()
-                ,FatText.getText().toString(),SodiumText.getText().toString(),SugarText.getText().toString(),KgText.getText().toString());
-                RequestQueue queue = Volley.newRequestQueue(FoodAddActivity.this);
-                queue.add(calendatRequest);
-                UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(FoodAddActivity.this);
-                userFoodListBackgroundTask.execute();
+            public void onCheckedChanged(RadioGroup radioGroup, int id) {
+                if(id == R.id.BreakFast)
+                {        s = "아침";
+                }else if(id == R.id.BreakFastTo)
+                {        s = "아점";
+                }else if(id == R.id.Lunch)
+                {        s = "점심";
+                }else if(id == R.id.LunchTo)
+                {        s = "점저";
+                } else if(id == R.id.Dinner)
+                {        s = "저녁";
+                }else if(id == R.id.DinnerTo)
+                {        s = "야식";
+                }
             }
         });
+
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    User user = new User();
+                    CalendatRequest calendatRequest = new CalendatRequest(user.getId(), Date, extras.getInt("FoodCood"),NameText.getText().toString(),KcalText.getText().toString(),CarbohydratText.getText().toString(),ProteinText.getText().toString()
+                            ,FatText.getText().toString(),SodiumText.getText().toString(),SugarText.getText().toString(),KgText.getText().toString(),s);
+                    RequestQueue queue = Volley.newRequestQueue(FoodAddActivity.this);
+                    queue.add(calendatRequest);
+                    UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(FoodAddActivity.this);
+                    userFoodListBackgroundTask.execute();
+
+                }
+            });
+
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -190,5 +194,15 @@ public class FoodAddActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public String getDT() {
+        Calendar cal = Calendar.getInstance();
+        String h, mi, s;
+
+        h = String.valueOf(cal.get(Calendar.HOUR));
+        mi = String.valueOf(cal.get(Calendar.MINUTE));
+        s = String.valueOf(cal.get(Calendar.SECOND));
+        String Time = h +"시" + mi +"분" + s+"초";
+        return Time;
     }
 }

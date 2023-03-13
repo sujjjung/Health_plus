@@ -99,49 +99,63 @@
         app:layout_constraintTop_toBottomOf="@+id/DateText">
 
         <RadioButton
+            android:id="@+id/BreakFast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="5dp"
             android:fontFamily="@font/a10093"
             android:text="아침"
             android:textColor="#303030"
-            android:textSize="16dp" />
+            android:textSize="15dp" />
 
         <RadioButton
+            android:id="@+id/BreakFastTo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="5dp"
             android:fontFamily="@font/a10093"
             android:text="아점"
             android:textColor="#303030"
-            android:textSize="16dp" />
+            android:textSize="15dp" />
 
         <RadioButton
+            android:id="@+id/Lunch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="5dp"
             android:fontFamily="@font/a10093"
             android:text="점심"
             android:textColor="#303030"
-            android:textSize="16dp" />
+            android:textSize="15dp" />
 
         <RadioButton
+            android:id="@+id/LunchTo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="5dp"
             android:fontFamily="@font/a10093"
             android:text="점저"
             android:textColor="#303030"
-            android:textSize="16dp" />
+            android:textSize="15dp" />
 
         <RadioButton
+            android:id="@+id/Dinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="5dp"
             android:fontFamily="@font/a10093"
             android:text="저녁"
             android:textColor="#303030"
-            android:textSize="16dp" />
+            android:textSize="15dp" />
+        <RadioButton
+            android:id="@+id/DinnerTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="@font/a10093"
+            android:text="야식"
+            android:textColor="#303030"
+            android:textSize="15dp" />
 
     </RadioGroup>
 

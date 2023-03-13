@@ -121,7 +121,7 @@ public class CalendarActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserFood"));
                     JSONArray jsonArray = jsonObject.getJSONArray("response");
                     int count = 0;
-                    String Date1,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
+                    String eatingTime,Date1,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
                     //JSON 배열 길이만큼 반복문을 실행
                     while (count < jsonArray.length()) {
                         //count는 배열의 인덱스를 의미
@@ -135,6 +135,7 @@ public class CalendarActivity extends AppCompatActivity {
                         FoodSodium = object.getString("FoodSodium");
                         FoodSugar = object.getString("FoodSugar");
                         FoodKg = object.getString("FoodKg");
+                        eatingTime = object.getString("eatingTime");
                         //값들을 User클래스에 묶어줍니다
                         UserID = object.getString("UserID");
                         if(UserID.equals(user1.getId())) {
