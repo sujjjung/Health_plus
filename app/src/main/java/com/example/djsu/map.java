@@ -51,8 +51,8 @@ public class map extends AppCompatActivity {
                         startActivity(homeintent);
                         return true;
                     case R.id.calender:
-                        Intent calenderintent = new Intent(getApplicationContext(), CalendarActivity.class);
-                        startActivity(calenderintent);
+                        UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(map.this);
+                        userFoodListBackgroundTask.execute();
                         return true;
                     case R.id.communety:
                         Intent communetyintent = new Intent(getApplicationContext(), community.class);
@@ -71,8 +71,8 @@ public class map extends AppCompatActivity {
                         startActivity(manbogiintent);
                         return true;*/
                     case R.id.annoucement:
-                        Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
-                        startActivity(annoucementintent);
+                       NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(map.this);
+                       noticeBackgroundTask.execute();
                         return true;
                 }
                 return false;

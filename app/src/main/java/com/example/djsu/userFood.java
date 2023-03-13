@@ -28,6 +28,7 @@ public class userFood extends AppCompatActivity {
     private List<User> userList;
     private UserFoodAdapter userFoodAdapter;
     private EditText editText;
+    String date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +39,9 @@ public class userFood extends AppCompatActivity {
         ListView userfoodListView = (ListView) findViewById(R.id.FoodView);
         userfoodListView.setAdapter(userFoodAdapter);
         User user1 = new User();
+        Bundle extras = getIntent().getExtras();
+
+        date = extras.getString("Date");
         try {
             userFoodAdapter.notifyDataSetChanged();
             System.out.println(intent.getStringExtra("UserFood"));
@@ -56,7 +60,9 @@ public class userFood extends AppCompatActivity {
                 User user = new User(Date,FoodName);
                     UserID = object.getString("UserID");
                     if(UserID.equals(user1.getId())) {
-                        userList.add(user);//리스트뷰에 값을 추가해줍니다
+                        if(date.equals(Date)) {
+                            userList.add(user);//리스트뷰에 값을 추가해줍니다
+                        }
                     }
                 count++;
                 };

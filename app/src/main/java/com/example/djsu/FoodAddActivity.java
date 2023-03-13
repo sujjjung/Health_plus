@@ -46,7 +46,7 @@ public class FoodAddActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Button addButton;
     ImageButton food_input, searchBtn;
-
+    String Date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +84,7 @@ public class FoodAddActivity extends AppCompatActivity {
         Sugar = extras.getString("FoodSugar");
         Kg = extras.getString("FoodKg");
         Cood = extras.getInt("FoodCood");
+        Date = extras.getString("Date");
 
         EditText NameText = (EditText) findViewById(R.id.nametext);
         EditText KcalText = (EditText) findViewById(R.id.kcaltext);
@@ -93,6 +94,7 @@ public class FoodAddActivity extends AppCompatActivity {
         EditText SodiumText = (EditText) findViewById(R.id.Sodiumtext);
         EditText SugarText = (EditText) findViewById(R.id.Sugartext);
         EditText KgText = (EditText) findViewById(R.id.Kgtext);
+        EditText DateText = (EditText) findViewById(R.id.DateText);
 
         String Namestr = Name;
         String Kcalstr = Kcal;
@@ -102,6 +104,7 @@ public class FoodAddActivity extends AppCompatActivity {
         String Sodiumstr = Sodium;
         String Sugarstr = Sugar;
         String Kgstr = Kg;
+        String Datestr = Date;
 
         NameText.setText(Namestr);
         KcalText.setText(Kcalstr);
@@ -111,7 +114,7 @@ public class FoodAddActivity extends AppCompatActivity {
         SodiumText.setText(Sodiumstr);
         SugarText.setText(Sugarstr);
         KgText.setText(Kgstr);
-
+        DateText.setText(Datestr);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,9 +127,8 @@ public class FoodAddActivity extends AppCompatActivity {
                 foodSum.setSumSodium(foodSum.sumSodium(Integer.parseInt(Sodiumstr)));
                 foodSum.setSumSugar(foodSum.sumSugar(Integer.parseInt(Sugarstr)));
                 foodSum.setSumKg(foodSum.sumKg(Integer.parseInt(Kgstr)));
-                Date currentTime = Calendar.getInstance().getTime();
                 User user = new User();
-                CalendatRequest calendatRequest = new CalendatRequest(user.getId(), currentTime, extras.getInt("FoodCood"));
+                CalendatRequest calendatRequest = new CalendatRequest(user.getId(), Date, extras.getInt("FoodCood"));
                 RequestQueue queue = Volley.newRequestQueue(FoodAddActivity.this);
                 queue.add(calendatRequest);
                 Intent intent = new Intent(FoodAddActivity.this, CalendarActivity.class);

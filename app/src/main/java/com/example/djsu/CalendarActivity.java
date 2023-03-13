@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import org.checkerframework.checker.units.qual.C;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,24 +46,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class CalendarActivity extends AppCompatActivity {
-    private SimpleDateFormat defaultDateFormat =new SimpleDateFormat("yyyy-MM-dd");
-    DateFormat defaultMonthFormat=new SimpleDateFormat("yyyy-MM");
-    public String selectedDate = "";
 
-    private Date startDate = new Date();
-    private Date selectedDateTime = null;
-    private ImageButton beforeIB;
-    private ImageButton afterIB;
-    private TextView dateTV,kcalSum,carbohydrateSum,proteinSum,fatSum,SodiumSum,sugarSum;
-
-
-    public RecyclerView calendarRecyclerView;
-    private CalendarAdapter calendarAdapter;
-
-    private Date nowDate = new Date();//주에 오늘 날짜가 포함하는지 보기위해.
-    private Calendar nowCal = Calendar.getInstance();
-    private int nowMonth = -1;
-
+    private TextView kcalSum, carbohydrateSum, proteinSum, fatSum, SodiumSum, sugarSum;
     // 플로팅버튼 상태
     private boolean fabMain_status = false;
     private FloatingActionButton fabMain;
@@ -72,7 +58,10 @@ public class CalendarActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-
+    public CalendarView calendarView;
+    public TextView diaryTextView;
+    public int year1, month1, dayOfMonth1;
+    String Year,Month,DayOfMonth,Date = "",date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,33 +86,29 @@ public class CalendarActivity extends AppCompatActivity {
         });
         FoodSum foodSum = new FoodSum();
 
-        foodSum.getSumKcal();
-        foodSum.getSumCarbohydrate();
-        foodSum.getSumProtein();
-        foodSum.getSumFat();
-        foodSum.getSumSodium();
-        foodSum.getSumSugar();
-        foodSum.getSumKg();
+        calendarView = findViewById(R.id.calendarView);
+        diaryTextView = findViewById(R.id.diaryTextView);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
+        {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth)
+            {
+                Year = String.valueOf(year);
+                Month = String.valueOf(month + 1);
+                DayOfMonth = String.valueOf(dayOfMonth);
+                Date = Year + "-" + Month + "-" + DayOfMonth;
+                diaryTextView.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(), String.format("%d - %d - %d", year, month + 1, dayOfMonth), Toast.LENGTH_SHORT).show();
+                diaryTextView.setText(Date);
+            }
+        });
 
-        kcalSum = findViewById(R.id.kcalSum);
-        kcalSum.setText(String.valueOf(foodSum.getSumKcal()));
+        date = getTime();
 
-        carbohydrateSum = findViewById(R.id.carbohydrateSum);
-        carbohydrateSum.setText(String.valueOf(foodSum.getSumCarbohydrate()));
-
-        proteinSum = findViewById(R.id.ProteinSum);
-        proteinSum.setText(String.valueOf(foodSum.getSumProtein()));
-
-        fatSum = findViewById(R.id.fatSum);
-        fatSum.setText(String.valueOf(foodSum.getSumFat()));
-
-        SodiumSum = findViewById(R.id.SodiumSum);
-        SodiumSum.setText(String.valueOf(foodSum.getSumSodium()));
-
-        sugarSum = findViewById(R.id.sugarSum);
-        sugarSum.setText(String.valueOf(foodSum.getSumSugar()));
-
-
+        if(Date.equals("")){
+            Date = date;
+        }
+        diaryTextView.setText(Date);
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -132,19 +117,83 @@ public class CalendarActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
+        Intent intent = getIntent();
+        User user1 = new User();
+        try {
+            System.out.println(intent.getStringExtra("UserFood"));
+            JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserFood"));
+            JSONArray jsonArray = jsonObject.getJSONArray("response");
+            int count = 0;
+            String Date1,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
+            //JSON 배열 길이만큼 반복문을 실행
+            while (count < jsonArray.length()) {
+                //count는 배열의 인덱스를 의미
+                JSONObject object = jsonArray.getJSONObject(count);
+                System.out.println(object);
+                Date1 = object.getString("Date");
+                FoodName = object.getString("FoodName");
+                FoodKcal = object.getString("FoodKcal");
+                FoodCarbohydrate = object.getString("FoodCarbohydrate");
+                FoodProtein = object.getString("FoodProtein");
+                FoodFat = object.getString("FoodFat");
+                FoodSodium = object.getString("FoodSodium");
+                FoodSugar = object.getString("FoodSugar");
+                FoodKg = object.getString("FoodKg");
+                //값들을 User클래스에 묶어줍니다
+                UserID = object.getString("UserID");
+                if(UserID.equals(user1.getId())) {
+                    if(Date.equals(Date1)) {
+                        foodSum.setSumKcal(foodSum.sumKcal(Integer.parseInt(FoodKcal)));
+                        foodSum.setSumCarbohydrate(foodSum.sumCarbohydrate(Integer.parseInt(FoodCarbohydrate)));
+                        foodSum.setSumProtein(foodSum.sumProtein(Integer.parseInt(FoodProtein)));
+                        foodSum.setSumFat(foodSum.sumFat(Integer.parseInt(FoodFat)));
+                        foodSum.setSumSodium(foodSum.sumSodium(Integer.parseInt(FoodSodium)));
+                        foodSum.setSumSugar(foodSum.sumSugar(Integer.parseInt(FoodSugar)));
+                        foodSum.setSumKg(foodSum.sumKg(Integer.parseInt(FoodKg)));
+                    }
+                }
+                count++;
+            };
 
+            foodSum.getSumKcal();
+            foodSum.getSumCarbohydrate();
+            foodSum.getSumProtein();
+            foodSum.getSumFat();
+            foodSum.getSumSodium();
+            foodSum.getSumSugar();
+            foodSum.getSumKg();
 
+            kcalSum = findViewById(R.id.kcalSum);
+            kcalSum.setText(String.valueOf(foodSum.getSumKcal()));
+
+            carbohydrateSum = findViewById(R.id.carbohydrateSum);
+            carbohydrateSum.setText(String.valueOf(foodSum.getSumCarbohydrate()));
+
+            proteinSum = findViewById(R.id.ProteinSum);
+            proteinSum.setText(String.valueOf(foodSum.getSumProtein()));
+
+            fatSum = findViewById(R.id.fatSum);
+            fatSum.setText(String.valueOf(foodSum.getSumFat()));
+
+            SodiumSum = findViewById(R.id.SodiumSum);
+            SodiumSum.setText(String.valueOf(foodSum.getSumSodium()));
+
+            sugarSum = findViewById(R.id.sugarSum);
+            sugarSum.setText(String.valueOf(foodSum.getSumSugar()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.home:
                         Intent homeintent = new Intent(getApplicationContext(), main_user.class);
                         startActivity(homeintent);
                         return true;
                     case R.id.calender:
-                        Intent calenderintent = new Intent(getApplicationContext(), CalendarActivity.class);
-                        startActivity(calenderintent);
+                        UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(CalendarActivity.this);
+                        userFoodListBackgroundTask.execute();
                         return true;
                     case R.id.communety:
                         Intent communetyintent = new Intent(getApplicationContext(), community.class);
@@ -163,7 +212,7 @@ public class CalendarActivity extends AppCompatActivity {
                         startActivity(manbogiintent);
                         return true;*/
                     case R.id.annoucement:
-                        NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask( CalendarActivity.this);
+                        NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(CalendarActivity.this);
                         noticeBackgroundTask.execute();
                         return true;
                     case R.id.friend:
@@ -190,7 +239,7 @@ public class CalendarActivity extends AppCompatActivity {
         fabFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new FoodBackgroundTask().execute();
+                new FoodBackgroundTask(Date).execute();
             }
         });
 
@@ -210,28 +259,11 @@ public class CalendarActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
-        calendarAdapter = new CalendarAdapter(this);
-        calendarRecyclerView.setAdapter(calendarAdapter);
-        beforeIB = findViewById(R.id.beforeIB);
-        afterIB = findViewById(R.id.afterIB);
-        dateTV = findViewById(R.id.dateTV);
-
-        beforeIB.setOnClickListener(v -> {
-            setDate(-1);
-        });
-        afterIB.setOnClickListener(v -> {
-            setDate(1);
-        });
-
-        selectedDateTime = Calendar.getInstance().getTime();
-
-        setCalendarList(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH));
     }
 
     // 플로팅 액션 버튼 클릭시 애니메이션 효과
     public void toggleFab() {
-        if(fabMain_status) {
+        if (fabMain_status) {
             // 플로팅 액션 버튼 닫기
             // 애니메이션 추가
             ObjectAnimator fk_animation = ObjectAnimator.ofFloat(fabKg, "translationY", 0f);
@@ -243,7 +275,7 @@ public class CalendarActivity extends AppCompatActivity {
             // 메인 플로팅 이미지 변경
             fabMain.setImageResource(R.drawable.ic_action_plus);
 
-        }else {
+        } else {
             // 플로팅 액션 버튼 열기
             ObjectAnimator fc_animation = ObjectAnimator.ofFloat(fabFood, "translationY", -200f);
             fc_animation.start();
@@ -256,168 +288,16 @@ public class CalendarActivity extends AppCompatActivity {
         }
         // 플로팅 버튼 상태 변경
         fabMain_status = !fabMain_status;
-
     }
 
-
-    private void setDate(int addAmount) {
-        Calendar calendar = Calendar.getInstance();
-
-        if (selectedDateTime != null) {
-            calendar.setTime(selectedDateTime);
-        }
-        calendar.add(Calendar.MONTH, addAmount);
-        startDate =calendar.getTime();
-
-        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1);
-
-
-        int max = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), max);
-
-        selectedDate = defaultDateFormat.format(nowDate);
-        selectedDateTime = calendar.getTime();//strStartDate;
-
-        int setMonth = calendar.get(Calendar.MONTH) + 1;
-        if (setMonth == nowMonth) {
-            selectedDate = defaultDateFormat.format(nowDate);
-            selectedDateTime = calendar.getTime();//strStartDate;
-        } else {
-            Calendar dashboardDateCal = Calendar.getInstance();
-            dashboardDateCal.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1);
-            selectedDate = defaultDateFormat.format(dashboardDateCal.getTime());//strStartDate;
-            selectedDateTime = calendar.getTime();//strStartDate;
-        }
-
-        if (selectedDateTime == null) {
-            calendar.setTime(startDate);
-            selectedDateTime = startDate;
-        } else {
-            calendar.setTime(selectedDateTime);
-        }
-        setCalendarList(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH));
-
-
-    }
-
-
-    public void setCalendarList(int year, int month) {
-
-        try {
-
-            dateTV.setText(defaultMonthFormat.format(selectedDateTime));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        List<DayModel> dayModelList = new ArrayList<>();
-
-
-        try {
-
-
-            GregorianCalendar calendar = new GregorianCalendar();
-            GregorianCalendar preCalendar = new GregorianCalendar();
-
-            if (year > 0 && month > -1) {
-                calendar.set(GregorianCalendar.YEAR, year);
-                calendar.set(GregorianCalendar.MONTH, month);
-                calendar.set(GregorianCalendar.DATE, 1);
-
-                preCalendar.set(GregorianCalendar.YEAR, year);
-                preCalendar.set(GregorianCalendar.MONTH, month);
-                preCalendar.set(GregorianCalendar.DATE, 1);
-
-            } else {
-                calendar.set(GregorianCalendar.YEAR, calendar.get(Calendar.YEAR));
-                calendar.set(GregorianCalendar.MONTH, calendar.get(Calendar.MONTH));
-                calendar.set(GregorianCalendar.DATE, 1);
-
-                preCalendar.set(GregorianCalendar.YEAR, calendar.get(Calendar.YEAR));
-                preCalendar.set(GregorianCalendar.MONTH, calendar.get(Calendar.MONTH));
-                preCalendar.set(GregorianCalendar.DATE, 1);
-
-            }
-
-            preCalendar.add(Calendar.MONTH, -1);
-
-            int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-            int max = calendar.getActualMaximum(Calendar.DAY_OF_MONTH); // 해당 월에 마지막 요일
-
-
-            int preMonthMax = preCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-            //앞의 EMPTY 생성
-            for (int j = 0; j < dayOfWeek; j++) {
-
-
-                DayModel dayModel = new DayModel();
-                dayModel.setType(102031);
-
-
-                dayModel.setCalendarModel(new GregorianCalendar(calendar.get(Calendar.YEAR), (calendar.get(Calendar.MONTH) - 1), preMonthMax - (dayOfWeek - 1 - j)));
-                dayModelList.add(dayModel);
-
-            }
-
-            if (dayOfWeek > 0) {
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                Date d = new Date(dayModelList.get(0).getCalendarModel().getTimeInMillis());
-            }
-
-            for (int j = 1; j <= max; j++) {
-
-                DayModel dayModel = new DayModel();
-                dayModel.setType(1);
-                dayModel.setCalendarModel(new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), j));
-                dayModelList.add(dayModel);
-            }
-
-            //뒤의 Empty
-            if (dayModelList.size() / 7 > 0) {
-
-                int extra = dayModelList.size() % 7;
-
-                if (extra > 0) {
-                    extra = 7 - extra;
-                }
-
-                for (int k = 0; k < extra; k++) {
-                    DayModel dayModel = new DayModel();
-                    dayModel.setType(102031);
-                    dayModel.setCalendarModel(new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, k + 1));
-                    dayModelList.add(dayModel);
-                }
-
-                if (extra > 0) {
-
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    Date d = new Date(dayModelList.get(dayModelList.size() - 1).getCalendarModel().getTimeInMillis());
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        calendarAdapter.mCalendarList = dayModelList;
-        calendarAdapter.notifyDataSetChanged();
-    }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch(item.getItemId()){
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
     class FoodBackgroundTask extends AsyncTask<Void, Void, String> {
         String target;
+        String Date;
+
+        public FoodBackgroundTask(String date) {
+            this.Date = date;
+        }
+
         @Override
         protected void onPreExecute() {
             //List.php은 파싱으로 가져올 웹페이지
@@ -456,6 +336,7 @@ public class CalendarActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Intent intent = new Intent(CalendarActivity.this, Food_List.class);
             intent.putExtra("Food",result);
+            intent.putExtra("Date", Date);
             startActivity(intent);
             CalendarActivity.this.startActivity(intent);
         }
@@ -504,9 +385,28 @@ public class CalendarActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Intent intent = new Intent(CalendarActivity.this, userFood.class);
             intent.putExtra("UserFood", result);
+            intent.putExtra("Date", Date);
             CalendarActivity.this.startActivity(intent);
 
         }
     }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        switch(item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private String getTime() {
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d");
+        String getTime = dateFormat.format(date);
+
+        return getTime;
+    }
 }

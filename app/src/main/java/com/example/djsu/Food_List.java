@@ -58,7 +58,7 @@ public class Food_List extends AppCompatActivity {
     private List<Food>foodArrayList;
     private FoodAdapter foodAdapter;
     private EditText editText;
-
+    String Date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,8 +101,10 @@ public class Food_List extends AppCompatActivity {
 
         // recyclerView1.bringToFront();
         foodArrayList =new ArrayList<>();
+        Bundle extras = getIntent().getExtras();
 
-        foodAdapter = new FoodAdapter(this,foodArrayList);
+        Date = extras.getString("Date");
+        foodAdapter = new FoodAdapter(this,foodArrayList,Date);
 
         ListView foodListView = (ListView) findViewById(R.id.FoodView);
         foodListView.setAdapter(foodAdapter);
