@@ -65,14 +65,15 @@
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/DateText"
         android:layout_width="260dp"
         android:layout_height="30dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="28dp"
         android:background="#DBDBDB"
         app:layout_constraintBottom_toBottomOf="@+id/textView24"
         app:layout_constraintStart_toEndOf="@+id/textView24"
-        app:layout_constraintTop_toTopOf="@+id/textView24" />
+        app:layout_constraintTop_toTopOf="@+id/textView24"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -80,10 +81,10 @@
         android:background="#DBDBDB"
         android:src="@drawable/triangle"
         android:layout_marginStart="236dp"
-        app:layout_constraintBottom_toBottomOf="@+id/editText"
-        app:layout_constraintEnd_toEndOf="@+id/editText"
-        app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toTopOf="@+id/editText" />
+        app:layout_constraintBottom_toBottomOf="@+id/DateText"
+        app:layout_constraintEnd_toEndOf="@+id/DateText"
+        app:layout_constraintStart_toStartOf="@+id/DateText"
+        app:layout_constraintTop_toTopOf="@+id/DateText" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -93,7 +94,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText">
+        app:layout_constraintTop_toBottomOf="@+id/DateText">
 
         <RadioButton
             android:layout_width="wrap_content"
