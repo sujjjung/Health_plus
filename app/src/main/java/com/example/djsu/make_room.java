@@ -9,6 +9,6 @@ public class make_room extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_make_room);
+        setContentView(R.layout.activity_friend_invite);
     }
 }

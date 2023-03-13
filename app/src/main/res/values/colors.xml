@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#ffde00</color>
     <color name="pink">#ff9898</color>
-    <color name="back">#F1E15B</color>
+    <color name="back">#fff5b3</color>
         <!--<color name="colorPrimary">#52BCDC</color>-->
         <color name="schedule_week_view_line">#EEEEEE</color>
         <!--<color name="colorPrimaryDark">#59C4E4</color>-->
@@ -22,7 +22,7 @@
         <color name="colorWhite">#ffffff</color>
         <color name="login_gray">#cccccc</color>
         <color name="color_skimcorp">#52BCDC</color>
-        <color name="color_yellow">#FFEB3B</color>
+        <color name="color_yellow">#ffde00</color>
         <color name="color_transparent">#00FFFFFF</color>
         <color name="compare_increase">#39B54A</color>
         <color name="compare_decrease">#BE1E2D</color>

@@ -6,49 +6,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".map">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        tools:context=".map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFF5B3">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:srcCompat="@drawable/logo3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo3" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <RelativeLayout
-        android:id="@+id/map_view"
-        android:layout_width="match_parent"
-        android:layout_height="673dp"
-        android:layout_below="@+id/imageView"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="0dp" />
-
-</RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include layout="@layout/toolbar" />
-    </LinearLayout>
-    <com.google.android.material.navigation.NavigationView
+    <ImageButton
+        android:id="@+id/menu"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:id="@+id/navigationView"
-        android:layout_gravity="left"
-        app:menu="@menu/hamburger"
-        tools:ignore="MissingConstraints" />
-</androidx.drawerlayout.widget.DrawerLayout>
-	
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:src="@drawable/ic_action_hamburger"
+        android:layout_marginStart="8dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imageView" />
+
+        <net.daum.mf.map.api.MapView
+            android:id="@+id/mapView"
+            android:layout_width="413dp"
+            android:layout_height="675dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="56dp"
+            tools:ignore="MissingClass,MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
+
+<include layout="@layout/toolbar" />
+</LinearLayout>
+<com.google.android.material.navigation.NavigationView
+android:layout_width="wrap_content"
+android:layout_height="match_parent"
+android:fitsSystemWindows="true"
+android:id="@+id/navigationView"
+android:layout_gravity="left"
+app:menu="@menu/hamburger"
+tools:ignore="MissingConstraints" />
+    </androidx.drawerlayout.widget.DrawerLayout>

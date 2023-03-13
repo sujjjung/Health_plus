@@ -13,14 +13,25 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import android.view.ViewGroup;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import net.daum.mf.map.api.MapView;
+
 public class map extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+
+    private MapView mapView;
+    private ViewGroup mapViewContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -67,6 +78,10 @@ public class map extends AppCompatActivity {
                 return false;
             }
         });
+        MapView mapView = new MapView(this);
+
+        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.mapView);
+        mapViewContainer.addView(mapView);
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

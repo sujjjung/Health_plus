@@ -12,11 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.example.djsu.admin.AdminMainActivity;
-
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 public class FoodAdapter extends BaseAdapter {
@@ -52,7 +47,7 @@ public class FoodAdapter extends BaseAdapter {
     public View getView (final int position, View convertView, ViewGroup parent){
         String FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
         int FoodCood;
-        View v = View.inflate(context, R.layout.food_list_item, null);
+        View v = View.inflate(context, R.layout.item_food_list, null);
        // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
         TextView FoodName = (TextView) v.findViewById(R.id.FoodName);
         FoodName.setText(foodList.get(position).getFoodName());

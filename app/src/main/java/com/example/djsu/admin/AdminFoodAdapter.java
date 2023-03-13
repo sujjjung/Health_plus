@@ -14,7 +14,6 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.djsu.Food;
 import com.example.djsu.FoodDelete;
-import com.example.djsu.NoticeDelete;
 import com.example.djsu.R;
 
 import org.json.JSONObject;
@@ -53,7 +52,7 @@ public class AdminFoodAdapter extends BaseAdapter {
     @Override
     public View getView (final int position, View convertView, ViewGroup parent){
 
-        View v = View.inflate(context, R.layout.admin_food_item, null);
+        View v = View.inflate(context, R.layout.item_admin_food, null);
         // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
         TextView FoodName = (TextView) v.findViewById(R.id.FoodName);
         FoodName.setText(foodList.get(position).getFoodName());

@@ -39,11 +39,12 @@ public class AdminNoticeAdd extends AppCompatActivity {
             
             @Override
             public void onClick(View v) {
+                String Notice_emoji=((EditText)findViewById(R.id.Notice_emoji_et)).getText().toString();
                 String Notice_title=((EditText)findViewById(R.id.Notice_title_et)).getText().toString();
                 String Notice_content=((EditText)findViewById(R.id.Notice_content_et)).getText().toString();
                 String date = getTime();
                 // 서버로 Volley를 이용해서 요청을 함.
-                NoticeRequest  noticeRequest= new NoticeRequest(date,Notice_title,Notice_content);
+                NoticeRequest  noticeRequest= new NoticeRequest(date,Notice_title,Notice_content,Notice_emoji);
                 RequestQueue queue = Volley.newRequestQueue(AdminNoticeAdd.this);
                 queue.add(noticeRequest);
                 Toast.makeText(getApplicationContext(),"공지가 등록되었습니다.",Toast.LENGTH_SHORT).show();
@@ -51,7 +52,6 @@ public class AdminNoticeAdd extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
     }
     private String getTime() {

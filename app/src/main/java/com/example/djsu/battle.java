@@ -18,7 +18,7 @@ public class battle extends AppCompatActivity {
         setContentView(R.layout.activity_battle);
         customDialog = new Dialog(battle.this);       // Dialog 초기화
         customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
-        customDialog.setContentView(R.layout.activity_custom_dialog);             // xml 레이아웃 파일과 연결
+        customDialog.setContentView(R.layout.dialog_vs_goal_kg);             // xml 레이아웃 파일과 연결
 
         // 버튼: 커스텀 다이얼로그 띄우기
         findViewById(R.id.goals_setting_btn).setOnClickListener(new View.OnClickListener() {

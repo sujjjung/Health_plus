@@ -17,11 +17,11 @@
         app:layout_constraintVertical_bias="0.332"
         app:srcCompat="@drawable/logo2" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signup_btn"
         android:layout_width="238dp"
         android:layout_height="62dp"
-        android:backgroundTint="#ffdc01"
+        android:background="@drawable/shape_yes_btn"
         android:fontFamily="@font/a10092"
         android:text="회원가입"
         android:textColor="#444444"
@@ -32,11 +32,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.741" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login_btn"
         android:layout_width="238dp"
         android:layout_height="62dp"
-        android:backgroundTint="#ffdc01"
+        android:background="@drawable/shape_no_btn"
         android:fontFamily="@font/a10092"
         android:text="로그인"
         android:textColor="#444444"

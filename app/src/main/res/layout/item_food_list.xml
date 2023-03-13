@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -25,32 +25,32 @@
 
 
         <TextView
-            android:id="@+id/ExName"
-            android:layout_width="118dp"
+            android:id="@+id/FoodName"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="이름"
             android:textColor="#000"
             android:textSize="20sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@drawable/shape_no_btn"
             android:id="@+id/select"
-            android:layout_width="65dp"
-            android:layout_height="46dp"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
             android:layout_margin="5dp"
-            android:backgroundTint="#ff9898"
             android:fontFamily="@font/a10091"
             android:text="선택"
             android:textColor="@color/black" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@drawable/shape_yes_btn"
             android:id="@+id/Detail"
-            android:layout_width="92dp"
-            android:layout_height="46dp"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
             android:layout_margin="5dp"
-            android:backgroundTint="#ff9898"
             android:fontFamily="@font/a10091"
-            android:text="운동설명"
+            android:text="상세성분"
             android:textColor="@color/black"
             android:textSize="13dp" />
 

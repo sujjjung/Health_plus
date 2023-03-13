@@ -33,22 +33,22 @@
             android:textColor="#000"
             android:textSize="20sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@drawable/shape_no_btn"
             android:id="@+id/select"
-            android:layout_width="65dp"
-            android:layout_height="46dp"
-            android:layout_margin="5dp"
-            android:backgroundTint="#ff9898"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:fontFamily="@font/a10091"
             android:text="수정"
             android:textColor="@color/black" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@drawable/shape_yes_btn"
             android:id="@+id/delete"
-            android:layout_width="64dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:backgroundTint="#ff9898"
+            android:layout_margin="10dp"
             android:fontFamily="@font/a10091"
             android:text="삭제"
             android:textColor="@color/black"

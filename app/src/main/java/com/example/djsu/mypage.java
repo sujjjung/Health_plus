@@ -29,6 +29,7 @@ import com.google.android.material.navigation.NavigationView;
 import android.graphics.Color;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -57,6 +58,8 @@ public class mypage extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+
+    private TextView name, state;
 
     BarChart barChart;
 
@@ -125,6 +128,12 @@ public class mypage extends AppCompatActivity {
                 return false;
             }
         });
+
+        User user = new User();
+        name = findViewById(R.id.name_textView);
+        name.setText(user.getName());
+        state = findViewById(R.id.Status_message_text);
+        state.setText(user.getState());
 
         GetData task = new GetData();
         task.execute("http://enejd0613.dothome.co.kr/fat.php", "");
