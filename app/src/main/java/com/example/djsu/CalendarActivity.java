@@ -53,13 +53,11 @@ public class CalendarActivity extends AppCompatActivity {
     private FloatingActionButton fabMain;
     private FloatingActionButton fabHealth;
     private FloatingActionButton fabFood;
-
     private FloatingActionButton fabKg;
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     public CalendarView calendarView;
-    public TextView diaryTextView;
     public int count = 0;
     String Year,Month,DayOfMonth,Date = "",date;
     @Override
@@ -94,7 +92,6 @@ public class CalendarActivity extends AppCompatActivity {
         TextView sodiumSum = findViewById(R.id.SodiumSum);
         TextView SugarSum = findViewById(R.id.sugarSum);
         calendarView = findViewById(R.id.calendarView);
-        diaryTextView = findViewById(R.id.diaryTextView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
         {
             @Override
@@ -113,10 +110,14 @@ public class CalendarActivity extends AppCompatActivity {
                 Month = String.valueOf(month + 1);
                 DayOfMonth = String.valueOf(dayOfMonth);
                 Date = Year + "-" + Month + "-" + DayOfMonth;
-                diaryTextView.setVisibility(View.VISIBLE);
                 KcalSum.setVisibility(View.VISIBLE);
+                CarbohydrateSum.setVisibility(View.VISIBLE);
+                proteinSum.setVisibility(View.VISIBLE);
+                FatSum.setVisibility(View.VISIBLE);
+                sodiumSum.setVisibility(View.VISIBLE);
+                SugarSum.setVisibility(View.VISIBLE);
+                UserFoodBtn.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(), String.format("%d - %d - %d", year, month + 1, dayOfMonth), Toast.LENGTH_SHORT).show();
-                diaryTextView.setText(Date);
                 try {
                     JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserFood"));
                     JSONArray jsonArray = jsonObject.getJSONArray("response");
@@ -168,7 +169,7 @@ public class CalendarActivity extends AppCompatActivity {
         if(Date.equals("")){
             Date = date;
         }
-        diaryTextView.setText(Date);
+
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();

@@ -72,6 +72,7 @@ public class signup extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            System.out.println("hongchul" + response);
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
                             if (success) { // 회원등록에 성공한 경우

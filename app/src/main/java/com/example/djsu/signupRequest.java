@@ -19,7 +19,7 @@ public class signupRequest extends StringRequest{
         map.put("UserID",UserID);
         map.put("UserPassword", UserPassword);
         map.put("UserName", UserName);
-        map.put("UserAge", UserAge);
+        map.put("UserAge", UserAge + "");
     }
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {

@@ -67,15 +67,11 @@ public class main_user extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
-    EditText Status_message_text;
-    Button Status_message_btn;
     private TextView name, state;
     private String profile;
 
     private String ID;
     private EditText et_status;
-
-    Dialog dialog_status;
 
     private ImageView ivImage;
 
@@ -99,8 +95,8 @@ public class main_user extends AppCompatActivity {
         announcement_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), annoucement.class);
-                startActivity(intent);
+                NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(main_user.this);
+                noticeBackgroundTask.execute();
             }
         });
 

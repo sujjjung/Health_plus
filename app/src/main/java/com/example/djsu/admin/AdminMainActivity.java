@@ -157,7 +157,6 @@ public class AdminMainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplication(), AdminNoticeMain.class);
             intent.putExtra("Notice",result);
             startActivity(intent);
-            getApplication().startActivity(intent);
         }
     }
     class ExBackgroundTask extends AsyncTask<Void, Void, String> {

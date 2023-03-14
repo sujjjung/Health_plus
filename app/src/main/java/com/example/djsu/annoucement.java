@@ -45,7 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class annoucement extends AppCompatActivity {
-    String date,title,detail;
+    String date,title,detail,emote;
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -99,8 +99,8 @@ public class annoucement extends AppCompatActivity {
                         startActivity(manbogiintent);
                         return true;*/
                     case R.id.annoucement:
-                        Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
-                        startActivity(annoucementintent);
+                        NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(annoucement.this);
+                        noticeBackgroundTask.execute();
                         return true;
                 }
                 return false;
@@ -111,7 +111,7 @@ public class annoucement extends AppCompatActivity {
         noticeAdapter = new NoticeAdapter(this,noticeList);
 
         ListView NoticeListView = (ListView) findViewById(R.id.NoticeView);
-
+        NoticeListView.setAdapter(noticeAdapter);
         try {
             noticeAdapter.notifyDataSetChanged();
             JSONObject jsonObject = new JSONObject(intent.getStringExtra("Notice"));
@@ -121,15 +121,14 @@ public class annoucement extends AppCompatActivity {
             while (count < jsonArray.length()) {
                 //count는 배열의 인덱스를 의미
                 JSONObject object = jsonArray.getJSONObject(count);
-
+                emote = object.getString("emote");
                 date = object.getString("date");
                 title = object.getString("title");
                 detail = object.getString("detail");
                 //값들을 User클래스에 묶어줍니다
-                Notice notice = new Notice(date,title,detail);
+                Notice notice = new Notice(date,title,detail,emote);
                 noticeList.add(notice);//리스트뷰에 값을 추가해줍니다
                 count++;
-                NoticeListView.setAdapter(noticeAdapter);
                 NoticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                     @Override
                     public void onItemClick(AdapterView parent, View v, int position, long id){
@@ -154,5 +153,13 @@ public class annoucement extends AppCompatActivity {
         }
 
     }
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        switch(item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
