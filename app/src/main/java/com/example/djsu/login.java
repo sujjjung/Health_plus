@@ -37,7 +37,6 @@ public class login extends AppCompatActivity {
 
     public static Context context_email;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

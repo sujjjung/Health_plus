@@ -17,14 +17,14 @@ import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import net.daum.mf.map.api.MapView;
+//import net.daum.mf.map.api.MapView;
 
 public class map extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
-    private MapView mapView;
+//    private MapView mapView;
     private ViewGroup mapViewContainer;
 
     @Override
@@ -78,10 +78,10 @@ public class map extends AppCompatActivity {
                 return false;
             }
         });
-        MapView mapView = new MapView(this);
-
-        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.mapView);
-        mapViewContainer.addView(mapView);
+//        MapView mapView = new MapView(this);
+//
+//        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.mapView);
+//        mapViewContainer.addView(mapView);
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
