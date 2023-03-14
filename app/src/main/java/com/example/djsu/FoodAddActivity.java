@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -126,8 +127,19 @@ public class FoodAddActivity extends AppCompatActivity {
                             ,FatText.getText().toString(),SodiumText.getText().toString(),SugarText.getText().toString(),KgText.getText().toString(),s);
                     RequestQueue queue = Volley.newRequestQueue(FoodAddActivity.this);
                     queue.add(calendatRequest);
-                    UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(FoodAddActivity.this);
-                    userFoodListBackgroundTask.execute();
+                    Intent intent = new Intent(getApplicationContext(), FoodAddActivity.class);
+                    intent.putExtra("FoodName", String.valueOf(NameText.getText()));
+                    intent.putExtra("FoodKcal", Kcalstr);
+                    intent.putExtra("FoodCarbohydrate", Carbohydratestr);
+                    intent.putExtra("FoodProtein", Proteinstr);
+                    intent.putExtra("FoodFat", Fatstr);
+                    intent.putExtra("FoodSodium", Sodiumstr);
+                    intent.putExtra("FoodSugar", Sugarstr);
+                    intent.putExtra("FoodKg", Kgstr);
+                    intent.putExtra("FoodCood", Cood);
+                    intent.putExtra("Date", Date);
+                    Toast.makeText(getApplicationContext(),"음식등록이 되었습니다.",Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
 
                 }
             });

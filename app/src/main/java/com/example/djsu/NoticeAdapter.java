@@ -58,7 +58,7 @@ public class NoticeAdapter extends BaseAdapter {
         TextView title = (TextView) v.findViewById(R.id.title);
         date.setText(NoticeList.get(position).getDate());
         title.setText(NoticeList.get(position).getTitle());
-        String content = NoticeList.get(position).getContent();
+        //String content = NoticeList.get(position).getContent();
         v.setTag(NoticeList.get(position).getDate());
 
 

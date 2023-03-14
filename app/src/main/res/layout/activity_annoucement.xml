@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                        <ExpandableListView
+                        <ListView
                             android:id="@+id/NoticeView"
                             android:layout_width="410dp"
                             android:layout_height="584dp"

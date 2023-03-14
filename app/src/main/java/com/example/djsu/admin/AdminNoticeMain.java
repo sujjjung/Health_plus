@@ -48,18 +48,18 @@ public class AdminNoticeMain extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(intent.getStringExtra("Notice"));
             JSONArray jsonArray = jsonObject.getJSONArray("response");
             int count = 0;
-            String date,title,detail;
+            String date,title,detail,emote;
             //JSON 배열 길이만큼 반복문을 실행
             while (count < jsonArray.length()) {
                 //count는 배열의 인덱스를 의미
                 JSONObject object = jsonArray.getJSONObject(count);
 
-                //emote = object.getString("emote");
+                emote = object.getString("emote");
                 date = object.getString("date");
                 title = object.getString("title");
                 detail = object.getString("detail");
                 //값들을 User클래스에 묶어줍니다
-                Notice notice = new Notice(date,title,detail);
+                Notice notice = new Notice(date,title,detail,emote);
                 noticeList.add(notice);//리스트뷰에 값을 추가해줍니다
                 count++;
 
