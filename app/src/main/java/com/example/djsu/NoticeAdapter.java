@@ -54,8 +54,10 @@ public class NoticeAdapter extends BaseAdapter {
 
         View v = View.inflate(context, R.layout.item_annoucement, null);
         // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
+        TextView emote = (TextView) v.findViewById(R.id.emote);
         TextView date = (TextView) v.findViewById(R.id.date);
         TextView title = (TextView) v.findViewById(R.id.title);
+        emote.setText(NoticeList.get(position).getEmote());
         date.setText(NoticeList.get(position).getDate());
         title.setText(NoticeList.get(position).getTitle());
         //String content = NoticeList.get(position).getContent();
