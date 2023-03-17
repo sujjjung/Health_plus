@@ -185,7 +185,7 @@ public class FoodAddActivity extends AppCompatActivity {
                         startActivity(annoucementintent);
                         return true;
                     case R.id.friend:
-                        Intent friend = new Intent(getApplicationContext(), friend_list.class);
+                        Intent friend = new Intent(getApplicationContext(), chatList.class);
                         startActivity(friend);
                         return true;
                 }

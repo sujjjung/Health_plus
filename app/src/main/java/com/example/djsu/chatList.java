@@ -39,7 +39,7 @@ public class chatList extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), friendAdd.class);
+                Intent intent = new Intent(getApplicationContext(), friends_remove.class);
                 startActivity(intent);
             }
         });
@@ -84,6 +84,10 @@ public class chatList extends AppCompatActivity {
                     case R.id.annoucement:
                         Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
                         startActivity(annoucementintent);
+                        return true;
+                    case R.id.friend:
+                        Intent friend = new Intent(getApplicationContext(), chatList.class);
+                        startActivity(friend);
                         return true;
                 }
                 return false;

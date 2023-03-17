@@ -95,6 +95,10 @@ public class community extends AppCompatActivity {
                         Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
                         startActivity(annoucementintent);
                         return true;
+                    case R.id.friend:
+                        Intent friend = new Intent(getApplicationContext(), chatList.class);
+                        startActivity(friend);
+                        return true;
                 }
                 return false;
             }

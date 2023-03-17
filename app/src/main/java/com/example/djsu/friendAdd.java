@@ -6,15 +6,20 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -22,9 +27,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import org.checkerframework.checker.units.qual.A;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +50,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class friendAdd extends AppCompatActivity {
 
@@ -43,31 +58,89 @@ public class friendAdd extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
-    private static final String TAG_JSON="webnautes";
-    private static final String TAG_Name="UserName";
-    private static final String TAG_ID="UserId";
-    private static final String TAG_Password="UserPassword";
-    private static final String TAG_Age="UserAge";
-    private static final String TAG_Profile="UserProfile";
+    RecyclerView recyclerView;
+    DatabaseReference databaseReference;
+    memberAdapter memberAdapter;
+    ArrayList<member> list;
 
+    private EditText editText;
 
-    ArrayList<HashMap<String, String>> mArrayList;
-    ListView mlistView;
-    String mJsonString;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_add);
-
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        ArrayList<member> search_list = new ArrayList<>();
+
+        editText = findViewById(R.id.searchtext);
+
+        // editText 리스터 작성
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String searchText = editText.getText().toString();
+                search_list.clear();
+
+                if(searchText.equals("")){
+                    memberAdapter.setItems(list);
+                }
+                else {
+                    // 검색 단어를 포함하는지 확인
+                    for (int a = 0; a < list.size(); a++) {
+                        if (list.get(a).getName().toLowerCase().contains(searchText.toLowerCase())) {
+                            search_list.add(list.get(a));
+                        }
+                        memberAdapter.setItems(search_list);
+                    }
+                }
+            }
+
+        });
+
         //뒤로가기버튼 이미지 적용
         actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
 
+        recyclerView = findViewById(R.id.UserList);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("User");
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        list = new ArrayList<>();
+        memberAdapter = new memberAdapter(this, list);
+        recyclerView.setAdapter(memberAdapter);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    member member = dataSnapshot.getValue(member.class);
+                    list.add(member);
+                }
+                memberAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -105,141 +178,6 @@ public class friendAdd extends AppCompatActivity {
                 return false;
             }
         });
+    } //onCreate
 
-        mlistView = (ListView) findViewById(R.id.UserList);
-        mArrayList = new ArrayList<>();
-
-        GetData task = new GetData();
-        task.execute("http://enejd0613.dothome.co.kr/UserList.php");
-    }
-
-    private class GetData extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
-        String errorString = null;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            progressDialog = ProgressDialog.show(friendAdd.this,
-                    "Please Wait", null, true, true);
-        }
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            progressDialog.dismiss();
-            Log.d(TAG, "response  - " + result);
-
-            mJsonString = result;
-            showResult();
-        }
-
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            String serverURL = params[0];
-
-
-            try {
-
-                URL url = new URL(serverURL);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
-
-                httpURLConnection.setReadTimeout(5000);
-                httpURLConnection.setConnectTimeout(5000);
-                httpURLConnection.connect();
-
-
-                int responseStatusCode = httpURLConnection.getResponseCode();
-                Log.d(TAG, "response code - " + responseStatusCode);
-
-                InputStream inputStream;
-                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
-                    inputStream = httpURLConnection.getInputStream();
-                }
-                else{
-                    inputStream = httpURLConnection.getErrorStream();
-                }
-
-
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-                StringBuilder sb = new StringBuilder();
-                String line;
-
-                while((line = bufferedReader.readLine()) != null){
-                    sb.append(line);
-                }
-
-
-                bufferedReader.close();
-
-
-                return sb.toString().trim();
-
-
-            } catch (Exception e) {
-
-                Log.d(TAG, "InsertData: Error ", e);
-                errorString = e.toString();
-
-                return null;
-            }
-
-        }
-    }
-
-
-    private void showResult(){
-        try {
-            JSONObject jsonObject = new JSONObject(mJsonString);
-            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
-
-            for(int i=0;i<jsonArray.length();i++){
-
-                JSONObject item = jsonArray.getJSONObject(i);
-
-                String UserName = item.getString(TAG_Name);
-//                String profile = item.getString(TAG_Profile);
-
-                HashMap<String,String> hashMap = new HashMap<>();
-
-                  hashMap.put(TAG_Name, UserName);
-//                hashMap.put(TAG_Profile, profile);
-
-                mArrayList.add(hashMap);
-            }
-
-            ListAdapter adapter = new SimpleAdapter(
-                    friendAdd.this, mArrayList, R.layout.item_friends_remove,
-                    new String[]{TAG_Name},
-                    new int[]{R.id.name}
-            );
-
-            mlistView.setAdapter(adapter);
-
-        } catch (JSONException e) {
-
-            Log.d(TAG, "showResult : ", e);
-        }
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch(item.getItemId()){
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
