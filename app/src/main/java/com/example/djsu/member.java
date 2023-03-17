@@ -6,6 +6,8 @@ public class member {
     private String Age;
     private String Name;
 
+    private String Profile;
+
     public member() {
     }
 
@@ -46,5 +48,13 @@ public class member {
 
     public void setName(String name) {
         Name = name;
+    }
+
+    public String getProfile() {
+        return Profile;
+    }
+
+    public void setProfile(String profile) {
+        Profile = profile;
     }
 }

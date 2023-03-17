@@ -28,7 +28,7 @@ public class chat_room_list extends AppCompatActivity {
         friendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),friend_list.class);
+                Intent intent=new Intent(getApplicationContext(),friends_remove.class);
                 startActivity(intent);
             }
         });
@@ -73,6 +73,10 @@ public class chat_room_list extends AppCompatActivity {
                     case R.id.annoucement:
                         Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
                         startActivity(annoucementintent);
+                        return true;
+                    case R.id.friend:
+                        Intent friend = new Intent(getApplicationContext(), chatList.class);
+                        startActivity(friend);
                         return true;
                 }
                 return false;

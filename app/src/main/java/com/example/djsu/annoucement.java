@@ -102,6 +102,10 @@ public class annoucement extends AppCompatActivity {
                         NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(annoucement.this);
                         noticeBackgroundTask.execute();
                         return true;
+                    case R.id.friend:
+                        Intent friend = new Intent(getApplicationContext(), chatList.class);
+                        startActivity(friend);
+                        return true;
                 }
                 return false;
             }
