@@ -48,13 +48,13 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-<!--        <activity-->
-<!--            android:name=".userFood"-->
-<!--            android:exported="false">-->
-<!--            <meta-data-->
-<!--                android:name="android.app.lib_name"-->
-<!--                android:value="" />-->
-<!--        </activity>-->
+        <activity
+         android:name=".userFood"
+         android:exported="false">
+         <meta-data
+             android:name="android.app.lib_name"
+              android:value="" />
+        </activity>
         <activity
             android:name=".Food_List"
             android:exported="false">

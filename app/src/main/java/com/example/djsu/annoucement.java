@@ -79,8 +79,8 @@ public class annoucement extends AppCompatActivity {
                         startActivity(homeintent);
                         return true;
                     case R.id.calender:
-                        Intent calenderintent = new Intent(getApplicationContext(), CalendarActivity.class);
-                        startActivity(calenderintent);
+                        UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(annoucement.this);
+                        userFoodListBackgroundTask.execute();
                         return true;
                     case R.id.communety:
                         Intent communetyintent = new Intent(getApplicationContext(), community.class);

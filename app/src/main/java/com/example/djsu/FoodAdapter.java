@@ -45,36 +45,38 @@ public class FoodAdapter extends BaseAdapter {
     //리스트뷰에서 실질적으로 뿌려주는 부분임
     @Override
     public View getView (final int position, View convertView, ViewGroup parent){
-        String FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
+        int FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
         int FoodCood;
         View v = View.inflate(context, R.layout.item_food_list, null);
        // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
         TextView FoodName = (TextView) v.findViewById(R.id.FoodName);
         FoodName.setText(foodList.get(position).getFoodName());
         FoodCood = foodList.get(position).getFoodCood();
-        FoodKcal = foodList.get(position).getFoodKcal();
-        FoodCarbohydrate = foodList.get(position).getFoodCarbohydrate();
-        FoodProtein = foodList.get(position).getFoodProtein();
-        FoodFat = foodList.get(position).getFoodFat();
-        FoodSodium = foodList.get(position).getFoodSodium();
-        FoodSugar = foodList.get(position).getFoodSugar();
-        FoodKg = foodList.get(position).getFoodKg();
+        FoodKg = Integer.parseInt(foodList.get(position).getFoodKg());
+        FoodKcal = Integer.parseInt(foodList.get(position).getFoodKcal());
+        FoodCarbohydrate = Integer.parseInt(foodList.get(position).getFoodCarbohydrate());
+        FoodProtein = Integer.parseInt(foodList.get(position).getFoodProtein());
+        FoodFat = Integer.parseInt(foodList.get(position).getFoodFat());
+        FoodSodium = Integer.parseInt(foodList.get(position).getFoodSodium());
+        FoodSugar = Integer.parseInt(foodList.get(position).getFoodSugar());
+
         v.setTag(foodList.get(position).getFoodName());
         Button selectBtn = (Button) v.findViewById(R.id.select);
         selectBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(context, FoodAddActivity.class);
-                intent.putExtra("FoodName", String.valueOf(FoodName.getText()));
-                intent.putExtra("FoodKcal", FoodKcal);
-                intent.putExtra("FoodCarbohydrate", FoodCarbohydrate);
-                intent.putExtra("FoodProtein", FoodProtein);
-                intent.putExtra("FoodFat", FoodFat);
-                intent.putExtra("FoodSodium", FoodSodium);
-                intent.putExtra("FoodSugar", FoodSugar);
-                intent.putExtra("FoodKg", FoodKg);
+                intent.putExtra("FoodName", FoodName.getText());
+                intent.putExtra("FoodKcal", String.valueOf(FoodKcal));
+                intent.putExtra("FoodCarbohydrate", String.valueOf(FoodCarbohydrate));
+                intent.putExtra("FoodProtein", String.valueOf(FoodProtein));
+                intent.putExtra("FoodFat", String.valueOf(FoodFat));
+                intent.putExtra("FoodSodium", String.valueOf(FoodSodium));
+                intent.putExtra("FoodSugar", String.valueOf(FoodSugar));
+                intent.putExtra("FoodKg", String.valueOf(FoodKg));
                 intent.putExtra("FoodCood", FoodCood);
                 intent.putExtra("Date", Date);
+                intent.putExtra("num", 1);
                 context.startActivity(intent);
                 };
         });
@@ -84,8 +86,8 @@ public class FoodAdapter extends BaseAdapter {
             public void onClick(View view) {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(context);
                 dlg.setTitle( String.valueOf(FoodName.getText()) + "상세성분"); //제목
-                dlg.setMessage("칼로리:"+FoodKcal+"\n탄수화물:"+FoodCarbohydrate+"\n단백질:"+FoodProtein+"\n지방:"+FoodFat
-                +"\n나트륨:"+FoodSodium+"\n당:"+FoodSugar+"\n무게:"+FoodKg);
+                dlg.setMessage("칼로리:"+FoodKcal*FoodKg+"\n탄수화물:"+FoodCarbohydrate*FoodKg+"\n단백질:"+FoodProtein*FoodKg+"\n지방:"+FoodFat*FoodKg
+                +"\n나트륨:"+FoodSodium*FoodKg+"\n당:"+FoodSugar*FoodKg+"\n무게:"+FoodKg);
                 dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int which) {
                         //토스트 메시지

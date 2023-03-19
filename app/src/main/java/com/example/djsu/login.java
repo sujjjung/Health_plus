@@ -77,9 +77,6 @@ public class login extends AppCompatActivity {
                                 user.setId(UserID);
                                 user.setState(state);
                                 user.setProfile(profile);
-                                UserRequest userRequest = new UserRequest(user.getId());
-                                RequestQueue queue = Volley.newRequestQueue(login.this);
-                                queue.add(userRequest);
                                 startActivity(intent);
                             }
                         } catch (JSONException e) {

@@ -47,7 +47,6 @@ import java.util.List;
 
 public class CalendarActivity extends AppCompatActivity {
 
-    private TextView kcalSum, carbohydrateSum, proteinSum, fatSum, SodiumSum, sugarSum;
     // 플로팅버튼 상태
     private boolean fabMain_status = false;
     private FloatingActionButton fabMain;
@@ -68,15 +67,6 @@ public class CalendarActivity extends AppCompatActivity {
         Button UserFoodBtn = (Button) findViewById(R.id.FoodGoBtn);
 
 
-        overridePendingTransition(0, 0);
-        UserFoodBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                new UserFoodBackgroundTask().execute();
-            }
-
-        });
         imageButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -116,12 +106,12 @@ public class CalendarActivity extends AppCompatActivity {
                 FatSum.setVisibility(View.VISIBLE);
                 sodiumSum.setVisibility(View.VISIBLE);
                 SugarSum.setVisibility(View.VISIBLE);
-                UserFoodBtn.setVisibility(View.VISIBLE);
+               // UserFoodBtn.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(), String.format("%d - %d - %d", year, month + 1, dayOfMonth), Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserFood"));
                     JSONArray jsonArray = jsonObject.getJSONArray("response");
-                    int count = 0;
+                    int count = 0,FcCode;
                     String eatingTime,Date1,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
                     //JSON 배열 길이만큼 반복문을 실행
                     while (count < jsonArray.length()) {
@@ -137,16 +127,17 @@ public class CalendarActivity extends AppCompatActivity {
                         FoodSugar = object.getString("FoodSugar");
                         FoodKg = object.getString("FoodKg");
                         eatingTime = object.getString("eatingTime");
+                        FcCode = object.getInt("FcCode");
                         //값들을 User클래스에 묶어줍니다
                         UserID = object.getString("UserID");
                         if(UserID.equals(user1.getId())) {
                             if(Date.equals(Date1)) {
-                                KcalNum += Integer.parseInt(FoodKcal);
-                                CarbohydrateNum += Integer.parseInt(FoodCarbohydrate);
-                                proteinNum += Integer.parseInt(FoodProtein);
-                                FatNum += Integer.parseInt(FoodFat);
-                                sodiumNum += Integer.parseInt(FoodSodium);
-                                SugarNum += Integer.parseInt(FoodSugar);
+                                KcalNum +=  Integer.parseInt(FoodKcal) * Integer.parseInt(FoodKg);
+                                CarbohydrateNum += Integer.parseInt(FoodCarbohydrate) * Integer.parseInt(FoodKg);
+                                proteinNum += Integer.parseInt(FoodProtein) * Integer.parseInt(FoodKg);
+                                FatNum += Integer.parseInt(FoodFat) * Integer.parseInt(FoodKg);
+                                sodiumNum += Integer.parseInt(FoodSodium) * Integer.parseInt(FoodKg);
+                                SugarNum += Integer.parseInt(FoodSugar) * Integer.parseInt(FoodKg);
                                 KcalSum.setText(String.valueOf(KcalNum));
                                 CarbohydrateSum.setText(String.valueOf(CarbohydrateNum));
                                 proteinSum.setText(String.valueOf(proteinNum));
@@ -170,6 +161,13 @@ public class CalendarActivity extends AppCompatActivity {
             Date = date;
         }
 
+        UserFoodBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new UserFoodBackgroundTask(Date).execute();
+            }
+
+        });
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -340,7 +338,10 @@ public class CalendarActivity extends AppCompatActivity {
 
     class UserFoodBackgroundTask extends AsyncTask<Void, Void, String> {
         String target;
-
+        String Date;
+        public UserFoodBackgroundTask(String date) {
+            this.Date = date;
+        }
         @Override
         protected void onPreExecute() {
             //List.php은 파싱으로 가져올 웹페이지
@@ -382,8 +383,8 @@ public class CalendarActivity extends AppCompatActivity {
             Intent intent = new Intent(CalendarActivity.this, userFood.class);
             intent.putExtra("UserFood", result);
             intent.putExtra("Date", Date);
+            startActivity(intent);
             CalendarActivity.this.startActivity(intent);
-
         }
     }
     @Override

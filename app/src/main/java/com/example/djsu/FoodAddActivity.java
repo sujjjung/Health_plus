@@ -1,7 +1,8 @@
 package com.example.djsu;
 
+import static java.lang.Double.sum;
+
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,8 +21,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONObject;
 
 import java.util.Calendar;
 
@@ -28,14 +33,18 @@ public class FoodAddActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private Button addButton;
+    private Button addButton,SumBtn;
     ImageButton food_input, searchBtn;
-    String Date,s;
+    EditText NameText,KcalText,CarbohydratText,ProteinText,FatText,SodiumText,SugarText,KgText,DateText;
+    String Namestr,Kcalstr,Carbohydratestr,Proteinstr,Fatstr,Sodiumstr,Sugarstr,Kgstr,Datestr;
+    String Date,s,Time;
+    Bundle extras;
+    int a,Cood,FcCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_add);
-
+        SumBtn = findViewById(R.id.SumBtn);
         addButton = findViewById(R.id.addBtn);
         searchBtn = (ImageButton) findViewById(R.id.SearchBtn);
         food_input = (ImageButton) findViewById(R.id.food_input_btn);
@@ -47,6 +56,16 @@ public class FoodAddActivity extends AppCompatActivity {
             }
         });
 
+        extras = getIntent().getExtras();
+        a = extras.getInt("num");
+       switch (a){
+           case 1: Add();
+               break;
+           case 2:
+               Time = extras.getString("Time");
+               Update();
+               break;
+       }
         s = getDT();
         String Name = "";
         String Kcal = "";
@@ -56,8 +75,7 @@ public class FoodAddActivity extends AppCompatActivity {
         String Sodium = "";
         String Sugar = "";
         String Kg = "";
-        int Cood;
-        Bundle extras = getIntent().getExtras();
+
 
         Name = extras.getString("FoodName");
         Kcal = extras.getString("FoodKcal");
@@ -69,26 +87,27 @@ public class FoodAddActivity extends AppCompatActivity {
         Kg = extras.getString("FoodKg");
         Cood = extras.getInt("FoodCood");
         Date = extras.getString("Date");
+        Time = extras.getString("Time");
+        FcCode = extras.getInt("FcCode");
+       NameText = (EditText) findViewById(R.id.nametext);
+       KcalText = (EditText) findViewById(R.id.kcaltext);
+       CarbohydratText = (EditText) findViewById(R.id.Carbohydratetext);
+       ProteinText = (EditText) findViewById(R.id.Protintext);
+       FatText = (EditText) findViewById(R.id.Fattext);
+       SodiumText = (EditText) findViewById(R.id.Sodiumtext);
+       SugarText = (EditText) findViewById(R.id.Sugartext);
+       KgText = (EditText) findViewById(R.id.Kgtext);
+       DateText = (EditText) findViewById(R.id.DateText);
 
-        EditText NameText = (EditText) findViewById(R.id.nametext);
-        EditText KcalText = (EditText) findViewById(R.id.kcaltext);
-        EditText CarbohydratText = (EditText) findViewById(R.id.Carbohydratetext);
-        EditText ProteinText = (EditText) findViewById(R.id.Protintext);
-        EditText FatText = (EditText) findViewById(R.id.Fattext);
-        EditText SodiumText = (EditText) findViewById(R.id.Sodiumtext);
-        EditText SugarText = (EditText) findViewById(R.id.Sugartext);
-        EditText KgText = (EditText) findViewById(R.id.Kgtext);
-        EditText DateText = (EditText) findViewById(R.id.DateText);
-
-        String Namestr = Name;
-        String Kcalstr = Kcal;
-        String Carbohydratestr = Carbohydrate;
-        String Proteinstr = Protein;
-        String Fatstr = Fat;
-        String Sodiumstr = Sodium;
-        String Sugarstr = Sugar;
-        String Kgstr = Kg;
-        String Datestr = Date;
+         Namestr = Name;
+         Kcalstr = Kcal;
+         Carbohydratestr = Carbohydrate;
+         Proteinstr = Protein;
+         Fatstr = Fat;
+         Sodiumstr = Sodium;
+         Sugarstr = Sugar;
+         Kgstr = Kg;
+         Datestr = Date;
 
         NameText.setText(Namestr);
         KcalText.setText(Kcalstr);
@@ -99,6 +118,13 @@ public class FoodAddActivity extends AppCompatActivity {
         SugarText.setText(Sugarstr);
         KgText.setText(Kgstr);
         DateText.setText(Datestr);
+        SumBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               int kk = Integer.parseInt(KgText.getText().toString());
+                Sum(kk,a);
+            }
+        });
         RadioGroup radioGroup = (RadioGroup)findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -119,30 +145,7 @@ public class FoodAddActivity extends AppCompatActivity {
             }
         });
 
-            addButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    User user = new User();
-                    CalendatRequest calendatRequest = new CalendatRequest(user.getId(), Date, extras.getInt("FoodCood"),NameText.getText().toString(),KcalText.getText().toString(),CarbohydratText.getText().toString(),ProteinText.getText().toString()
-                            ,FatText.getText().toString(),SodiumText.getText().toString(),SugarText.getText().toString(),KgText.getText().toString(),s);
-                    RequestQueue queue = Volley.newRequestQueue(FoodAddActivity.this);
-                    queue.add(calendatRequest);
-                    Intent intent = new Intent(getApplicationContext(), FoodAddActivity.class);
-                    intent.putExtra("FoodName", String.valueOf(NameText.getText()));
-                    intent.putExtra("FoodKcal", Kcalstr);
-                    intent.putExtra("FoodCarbohydrate", Carbohydratestr);
-                    intent.putExtra("FoodProtein", Proteinstr);
-                    intent.putExtra("FoodFat", Fatstr);
-                    intent.putExtra("FoodSodium", Sodiumstr);
-                    intent.putExtra("FoodSugar", Sugarstr);
-                    intent.putExtra("FoodKg", Kgstr);
-                    intent.putExtra("FoodCood", Cood);
-                    intent.putExtra("Date", Date);
-                    Toast.makeText(getApplicationContext(),"음식등록이 되었습니다.",Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
 
-                }
-            });
 
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
@@ -216,5 +219,91 @@ public class FoodAddActivity extends AppCompatActivity {
         s = String.valueOf(cal.get(Calendar.SECOND));
         String Time = h +"시" + mi +"분" + s+"초";
         return Time;
+    }
+    public void Add() {
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                User user = new User();
+                CalendatRequest calendatRequest = new CalendatRequest(user.getId(), Date, Cood,NameText.getText().toString(),KcalText.getText().toString(),CarbohydratText.getText().toString(),ProteinText.getText().toString()
+                        ,FatText.getText().toString(),SodiumText.getText().toString(),SugarText.getText().toString(),KgText.getText().toString(),s);
+                RequestQueue queue = Volley.newRequestQueue(FoodAddActivity.this);
+                queue.add(calendatRequest);
+                Intent intent = new Intent(getApplicationContext(), FoodAddActivity.class);
+                intent.putExtra("FoodName", String.valueOf(NameText.getText()));
+                intent.putExtra("FoodKcal", Kcalstr);
+                intent.putExtra("FoodCarbohydrate", Carbohydratestr);
+                intent.putExtra("FoodProtein", Proteinstr);
+                intent.putExtra("FoodFat", Fatstr);
+                intent.putExtra("FoodSodium", Sodiumstr);
+                intent.putExtra("FoodSugar", Sugarstr);
+                intent.putExtra("FoodKg", Kgstr);
+                intent.putExtra("FoodCood", Cood);
+                intent.putExtra("Date", Date);
+                intent.putExtra("num", 1);
+                Toast.makeText(getApplicationContext(),"음식등록이 되었습니다.",Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+
+            }
+        });
+    }
+    public void Sum(int kg, int s){
+                Intent intent = new Intent(getApplicationContext(), FoodAddActivity.class);
+                intent.putExtra("FoodName", String.valueOf(NameText.getText()));
+                intent.putExtra("FoodKcal",  String.valueOf(Integer.parseInt(Kcalstr) * kg));
+                intent.putExtra("FoodCarbohydrate", String.valueOf(Integer.parseInt(Carbohydratestr)* kg));
+                intent.putExtra("FoodProtein", String.valueOf(Integer.parseInt(Proteinstr)* kg));
+                intent.putExtra("FoodFat", String.valueOf(Integer.parseInt(Fatstr)* kg));
+                intent.putExtra("FoodSodium", String.valueOf(Integer.parseInt(Sodiumstr)* kg));
+                intent.putExtra("FoodSugar", String.valueOf(Integer.parseInt(Sugarstr)* kg));
+                intent.putExtra("FoodKg", String.valueOf(kg));
+                intent.putExtra("FoodCood", Cood);
+                intent.putExtra("Date", Date);
+                intent.putExtra("num", s);
+                Toast.makeText(getApplicationContext(),"음식등록이 되었습니다.",Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+    }
+    public void Update() {
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            //받아온 값이 success면 정상적으로 서버로부터 값을 받은 것을 의미함
+                            if (success) {
+                                Toast.makeText(FoodAddActivity.this, "삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                UserFoodUpdate UpdateRequest = new UserFoodUpdate(Date, NameText.getText().toString(), KcalText.getText().toString(), CarbohydratText.getText().toString(), ProteinText.getText().toString()
+                        , FatText.getText().toString(), SodiumText.getText().toString(), SugarText.getText().toString(), KgText.getText().toString(), Time, FcCode, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(FoodAddActivity.this);
+                queue.add(UpdateRequest);
+                Intent intent = new Intent(getApplicationContext(), FoodAddActivity.class);
+                intent.putExtra("FoodName", String.valueOf(NameText.getText()));
+                intent.putExtra("FoodKcal", Kcalstr);
+                intent.putExtra("FoodCarbohydrate", Carbohydratestr);
+                intent.putExtra("FoodProtein", Proteinstr);
+                intent.putExtra("FoodFat", Fatstr);
+                intent.putExtra("FoodSodium", Sodiumstr);
+                intent.putExtra("FoodSugar", Sugarstr);
+                intent.putExtra("FoodKg", Kgstr);
+                intent.putExtra("FoodCood", Cood);
+                intent.putExtra("Date", Date);
+                intent.putExtra("num", 2);
+                intent.putExtra("FcCode", FcCode);
+                intent.putExtra("Time", Time);
+                Toast.makeText(getApplicationContext(), "음식수정이 되었습니다.", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }
+
+        });
     }
 }
