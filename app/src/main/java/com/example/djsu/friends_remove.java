@@ -8,20 +8,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,10 +55,16 @@ public class friends_remove extends AppCompatActivity {
 
     private static final String TAG_UserName="User";
     private static final String TAG_FriendName="Friend";
+//    ArrayList<HashMap<String, String>> mArrayList;
+//    ListView mlistView;
+//    String mJsonString;
 
-    ArrayList<HashMap<String, String>> mArrayList;
-    ListView mlistView;
-    String mJsonString;
+    RecyclerView recyclerView;
+    DatabaseReference databaseReference;
+    friendAdapter friendAdapter;
+    ArrayList<member> list;
+
+    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +78,74 @@ public class friends_remove extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
+
+        ArrayList<member> search_list = new ArrayList<>();
+
+        editText = findViewById(R.id.editTextTextPersonName);
+
+        // editText 리스터 작성
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String searchText = editText.getText().toString();
+                search_list.clear();
+
+                if(searchText.equals("")){
+                    friendAdapter.setItems(list);
+                }
+                else {
+                    // 검색 단어를 포함하는지 확인
+                    for (int a = 0; a < list.size(); a++) {
+                        if (list.get(a).getName().toLowerCase().contains(searchText.toLowerCase())) {
+                            search_list.add(list.get(a));
+                        }
+                        friendAdapter.setItems(search_list);
+                    }
+                }
+            }
+
+        });
+
+        recyclerView = findViewById(R.id.recycler_messages);
+
+        User user = new User();
+
+        DatabaseReference userID = FirebaseDatabase.getInstance().getReference("User");
+        DatabaseReference userName = userID.child("subin");
+        DatabaseReference name = userName.child("friend");
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        list = new ArrayList<>();
+        friendAdapter = new friendAdapter(this, list);
+        recyclerView.setAdapter(friendAdapter);
+
+        name.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    member member = dataSnapshot.getValue(member.class);
+                    list.add(member);
+                }
+                friendAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         Button btn =findViewById(R.id.button2);
         btn.setOnClickListener(new View.OnClickListener() {

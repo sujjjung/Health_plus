@@ -108,6 +108,6 @@ public class signup extends AppCompatActivity {
 
         //child는 해당 키 위치로 이동하는 함수입니다.
         //키가 없는데 "zoo"와 name같이 값을 지정한 경우 자동으로 생성합니다.
-        databaseReference.child("User").child(UserName).setValue(member);
+        databaseReference.child("User").child(UserId).setValue(member);
     }
 }
