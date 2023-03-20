@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -75,12 +76,36 @@ public class main_user extends AppCompatActivity {
 
     private ImageView ivImage;
 
+    private TextView water;
+    private int count;
+
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_user);
+
+        water = findViewById(R.id.water_tv);
+        water.setText(count+"");
+
+        ImageButton plus = (ImageButton) findViewById(R.id.plusBtn);
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count = count+100;
+                water.setText(count+"");
+            }
+        });
+
+        ImageButton minus = (ImageButton) findViewById(R.id.minusBtn);
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count = count-100;
+                water.setText(count+"");
+            }
+        });
 
         ImageButton view_food = (ImageButton) findViewById(R.id.view_food);
         view_food.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +141,6 @@ public class main_user extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
-
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -163,16 +187,42 @@ public class main_user extends AppCompatActivity {
         text1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
+                String UserID = user.getId();
                 String text = text1.getText().toString();
+
                 dialog_status alert = new dialog_status(main_user.this,text);
                 alert.callFunction();
                 alert.setModifyReturnListener(new dialog_status.ModifyReturnListener() {
                     @Override
                     public void afterModify(String text) {
-                        text1.setText(text);
-                        System.out.println("!!!!!!!!!!!!!: " +text);
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    String success = jsonObject.getString("success");
+
+                                    if (success.equals("1")) { // 회원등록에 성공한 경우
+                                        text1.setText(text);
+                                        System.out.println("!!!!!!!!!!!!!: " +text);
+                                        Toast.makeText(getApplicationContext(), "한줄소개가 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                                    } else { // 회원등록에 실패한 경우
+                                        Toast.makeText(getApplicationContext(), "회원 정보 변경에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        // 서버로 Volley를 이용해서 요청을 함.
+                        StatusRequest stateRequest1 = new StatusRequest(UserID, text, responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(main_user.this);
+                        queue.add(stateRequest1);
                     }
                 });
+
             }
         });
 

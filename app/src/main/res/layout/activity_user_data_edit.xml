@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signup">
+    tools:context=".user_data_edit">
 
     <ImageView
         android:id="@+id/imageView"
@@ -22,7 +22,7 @@
         android:layout_height="62dp"
         android:backgroundTint="#ffdc01"
         android:fontFamily="@font/a10092"
-        android:text="회원가입"
+        android:text="정보 변경"
         android:textColor="#444444"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,7 +30,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.822" />
+        app:layout_constraintVertical_bias="0.83" />
 
     <EditText
         android:id="@+id/birth_editText"
@@ -43,7 +43,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintHorizontal_bias="0.396"
         app:layout_constraintStart_toEndOf="@+id/imageView7"
         app:layout_constraintTop_toBottomOf="@+id/name_editText"
         app:layout_constraintVertical_bias="0.1" />
@@ -59,24 +59,8 @@
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.619"
+        app:layout_constraintHorizontal_bias="0.396"
         app:layout_constraintStart_toEndOf="@+id/imageView9"
-        app:layout_constraintTop_toBottomOf="@+id/email_editText"
-        app:layout_constraintVertical_bias="0.153" />
-
-    <EditText
-        android:id="@+id/email_editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#ffdc01"
-        android:ems="13"
-        android:fontFamily="@font/a1009_1"
-        android:hint="　5자 - 20자의 아이디"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
-        app:layout_constraintStart_toEndOf="@+id/imageView8"
         app:layout_constraintTop_toBottomOf="@+id/birth_editText"
         app:layout_constraintVertical_bias="0.119" />
 
@@ -91,10 +75,10 @@
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.619"
+        app:layout_constraintHorizontal_bias="0.384"
         app:layout_constraintStart_toEndOf="@+id/imageView10"
         app:layout_constraintTop_toBottomOf="@+id/password_editText"
-        app:layout_constraintVertical_bias="0.197" />
+        app:layout_constraintVertical_bias="0.153" />
 
     <EditText
         android:id="@+id/name_editText"
@@ -107,7 +91,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintHorizontal_bias="0.396"
         app:layout_constraintStart_toEndOf="@+id/imageView6"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.086" />
@@ -116,7 +100,7 @@
         android:id="@+id/imageView6"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="56dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
@@ -126,40 +110,59 @@
         android:id="@+id/imageView7"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="56dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        app:srcCompat="@drawable/birthday" />
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="56dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
-        app:srcCompat="@drawable/id" />
+        app:srcCompat="@drawable/birthday"
+        tools:layout_editor_absoluteX="16dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="56dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8"
-        app:srcCompat="@drawable/password" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:srcCompat="@drawable/password"
+        tools:layout_editor_absoluteX="16dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="56dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/name_editText"
         app:layout_constraintTop_toBottomOf="@+id/imageView9"
         app:srcCompat="@drawable/check" />
+
+    <ImageView
+        android:id="@+id/user"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/name_editText"
+        app:layout_constraintTop_toBottomOf="@+id/imageView10"
+        app:srcCompat="@drawable/profile_image" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="264dp"
+        android:background="#00000000"
+        android:fontFamily="@font/a1009_1"
+        android:gravity=""
+        android:text=" 프로필 사진 변경"
+        android:textColor="#9e9e9e"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/user"
+        app:layout_constraintTop_toBottomOf="@+id/password_editText2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
