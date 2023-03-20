@@ -70,6 +70,8 @@ public class login extends AppCompatActivity {
                                 String name = jsonObject.getString("UserName");
                                 String state = jsonObject.getString("State");
                                 String profile = jsonObject.getString("UserProfile");
+                                String age = jsonObject.getString("UserAge");
+                                String password = jsonObject.getString("UserPassword");
                                 Toast.makeText(getApplicationContext(), "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(login.this, main_user.class);
                                 User user = new User();
@@ -77,6 +79,8 @@ public class login extends AppCompatActivity {
                                 user.setId(UserID);
                                 user.setState(state);
                                 user.setProfile(profile);
+                                user.setAge(age);
+                                user.setPassword(password);
                                 startActivity(intent);
                             }
                         } catch (JSONException e) {
