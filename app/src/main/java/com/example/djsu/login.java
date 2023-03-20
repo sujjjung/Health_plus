@@ -1,7 +1,9 @@
 package com.example.djsu;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +23,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +44,8 @@ public class login extends AppCompatActivity {
 
     public static Context context_email;
 
+    private DatabaseReference mDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +55,36 @@ public class login extends AppCompatActivity {
         et_pass = findViewById(R.id.password_editText);
         login_btn = findViewById(R.id.login_btn);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference("User");
+
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
                 String UserID = et_id.getText().toString();
                 String UserPassword = et_pass.getText().toString();
+
+                mDatabase.child(UserID).child("password").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String value = snapshot.getValue(String.class);
+                        if(UserID.length() == 0 || UserPassword.length() == 0){
+                            Toast.makeText(login.this, "모두 입력해주세요.", Toast.LENGTH_SHORT).show();
+                        } else if(value == null) {
+                            Toast.makeText(login.this, "없는 아이디 입니다.", Toast.LENGTH_SHORT).show();
+                            et_pass.setText(null);
+                        }else if(!value.equals(UserPassword)){
+                            Toast.makeText(login.this, "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
+                            et_pass.setText(null);
+                        }else{
+                            Toast.makeText(login.this, et_id.getText().toString() + " 님 환영합니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(login.this, "인터넷 연결 실패", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -89,9 +122,9 @@ public class login extends AppCompatActivity {
                 queue.add(loginrequest);
             }
         });
-
-
     }
+
+
     class BackgroundTask2 extends AsyncTask<Void, Void, String> {
         String target;
         @Override
