@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -29,6 +30,7 @@ import com.google.android.material.navigation.NavigationView;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -62,6 +64,8 @@ public class mypage extends AppCompatActivity {
     private DrawerLayout drawerLayout;
 
     private TextView name, state;
+    private ImageView ivImage;
+    private String profile;
 
     final static private String URL = "http:enejd0613.dothome.co.kr/Register.php";
     private static String TAG = "djsu";
@@ -99,6 +103,54 @@ public class mypage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button user_delete = (Button) findViewById(R.id.secession_btn);
+        user_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String UserID = user.getId();
+
+                dialog_del alert = new dialog_del(mypage.this, UserID);
+                alert.callFunction();
+                alert.setModifyReturnListener(new dialog_del.ModifyReturnListener() {
+                    @Override
+                    public void afterModify(String text) {
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    String success = jsonObject.getString("success");
+
+                                    if (success.equals("1")) { // 회원등록에 성공한 경우
+                                        Toast.makeText(getApplicationContext(), "회원 정보가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(mypage.this, MainActivity.class);
+                                        startActivity(intent);  //intent를 넣어 실행시키게 됩니다.
+                                    } else { // 회원등록에 실패한 경우
+                                        Toast.makeText(getApplicationContext(), "회원 탈퇴에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        // 서버로 Volley를 이용해서 요청을 함.
+                        delUserRequest delUserRequest1 = new delUserRequest(UserID, responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(mypage.this);
+                        queue.add(delUserRequest1);
+                    }
+                });
+            }
+        });
+
+        profile = user.getProfile();
+
+        ivImage = findViewById(R.id.profile);
+
+        // Glide로 이미지 표시하기
+        String imageUrl = profile;
+        Glide.with(this).load(imageUrl).into(ivImage);
 
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
