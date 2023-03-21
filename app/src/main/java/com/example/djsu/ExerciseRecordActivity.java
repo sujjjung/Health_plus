@@ -21,9 +21,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Response;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExerciseRecordActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -31,9 +35,11 @@ public class ExerciseRecordActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private RecyclerView recyclerView;
     private ArrayList<exrecode> exrecodeList;
+    private ArrayList<Set> setArrayList;
     private exerciserecodeAdapter exAdapter;
     int setcount = 1;
-    int num;
+    int num,position;
+    int n;
     private int count = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +47,12 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exercise_record);
         TextView unit = findViewById(R.id.unittext);
         exrecodeList = new ArrayList<>();
+        setArrayList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        exAdapter = new exerciserecodeAdapter(exrecodeList);
+        exAdapter = new exerciserecodeAdapter(exrecodeList,ExerciseRecordActivity.this);
         recyclerView.setAdapter(exAdapter);
         ImageButton unitbtn = (ImageButton)findViewById(R.id.unitBtn);
         unitbtn.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +84,8 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                                 else {
                                 // 4. 사용자가 입력한 내용을 가져와서
                                 String unit = editTextID.getText().toString();
-                                String number = "0";
+                                String number = "20";
+                                n = Integer.parseInt(number);
                                 String setnumber = String.valueOf(setcount);
 
                                 // 5. ArrayList에 추가하고
@@ -101,11 +109,10 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                 }
                 else {
                     String unit = String.valueOf(num);
-                    String number = "0";
                     String setnumber = String.valueOf(setcount);
 
                     // 5. ArrayList에 추가하고
-                    exrecode dict = new exrecode(setnumber, unit, number);
+                    exrecode dict = new exrecode(setnumber, unit,String.valueOf(n));
                     exrecodeList.add(0, dict); //첫번째 줄에 삽입됨
                     //mArrayList.add(dict); //마지막 줄에 삽입됨
                     // 6. 어댑터에서 RecyclerView에 반영하도록 합니다.
@@ -113,7 +120,20 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                     setcount++;}
             }
         });
-
+        List<Set> checkedItems = exAdapter.getCheckedItems();
+        ImageButton deleteBtn = (ImageButton) findViewById(R.id.Save);
+        deleteBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ExerciseRecordActivity.this, "삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ExerciseRecordActivity.this, ExerciseRecordActivity.class);
+                Set set = setArrayList.get(position);
+                System.out.println("hongchul" + checkedItems.toString());
+               // intent.putExtra("FoodKcal", String.valueOf(exeLsit.getSetNumber()));
+               // intent.putExtra("FoodKcal", String.valueOf(exeLsit.getNumber()));
+                startActivity(intent);
+            }
+        });
         Bundle extras = getIntent().getExtras();
         String Name = "";
         Name = extras.getString("exName");
