@@ -1,14 +1,11 @@
 package com.example.djsu;
 
 public class User {
-    public String getId, getState;
-    private String profile,Date,FoodName,EatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;;
-    static private String Id;
-    static private String Name;
-    static private String State;
-    static private String Profile;
+    private String Date,FoodName,EatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;;
+    static private String Id, Name, State, Profile, Age, Password;
     static private int CurrentSteps;
     int FcCode;
+    static private String Water;
 
     public User() {}
 
@@ -103,6 +100,7 @@ public class User {
     public void setFoodName(String foodName) {
         FoodName = foodName;
     }
+
     public static String getId() {
         return Id;
     }
@@ -126,6 +124,14 @@ public class User {
     public static String getProfile() { return Profile; }
 
     public static void setProfile(String profile) { Profile = profile; }
+
+    public static String getAge() { return Age; }
+
+    public static void setAge(String age) { Age = age; }
+
+    public static String getPassword() { return Password; }
+
+    public static void setPassword(String password) { Password = password; }
 
     public String getDate() {
         return Date;
@@ -151,4 +157,7 @@ public class User {
         FcCode = fcCode;
     }
 
+    public static String getWater() { return Water; }
+
+    public static void setWater(String water) { Water = water; }
 }

@@ -14,11 +14,9 @@
         <!--프로필 사진-->
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile"
-            android:layout_width="66dp"
-            android:layout_height="66dp"
-            android:background="#00000000"
-            android:src="@drawable/profile"
-            />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/profile_image"/>
 
         <!--이름-->
         <TextView
