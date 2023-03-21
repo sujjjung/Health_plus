@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -64,6 +65,7 @@ public class friendAdd extends AppCompatActivity {
     ArrayList<member> list;
 
     private EditText editText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
