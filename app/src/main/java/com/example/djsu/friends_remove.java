@@ -43,6 +43,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -51,10 +52,7 @@ public class friends_remove extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
-    private static final String TAG_JSON="webnautes";
-
-    private static final String TAG_UserName="User";
-    private static final String TAG_FriendName="Friend";
+    private TextView test;
 //    ArrayList<HashMap<String, String>> mArrayList;
 //    ListView mlistView;
 //    String mJsonString;
@@ -119,9 +117,11 @@ public class friends_remove extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_messages);
 
         User user = new User();
+        String memberId = user.getId();
+
 
         DatabaseReference userID = FirebaseDatabase.getInstance().getReference("User");
-        DatabaseReference userName = userID.child("subin");
+        DatabaseReference userName = userID.child(memberId);
         DatabaseReference name = userName.child("friend");
 
         recyclerView.setHasFixedSize(true);
@@ -131,7 +131,7 @@ public class friends_remove extends AppCompatActivity {
         friendAdapter = new friendAdapter(this, list);
         recyclerView.setAdapter(friendAdapter);
 
-        name.addValueEventListener(new ValueEventListener() {
+       name.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
