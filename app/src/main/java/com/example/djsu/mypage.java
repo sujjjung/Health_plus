@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.android.volley.RequestQueue;
@@ -200,10 +201,10 @@ public class mypage extends AppCompatActivity {
                         Intent mapintent = new Intent(getApplicationContext(), map.class);
                         startActivity(mapintent);
                         return true;
-                   /* case R.id.manbogi:
-                        Intent manbogiintent = new Intent(getApplicationContext(), .class);
+                    case R.id.manbogi:
+                        Intent manbogiintent = new Intent(getApplicationContext(), pedometer.class);
                         startActivity(manbogiintent);
-                        return true;*/
+                        return true;
                     case R.id.annoucement:
                         NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(mypage.this);
                         noticeBackgroundTask.execute();
@@ -226,9 +227,8 @@ public class mypage extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
-                        int fatKey = jsonObject.getInt("fatKey");
                         int weight = jsonObject.getInt("weight");
-                        values.add(new BarEntry(i, new float[] {fatKey, weight}));
+                        values.add(new BarEntry(i, new float[] {weight}));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -267,9 +267,8 @@ public class mypage extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
-                        int fatKey = jsonObject.getInt("fatKey");
                         int fat = jsonObject.getInt("fat");
-                        values.add(new BarEntry(i, new float[] {fatKey, fat}));
+                        values.add(new BarEntry(i, new float[] {fat}));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -308,9 +307,8 @@ public class mypage extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
-                        int fatKey = jsonObject.getInt("fatKey");
                         int muscle = jsonObject.getInt("muscle");
-                        values.add(new BarEntry(i, new float[] {fatKey, muscle}));
+                        values.add(new BarEntry(i, new float[] {muscle}));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -335,5 +333,15 @@ public class mypage extends AppCompatActivity {
         });
 
         queue.add(request);
+    }
+    // 햄버거 버튼 구현부
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
