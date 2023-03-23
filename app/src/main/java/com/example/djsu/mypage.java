@@ -1,6 +1,7 @@
 package com.example.djsu;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -17,6 +18,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.navigation.NavigationView;
 
@@ -223,19 +226,22 @@ public class mypage extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 ArrayList<BarEntry> values = new ArrayList<>();
+                ArrayList<String> labels = new ArrayList<>();
 
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
                         int weight = jsonObject.getInt("weight");
                         values.add(new BarEntry(i, new float[] {weight}));
+                        String date = jsonObject.getString("date");
+                        labels.add(date);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
                 BarDataSet set1 = new BarDataSet(values, "weight Data");
-                set1.setColors(ColorTemplate.MATERIAL_COLORS);
+                set1.setColors(Color.rgb(255, 222, 0));
                 set1.setDrawValues(false);
 
                 BarData data = new BarData(set1);
@@ -244,6 +250,18 @@ public class mypage extends AppCompatActivity {
                 weightChart.setData(data);
                 weightChart.setFitBars(true);
                 weightChart.invalidate();
+                weightChart.setTouchEnabled(false); // 터치 막기
+                weightChart.setMaxVisibleValueCount(7); // 그래프 최대 갯수
+                weightChart.getXAxis().setDrawGridLines(false); // X축 및 Y축 격자선 없애기
+                weightChart.getAxisLeft().setDrawGridLines(false);
+                weightChart.getAxisRight().setDrawGridLines(false);
+                weightChart.getAxisLeft().setDrawLabels(false); // 왼쪽 값 없애기
+                // weightChart.getXAxis().setDrawLabels(false); // 위쪽 라벨 없애기
+                XAxis xAxis = weightChart.getXAxis(); // x축 설정
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(labels)); // 라벨 붙이기
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // 라벨 위치 설정
+                weightChart.getLegend().setEnabled(false); // 레전드 제거
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -263,18 +281,22 @@ public class mypage extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 ArrayList<BarEntry> values = new ArrayList<>();
+                ArrayList<String> labels = new ArrayList<>();
 
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
                         int fat = jsonObject.getInt("fat");
                         values.add(new BarEntry(i, new float[] {fat}));
+                        String date = jsonObject.getString("date");
+                        labels.add(date);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
                 BarDataSet set1 = new BarDataSet(values, "fat Data");
+                set1.setColors(Color.rgb(255, 222, 0));
                 set1.setColors(ColorTemplate.MATERIAL_COLORS);
                 set1.setDrawValues(false);
 
@@ -284,6 +306,17 @@ public class mypage extends AppCompatActivity {
                 fatChart.setData(data);
                 fatChart.setFitBars(true);
                 fatChart.invalidate();
+                fatChart.setTouchEnabled(false); // 터치 막기
+                fatChart.setMaxVisibleValueCount(7); // 그래프 최대 갯수
+                fatChart.getXAxis().setDrawGridLines(false); // X축 및 Y축 격자선 없애기
+                fatChart.getAxisLeft().setDrawGridLines(false);
+                fatChart.getAxisRight().setDrawGridLines(false);
+                fatChart.getAxisLeft().setDrawLabels(false); // 왼쪽 값 없애기
+                // weightChart.getXAxis().setDrawLabels(false); // 위쪽 라벨 없애기
+                XAxis xAxis = fatChart.getXAxis(); // x축 설정
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(labels)); // 라벨 붙이기
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // 라벨 위치 설정
+                fatChart.getLegend().setEnabled(false); // 레전드 제거
             }
         }, new Response.ErrorListener() {
             @Override
@@ -303,18 +336,22 @@ public class mypage extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 ArrayList<BarEntry> values = new ArrayList<>();
+                ArrayList<String> labels = new ArrayList<>();
 
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
                         int muscle = jsonObject.getInt("muscle");
                         values.add(new BarEntry(i, new float[] {muscle}));
+                        String date = jsonObject.getString("date");
+                        labels.add(date);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
                 BarDataSet set1 = new BarDataSet(values, "muscle Data");
+                set1.setColors(Color.rgb(255, 222, 0));
                 set1.setColors(ColorTemplate.MATERIAL_COLORS);
                 set1.setDrawValues(false);
 
@@ -324,6 +361,16 @@ public class mypage extends AppCompatActivity {
                 muscleChart.setData(data);
                 muscleChart.setFitBars(true);
                 muscleChart.invalidate();
+                muscleChart.setMaxVisibleValueCount(7); // 그래프 최대 갯수
+                muscleChart.getXAxis().setDrawGridLines(false); // X축 및 Y축 격자선 없애기
+                muscleChart.getAxisLeft().setDrawGridLines(false);
+                muscleChart.getAxisRight().setDrawGridLines(false);
+                muscleChart.getAxisLeft().setDrawLabels(false); // 왼쪽 값 없애기
+                // weightChart.getXAxis().setDrawLabels(false); // 위쪽 라벨 없애기
+                XAxis xAxis = muscleChart.getXAxis(); // x축 설정
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(labels)); // 라벨 붙이기
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // 라벨 위치 설정
+                muscleChart.getLegend().setEnabled(false); // 레전드 제거
             }
         }, new Response.ErrorListener() {
             @Override
