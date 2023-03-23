@@ -208,10 +208,10 @@ public class CalendarActivity extends AppCompatActivity {
                         Intent mapintent = new Intent(getApplicationContext(), map.class);
                         startActivity(mapintent);
                         return true;
-                   /* case R.id.manbogi:
-                        Intent manbogiintent = new Intent(getApplicationContext(), .class);
+                    case R.id.manbogi:
+                        Intent manbogiintent = new Intent(getApplicationContext(), pedometer.class);
                         startActivity(manbogiintent);
-                        return true;*/
+                        return true;
                     case R.id.annoucement:
                         NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(CalendarActivity.this);
                         noticeBackgroundTask.execute();

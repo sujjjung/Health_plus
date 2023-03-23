@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +21,10 @@ import org.json.JSONObject;
 public class user_data_edit extends AppCompatActivity {
     private EditText et_id, et_pass, et_name, et_age, et_pass2;
     private Button btn_register;
+
+    DatabaseReference databaseReference;
+
+    FirebaseDatabase mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,4 +81,16 @@ public class user_data_edit extends AppCompatActivity {
             }
         });
     }
+//    public void addUser(String UserId, String UserPass, String UserAge, String UserName) {
+//
+//        //여기에서 직접 변수를 만들어서 값을 직접 넣는것도 가능합니다.
+//        // ex) 갓 태어난 동물만 입력해서 int age=1; 등을 넣는 경우
+//
+//        //animal.java에서 선언했던 함수.
+//        member member = new member(UserId,UserPass,UserAge,UserName);
+//
+//        //child는 해당 키 위치로 이동하는 함수입니다.
+//        //키가 없는데 "zoo"와 name같이 값을 지정한 경우 자동으로 생성합니다.
+//        databaseReference.child("User").child(UserId).updateChildren(member);
+//    }
 }

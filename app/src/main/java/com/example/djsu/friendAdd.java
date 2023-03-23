@@ -3,6 +3,7 @@ package com.example.djsu;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,14 +59,7 @@ public class friendAdd extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-
-    RecyclerView recyclerView;
-    DatabaseReference databaseReference;
-    memberAdapter memberAdapter;
-    ArrayList<member> list;
-
     private EditText editText;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,71 +70,30 @@ public class friendAdd extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ArrayList<member> search_list = new ArrayList<>();
-
-        editText = findViewById(R.id.searchtext);
-
-        // editText 리스터 작성
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String searchText = editText.getText().toString();
-                search_list.clear();
-
-                if(searchText.equals("")){
-                    memberAdapter.setItems(list);
-                }
-                else {
-                    // 검색 단어를 포함하는지 확인
-                    for (int a = 0; a < list.size(); a++) {
-                        if (list.get(a).getName().toLowerCase().contains(searchText.toLowerCase())) {
-                            search_list.add(list.get(a));
-                        }
-                        memberAdapter.setItems(search_list);
-                    }
-                }
-            }
-
-        });
-
         //뒤로가기버튼 이미지 적용
         actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
 
-        recyclerView = findViewById(R.id.UserList);
+        ListView listView = findViewById(R.id.UserList);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("User");
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        list = new ArrayList<>();
-        memberAdapter = new memberAdapter(this, list);
-        recyclerView.setAdapter(memberAdapter);
-
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    member member = dataSnapshot.getValue(member.class);
-                    list.add(member);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<member> postList = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    member member = snapshot.getValue(member.class);
+                    postList.add(member);
                 }
-                memberAdapter.notifyDataSetChanged();
+                // ListView에 데이터를 표시하는 코드 작성
+                friendAddAdapter friendAddAdapter = new friendAddAdapter(friendAdd.this, postList);
+                listView.setAdapter(friendAddAdapter);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onCancelled(DatabaseError databaseError) {
+                // 데이터 읽기에 실패한 경우 호출되는 콜백 메서드
             }
         });
 
@@ -168,10 +121,10 @@ public class friendAdd extends AppCompatActivity {
                         Intent mapintent = new Intent(getApplicationContext(), map.class);
                         startActivity(mapintent);
                         return true;
-                   /* case R.id.manbogi:
-                        Intent manbogiintent = new Intent(getApplicationContext(), .class);
+                    case R.id.manbogi:
+                        Intent manbogiintent = new Intent(getApplicationContext(), pedometer.class);
                         startActivity(manbogiintent);
-                        return true;*/
+                        return true;
                     case R.id.annoucement:
                         Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
                         startActivity(annoucementintent);
