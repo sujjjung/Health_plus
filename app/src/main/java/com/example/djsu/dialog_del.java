@@ -7,9 +7,15 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class dialog_del {
     private Context context;
     private String text;
+    FirebaseDatabase mDatabase;
+
+    DatabaseReference databaseReference;
 
     public dialog_del(Context context, String text) {
         this.context = context;
@@ -41,12 +47,21 @@ public class dialog_del {
             @Override
             public void onClick(View view) {
                 dlg.onBackPressed();
+
             }
         });
 
         conformBtn.setOnClickListener(new View.OnClickListener() { // 수정 버튼 눌렀을 때
             @Override
             public void onClick(View view) {
+                User user = new User();
+                String userID = user.getId();
+
+                mDatabase = FirebaseDatabase.getInstance();
+                databaseReference = mDatabase.getReference("User").child(userID);
+
+                databaseReference.removeValue();
+
                 String ModifyedText = scaneET.getText().toString(); //스케너에 있는 텍스트 String으로 가져오기
                 modifyReturnListener.afterModify(ModifyedText);
                 dlg.onBackPressed();

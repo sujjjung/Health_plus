@@ -46,21 +46,12 @@ import java.net.URL;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class friends_remove extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-
-    private TextView test;
-//    ArrayList<HashMap<String, String>> mArrayList;
-//    ListView mlistView;
-//    String mJsonString;
-
-    RecyclerView recyclerView;
-    DatabaseReference databaseReference;
-    friendAdapter friendAdapter;
-    ArrayList<member> list;
 
     private EditText editText;
 
@@ -77,75 +68,31 @@ public class friends_remove extends AppCompatActivity {
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
 
-        ArrayList<member> search_list = new ArrayList<>();
-
-        editText = findViewById(R.id.editTextTextPersonName);
-
-        // editText 리스터 작성
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String searchText = editText.getText().toString();
-                search_list.clear();
-
-                if(searchText.equals("")){
-                    friendAdapter.setItems(list);
-                }
-                else {
-                    // 검색 단어를 포함하는지 확인
-                    for (int a = 0; a < list.size(); a++) {
-                        if (list.get(a).getName().toLowerCase().contains(searchText.toLowerCase())) {
-                            search_list.add(list.get(a));
-                        }
-                        friendAdapter.setItems(search_list);
-                    }
-                }
-            }
-
-        });
-
-        recyclerView = findViewById(R.id.recycler_messages);
+        ListView listView = findViewById(R.id.recycler_messages);
 
         User user = new User();
-        String memberId = user.getId();
+        String userName = user.getId();
 
-
-        DatabaseReference userID = FirebaseDatabase.getInstance().getReference("User");
-        DatabaseReference userName = userID.child(memberId);
-        DatabaseReference name = userName.child("friend");
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        list = new ArrayList<>();
-        friendAdapter = new friendAdapter(this, list);
-        recyclerView.setAdapter(friendAdapter);
-
-       name.addValueEventListener(new ValueEventListener() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User").child(userName).child("friend");
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    member member = dataSnapshot.getValue(member.class);
-                    list.add(member);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<member> postList = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    member member = snapshot.getValue(member.class);
+                    postList.add(member);
                 }
-                friendAdapter.notifyDataSetChanged();
+                // ListView에 데이터를 표시하는 코드 작성
+                friendRemoveAdapter friendRemoveAdapter = new friendRemoveAdapter(friends_remove.this, postList);
+                listView.setAdapter(friendRemoveAdapter);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onCancelled(DatabaseError databaseError) {
+                // 데이터 읽기에 실패한 경우 호출되는 콜백 메서드
             }
         });
+
 
         Button btn =findViewById(R.id.button2);
         btn.setOnClickListener(new View.OnClickListener() {

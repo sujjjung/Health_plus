@@ -52,7 +52,7 @@
         app:layout_constraintVertical_bias="0.067"
         tools:ignore="MissingConstraints" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
         android:id="@+id/recycler_messages"
         android:layout_width="390dp"
         android:layout_height="551dp"
