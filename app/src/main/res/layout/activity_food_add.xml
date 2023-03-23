@@ -10,447 +10,462 @@
         android:id="@+id/bio_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".FoodAddActivity"
-    android:background="#FFF5B3"
-    android:paddingBottom="30dp"
-    >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".FoodAddActivity"
+            android:background="#FFF5B3"
+            android:paddingBottom="30dp"
+            >
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        app:srcCompat="@drawable/logo3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="0dp"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                app:srcCompat="@drawable/logo3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageButton
-        android:id="@+id/menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:src="@drawable/ic_action_hamburger"
-        android:layout_marginStart="8dp"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/imageView" />
+            <ImageButton
+                android:id="@+id/menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:src="@drawable/ic_action_hamburger"
+                android:layout_marginStart="8dp"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageView" />
 
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:fontFamily="@font/a10093"
-        android:text="식단 추가"
-        android:textColor="#2E2E2E"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:fontFamily="@font/a10093"
+                android:text="식단 추가"
+                android:textColor="#2E2E2E"
+                android:textSize="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <TextView
-        android:id="@+id/textView24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/a10092"
-        android:text="날짜"
-        android:textColor="#535353"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/a10092"
+                android:text="날짜"
+                android:textColor="#535353"
+                android:textSize="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
-    <EditText
-        android:id="@+id/DateText"
-        android:layout_width="260dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="28dp"
-        android:background="#DBDBDB"
-        app:layout_constraintBottom_toBottomOf="@+id/textView24"
-        app:layout_constraintStart_toEndOf="@+id/textView24"
-        app:layout_constraintTop_toTopOf="@+id/textView24"
-        app:layout_constraintVertical_bias="1.0" />
+            <EditText
+                android:id="@+id/DateText"
+                android:layout_width="260dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="28dp"
+                android:background="#DBDBDB"
+                app:layout_constraintBottom_toBottomOf="@+id/textView24"
+                app:layout_constraintStart_toEndOf="@+id/textView24"
+                app:layout_constraintTop_toTopOf="@+id/textView24"
+                app:layout_constraintVertical_bias="1.0" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#DBDBDB"
-        android:src="@drawable/triangle"
-        android:layout_marginStart="236dp"
-        app:layout_constraintBottom_toBottomOf="@+id/DateText"
-        app:layout_constraintEnd_toEndOf="@+id/DateText"
-        app:layout_constraintStart_toStartOf="@+id/DateText"
-        app:layout_constraintTop_toTopOf="@+id/DateText" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#DBDBDB"
+                android:src="@drawable/triangle"
+                android:layout_marginStart="236dp"
+                app:layout_constraintBottom_toBottomOf="@+id/DateText"
+                app:layout_constraintEnd_toEndOf="@+id/DateText"
+                app:layout_constraintStart_toStartOf="@+id/DateText"
+                app:layout_constraintTop_toTopOf="@+id/DateText" />
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DateText">
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/DateText">
 
-        <RadioButton
-            android:id="@+id/BreakFast"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:fontFamily="@font/a10093"
-            android:text="아침"
-            android:textColor="#303030"
-            android:textSize="15dp" />
+                <RadioButton
+                    android:id="@+id/BreakFast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/a10093"
+                    android:text="아침"
+                    android:textColor="#303030"
+                    android:textSize="15dp" />
 
-        <RadioButton
-            android:id="@+id/BreakFastTo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:fontFamily="@font/a10093"
-            android:text="아점"
-            android:textColor="#303030"
-            android:textSize="15dp" />
+                <RadioButton
+                    android:id="@+id/BreakFastTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/a10093"
+                    android:text="아점"
+                    android:textColor="#303030"
+                    android:textSize="15dp" />
 
-        <RadioButton
-            android:id="@+id/Lunch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:fontFamily="@font/a10093"
-            android:text="점심"
-            android:textColor="#303030"
-            android:textSize="15dp" />
+                <RadioButton
+                    android:id="@+id/Lunch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/a10093"
+                    android:text="점심"
+                    android:textColor="#303030"
+                    android:textSize="15dp" />
 
-        <RadioButton
-            android:id="@+id/LunchTo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:fontFamily="@font/a10093"
-            android:text="점저"
-            android:textColor="#303030"
-            android:textSize="15dp" />
+                <RadioButton
+                    android:id="@+id/LunchTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/a10093"
+                    android:text="점저"
+                    android:textColor="#303030"
+                    android:textSize="15dp" />
 
-        <RadioButton
-            android:id="@+id/Dinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:fontFamily="@font/a10093"
-            android:text="저녁"
-            android:textColor="#303030"
-            android:textSize="15dp" />
-        <RadioButton
-            android:id="@+id/DinnerTo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:fontFamily="@font/a10093"
-            android:text="야식"
-            android:textColor="#303030"
-            android:textSize="15dp" />
+                <RadioButton
+                    android:id="@+id/Dinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/a10093"
+                    android:text="저녁"
+                    android:textColor="#303030"
+                    android:textSize="15dp" />
+                <RadioButton
+                    android:id="@+id/DinnerTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/a10093"
+                    android:text="야식"
+                    android:textColor="#303030"
+                    android:textSize="15dp" />
 
-    </RadioGroup>
+            </RadioGroup>
 
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="320dp"
-        android:layout_height="34dp"
-        android:background="#DBDBDB"
-        android:hint="　다른 음식 검색"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        android:layout_marginTop="20dp"/>
+            <EditText
+                android:id="@+id/editText1"
+                android:layout_width="320dp"
+                android:layout_height="34dp"
+                android:background="#DBDBDB"
+                android:hint="　다른 음식 검색"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+                android:layout_marginTop="20dp"/>
 
-    <ImageButton
-        android:id="@+id/SearchBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#DBDBDB"
-        android:src="@drawable/search_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/editText1"
-        app:layout_constraintEnd_toEndOf="@+id/editText1"
-        app:layout_constraintStart_toStartOf="@+id/editText1"
-        app:layout_constraintTop_toTopOf="@+id/editText1"
-        android:layout_marginStart="288dp"/>
+            <ImageButton
+                android:id="@+id/SearchBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#DBDBDB"
+                android:src="@drawable/search_black_24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/editText1"
+                app:layout_constraintEnd_toEndOf="@+id/editText1"
+                app:layout_constraintStart_toStartOf="@+id/editText1"
+                app:layout_constraintTop_toTopOf="@+id/editText1"
+                android:layout_marginStart="288dp"/>
 
-    <TextView
-        android:id="@+id/ftext"
-        android:layout_width="68dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/a10092"
-        android:text="음식 명"
-        android:textColor="#535353"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText1" />
+            <TextView
+                android:id="@+id/ftext"
+                android:layout_width="68dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="52dp"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/a10092"
+                android:text="음식 명"
+                android:textColor="#535353"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText1" />
 
-    <EditText
-        android:id="@+id/nametext"
-        android:layout_width="105dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:lines="5"
-        app:layout_constraintBottom_toBottomOf="@+id/ftext"
-        app:layout_constraintStart_toEndOf="@+id/ftext"
-        app:layout_constraintTop_toTopOf="@+id/ftext" />
+            <EditText
+                android:id="@+id/nametext"
+                android:layout_width="105dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:lines="5"
+                app:layout_constraintBottom_toBottomOf="@+id/ftext"
+                app:layout_constraintStart_toEndOf="@+id/ftext"
+                app:layout_constraintTop_toTopOf="@+id/ftext" />
 
-    <TextView
-        android:id="@+id/textView25"
-        android:layout_width="54dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="88dp"
-        android:fontFamily="@font/a10092"
-        android:text="칼로리"
-        android:textColor="#535353"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText1" />
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="54dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="88dp"
+                android:fontFamily="@font/a10092"
+                android:text="칼로리"
+                android:textColor="#535353"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText1" />
 
-    <EditText
-        android:id="@+id/kcaltext"
-        android:layout_width="106dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView25"
-        app:layout_constraintStart_toEndOf="@+id/textView25"
-        app:layout_constraintTop_toTopOf="@+id/textView25"
-        app:layout_constraintVertical_bias="0.6" />
+            <EditText
+                android:id="@+id/kcaltext"
+                android:layout_width="106dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView25"
+                app:layout_constraintStart_toEndOf="@+id/textView25"
+                app:layout_constraintTop_toTopOf="@+id/textView25"
+                app:layout_constraintVertical_bias="0.6" />
 
-    <ImageButton
-        android:id="@+id/food_input_btn"
-        android:layout_width="100dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="30dp"
-        android:background="#00000000"
-        android:src="@drawable/roundsquare3"
-        app:layout_constraintBottom_toBottomOf="@+id/kcaltext"
-        app:layout_constraintStart_toEndOf="@+id/kcaltext"
-        app:layout_constraintTop_toTopOf="@+id/kcaltext" />
+            <ImageButton
+                android:id="@+id/food_input_btn"
+                android:layout_width="100dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="30dp"
+                android:background="#00000000"
+                android:src="@drawable/roundsquare3"
+                app:layout_constraintBottom_toBottomOf="@+id/kcaltext"
+                app:layout_constraintStart_toEndOf="@+id/kcaltext"
+                app:layout_constraintTop_toTopOf="@+id/kcaltext" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/a10092"
-        android:text="직접 입력"
-        android:textColor="#535353"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/food_input_btn"
-        app:layout_constraintEnd_toEndOf="@+id/food_input_btn"
-        app:layout_constraintStart_toStartOf="@+id/food_input_btn"
-        app:layout_constraintTop_toTopOf="@+id/food_input_btn" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/a10092"
+                android:text="직접 입력"
+                android:textColor="#535353"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/food_input_btn"
+                app:layout_constraintEnd_toEndOf="@+id/food_input_btn"
+                app:layout_constraintStart_toStartOf="@+id/food_input_btn"
+                app:layout_constraintTop_toTopOf="@+id/food_input_btn" />
 
-    <TextView
-        android:id="@+id/textView26"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="60dp"
-        android:fontFamily="@font/a10094"
-        android:text="상세 영양소"
-        android:textColor="#535353"
-        android:textSize="22dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="60dp"
+                android:fontFamily="@font/a10094"
+                android:text="상세 영양소"
+                android:textColor="#535353"
+                android:textSize="22dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
-    <TextView
-        android:id="@+id/textView27"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/a10092"
-        android:text="탄수화물"
-        android:textColor="#535353"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView26" />
-
-
-    <EditText
-        android:id="@+id/Carbohydratetext"
-        android:layout_width="96dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="6dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView27"
-        app:layout_constraintStart_toEndOf="@+id/textView27"
-        app:layout_constraintTop_toTopOf="@+id/textView27" />
-
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="110dp"
-        android:fontFamily="@font/a10092"
-        android:text="나트륨"
-        android:textColor="#535353"
-        android:textSize="18dp"
-        app:layout_constraintStart_toEndOf="@+id/textView27"
-        app:layout_constraintTop_toTopOf="@+id/textView27" />
-
-    <EditText
-        android:id="@+id/Sodiumtext"
-        android:layout_width="95dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="6dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView28"
-        app:layout_constraintStart_toEndOf="@+id/textView28"
-        app:layout_constraintTop_toTopOf="@+id/textView28" />
-
-    <TextView
-        android:id="@+id/textView29"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/a10092"
-        android:text="단백질"
-        android:textColor="#535353"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView27" />
-
-    <EditText
-        android:id="@+id/Protintext"
-        android:layout_width="98dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="6dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView29"
-        app:layout_constraintStart_toEndOf="@+id/textView29"
-        app:layout_constraintTop_toTopOf="@+id/textView29" />
-
-    <TextView
-        android:id="@+id/textView33"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/a10092"
-        android:text="당"
-        android:textColor="#535353"
-        android:textSize="18dp"
-        app:layout_constraintStart_toEndOf="@+id/textView29"
-        app:layout_constraintTop_toTopOf="@+id/textView29"
-        android:layout_marginStart="130dp"/>
-
-    <EditText
-        android:id="@+id/Sugartext"
-        android:layout_width="92dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView33"
-        app:layout_constraintStart_toEndOf="@+id/textView33"
-        app:layout_constraintTop_toTopOf="@+id/textView33"
-        app:layout_constraintVertical_bias="0.406" />
-
-    <TextView
-        android:id="@+id/textView30"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="36dp"
-        android:fontFamily="@font/a10092"
-        android:text="지방"
-        android:textColor="#535353"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView29" />
-
-    <EditText
-        android:id="@+id/Fattext"
-        android:layout_width="99dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView30"
-        app:layout_constraintStart_toEndOf="@+id/textView30"
-        app:layout_constraintTop_toTopOf="@+id/textView30"
-        app:layout_constraintVertical_bias="0.621" />
-
-    <TextView
-
-        android:id="@+id/textView31"
-        android:layout_width="44dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/a10092"
-        android:text="무게"
-        android:textColor="#535353"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView33" />
-
-    <EditText
-        android:id="@+id/Kgtext"
-        android:layout_width="96dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="176dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView30"
-        app:layout_constraintStart_toEndOf="@+id/textView30"
-        app:layout_constraintTop_toTopOf="@+id/textView30"
-        app:layout_constraintVertical_bias="0.621" />
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="46dp"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/a10092"
+                android:text="탄수화물"
+                android:textColor="#535353"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView26" />
 
 
-    <ImageButton
-        android:id="@+id/imageButton8"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="48dp"
-        android:background="#00000000"
-        android:src="@drawable/roundsquare3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.864"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+            <EditText
+                android:id="@+id/Carbohydratetext"
+                android:layout_width="96dp"
+                android:layout_height="51dp"
+                android:layout_marginStart="6dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView27"
+                app:layout_constraintStart_toEndOf="@+id/textView27"
+                app:layout_constraintTop_toTopOf="@+id/textView27" />
 
-    <Button
-        android:id="@+id/addBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#ff9898"
-        android:fontFamily="@font/a10093"
-        android:text="등록하기"
-        android:textColor="#2E2E2E"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageButton8"
-        app:layout_constraintTop_toTopOf="@+id/imageButton8"
-        app:layout_constraintVertical_bias="1.0" />
+            <TextView
+                android:id="@+id/textView28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="110dp"
+                android:fontFamily="@font/a10092"
+                android:text="나트륨"
+                android:textColor="#535353"
+                android:textSize="18dp"
+                app:layout_constraintStart_toEndOf="@+id/textView27"
+                app:layout_constraintTop_toTopOf="@+id/textView27" />
 
-    <Button
-        android:id="@+id/SumBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#ff9898"
-        android:fontFamily="@font/a10093"
-        android:text="무게갱신"
-        android:textColor="#2E2E2E"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/addBtn"
-        app:layout_constraintEnd_toEndOf="@+id/addBtn"
-        app:layout_constraintHorizontal_bias="0.234"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/addBtn"
-        app:layout_constraintVertical_bias="1.0" />
+            <EditText
+                android:id="@+id/Sodiumtext"
+                android:layout_width="95dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="6dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView28"
+                app:layout_constraintStart_toEndOf="@+id/textView28"
+                app:layout_constraintTop_toTopOf="@+id/textView28" />
 
-    <include
-        layout="@layout/toolbar"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-11dp" />
+            <TextView
+                android:id="@+id/textView29"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/a10092"
+                android:text="단백질"
+                android:textColor="#535353"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+            <EditText
+                android:id="@+id/Protintext"
+                android:layout_width="98dp"
+                android:layout_height="47dp"
+                android:layout_marginStart="6dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView29"
+                app:layout_constraintStart_toEndOf="@+id/textView29"
+                app:layout_constraintTop_toTopOf="@+id/textView29" />
+
+            <TextView
+                android:id="@+id/textView33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/a10092"
+                android:text="당"
+                android:textColor="#535353"
+                android:textSize="18dp"
+                app:layout_constraintStart_toEndOf="@+id/textView29"
+                app:layout_constraintTop_toTopOf="@+id/textView29"
+                android:layout_marginStart="130dp"/>
+
+            <EditText
+                android:id="@+id/Sugartext"
+                android:layout_width="92dp"
+                android:layout_height="53dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView33"
+                app:layout_constraintStart_toEndOf="@+id/textView33"
+                app:layout_constraintTop_toTopOf="@+id/textView33"
+                app:layout_constraintVertical_bias="0.406" />
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="72dp"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/a10092"
+                android:text="지방"
+                android:textColor="#535353"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+            <EditText
+                android:id="@+id/Fattext"
+                android:layout_width="99dp"
+                android:layout_height="58dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView30"
+                app:layout_constraintStart_toEndOf="@+id/textView30"
+                app:layout_constraintTop_toTopOf="@+id/textView30"
+                app:layout_constraintVertical_bias="0.621" />
+
+            <TextView
+
+                android:id="@+id/textView31"
+                android:layout_width="44dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="236dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/a10092"
+                android:text="무게"
+                android:textColor="#535353"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+            <EditText
+                android:id="@+id/Kgtext"
+                android:layout_width="96dp"
+                android:layout_height="58dp"
+                android:layout_marginStart="176dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView30"
+                app:layout_constraintStart_toEndOf="@+id/textView30"
+                app:layout_constraintTop_toTopOf="@+id/textView30"
+                app:layout_constraintVertical_bias="0.621" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageButton
+                android:id="@+id/imageButton8"
+                android:layout_width="123dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="40dp"
+                android:background="#00000000"
+                android:src="@drawable/roundsquare3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView30" />
+
+            <Button
+                android:id="@+id/backBtn"
+                android:layout_width="123dp"
+                android:layout_height="46dp"
+                android:backgroundTint="#ff9898"
+                android:fontFamily="@font/a10093"
+                android:text="뒤로가기"
+                android:textColor="#2E2E2E"
+                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageButton8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageButton8"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <Button
+                android:id="@+id/addtoBtn"
+                android:layout_width="123dp"
+                android:layout_height="46dp"
+                android:backgroundTint="#ff9898"
+                android:fontFamily="@font/a10093"
+                android:text="재등록하기"
+                android:textColor="#2E2E2E"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageButton8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/imageButton8"
+                app:layout_constraintTop_toTopOf="@+id/imageButton8"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <Button
+                android:id="@+id/addBtn"
+                android:layout_width="123dp"
+                android:layout_height="46dp"
+                android:backgroundTint="#ff9898"
+                android:fontFamily="@font/a10093"
+                android:text="등록하기"
+                android:textColor="#2E2E2E"
+                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageButton8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/backBtn"
+                app:layout_constraintTop_toTopOf="@+id/imageButton8"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <include
+                layout="@layout/toolbar"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="-11dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
     <LinearLayout
         android:layout_width="match_parent"

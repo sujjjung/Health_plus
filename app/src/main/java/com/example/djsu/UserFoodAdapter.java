@@ -130,7 +130,8 @@ public class UserFoodAdapter extends BaseAdapter {
                 intent.putExtra("num", 2);
                 intent.putExtra("FcCode", FcCode);
                 intent.putExtra("Time", String.valueOf(Time.getText()));
-                context.startActivity(intent);
+                UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(context);
+                userFoodListBackgroundTask.execute();
 
             }
         });

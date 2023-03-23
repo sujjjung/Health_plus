@@ -153,6 +153,7 @@ public class main_user extends AppCompatActivity {
                     case R.id.calender:
                         UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(main_user.this);
                         userFoodListBackgroundTask.execute();
+
                         return true;
                     case R.id.communety:
                         Intent communetyintent = new Intent(getApplicationContext(), community.class);
