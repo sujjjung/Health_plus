@@ -1,8 +1,13 @@
 package com.example.djsu;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.app.AlarmManager;
@@ -17,19 +22,40 @@ import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class pedometer extends AppCompatActivity {
+    //햄버거 선언부
+    private Toolbar toolbar;
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
 
     SensorManager sensorManager;
     Sensor stepCountSensor;
@@ -47,6 +73,9 @@ public class pedometer extends AppCompatActivity {
     // 현재 걸음 수
     int currentSteps = 0;
 
+    // 차트 선언
+    private BarChart walkChart;
+
     @RequiresApi(api = Build.VERSION_CODES.Q)
 
     @Override
@@ -54,10 +83,63 @@ public class pedometer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedometer);
 
+        // 걷는 움짤
         ImageView walk = (ImageView)findViewById(R.id.walk_lion);
         Glide.with(this).load(R.raw.girl).into(walk);
 
+        // 햄버거 버튼 구현부
+        toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
+        navigationView = findViewById(R.id.navigationView);
+        drawerLayout = findViewById(R.id.drawerLayout);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch(menuItem.getItemId()){
+                    case R.id.home:
+                        Intent homeintent = new Intent(getApplicationContext(), main_user.class);
+                        startActivity(homeintent);
+                        return true;
+                    case R.id.calender:
+                        Intent calenderintent = new Intent(getApplicationContext(), CalendarActivity.class);
+                        startActivity(calenderintent);
+                        return true;
+                    case R.id.communety:
+                        Intent communetyintent = new Intent(getApplicationContext(), community.class);
+                        startActivity(communetyintent);
+                        return true;
+                    case R.id.mypage:
+                        Intent mypageintent = new Intent(getApplicationContext(), mypage.class);
+                        startActivity(mypageintent);
+                        return true;
+                    case R.id.map:
+                        Intent mapintent = new Intent(getApplicationContext(), map.class);
+                        startActivity(mapintent);
+                        return true;
+                    case R.id.manbogi:
+                        Intent manbogiintent = new Intent(getApplicationContext(), pedometer.class);
+                        startActivity(manbogiintent);
+                        return true;
+                    case R.id.annoucement:
+                        Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
+                        startActivity(annoucementintent);
+                        return true;
+                    case R.id.friend:
+                        Intent friend = new Intent(getApplicationContext(), friend_list.class);
+                        startActivity(friend);
+                        return true;
+                }
+                return false;
+            }
+        });
+
+        // 걸음수 선언
         stepCountView = findViewById(R.id.stepCountView);
+        // 초기화 버튼 선언
         resetButton = findViewById(R.id.resetButton);
 
 
@@ -91,6 +173,20 @@ public class pedometer extends AppCompatActivity {
 
             }
         });
+
+        // 차트
+        walkChart = findViewById(R.id.walk_chart);
+        // Disable description
+        walkChart.getDescription().setEnabled(false);
+        // Enable touch gestures
+        walkChart.setTouchEnabled(true);
+        // Enable scaling and dragging
+        walkChart.setDragEnabled(true);
+        walkChart.setScaleEnabled(true);
+        // 데이터 초기화
+        walkChart.clear();
+        // Set data
+        setWalkData();
     }
 
     public void onStart() {
@@ -118,9 +214,7 @@ public class pedometer extends AppCompatActivity {
                 // User user = new User();
                 // user.setCurrentSteps(currentSteps);
             }
-
         }
-
     }
 
     public static void resetAlarm(Context context){
@@ -145,4 +239,53 @@ public class pedometer extends AppCompatActivity {
         Log.d("resetAlarm", "ResetHour : " + setResetTime);
     }
 
+    private void setWalkData() {
+        String url = "http://enejd0613.dothome.co.kr/getWalk.php";
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                ArrayList<BarEntry> values = new ArrayList<>();
+
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        int walk = jsonObject.getInt("walk");
+                        values.add(new BarEntry(i, new float[] {walk}));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                BarDataSet set1 = new BarDataSet(values, "walk Data");
+                set1.setColors(ColorTemplate.MATERIAL_COLORS);
+                set1.setDrawValues(false);
+
+                BarData data = new BarData(set1);
+                data.setBarWidth(0.45f);
+
+                walkChart.setData(data);
+                walkChart.setFitBars(true);
+                walkChart.invalidate();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(pedometer.this, "Error loading data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        queue.add(request);
+    }
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -1,10 +1,7 @@
 package com.example.djsu;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -14,51 +11,34 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.navigation.NavigationView;
 
-import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class mypage extends AppCompatActivity {
+    //햄버거 선언부
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -67,34 +47,32 @@ public class mypage extends AppCompatActivity {
     private ImageView ivImage;
     private String profile;
 
-    final static private String URL = "http:enejd0613.dothome.co.kr/Register.php";
-    private static String TAG = "djsu";
-
-    private String mJsonString = "";
-
-    private static final String TAG_JSON = "webnautes";
-    private static final String TAG_USERID = "userId";
-    private static final String TAG_DATE = "date";
-    private static final String TAG_FAT = "fat";
-    private static final String TAG_MUSCLE = "muscle";
-    private static final String TAG_WEIGHT = "wegiht";
-
-    ArrayList<String> dateChart = new ArrayList<>();
-    ArrayList<Integer> weightChart = new ArrayList<>();
-    ArrayList<Integer> fatChart = new ArrayList<>();
-    ArrayList<Integer> muscleChart = new ArrayList<>();
+    //차트
+    private BarChart weightChart;
+    private BarChart muscleChart;
+    private BarChart fatChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
 
+        // User Data 불러오기
         User user = new User();
         name = findViewById(R.id.name_textView);
         name.setText(user.getName());
         state = findViewById(R.id.Status_message_text);
         state.setText(user.getState());
 
+        profile = user.getProfile();
+
+        ivImage = findViewById(R.id.profile);
+
+        // Glide로 이미지 표시하기
+        String imageUrl = profile;
+        Glide.with(this).load(imageUrl).into(ivImage);
+
+        // 정보 변경 버튼
         Button user_edit = (Button) findViewById(R.id.change_btn);
         user_edit.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -104,6 +82,7 @@ public class mypage extends AppCompatActivity {
             }
         });
 
+        // 회원 탈퇴 버튼
         Button user_delete = (Button) findViewById(R.id.secession_btn);
         user_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,11 +101,11 @@ public class mypage extends AppCompatActivity {
                                     JSONObject jsonObject = new JSONObject(response);
                                     String success = jsonObject.getString("success");
 
-                                    if (success.equals("1")) { // 회원등록에 성공한 경우
+                                    if (success.equals("1")) { // 회원 삭제에 성공한 경우
                                         Toast.makeText(getApplicationContext(), "회원 정보가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(mypage.this, MainActivity.class);
                                         startActivity(intent);  //intent를 넣어 실행시키게 됩니다.
-                                    } else { // 회원등록에 실패한 경우
+                                    } else { // 회원 삭제에 실패한 경우
                                         Toast.makeText(getApplicationContext(), "회원 탈퇴에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
@@ -143,15 +122,53 @@ public class mypage extends AppCompatActivity {
                 });
             }
         });
+        // 몸무게
+        // 차트
+        weightChart = findViewById(R.id.weight_chart);
+        // Disable description
+        weightChart.getDescription().setEnabled(false);
+        // Enable touch gestures
+        weightChart.setTouchEnabled(true);
+        // Enable scaling and dragging
+        weightChart.setDragEnabled(true);
+        weightChart.setScaleEnabled(true);
+        // 데이터 초기화
+        weightChart.clear();
+        // Set data
+        setWeightData();
 
-        profile = user.getProfile();
+        // 체지방량
+        // 차트
+        fatChart = findViewById(R.id.fat_chart);
+        // Disable description
+        fatChart.getDescription().setEnabled(false);
+        // Enable touch gestures
+        fatChart.setTouchEnabled(true);
+        // Enable scaling and dragging
+        fatChart.setDragEnabled(true);
+        fatChart.setScaleEnabled(true);
+        // 데이터 초기화
+        fatChart.clear();
+        // Set data
+        setFatData();
 
-        ivImage = findViewById(R.id.profile);
+        // 체지방량
+        // 차트
+        muscleChart = findViewById(R.id.muscles_chart);
+        // Disable description
+        muscleChart.getDescription().setEnabled(false);
+        // Enable touch gestures
+        muscleChart.setTouchEnabled(true);
+        // Enable scaling and dragging
+        muscleChart.setDragEnabled(true);
+        muscleChart.setScaleEnabled(true);
+        // 데이터 초기화
+        muscleChart.clear();
+        // Set data
+        setMuscleData();
 
-        // Glide로 이미지 표시하기
-        String imageUrl = profile;
-        Glide.with(this).load(imageUrl).into(ivImage);
 
+        // 햄버거 버튼 구현부
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -184,10 +201,10 @@ public class mypage extends AppCompatActivity {
                         Intent mapintent = new Intent(getApplicationContext(), map.class);
                         startActivity(mapintent);
                         return true;
-                   /* case R.id.manbogi:
-                        Intent manbogiintent = new Intent(getApplicationContext(), .class);
+                    case R.id.manbogi:
+                        Intent manbogiintent = new Intent(getApplicationContext(), pedometer.class);
                         startActivity(manbogiintent);
-                        return true;*/
+                        return true;
                     case R.id.annoucement:
                         NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(mypage.this);
                         noticeBackgroundTask.execute();
@@ -196,5 +213,135 @@ public class mypage extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void setWeightData() {
+        String url = "http://enejd0613.dothome.co.kr/getWeight.php";
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                ArrayList<BarEntry> values = new ArrayList<>();
+
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        int weight = jsonObject.getInt("weight");
+                        values.add(new BarEntry(i, new float[] {weight}));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                BarDataSet set1 = new BarDataSet(values, "weight Data");
+                set1.setColors(ColorTemplate.MATERIAL_COLORS);
+                set1.setDrawValues(false);
+
+                BarData data = new BarData(set1);
+                data.setBarWidth(0.45f);
+
+                weightChart.setData(data);
+                weightChart.setFitBars(true);
+                weightChart.invalidate();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(mypage.this, "Error loading data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        queue.add(request);
+    }
+
+    private void setFatData() {
+        String url = "http://enejd0613.dothome.co.kr/getFat.php";
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                ArrayList<BarEntry> values = new ArrayList<>();
+
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        int fat = jsonObject.getInt("fat");
+                        values.add(new BarEntry(i, new float[] {fat}));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                BarDataSet set1 = new BarDataSet(values, "fat Data");
+                set1.setColors(ColorTemplate.MATERIAL_COLORS);
+                set1.setDrawValues(false);
+
+                BarData data = new BarData(set1);
+                data.setBarWidth(0.45f);
+
+                fatChart.setData(data);
+                fatChart.setFitBars(true);
+                fatChart.invalidate();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(mypage.this, "Error loading data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        queue.add(request);
+    }
+
+    private void setMuscleData() {
+        String url = "http://enejd0613.dothome.co.kr/getMuscle.php";
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                ArrayList<BarEntry> values = new ArrayList<>();
+
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        int muscle = jsonObject.getInt("muscle");
+                        values.add(new BarEntry(i, new float[] {muscle}));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                BarDataSet set1 = new BarDataSet(values, "muscle Data");
+                set1.setColors(ColorTemplate.MATERIAL_COLORS);
+                set1.setDrawValues(false);
+
+                BarData data = new BarData(set1);
+                data.setBarWidth(0.45f);
+
+                muscleChart.setData(data);
+                muscleChart.setFitBars(true);
+                muscleChart.invalidate();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(mypage.this, "Error loading data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        queue.add(request);
+    }
+    // 햄버거 버튼 구현부
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
