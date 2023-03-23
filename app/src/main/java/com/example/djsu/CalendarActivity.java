@@ -46,7 +46,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class CalendarActivity extends AppCompatActivity {
-
+    Bundle extras;
     // 플로팅버튼 상태
     private boolean fabMain_status = false;
     private FloatingActionButton fabMain;
@@ -58,6 +58,7 @@ public class CalendarActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     public CalendarView calendarView;
     public int count = 0;
+    int num = 0;
     String Year,Month,DayOfMonth,Date = "",date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +66,8 @@ public class CalendarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calendar);
         Button imageButton = (Button) findViewById(R.id.btn_exercise);
         Button UserFoodBtn = (Button) findViewById(R.id.FoodGoBtn);
-
-
+        extras = getIntent().getExtras();
+        num = extras.getInt("num");
         imageButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -75,6 +76,12 @@ public class CalendarActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        extras = getIntent().getExtras();
+        switch (num){
+            case 1:UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(CalendarActivity.this);
+                userFoodListBackgroundTask.execute();
+                break;
+        }
         TextView KcalSum = findViewById(R.id.kcalSum);
         TextView CarbohydrateSum = findViewById(R.id.carbohydrateSum);
         TextView proteinSum = findViewById(R.id.ProteinSum);

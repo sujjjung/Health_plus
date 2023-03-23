@@ -76,7 +76,6 @@ public class FoodAdapter extends BaseAdapter {
                 intent.putExtra("FoodKg", String.valueOf(FoodKg));
                 intent.putExtra("FoodCood", FoodCood);
                 intent.putExtra("Date", Date);
-                intent.putExtra("num", 1);
                 context.startActivity(intent);
                 };
         });
