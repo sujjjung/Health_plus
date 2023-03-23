@@ -50,10 +50,12 @@ public class WeightActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight);
 
+        // EditText 선언
         et_weight = findViewById(R.id.weight_text);
         et_fat = findViewById(R.id.muscles_text);
         et_muscle = findViewById(R.id.fat_text);
 
+        // 저장 버튼 실행
         savebtn = findViewById(R.id.SaveBtn);
         savebtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +80,7 @@ public class WeightActivity extends AppCompatActivity {
             }
         });
     }
+    // 날짜 형태 변환
     private String getTime() {
         long now = System.currentTimeMillis();
         Date date = new Date(now);

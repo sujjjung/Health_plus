@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class weightRequest extends StringRequest {
-    final static private String URL = "http://enejd0613.dothome.co.kr/fat.php";
+    final static private String URL = "http://enejd0613.dothome.co.kr/fat_add.php";
     private Map<String, String> map;
 
     public weightRequest(String userId, String date, String fat, String muscle, String weight) {
