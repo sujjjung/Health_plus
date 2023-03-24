@@ -33,6 +33,7 @@ public class friendAddAdapter extends ArrayAdapter<member> {
 
     private DatabaseReference databaseReference = database.getReference();
 
+
     public friendAddAdapter(Context context, List<member> postList) {
         super(context, 0, postList);
         this.context = context;
@@ -51,17 +52,21 @@ public class friendAddAdapter extends ArrayAdapter<member> {
 
         final member memberItem = postList.get(position);
 
-//        User user = new User();
-//        String userID = user.getId();
-//        String userName = user.getName();
-//        String userProfile = user.getProfile();
+        User user = new User();
+        String userID = user.getId();
+
+        String userItem = memberItem.getId();
+        String userName = memberItem.getName();
+        String userPro = memberItem.getProfile();
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Context context = v.getContext();
                 // 버튼 클릭 이벤트 처리
-                //databaseReference.child("User").child(userID).child("friend").child(memberItem.getId()).setValue("테스트");
+                databaseReference.child("User").child(userID).child("friend").child(userItem).child("id").setValue(userItem);
+                databaseReference.child("User").child(userID).child("friend").child(userItem).child("name").setValue(userName);
+                databaseReference.child("User").child(userID).child("friend").child(userItem).child("profile").setValue(userPro);
                 Toast.makeText(context, "Button clicked for " + memberItem.getName(), Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(v.getContext(), friends_remove.class);
 //                context.startActivity(intent);

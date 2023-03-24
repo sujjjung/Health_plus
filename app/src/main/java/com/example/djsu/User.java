@@ -1,5 +1,7 @@
 package com.example.djsu;
 
+import java.net.IDN;
+
 public class User {
     private String Date,FoodName,EatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;;
     static private String Id, Name, State, Profile, Age, Password;
@@ -77,6 +79,13 @@ public class User {
         FoodSugar = foodSugar;
         FoodKg = foodKg;
         FcCode = fccode;
+    }
+
+    public User(String id, String name, String profile, String age) {
+        Id = id;
+        Name = name;
+        Profile = profile;
+        Age = age;
     }
 
     public User(String date, String foodName, String eatingTime) {
