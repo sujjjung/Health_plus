@@ -57,31 +57,16 @@ public class CalendarActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     public CalendarView calendarView;
-    public int count = 0;
-    int num = 0;
+    int FcCode;
+    int KcalNum,CarbohydrateNum,proteinNum,FatNum,sodiumNum,SugarNum;
+    User user1 = new User();
     String Year,Month,DayOfMonth,Date = "",date;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-        Button imageButton = (Button) findViewById(R.id.btn_exercise);
-        Button UserFoodBtn = (Button) findViewById(R.id.FoodGoBtn);
-        extras = getIntent().getExtras();
-        num = extras.getInt("num");
-        imageButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ExerciseRecordActivity.class);
-                startActivity(intent);
-            }
-        });
-        extras = getIntent().getExtras();
-        switch (num){
-            case 1:UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(CalendarActivity.this);
-                userFoodListBackgroundTask.execute();
-                break;
-        }
+        Intent intent = getIntent();
         TextView KcalSum = findViewById(R.id.kcalSum);
         TextView CarbohydrateSum = findViewById(R.id.carbohydrateSum);
         TextView proteinSum = findViewById(R.id.ProteinSum);
@@ -100,28 +85,23 @@ public class CalendarActivity extends AppCompatActivity {
                 FatSum.setText("");
                 sodiumSum.setText("");
                 SugarSum.setText("");
-                int KcalNum = 0,CarbohydrateNum = 0,proteinNum = 0,FatNum = 0,sodiumNum = 0,SugarNum = 0;;
-                Intent intent = getIntent();
-                User user1 = new User();
                 Year = String.valueOf(year);
                 Month = String.valueOf(month + 1);
                 DayOfMonth = String.valueOf(dayOfMonth);
                 Date = Year + "-" + Month + "-" + DayOfMonth;
-                KcalSum.setVisibility(View.VISIBLE);
-                CarbohydrateSum.setVisibility(View.VISIBLE);
-                proteinSum.setVisibility(View.VISIBLE);
-                FatSum.setVisibility(View.VISIBLE);
-                sodiumSum.setVisibility(View.VISIBLE);
-                SugarSum.setVisibility(View.VISIBLE);
-               // UserFoodBtn.setVisibility(View.VISIBLE);
-                Toast.makeText(getApplicationContext(), String.format("%d - %d - %d", year, month + 1, dayOfMonth), Toast.LENGTH_SHORT).show();
+                String eatingTime,Date1,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
+                KcalNum = 0;
+                int count = 0;
+                CarbohydrateNum = 0;proteinNum = 0;FatNum = 0;sodiumNum = 0;SugarNum = 0;
                 try {
                     JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserFood"));
                     JSONArray jsonArray = jsonObject.getJSONArray("response");
-                    int count = 0,FcCode;
-                    String eatingTime,Date1,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
+                    int a = jsonArray.length();
+                    int b = a + 3;
+                    System.out.println("hongchul" + b);
                     //JSON 배열 길이만큼 반복문을 실행
-                    while (count < jsonArray.length()) {
+                    while (count < b) {
+                        System.out.println("hongchul" + count);
                         //count는 배열의 인덱스를 의미
                         JSONObject object = jsonArray.getJSONObject(count);
                         Date1 = object.getString("Date");
@@ -139,12 +119,12 @@ public class CalendarActivity extends AppCompatActivity {
                         UserID = object.getString("UserID");
                         if(UserID.equals(user1.getId())) {
                             if(Date.equals(Date1)) {
-                                KcalNum +=  Integer.parseInt(FoodKcal) * Integer.parseInt(FoodKg);
-                                CarbohydrateNum += Integer.parseInt(FoodCarbohydrate) * Integer.parseInt(FoodKg);
-                                proteinNum += Integer.parseInt(FoodProtein) * Integer.parseInt(FoodKg);
-                                FatNum += Integer.parseInt(FoodFat) * Integer.parseInt(FoodKg);
-                                sodiumNum += Integer.parseInt(FoodSodium) * Integer.parseInt(FoodKg);
-                                SugarNum += Integer.parseInt(FoodSugar) * Integer.parseInt(FoodKg);
+                                KcalNum +=  Integer.parseInt(FoodKcal);
+                                CarbohydrateNum += Integer.parseInt(FoodCarbohydrate);
+                                proteinNum += Integer.parseInt(FoodProtein);
+                                FatNum += Integer.parseInt(FoodFat);
+                                sodiumNum += Integer.parseInt(FoodSodium);
+                                SugarNum += Integer.parseInt(FoodSugar);
                                 KcalSum.setText(String.valueOf(KcalNum));
                                 CarbohydrateSum.setText(String.valueOf(CarbohydrateNum));
                                 proteinSum.setText(String.valueOf(proteinNum));
@@ -159,8 +139,29 @@ public class CalendarActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                KcalSum.setVisibility(View.VISIBLE);
+                CarbohydrateSum.setVisibility(View.VISIBLE);
+                proteinSum.setVisibility(View.VISIBLE);
+                FatSum.setVisibility(View.VISIBLE);
+                sodiumSum.setVisibility(View.VISIBLE);
+                SugarSum.setVisibility(View.VISIBLE);
+                // UserFoodBtn.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(), String.format("%d - %d - %d", year, month + 1, dayOfMonth), Toast.LENGTH_SHORT).show();
+
             }
         });
+        Button imageButton = (Button) findViewById(R.id.btn_exercise);
+        Button UserFoodBtn = (Button) findViewById(R.id.FoodGoBtn);
+        extras = getIntent().getExtras();
+        imageButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ExerciseRecordActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         date = getTime();
 
@@ -258,6 +259,7 @@ public class CalendarActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarActivity.this, WeightActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -339,7 +341,7 @@ public class CalendarActivity extends AppCompatActivity {
             intent.putExtra("Food",result);
             intent.putExtra("Date", Date);
             startActivity(intent);
-            CalendarActivity.this.startActivity(intent);
+            finish();
         }
     }
 
@@ -391,7 +393,7 @@ public class CalendarActivity extends AppCompatActivity {
             intent.putExtra("UserFood", result);
             intent.putExtra("Date", Date);
             startActivity(intent);
-            CalendarActivity.this.startActivity(intent);
+            finish();
         }
     }
     @Override

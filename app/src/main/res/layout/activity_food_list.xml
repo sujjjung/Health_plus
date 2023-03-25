@@ -38,16 +38,16 @@
             android:gravity="left"
             android:src="@drawable/search_black_24dp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <ListView
             android:id="@+id/FoodView"
-            android:layout_width="410dp"
-            android:layout_height="365dp"
+            android:layout_width="match_parent"
+            android:layout_height="595dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
