@@ -56,5 +56,6 @@ class UserFoodListBackgroundTask extends AsyncTask<Void, Void, String> {
         Intent intent = new Intent(context, CalendarActivity.class);
         intent.putExtra("UserFood", result);
         context.startActivity(intent);
+
     }
 }

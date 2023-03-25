@@ -4,16 +4,16 @@ public class Food {
     private int FoodCood;
     private String profile;
     private String FoodName;
-    private String FoodKcal;
-    private String FoodCarbohydrate;
-    private String FoodProtein;
-    private String FoodFat;
-    private String FoodSodium;
-    private String FoodSugar;
-    private String FoodKg;
+    private float FoodKcal;
+    private float FoodCarbohydrate;
+    private float FoodProtein;
+    private float FoodFat;
+    private float FoodSodium;
+    private float FoodSugar;
+    private float FoodKg;
     private String writeDate;
 
-    public Food(int foodCood, String foodName, String foodKcal, String foodCarbohydrate, String foodProtein, String foodFat, String foodSodium, String foodSugar, String foodKg) {
+    public Food(int foodCood, String foodName, float foodKcal, float foodCarbohydrate, float foodProtein, float foodFat, float foodSodium, float foodSugar, float foodKg) {
         FoodCood = foodCood;
         FoodName = foodName;
         FoodKcal = foodKcal;
@@ -25,16 +25,6 @@ public class Food {
         FoodKg = foodKg;
     }
 
-    public Food(String foodName, String foodKcal, String foodCarbohydrate, String foodProtein, String foodFat, String foodSodium, String foodSugar, String foodKg) {
-        FoodName = foodName;
-        FoodKcal = foodKcal;
-        FoodCarbohydrate = foodCarbohydrate;
-        FoodProtein = foodProtein;
-        FoodFat = foodFat;
-        FoodSodium = foodSodium;
-        FoodSugar = foodSugar;
-        FoodKg = foodKg;
-    }
 
     public Food(String foodName) {
         FoodName = foodName;
@@ -67,59 +57,59 @@ public class Food {
         FoodName = foodName;
     }
 
-    public String getFoodKcal() {
+    public float getFoodKcal() {
         return FoodKcal;
     }
 
-    public void setFoodKcal(String foodKcal) {
+    public void setFoodKcal(float foodKcal) {
         FoodKcal = foodKcal;
     }
 
-    public String getFoodCarbohydrate() {
+    public float getFoodCarbohydrate() {
         return FoodCarbohydrate;
     }
 
-    public void setFoodCarbohydrate(String foodCarbohydrate) {
+    public void setFoodCarbohydrate(float foodCarbohydrate) {
         FoodCarbohydrate = foodCarbohydrate;
     }
 
-    public String getFoodProtein() {
+    public float getFoodProtein() {
         return FoodProtein;
     }
 
-    public void setFoodProtein(String foodProtein) {
+    public void setFoodProtein(float foodProtein) {
         FoodProtein = foodProtein;
     }
 
-    public String getFoodFat() {
+    public float getFoodFat() {
         return FoodFat;
     }
 
-    public void setFoodFat(String foodFat) {
+    public void setFoodFat(float foodFat) {
         FoodFat = foodFat;
     }
 
-    public String getFoodSodium() {
+    public float getFoodSodium() {
         return FoodSodium;
     }
 
-    public void setFoodSodium(String foodSodium) {
+    public void setFoodSodium(float foodSodium) {
         FoodSodium = foodSodium;
     }
 
-    public String getFoodSugar() {
+    public float getFoodSugar() {
         return FoodSugar;
     }
 
-    public void setFoodSugar(String foodSugar) {
+    public void setFoodSugar(float foodSugar) {
         FoodSugar = foodSugar;
     }
 
-    public String getFoodKg() {
+    public float getFoodKg() {
         return FoodKg;
     }
 
-    public void setFoodKg(String foodKg) {
+    public void setFoodKg(float foodKg) {
         FoodKg = foodKg;
     }
 
