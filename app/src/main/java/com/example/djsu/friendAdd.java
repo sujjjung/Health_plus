@@ -61,6 +61,8 @@ public class friendAdd extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private EditText editText;
 
+    List<member> filteredList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,25 +79,52 @@ public class friendAdd extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.UserList);
 
+        User user = new User();
+        String userid = user.getId();
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+
+        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("User").child(userid).child("friend");
+
+        databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                List<member> postList = new ArrayList<>();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    member member = snapshot.getValue(member.class);
-                    postList.add(member);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<String> excludedIds = new ArrayList<>();
+                for (DataSnapshot excludedIdSnapshot : snapshot.getChildren()) {
+                    String excludedId = excludedIdSnapshot.getKey();
+                    excludedIds.add(excludedId);
                 }
-                // ListView에 데이터를 표시하는 코드 작성
-                friendAddAdapter friendAddAdapter = new friendAddAdapter(friendAdd.this, postList);
-                listView.setAdapter(friendAddAdapter);
+
+                DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("User");
+                databaseReference2.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        List<member> postList = new ArrayList<>();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            member member = snapshot.getValue(member.class);
+                            if (!excludedIds.contains(member.getId()) && !member.getId().equals(userid)) {
+                                // 위에서 가져온 친구 목록에 포함되지 않고, 로그인한 유저가 아닌 경우에만 리스트에 추가합니다.
+                                postList.add(member);
+                            }
+                        }
+                        // ListView에 데이터를 표시하는 코드 작성
+                        friendAddAdapter friendAddAdapter = new friendAddAdapter(friendAdd.this, postList);
+                        listView.setAdapter(friendAddAdapter);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // 데이터 읽기에 실패한 경우 호출되는 콜백 메서드
+                    }
+                });
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // 데이터 읽기에 실패한 경우 호출되는 콜백 메서드
+            public void onCancelled(@NonNull DatabaseError error) {
+                // 처리 중 오류 발생 시
             }
         });
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -134,5 +163,4 @@ public class friendAdd extends AppCompatActivity {
             }
         });
     } //onCreate
-
 }
