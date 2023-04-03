@@ -37,8 +37,8 @@ public class community_mypage extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch(menuItem.getItemId()){
                     case R.id.home:
-                        Intent homeintent = new Intent(getApplicationContext(), main_user.class);
-                        startActivity(homeintent);
+                        mainkcalBackgroundTask mainkcalBackgroundTask = new mainkcalBackgroundTask(community_mypage.this);
+                        mainkcalBackgroundTask.execute();
                         return true;
                     case R.id.calender:
                         Intent calenderintent = new Intent(getApplicationContext(), CalendarActivity.class);
