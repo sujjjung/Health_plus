@@ -50,7 +50,7 @@ public class userFood extends AppCompatActivity {
             System.out.println(intent.getStringExtra("UserFood"));
             JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserFood"));
             JSONArray jsonArray = jsonObject.getJSONArray("response");
-            int count = 0,FcCode;
+            int count = 0,FcCode,quantity;
             String eatingTime,Date,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
             //JSON 배열 길이만큼 반복문을 실행
             while (count < jsonArray.length()) {
@@ -68,8 +68,9 @@ public class userFood extends AppCompatActivity {
                 FoodKg = object.getString("FoodKg");
                 eatingTime = object.getString("eatingTime");
                 FcCode = object.getInt("FcCode");
+                quantity = object.getInt("quantity");
                 //값들을 User클래스에 묶어줍니다
-                User user = new User(Date,FoodName,eatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg,FcCode);
+                User user = new User(Date,FoodName,eatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg,FcCode,quantity);
                     UserID = object.getString("UserID");
                     if(UserID.equals(user1.getId())) {
                         if(date.equals(Date)) {

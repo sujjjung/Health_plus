@@ -98,10 +98,8 @@ public class CalendarActivity extends AppCompatActivity {
                     JSONArray jsonArray = jsonObject.getJSONArray("response");
                     int a = jsonArray.length();
                     int b = a + 3;
-                    System.out.println("hongchul" + b);
                     //JSON 배열 길이만큼 반복문을 실행
                     while (count < b) {
-                        System.out.println("hongchul" + count);
                         //count는 배열의 인덱스를 의미
                         JSONObject object = jsonArray.getJSONObject(count);
                         Date1 = object.getString("Date");
@@ -190,8 +188,8 @@ public class CalendarActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home:
-                        Intent homeintent = new Intent(getApplicationContext(), main_user.class);
-                        startActivity(homeintent);
+                        mainkcalBackgroundTask mainkcalBackgroundTask = new mainkcalBackgroundTask(CalendarActivity.this);
+                        mainkcalBackgroundTask.execute();
                         return true;
                     case R.id.calender:
                         UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(CalendarActivity.this);
@@ -340,6 +338,7 @@ public class CalendarActivity extends AppCompatActivity {
             Intent intent = new Intent(CalendarActivity.this, Food_List.class);
             intent.putExtra("Food",result);
             intent.putExtra("Date", Date);
+            intent.putExtra("num", 1);
             startActivity(intent);
             finish();
         }
@@ -393,7 +392,6 @@ public class CalendarActivity extends AppCompatActivity {
             intent.putExtra("UserFood", result);
             intent.putExtra("Date", Date);
             startActivity(intent);
-            finish();
         }
     }
     @Override

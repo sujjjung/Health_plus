@@ -58,7 +58,7 @@ public class Food_List extends AppCompatActivity {
     private List<Food>foodArrayList;
     private FoodAdapter foodAdapter;
     private EditText editText;
-    String Date;
+    String Date,search;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,42 +68,14 @@ public class Food_List extends AppCompatActivity {
         foodArrayList = new ArrayList<Food>();
         editText = findViewById(R.id.searchtext);
         // editText 리스터 작성
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String searchText = editText.getText().toString();
-                search_list.clear();
-
-                if (searchText.equals("")) {
-                    foodAdapter.setItems((ArrayList<Food>) foodArrayList);
-                } else {
-                    // 검색 단어를 포함하는지 확인
-                    for (int a = 0; a < foodArrayList.size(); a++) {
-                        if (foodArrayList.get(a).getFoodName().toLowerCase().contains(searchText.toLowerCase())) {
-                            search_list.add(foodArrayList.get(a));
-                        }
-                        foodAdapter.setItems(search_list);
-                    }
-                }
-            }
-
-        });
 
         // recyclerView1.bringToFront();
         foodArrayList =new ArrayList<>();
         Bundle extras = getIntent().getExtras();
 
         Date = extras.getString("Date");
+        search = extras.getString("searchText");
+
         foodAdapter = new FoodAdapter(this,foodArrayList,Date);
 
         ListView foodListView = (ListView) findViewById(R.id.FoodView);
@@ -143,7 +115,55 @@ public class Food_List extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        int num = extras.getInt("num");
+        switch (num){
+            case 1: break;
+            case 0:     editText.setText(search);
+                String searchText = editText.getText().toString();
+                search_list.clear();
 
+                if (searchText.equals("")) {
+                    foodAdapter.setItems((ArrayList<Food>) foodArrayList);
+                } else {
+                    // 검색 단어를 포함하는지 확인
+                    for (int a = 0; a < foodArrayList.size(); a++) {
+                        if (foodArrayList.get(a).getFoodName().toLowerCase().contains(searchText.toLowerCase())) {
+                            search_list.add(foodArrayList.get(a));
+                        }
+                        foodAdapter.setItems(search_list);
+                    }
+                };break;
+        }
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String searchText = editText.getText().toString();
+                search_list.clear();
+
+                if (searchText.equals("")) {
+                    foodAdapter.setItems((ArrayList<Food>) foodArrayList);
+                } else {
+                    // 검색 단어를 포함하는지 확인
+                    for (int a = 0; a < foodArrayList.size(); a++) {
+                        if (foodArrayList.get(a).getFoodName().toLowerCase().contains(searchText.toLowerCase())) {
+                            search_list.add(foodArrayList.get(a));
+                        }
+                        foodAdapter.setItems(search_list);
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+        });
     }
 
 }

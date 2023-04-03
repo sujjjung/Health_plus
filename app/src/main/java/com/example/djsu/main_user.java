@@ -50,6 +50,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,6 +61,8 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,27 +71,25 @@ public class main_user extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
-    private TextView name, state;
+    private TextView name, state,kcalText;
     private String profile;
 
-    private String ID;
+    private String ID,date;
     private EditText et_status;
 
     private ImageView ivImage;
 
     private TextView water;
     private int count;
-
-    final FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    int KcalNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_user);
-
+        kcalText = findViewById(R.id.kcalText);
         water = findViewById(R.id.water_tv);
         water.setText(count+"");
-
+        date = getTime();
         ImageButton plus = (ImageButton) findViewById(R.id.plusBtn);
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,8 +148,8 @@ public class main_user extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home:
-                        Intent homeintent = new Intent(getApplicationContext(), main_user.class);
-                        startActivity(homeintent);
+                        mainkcalBackgroundTask mainkcalBackgroundTask = new mainkcalBackgroundTask(main_user.this);
+                        mainkcalBackgroundTask.execute();
                         return true;
                     case R.id.calender:
                         UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(main_user.this);
@@ -183,7 +184,32 @@ public class main_user extends AppCompatActivity {
                 return false;
             }
         });
+        Intent intent = getIntent();
+        User user1 = new User();
+        try {
+            JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserFood"));
+            JSONArray jsonArray = jsonObject.getJSONArray("response");
+            String Date,UserID,FoodKcal;
+            //JSON 배열 길이만큼 반복문을 실행
+            while (count < jsonArray.length()) {
+                //count는 배열의 인덱스를 의미
+                JSONObject object = jsonArray.getJSONObject(count);
+                Date = object.getString("Date");
+                FoodKcal = object.getString("FoodKcal");
+                //값들을 User클래스에 묶어줍니다
+                UserID = object.getString("UserID");
+                if(UserID.equals(user1.getId())) {
+                    if(Date.equals(date)) {
+                        KcalNum +=  Integer.parseInt(FoodKcal);
+                        kcalText.setText(String.valueOf(KcalNum));
+                    }
+                }
+                count++;
+            };
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         TextView text1 = findViewById(R.id.Status_message_text);
         text1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,5 +271,13 @@ public class main_user extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    private String getTime() {
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d");
+        String getTime = dateFormat.format(date);
+
+        return getTime;
     }
 }
