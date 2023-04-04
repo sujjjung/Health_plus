@@ -13,13 +13,14 @@ public class user_data_editRequest extends StringRequest {
     final static private String URL = "http://enejd0613.dothome.co.kr/user_info_edit.php";
     private Map<String, String> map;
 
-    public user_data_editRequest(String UserID, String UserPassword, String UserName, String UserAge, Response.Listener<String> listener) {
+    public user_data_editRequest(String UserID, String UserPassword, String UserName, String UserAge, String State, Response.Listener<String> listener) {
         super(Request.Method.POST, URL, listener, null);
         map = new HashMap<>();
         map.put("UserID",UserID);
         map.put("UserPassword", UserPassword);
         map.put("UserName", UserName);
         map.put("UserAge", UserAge + "");
+        map.put("State", State);
     }
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
