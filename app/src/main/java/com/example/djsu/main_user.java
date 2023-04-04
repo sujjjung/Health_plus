@@ -86,13 +86,10 @@ public class main_user extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    
     // 프로필
-
     private TextView name, state,kcalText;
-    private String profile;
-    private String ID,date;
-    private EditText et_status;
-    private String profile, ID;
+    private String profile, ID, date;
     private Bitmap bitmap;
     private ImageView ivImage;
     private static final int PICK_IMAGE_REQUEST = 1;
