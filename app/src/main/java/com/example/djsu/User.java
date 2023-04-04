@@ -3,10 +3,10 @@ package com.example.djsu;
 import java.net.IDN;
 
 public class User {
-    private String Date,FoodName,EatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;;
+    private String Date,FoodName,EatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
     static private String Id, Name, State, Profile, Age, Password;
     static private int CurrentSteps;
-    int FcCode;
+    int FcCode,quantity;
     static private String Water;
 
     public User() {}
@@ -67,7 +67,29 @@ public class User {
         FoodKg = foodKg;
     }
 
-    public User(String date, String foodName, String eatingTime, String foodKcal, String foodCarbohydrate, String foodProtein, String foodFat, String foodSodium, String foodSugar, String foodKg,int fccode) {
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public User(String date, String foodName, String eatingTime, String foodKcal, String foodCarbohydrate, String foodProtein, String foodFat, String foodSodium, String foodSugar, String foodKg, int fccode, int quantity) {
+        Date = date;
+        FoodName = foodName;
+        EatingTime = eatingTime;
+        FoodKcal = foodKcal;
+        FoodCarbohydrate = foodCarbohydrate;
+        FoodProtein = foodProtein;
+        FoodFat = foodFat;
+        FoodSodium = foodSodium;
+        FoodSugar = foodSugar;
+        FoodKg = foodKg;
+        FcCode = fccode;
+        this.quantity = quantity;
+    }
+    public User(String date, String foodName, String eatingTime, String foodKcal, String foodCarbohydrate, String foodProtein, String foodFat, String foodSodium, String foodSugar, String foodKg, int fccode) {
         Date = date;
         FoodName = foodName;
         EatingTime = eatingTime;

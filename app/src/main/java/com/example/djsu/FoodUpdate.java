@@ -1,9 +1,13 @@
 package com.example.djsu;
 
-import static java.lang.Double.sum;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,15 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -42,37 +38,33 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class FoodAddActivity extends AppCompatActivity {
+public class FoodUpdate extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private Button addButton, backButton, addtoButton;
+    EditText NameText,KcalText,CarbohydratText,ProteinText,FatText,SodiumText,SugarText,KgText,DateText,setText,searchText;
+    String Namestr,Kcalstr,Carbohydratestr,Proteinstr,Fatstr,Sodiumstr,Sugarstr,Kgstr,Datestr;
+    String s = "0",Time;
+    Double setSum;
+    ImageButton searchBtn;
+    Double KcalSum,CarbohydratSum, ProteinSum, FatSum ,SodiumSum,SugarSum,KgSum;
     private List<User> userList;
     private FoodAddAdapter userFoodAdapter;
-    ImageButton searchBtn;
-    EditText NameText, KcalText, CarbohydratText, ProteinText, FatText, SodiumText, SugarText, KgText, DateText, setText,searchText;
-    String Namestr, Kcalstr, Carbohydratestr, Proteinstr, Fatstr, Sodiumstr, Sugarstr, Kgstr, Datestr;
-    String Date, s = "0", Time;
-    Bundle extras;
-    Double setSum;
-    int quantity;
-    Double KcalSum, CarbohydratSum, ProteinSum, FatSum, SodiumSum, SugarSum, KgSum;
     DatePickerDialog datePickerDialog;
-    int a, Cood, FcCode;
-
+    Bundle extras;
+    Double kgSum;
+    int Cood,FcCode;
+    private Button addButton,backButton;
+    String Date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_food_add);
-        addButton = findViewById(R.id.addBtn);
-        ImageButton calendarBtn = findViewById(R.id.calendarbtn);
-
-        findViewById(R.id.addBtn).setOnClickListener(onClickListener);
+        setContentView(R.layout.activity_food_update);
         extras = getIntent().getExtras();
         Date = extras.getString("Date");
         Datestr = Date;
         userList = new ArrayList<>();
-        userFoodAdapter = new FoodAddAdapter(FoodAddActivity.this, userList);
+        userFoodAdapter = new FoodAddAdapter(FoodUpdate.this, userList);
         ListView userfoodListView = (ListView) findViewById(R.id.FoodView);
         userfoodListView.setAdapter(userFoodAdapter);
         Intent intent = getIntent();
@@ -112,7 +104,15 @@ public class FoodAddActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        searchBtn = (ImageButton) findViewById(R.id.SearchBtn);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new FoodBackgroundTask().execute();
+            }
+        });
+        searchText = (EditText) findViewById(R.id.searchText);
+        ImageButton calendarBtn = findViewById(R.id.calendarbtn);
         calendarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,7 +123,7 @@ public class FoodAddActivity extends AppCompatActivity {
                 int pMonth = calendar.get(Calendar.MONTH);//월
                 int pDay = calendar.get(Calendar.DAY_OF_MONTH);//일
 
-                datePickerDialog = new DatePickerDialog(FoodAddActivity.this,
+                datePickerDialog = new DatePickerDialog(FoodUpdate.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -131,48 +131,43 @@ public class FoodAddActivity extends AppCompatActivity {
                                 //1월은 0부터 시작하기 때문에 +1을 해준다.
                                 month = month + 1;
                                 Date = year + "-" + month + "-" + day;
-                                Datestr = Date;
-                                new UserFoodListBackgroundTask1().execute();
+                                DateText.setText(Date);
                             }
                         }, pYear, pMonth, pDay);
                 datePickerDialog.show();
             } //onClick
         });
+
+        addButton = findViewById(R.id.addBtn);
         backButton = findViewById(R.id.backBtn);
-        addtoButton = findViewById(R.id.addtoBtn);
-        searchBtn = (ImageButton) findViewById(R.id.SearchBtn);
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new FoodBackgroundTask().execute();
-            }
-        });
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask();
-                userFoodListBackgroundTask.execute();
+                new UserFoodBackgroundTask1(Date).execute();
             }
         });
-        addtoButton.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (s.equals("0")){
-                    Toast.makeText(getApplicationContext(), "섭취시기를 체크해주세요.", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    User user = new User();
-                    CalendatRequest calendatRequest = new CalendatRequest(user.getId(), Date, Cood, NameText.getText().toString(), KcalText.getText().toString(), CarbohydratText.getText().toString(), ProteinText.getText().toString()
-                            , FatText.getText().toString(), SodiumText.getText().toString(), SugarText.getText().toString(), KgText.getText().toString(), s, setText.getText().toString());
-                    RequestQueue queue = Volley.newRequestQueue(FoodAddActivity.this);
-                    queue.add(calendatRequest);
-
-
-                    Toast.makeText(getApplicationContext(), "음식등록이 되었습니다.", Toast.LENGTH_SHORT).show();
-                    FoodaddListBackgroundTask userFoodListBackgroundTask = new FoodaddListBackgroundTask();
-                    userFoodListBackgroundTask.execute();
-                }
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                UserFoodUpdate UpdateRequest = new UserFoodUpdate(Date, NameText.getText().toString(), KcalText.getText().toString(), CarbohydratText.getText().toString(), ProteinText.getText().toString()
+                        , FatText.getText().toString(), SodiumText.getText().toString(), SugarText.getText().toString(), KgText.getText().toString(), Time, FcCode,setText.getText().toString(), responseListener);
+                RequestQueue queue = Volley.newRequestQueue(FoodUpdate.this);
+                queue.add(UpdateRequest);
+                Toast.makeText(getApplicationContext(), "음식수정이 되었습니다.", Toast.LENGTH_SHORT).show();
+                new UserFoodBackgroundTask1(Date).execute();
             }
+
         });
 
         String Name = "";
@@ -183,8 +178,9 @@ public class FoodAddActivity extends AppCompatActivity {
         String Sodium = "";
         String Sugar = "";
         String Kg = "";
+        int quantity;
 
-
+        quantity = extras.getInt("quantity");
         Name = extras.getString("FoodName");
         Kcal = extras.getString("FoodKcal");
         Carbohydrate = extras.getString("FoodCarbohydrate");
@@ -196,7 +192,6 @@ public class FoodAddActivity extends AppCompatActivity {
         Cood = extras.getInt("FoodCood");
         Time = extras.getString("Time");
         FcCode = extras.getInt("FcCode");
-        quantity = extras.getInt("set");
         NameText = (EditText) findViewById(R.id.nametext);
         KcalText = (EditText) findViewById(R.id.kcaltext);
         CarbohydratText = (EditText) findViewById(R.id.Carbohydratetext);
@@ -207,7 +202,7 @@ public class FoodAddActivity extends AppCompatActivity {
         KgText = (EditText) findViewById(R.id.Kgtext);
         DateText = (EditText) findViewById(R.id.DateText);
         setText = (EditText) findViewById(R.id.settext);
-        searchText = (EditText) findViewById(R.id.searchText);
+        setText.setText(String.valueOf(quantity));
         Namestr = Name;
         Kcalstr = Kcal;
         Carbohydratestr = Carbohydrate;
@@ -216,7 +211,7 @@ public class FoodAddActivity extends AppCompatActivity {
         Sodiumstr = Sodium;
         Sugarstr = Sugar;
         Kgstr = Kg;
-        setSum =  Double.valueOf(quantity);
+        kgSum =  Double.valueOf(Kgstr);
         NameText.setText(Namestr);
         KcalText.setText(Kcalstr);
         CarbohydratText.setText(Carbohydratestr);
@@ -226,7 +221,7 @@ public class FoodAddActivity extends AppCompatActivity {
         SugarText.setText(Sugarstr);
         KgText.setText(Kgstr);
         DateText.setText(Datestr);
-        setText.setText("1");
+        setSum =  Double.valueOf(quantity);
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -304,11 +299,11 @@ public class FoodAddActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home:
-                        mainkcalBackgroundTask mainkcalBackgroundTask = new mainkcalBackgroundTask(FoodAddActivity.this);
-                        mainkcalBackgroundTask.execute();
+                        Intent homeintent = new Intent(getApplicationContext(), main_user.class);
+                        startActivity(homeintent);
                         return true;
                     case R.id.calender:
-                        UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask();
+                        FoodUpdate.UserFoodListBackgroundTask userFoodListBackgroundTask = new FoodUpdate.UserFoodListBackgroundTask();
                         userFoodListBackgroundTask.execute();
                         return true;
                     case R.id.communety:
@@ -354,22 +349,6 @@ public class FoodAddActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.addBtn:
-                    if (s.equals("0")) {
-                        back();
-                    } else {
-                        add();
-                    }
-                    break;
-            }
-        }
-    };
-
     class FoodaddListBackgroundTask extends AsyncTask<Void, Void, String> {
         String target;
 
@@ -408,7 +387,7 @@ public class FoodAddActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-            Intent intent = new Intent(FoodAddActivity.this, FoodAddActivity.class);
+            Intent intent = new Intent(FoodUpdate.this, FoodAddActivity.class);
             intent.putExtra("FoodName", String.valueOf(NameText.getText()));
             intent.putExtra("FoodKcal", Kcalstr);
             intent.putExtra("FoodCarbohydrate", Carbohydratestr);
@@ -418,10 +397,9 @@ public class FoodAddActivity extends AppCompatActivity {
             intent.putExtra("FoodSugar", Sugarstr);
             intent.putExtra("FoodKg", Kgstr);
             intent.putExtra("FoodCood", Cood);
+            intent.putExtra("Date", Date);
             intent.putExtra("FcCode", FcCode);
             intent.putExtra("Time", Time);
-            intent.putExtra("Date", Date);
-            intent.putExtra("set", 1);
             intent.putExtra("UserFood", result);
             startActivity(intent);
             finish();
@@ -466,33 +444,24 @@ public class FoodAddActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-            Intent intent = new Intent(FoodAddActivity.this, CalendarActivity.class);
+            Intent intent = new Intent(FoodUpdate.this, CalendarActivity.class);
             intent.putExtra("UserFood", result);
             startActivity(intent);
         }
     }
-
-    public void back(){
-        Toast.makeText(getApplicationContext(), "섭취시기를 체크해주세요.", Toast.LENGTH_SHORT).show();
-    }
-    public void add(){
-        User user = new User();
-        CalendatRequest calendatRequest = new CalendatRequest(user.getId(), Date, Cood, NameText.getText().toString(), KcalText.getText().toString(), CarbohydratText.getText().toString(), ProteinText.getText().toString()
-                , FatText.getText().toString(), SodiumText.getText().toString(), SugarText.getText().toString(), KgText.getText().toString(), s, setText.getText().toString());
-        RequestQueue queue = Volley.newRequestQueue(FoodAddActivity.this);
-        queue.add(calendatRequest);
-        Toast.makeText(getApplicationContext(), "음식등록이 되었습니다.", Toast.LENGTH_SHORT).show();
-        new UserFoodListBackgroundTask().execute();
-    }
-
-    class UserFoodListBackgroundTask1 extends AsyncTask<Void, Void, String> {
+    class UserFoodBackgroundTask1 extends AsyncTask<Void, Void, String> {
         String target;
-
-
+        String Date;
+        public UserFoodBackgroundTask1(String date) {
+            this.Date = date;
+        }
+        @Override
         protected void onPreExecute() {
             //List.php은 파싱으로 가져올 웹페이지
             target = "http://enejd0613.dothome.co.kr/foodcalendarlist.php";
         }
+
+        @Override
         protected String doInBackground(Void... voids) {
 
             try {
@@ -518,28 +487,28 @@ public class FoodAddActivity extends AppCompatActivity {
             return null;
         }
 
+        @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
         }
 
         protected void onPostExecute(String result) {
-            Intent intent = new Intent(FoodAddActivity.this, FoodAddActivity.class);
-            intent.putExtra("FoodName", String.valueOf(NameText.getText()));
-            intent.putExtra("FoodKcal", KcalText.getText().toString());
-            intent.putExtra("FoodCarbohydrate", CarbohydratText.getText().toString());
-            intent.putExtra("FoodProtein", ProteinText.getText().toString());
-            intent.putExtra("FoodFat", FatText.getText().toString());
-            intent.putExtra("FoodSodium", SodiumText.getText().toString());
-            intent.putExtra("FoodSugar", SugarText.getText().toString());
-            intent.putExtra("FoodKg", KgText.getText().toString());
-            intent.putExtra("FoodCood", Cood);
-            intent.putExtra("FcCode", FcCode);
-            intent.putExtra("Time", Time);
-            intent.putExtra("Date", Datestr);
-            intent.putExtra("set", Integer.parseInt(setText.getText().toString()));
+            Intent intent = new Intent(FoodUpdate.this, userFood.class);
             intent.putExtra("UserFood", result);
+            intent.putExtra("FoodName", String.valueOf(NameText.getText()));
+            intent.putExtra("FoodKcal", Kcalstr);
+            intent.putExtra("FoodCarbohydrate", Carbohydratestr);
+            intent.putExtra("FoodProtein", Proteinstr);
+            intent.putExtra("FoodFat", Fatstr);
+            intent.putExtra("FoodSodium", Sodiumstr);
+            intent.putExtra("FoodSugar", Sugarstr);
+            intent.putExtra("FoodKg", Kgstr);
+            intent.putExtra("FoodCood", Cood);
+            intent.putExtra("Date", Date);
+
+            intent.putExtra("FcCode", FcCode);
+            intent.putExtra("Time", s);
             startActivity(intent);
-            finish();
         }
     }
     class FoodBackgroundTask extends AsyncTask<Void, Void, String> {
@@ -580,7 +549,7 @@ public class FoodAddActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-            Intent intent = new Intent(FoodAddActivity.this, Food_List.class);
+            Intent intent = new Intent(FoodUpdate.this, Food_List.class);
             intent.putExtra("Food",result);
             intent.putExtra("Date",Datestr);
             intent.putExtra("searchText",searchText.getText().toString());
