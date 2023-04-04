@@ -17,7 +17,7 @@ class mainkcalBackgroundTask extends AsyncTask<Void, Void, String> {
 
     protected void onPreExecute() {
         //List.php은 파싱으로 가져올 웹페이지
-        target = "http://enejd0613.dothome.co.kr/foodcalendarlist.php";
+        target = "http://enejd0613.dothome.co.kr/usersteat.php";
     }
     public mainkcalBackgroundTask(Context context) {
         this.context = context;

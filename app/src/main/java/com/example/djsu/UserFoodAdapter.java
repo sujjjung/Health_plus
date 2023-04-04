@@ -81,13 +81,13 @@ public class UserFoodAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(context);
-                dlg.setTitle(String.valueOf(FoodName.getText()) + "상세성분"); //제목
-                dlg.setMessage(quantity+"기준" + "\n칼로리:" + FoodKcal + "\n탄수화물:" + FoodCarbohydrate + "\n단백질:" + FoodProtein + "\n지방:" + FoodFat
-                        + "\n나트륨:" + FoodSodium + "\n당:" + FoodSugar + "\n무게:" + FoodKg);
-                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                dlg.setTitle( userList.get(position).getFoodName() + "상세성분"); //제목
+                dlg.setMessage("수량1 기준" + "\n칼로리:"+userList.get(position).getFoodKcal()+"\n탄수화물:"+userList.get(position).getFoodCarbohydrate()+"\n단백질:"+userList.get(position).getFoodProtein()+"\n지방:"+userList.get(position).getFoodFat()
+                        +"\n나트륨:"+userList.get(position).getFoodSodium()+"\n당:"+userList.get(position).getFoodSugar()+"\n무게:"+userList.get(position).getFoodKg());
+                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int which) {
                         //토스트 메시지
-                        Toast.makeText(context, "확인을 눌르셨습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"확인을 눌르셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                 });
                 dlg.show();

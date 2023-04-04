@@ -101,7 +101,8 @@ public class main_user extends AppCompatActivity {
 
     // 걸음수
     private int count;
-    int KcalNum;
+    int Kcalcount;
+    int KcalNum,waterNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +126,9 @@ public class main_user extends AppCompatActivity {
             public void onClick(View v) {
                 count = count+100;
                 water.setText(count+"");
+                waterRequest waterRequest = new waterRequest(ID,count,date);
+                RequestQueue queue = Volley.newRequestQueue(main_user.this);
+                queue.add(waterRequest);
             }
         });
 
@@ -135,6 +139,9 @@ public class main_user extends AppCompatActivity {
             public void onClick(View v) {
                 count = count-100;
                 water.setText(count+"");
+                waterRequest waterRequest = new waterRequest(ID,count,date);
+                RequestQueue queue = Volley.newRequestQueue(main_user.this);
+                queue.add(waterRequest);
             }
         });
 
@@ -224,6 +231,7 @@ public class main_user extends AppCompatActivity {
                 return false;
             }
         });
+        // 식단 칼로리 합
         Intent intent = getIntent();
         User user1 = new User();
         try {
@@ -231,9 +239,9 @@ public class main_user extends AppCompatActivity {
             JSONArray jsonArray = jsonObject.getJSONArray("response");
             String Date,UserID,FoodKcal;
             //JSON 배열 길이만큼 반복문을 실행
-            while (count < jsonArray.length()) {
+            while (Kcalcount < jsonArray.length()) {
                 //count는 배열의 인덱스를 의미
-                JSONObject object = jsonArray.getJSONObject(count);
+                JSONObject object = jsonArray.getJSONObject(Kcalcount);
                 Date = object.getString("Date");
                 FoodKcal = object.getString("FoodKcal");
                 //값들을 User클래스에 묶어줍니다
@@ -244,12 +252,34 @@ public class main_user extends AppCompatActivity {
                         kcalText.setText(String.valueOf(KcalNum));
                     }
                 }
-                count++;
+                Kcalcount++;
             };
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+        try {
+            JSONObject jsonObject = new JSONObject(intent.getStringExtra("water"));
+            JSONArray jsonArray = jsonObject.getJSONArray("response");
+            String Date,UserID,wateradd;
+            //JSON 배열 길이만큼 반복문을 실행
+            while (Kcalcount < jsonArray.length()) {
+                //count는 배열의 인덱스를 의미
+                JSONObject object = jsonArray.getJSONObject(Kcalcount);
+                Date = object.getString("Date");
+                wateradd = object.getString("water");
+                //값들을 User클래스에 묶어줍니다
+                UserID = object.getString("UserID");
+                if(UserID.equals(user1.getId())) {
+                    if(Date.equals(date)) {
+                        waterNum +=  Integer.parseInt(wateradd);
+                        water.setText(String.valueOf(waterNum));
+                    }
+                }
+                Kcalcount++;
+            };
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // 상태메시지 변경
         TextView text1 = findViewById(R.id.Status_message_text);
         text1.setOnClickListener(new View.OnClickListener() {

@@ -269,8 +269,8 @@
         app:layout_constraintTop_toTopOf="@+id/textView21" />
 
 
-    <Button
-        android:id="@+id/btn_exercise"
+    <TextView
+        android:id="@+id/exercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -282,7 +282,7 @@
         android:textColor="#393939"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+        app:layout_constraintTop_toBottomOf="@+id/textView22"  />
 
     <TextView
         android:id="@+id/exkari"
@@ -294,7 +294,7 @@
         android:textColor="#393939"
         android:textSize="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_exercise" />
+        app:layout_constraintTop_toBottomOf="@+id/exercise" />
 
     <TextView
         android:id="@+id/ExkcalSum"
