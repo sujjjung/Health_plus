@@ -148,18 +148,8 @@ public class CalendarActivity extends AppCompatActivity {
 
             }
         });
-        Button imageButton = (Button) findViewById(R.id.btn_exercise);
         Button UserFoodBtn = (Button) findViewById(R.id.FoodGoBtn);
         extras = getIntent().getExtras();
-        imageButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ExerciseRecordActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         date = getTime();
 
