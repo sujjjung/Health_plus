@@ -1,8 +1,10 @@
 package com.example.djsu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,13 +65,33 @@ public class friendAddAdapter extends ArrayAdapter<member> {
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
-                // 버튼 클릭 이벤트 처리
-                databaseReference.child("User").child(userID).child("friend").child(userItem).child("id").setValue(userItem);
-                databaseReference.child("User").child(userID).child("friend").child(userItem).child("name").setValue(userName);
-                databaseReference.child("User").child(userID).child("friend").child(userItem).child("profile").setValue(userPro);
-                Toast.makeText(context, "Button clicked for " + memberItem.getName(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(v.getContext(), friends_remove.class);
-                context.startActivity(intent);
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("친구 추가");
+                builder.setMessage(userName+" 님을 추가하시겠습니까?");
+
+                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 확인 버튼을 눌렀을 때 처리할 코드
+                        databaseReference.child("User").child(userID).child("friend").child(userItem).child("id").setValue(userItem);
+                        databaseReference.child("User").child(userID).child("friend").child(userItem).child("name").setValue(userName);
+                        databaseReference.child("User").child(userID).child("friend").child(userItem).child("profile").setValue(userPro);
+                        Toast.makeText(context, "Button clicked for " + memberItem.getName(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(v.getContext(), friends_remove.class);
+                        context.startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 취소 버튼을 눌렀을 때 처리할 코드
+                        dialog.dismiss();
+                    }
+                });
+
+                // dialog 생성
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
