@@ -45,14 +45,14 @@ public class FoodUpdate extends AppCompatActivity {
     EditText NameText,KcalText,CarbohydratText,ProteinText,FatText,SodiumText,SugarText,KgText,DateText,setText,searchText;
     String Namestr,Kcalstr,Carbohydratestr,Proteinstr,Fatstr,Sodiumstr,Sugarstr,Kgstr,Datestr;
     String s = "0",Time;
-    Double setSum;
+    int setSum;
     ImageButton searchBtn;
-    Double KcalSum,CarbohydratSum, ProteinSum, FatSum ,SodiumSum,SugarSum,KgSum;
+    Double KcalSum,CarbohydratSum, ProteinSum, FatSum ,SodiumSum,SugarSum,KgSum,kgSum;
     private List<User> userList;
     private FoodAddAdapter userFoodAdapter;
     DatePickerDialog datePickerDialog;
     Bundle extras;
-    Double kgSum;
+    Double KcalNum,CarbohydratNum, ProteinNum, FatNum ,SodiumNum,SugarNum,KgNum;
     int Cood,FcCode;
     private Button addButton,backButton;
     String Date;
@@ -221,7 +221,14 @@ public class FoodUpdate extends AppCompatActivity {
         SugarText.setText(Sugarstr);
         KgText.setText(Kgstr);
         DateText.setText(Datestr);
-        setSum =  Double.valueOf(quantity);
+        setSum =  quantity;
+        KcalNum = Double.valueOf(Kcalstr) /quantity;
+        CarbohydratNum = Double.valueOf(Carbohydratestr) /quantity;
+        ProteinNum = Double.valueOf(Proteinstr) /quantity;
+        FatNum = Double.valueOf(Fatstr) /quantity;
+        SodiumNum = Double.valueOf(Sodiumstr) /quantity;
+        SugarNum = Double.valueOf(Sugarstr) /quantity;
+        KgNum = Double.valueOf(Kgstr) /quantity;
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -247,19 +254,19 @@ public class FoodUpdate extends AppCompatActivity {
             public void onClick(View v) {
                 setSum = setSum + 1;
                 setText.setText(String.valueOf(setSum));
-                KcalSum = Double.valueOf(Kcalstr) * setSum;
+                KcalSum = Double.valueOf(KcalNum) * setSum;
                 KcalText.setText(String.valueOf(KcalSum));
-                CarbohydratSum = Double.valueOf(Carbohydratestr) * setSum;
+                CarbohydratSum = Double.valueOf(CarbohydratNum) * setSum;
                 CarbohydratText.setText(String.valueOf(CarbohydratSum));
-                ProteinSum = Double.valueOf(Proteinstr) * setSum;
+                ProteinSum = Double.valueOf(ProteinNum) * setSum;
                 ProteinText.setText(String.valueOf(ProteinSum));
-                FatSum = Double.valueOf(Fatstr) * setSum;
+                FatSum = Double.valueOf(FatNum) * setSum;
                 FatText.setText(String.valueOf(FatSum));
-                SodiumSum = Double.valueOf(Sodiumstr) * setSum;
+                SodiumSum = Double.valueOf(SodiumNum) * setSum;
                 SodiumText.setText(String.valueOf(SodiumSum));
-                SugarSum = Double.valueOf(Sugarstr) * setSum;
+                SugarSum = Double.valueOf(SugarNum) * setSum;
                 SugarText.setText(String.valueOf(SugarSum));
-                KgSum = Double.valueOf(Kgstr) * setSum;
+                KgSum = Double.valueOf(KgNum) * setSum;
                 KgText.setText(String.valueOf(KgSum));
             }
         });
@@ -268,22 +275,26 @@ public class FoodUpdate extends AppCompatActivity {
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setSum = setSum - 1;
-                setText.setText(String.valueOf(setSum));
-                KcalSum -= Double.valueOf(Kcalstr);
-                KcalText.setText(String.valueOf(KcalSum));
-                CarbohydratSum -= Double.valueOf(Carbohydratestr);
-                CarbohydratText.setText(String.valueOf(CarbohydratSum));
-                ProteinSum -= Double.valueOf(Proteinstr);
-                ProteinText.setText(String.valueOf(ProteinSum));
-                FatSum -= Double.valueOf(Fatstr);
-                FatText.setText(String.valueOf(FatSum));
-                SodiumSum -= Double.valueOf(Sodiumstr);
-                SodiumText.setText(String.valueOf(SodiumSum));
-                SugarSum -= Double.valueOf(Sugarstr);
-                SugarText.setText(String.valueOf(SugarSum));
-                KgSum -= Double.valueOf(Kgstr);
-                KgText.setText(String.valueOf(KgSum));
+                if(setText.getText().toString().equals("1")){
+                    Toast.makeText(getApplicationContext(),"수량 1밑으로는 내릴수 없습니다.",Toast.LENGTH_SHORT).show();
+                }else {
+                    setSum = setSum - 1;
+                    setText.setText(String.valueOf(setSum));
+                    KcalSum = Double.valueOf(KcalText.getText().toString()) - Double.valueOf(KcalNum);
+                    KcalText.setText(String.valueOf(KcalSum));
+                    CarbohydratSum = Double.valueOf(CarbohydratText.getText().toString()) - Double.valueOf(CarbohydratNum);
+                    CarbohydratText.setText(String.valueOf(CarbohydratSum));
+                    ProteinSum = Double.valueOf(ProteinText.getText().toString()) - Double.valueOf(ProteinNum);
+                    ProteinText.setText(String.valueOf(ProteinSum));
+                    FatSum = Double.valueOf(FatText.getText().toString()) - Double.valueOf(FatNum);
+                    FatText.setText(String.valueOf(FatSum));
+                    SodiumSum = Double.valueOf(SodiumText.getText().toString()) - Double.valueOf(SodiumNum);
+                    SodiumText.setText(String.valueOf(SodiumSum));
+                    SugarSum = Double.valueOf(SugarText.getText().toString()) - Double.valueOf(SugarNum);
+                    SugarText.setText(String.valueOf(SugarSum));
+                    KgSum = Double.valueOf(KgText.getText().toString()) - Double.valueOf(KgNum);
+                    KgText.setText(String.valueOf(KgSum));
+                }
             }
         });
         toolbar = findViewById(R.id.toolBar);

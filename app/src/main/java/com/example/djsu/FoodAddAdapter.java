@@ -56,8 +56,10 @@ public class FoodAddAdapter extends BaseAdapter {
         View v = View.inflate(context, R.layout.item_food_add, null);
         TextView Time = (TextView) v.findViewById(R.id.foodTime);
         TextView FoodName = (TextView) v.findViewById(R.id.FoodName);
+        TextView foodcal = (TextView) v.findViewById(R.id.foodcal);
         Time.setText(userList.get(position).getEatingTime());
         FoodName.setText(userList.get(position).getFoodName());
+        foodcal.setText(userList.get(position).getFoodKcal());
         FoodKg = Integer.parseInt(userList.get(position).getFoodKg());
         FoodKcal = Integer.parseInt(userList.get(position).getFoodKcal());
         FoodCarbohydrate = Integer.parseInt(userList.get(position).getFoodCarbohydrate());
