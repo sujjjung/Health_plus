@@ -54,7 +54,7 @@ public class FoodAddActivity extends AppCompatActivity {
     String Namestr, Kcalstr, Carbohydratestr, Proteinstr, Fatstr, Sodiumstr, Sugarstr, Kgstr, Datestr;
     String Date, s = "0", Time;
     Bundle extras;
-    Double setSum;
+    int setSum;
     int quantity;
     Double KcalSum, CarbohydratSum, ProteinSum, FatSum, SodiumSum, SugarSum, KgSum;
     DatePickerDialog datePickerDialog;
@@ -216,7 +216,7 @@ public class FoodAddActivity extends AppCompatActivity {
         Sodiumstr = Sodium;
         Sugarstr = Sugar;
         Kgstr = Kg;
-        setSum =  Double.valueOf(quantity);
+        setSum = quantity;
         NameText.setText(Namestr);
         KcalText.setText(Kcalstr);
         CarbohydratText.setText(Carbohydratestr);
@@ -273,22 +273,26 @@ public class FoodAddActivity extends AppCompatActivity {
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setSum = setSum - 1;
-                setText.setText(String.valueOf(setSum));
-                KcalSum -= Double.valueOf(Kcalstr);
-                KcalText.setText(String.valueOf(KcalSum));
-                CarbohydratSum -= Double.valueOf(Carbohydratestr);
-                CarbohydratText.setText(String.valueOf(CarbohydratSum));
-                ProteinSum -= Double.valueOf(Proteinstr);
-                ProteinText.setText(String.valueOf(ProteinSum));
-                FatSum -= Double.valueOf(Fatstr);
-                FatText.setText(String.valueOf(FatSum));
-                SodiumSum -= Double.valueOf(Sodiumstr);
-                SodiumText.setText(String.valueOf(SodiumSum));
-                SugarSum -= Double.valueOf(Sugarstr);
-                SugarText.setText(String.valueOf(SugarSum));
-                KgSum -= Double.valueOf(Kgstr);
-                KgText.setText(String.valueOf(KgSum));
+                if(setText.getText().toString().equals("1")){
+                    Toast.makeText(getApplicationContext(),"수량 1밑으로는 내릴수 없습니다.",Toast.LENGTH_SHORT).show();
+                }else {
+                    setSum = setSum - 1;
+                    setText.setText(String.valueOf(setSum));
+                    KcalSum -= Double.valueOf(Kcalstr);
+                    KcalText.setText(String.valueOf(KcalSum));
+                    CarbohydratSum -= Double.valueOf(Carbohydratestr);
+                    CarbohydratText.setText(String.valueOf(CarbohydratSum));
+                    ProteinSum -= Double.valueOf(Proteinstr);
+                    ProteinText.setText(String.valueOf(ProteinSum));
+                    FatSum -= Double.valueOf(Fatstr);
+                    FatText.setText(String.valueOf(FatSum));
+                    SodiumSum -= Double.valueOf(Sodiumstr);
+                    SodiumText.setText(String.valueOf(SodiumSum));
+                    SugarSum -= Double.valueOf(Sugarstr);
+                    SugarText.setText(String.valueOf(SugarSum));
+                    KgSum -= Double.valueOf(Kgstr);
+                    KgText.setText(String.valueOf(KgSum));
+                }
             }
         });
         toolbar = findViewById(R.id.toolBar);

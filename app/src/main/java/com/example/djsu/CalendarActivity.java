@@ -137,12 +137,7 @@ public class CalendarActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                KcalSum.setVisibility(View.VISIBLE);
-                CarbohydrateSum.setVisibility(View.VISIBLE);
-                proteinSum.setVisibility(View.VISIBLE);
-                FatSum.setVisibility(View.VISIBLE);
-                sodiumSum.setVisibility(View.VISIBLE);
-                SugarSum.setVisibility(View.VISIBLE);
+
                 // UserFoodBtn.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(), String.format("%d - %d - %d", year, month + 1, dayOfMonth), Toast.LENGTH_SHORT).show();
 
@@ -156,7 +151,52 @@ public class CalendarActivity extends AppCompatActivity {
         if(Date.equals("")){
             Date = date;
         }
+        String eatingTime,Date1,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
+        int count = 0;
+        try {
+            JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserFood"));
+            JSONArray jsonArray = jsonObject.getJSONArray("response");
+            int a = jsonArray.length();
+            int b = a + 3;
+            //JSON 배열 길이만큼 반복문을 실행
+            while (count < b) {
+                //count는 배열의 인덱스를 의미
+                JSONObject object = jsonArray.getJSONObject(count);
+                Date1 = object.getString("Date");
+                FoodName = object.getString("FoodName");
+                FoodKcal = object.getString("FoodKcal");
+                FoodCarbohydrate = object.getString("FoodCarbohydrate");
+                FoodProtein = object.getString("FoodProtein");
+                FoodFat = object.getString("FoodFat");
+                FoodSodium = object.getString("FoodSodium");
+                FoodSugar = object.getString("FoodSugar");
+                FoodKg = object.getString("FoodKg");
+                eatingTime = object.getString("eatingTime");
+                FcCode = object.getInt("FcCode");
+                //값들을 User클래스에 묶어줍니다
+                UserID = object.getString("UserID");
+                if(UserID.equals(user1.getId())) {
+                    if(Date.equals(Date1)) {
+                        KcalNum +=  Integer.parseInt(FoodKcal);
+                        CarbohydrateNum += Integer.parseInt(FoodCarbohydrate);
+                        proteinNum += Integer.parseInt(FoodProtein);
+                        FatNum += Integer.parseInt(FoodFat);
+                        sodiumNum += Integer.parseInt(FoodSodium);
+                        SugarNum += Integer.parseInt(FoodSugar);
+                        KcalSum.setText(String.valueOf(KcalNum));
+                        CarbohydrateSum.setText(String.valueOf(CarbohydrateNum));
+                        proteinSum.setText(String.valueOf(proteinNum));
+                        FatSum.setText(String.valueOf(FatNum));
+                        sodiumSum.setText(String.valueOf(sodiumNum));
+                        SugarSum.setText(String.valueOf(SugarNum));
+                    }
+                }
+                count++;
+            };
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         UserFoodBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -292,7 +332,7 @@ public class CalendarActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             //List.php은 파싱으로 가져올 웹페이지
-            target = "http://enejd0613.dothome.co.kr/foodlist.php";
+            target = "http://enejd0613.dothome.co.kr/foodcalendarlist.php";
         }
 
         @Override
@@ -325,10 +365,9 @@ public class CalendarActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-            Intent intent = new Intent(CalendarActivity.this, Food_List.class);
-            intent.putExtra("Food",result);
+            Intent intent = new Intent(CalendarActivity.this, FoodAddActivity.class);
+            intent.putExtra("UserFood", result);
             intent.putExtra("Date", Date);
-            intent.putExtra("num", 1);
             startActivity(intent);
             finish();
         }

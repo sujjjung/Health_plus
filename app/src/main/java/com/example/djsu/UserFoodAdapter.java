@@ -82,7 +82,7 @@ public class UserFoodAdapter extends BaseAdapter {
             public void onClick(View view) {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(context);
                 dlg.setTitle( userList.get(position).getFoodName() + "상세성분"); //제목
-                dlg.setMessage("수량1 기준" + "\n칼로리:"+userList.get(position).getFoodKcal()+"\n탄수화물:"+userList.get(position).getFoodCarbohydrate()+"\n단백질:"+userList.get(position).getFoodProtein()+"\n지방:"+userList.get(position).getFoodFat()
+                dlg.setMessage("수량"+userList.get(position).getQuantity() + "기준" + "\n칼로리:"+userList.get(position).getFoodKcal()+"\n탄수화물:"+userList.get(position).getFoodCarbohydrate()+"\n단백질:"+userList.get(position).getFoodProtein()+"\n지방:"+userList.get(position).getFoodFat()
                         +"\n나트륨:"+userList.get(position).getFoodSodium()+"\n당:"+userList.get(position).getFoodSugar()+"\n무게:"+userList.get(position).getFoodKg());
                 dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int which) {
