@@ -40,24 +40,17 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class user_data_edit extends AppCompatActivity {
-    private EditText et_id, et_pass, et_name, et_age, et_pass2, et_status;
-    private Button btn_register, btn_photo;
-    private Bitmap bitmap;
-    ImageView UserProfile;
-    private static String URL_UPLOAD = "http://enejd0613.dothome.co.kr/upload_profile.php";
-
-    User user = new User();
-    String UserID = user.getId();
-
+    // 선언
     private static final String TAG = user_data_edit.class.getSimpleName();
     private EditText et_id, et_pass, et_name, et_age, et_pass2, et_state;
-    // private Button btn_logout, btn_photo;
-    // SessionManager sessionManager;
-    // String getId;
+    private Button btn_register, btn_photo;
     private static final String URL_EDIT = "http://enejd0613.dothome.co.kr/user_info_edit.php";
     private static final String URL_UPLOAD = "http://enejd0613.dothome.co.kr/upload_profile.php";
     private Bitmap bitmap;
-    CircleImageView user;
+    ImageView UserProfile;
+
+    User user = new User();
+    String UserID = String.valueOf(user.getId());
 
     DatabaseReference databaseReference;
 
@@ -68,6 +61,7 @@ public class user_data_edit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_data_edit);
 
+        // 선언
         et_id = findViewById(R.id.name_editText);
         et_pass = findViewById(R.id.password_editText);
         et_pass2 = findViewById(R.id.password_editText2);
@@ -76,14 +70,14 @@ public class user_data_edit extends AppCompatActivity {
         et_state = findViewById(R.id.state_editText);
         btn_register = findViewById(R.id.signup_btn);
 
-        User user = new User();
+        // 데이터 세팅
         et_id.setText(user.getId());
         et_pass.setText(user.getPassword());
         et_pass2.setText(user.getPassword());
         et_name.setText(user.getName());
         et_age.setText(user.getAge());
-        et_status = findViewById(R.id.status_editText);
-        et_status.setText(user.getState());
+        et_state = findViewById(R.id.state_editText);
+        et_state.setText(user.getState());
         btn_photo = findViewById(R.id.btn_photo);
         UserProfile = findViewById(R.id.profile);
         
@@ -95,7 +89,7 @@ public class user_data_edit extends AppCompatActivity {
                 String UserName = et_name.getText().toString();
                 String UserAge = et_age.getText().toString();
                 String UserPass = et_pass.getText().toString();
-                String State = et_status.getText().toString();
+                String State = et_state.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -133,6 +127,7 @@ public class user_data_edit extends AppCompatActivity {
         });
     }
 
+    // 사진 변경 함수
     private void chooseFile() {
         Intent intent = new Intent();
         intent.setType("image/*");

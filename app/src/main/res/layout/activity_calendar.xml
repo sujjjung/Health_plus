@@ -24,20 +24,19 @@
                 tools:ignore="MissingConstraints" />
 
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="325dp"
-        android:layout_height="351dp"
-        android:layout_marginBottom="36dp"
-        app:layout_constraintBottom_toTopOf="@+id/view3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.727"
-        app:mcv_selectionColor="#d2d2d2"
-        android:theme="@style/CalenderViewCustom"
-        app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
-        app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText"/>
-
+                android:id="@+id/calendarView"
+                android:layout_width="325dp"
+                android:layout_height="351dp"
+                android:layout_marginBottom="36dp"
+                app:layout_constraintBottom_toTopOf="@+id/view3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                app:layout_constraintVertical_bias="0.727"
+                app:mcv_selectionColor="#d2d2d2"
+                android:theme="@style/CalenderViewCustom"
+                app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
+                app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText"/>
 
             <View
                 android:id="@+id/view3"
@@ -56,9 +55,10 @@
                 android:id="@+id/imageView5"
                 android:layout_width="380dp"
                 android:layout_height="320dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/roundsquare2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.516"
+                app:layout_constraintHorizontal_bias="0.461"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
@@ -66,8 +66,8 @@
                 android:id="@+id/FoodGoBtn"
                 android:layout_width="121dp"
                 android:layout_height="32dp"
-                android:layout_marginEnd="28dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/shape_no_btn"
                 android:fontFamily="@font/a10091"
                 android:gravity="center"
@@ -92,10 +92,11 @@
 
             <TextView
                 android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
                 android:text="칼로리"
                 android:textColor="#393939"
                 android:textSize="16dp"
@@ -104,9 +105,9 @@
 
             <TextView
                 android:id="@+id/kcalSum"
-                android:layout_width="60dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="28dp"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="25dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="475"
                 android:textColor="#393939"
@@ -117,10 +118,11 @@
 
             <TextView
                 android:id="@+id/textView17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
                 android:text="탄수화물"
                 android:textColor="#393939"
                 android:textSize="16dp"
@@ -129,9 +131,9 @@
 
             <TextView
                 android:id="@+id/carbohydrateSum"
-                android:layout_width="60dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="13dp"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="25dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="200"
                 android:textColor="#393939"
@@ -142,10 +144,11 @@
 
             <TextView
                 android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
                 android:text="단백질"
                 android:textColor="#393939"
                 android:textSize="16dp"
@@ -154,9 +157,9 @@
 
             <TextView
                 android:id="@+id/ProteinSum"
-                android:layout_width="60dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="28dp"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="25dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="200"
                 android:textColor="#393939"
@@ -167,10 +170,11 @@
 
             <TextView
                 android:id="@+id/textView22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
                 android:text="지방"
                 android:textColor="#393939"
                 android:textSize="16dp"
@@ -179,9 +183,9 @@
 
             <TextView
                 android:id="@+id/fatSum"
-                android:layout_width="60dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="43dp"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="25dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="130"
                 android:textColor="#393939"
@@ -192,21 +196,22 @@
 
             <TextView
                 android:id="@+id/textView19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="120dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
                 android:text="나트륨"
                 android:textColor="#393939"
                 android:textSize="16dp"
-                app:layout_constraintStart_toEndOf="@+id/textView16"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                app:layout_constraintStart_toEndOf="@+id/kcalSum"
+                app:layout_constraintTop_toTopOf="@+id/kcalSum" />
 
             <TextView
                 android:id="@+id/SodiumSum"
-                android:layout_width="60dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="16dp"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="25dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="130"
                 android:textColor="#393939"
@@ -217,21 +222,24 @@
 
             <TextView
                 android:id="@+id/textView20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="61dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
                 android:text="당"
                 android:textColor="#393939"
                 android:textSize="16dp"
-                android:layout_marginStart="48dp"
                 app:layout_constraintBottom_toBottomOf="@+id/carbohydrateSum"
                 app:layout_constraintStart_toEndOf="@+id/carbohydrateSum"
-                app:layout_constraintTop_toTopOf="@+id/carbohydrateSum" />
+                app:layout_constraintTop_toBottomOf="@+id/textView19"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/sugarSum"
-                android:layout_width="60dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="28dp"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="25dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="130"
                 android:textColor="#393939"
@@ -243,35 +251,36 @@
 
             <TextView
                 android:id="@+id/textView21"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="47dp"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
                 android:text="물"
                 android:textColor="#393939"
                 android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/ProteinSum"
                 app:layout_constraintStart_toEndOf="@+id/ProteinSum"
-                app:layout_constraintTop_toTopOf="@+id/ProteinSum" />
+                app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
             <TextView
-                android:layout_width="60dp"
-                android:layout_height="24dp"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="25dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="130"
                 android:textColor="#393939"
                 android:textSize="16dp"
-                android:layout_marginStart="30dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView21"
                 app:layout_constraintStart_toEndOf="@+id/textView21"
                 app:layout_constraintTop_toTopOf="@+id/textView21" />
 
 
-            <TextView
-                android:id="@+id/exercise"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_exercise"
+                android:layout_width="72dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="28dp"
                 android:background="#00000000"
                 android:fontFamily="@font/a10093"
                 android:paddingLeft="0dp"
@@ -283,15 +292,16 @@
 
             <TextView
                 android:id="@+id/exkari"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="8dp"
+                android:layout_width="75dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
                 android:text="소비칼로리"
                 android:textColor="#393939"
                 android:textSize="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/exercise" />
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toBottomOf="@+id/btn_exercise" />
 
             <TextView
                 android:id="@+id/ExkcalSum"
@@ -304,35 +314,38 @@
 
                 app:layout_constraintBottom_toBottomOf="@+id/exkari"
                 app:layout_constraintEnd_toStartOf="@+id/weight"
+                app:layout_constraintHorizontal_bias="0.263"
                 app:layout_constraintStart_toEndOf="@+id/exkari"
-                app:layout_constraintTop_toTopOf="@+id/exkari" />
+                app:layout_constraintTop_toTopOf="@+id/exkari"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
-                android:layout_marginTop="108dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="104dp"
                 android:text="총 무게"
                 android:textColor="#393939"
                 android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.455"
+                app:layout_constraintHorizontal_bias="0.524"
                 app:layout_constraintStart_toStartOf="@+id/exkari"
                 app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
             <TextView
                 android:id="@+id/Exweight"
-                android:layout_width="60dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="28dp"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="32dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="130"
                 android:textColor="#393939"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/weight"
                 app:layout_constraintStart_toEndOf="@+id/weight"
-                app:layout_constraintTop_toTopOf="@+id/weight" />
+                app:layout_constraintTop_toTopOf="@+id/weight"
+                app:layout_constraintVertical_bias="1.0" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/floatingFood"
@@ -383,11 +396,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#FFCBCB"
                 android:src="@drawable/ic_action_plus"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:backgroundTint="#FFCBCB"
-                />
+                app:layout_constraintEnd_toEndOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -396,7 +410,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-      
+
         <include
             layout="@layout/toolbar"
             android:layout_width="match_parent"
