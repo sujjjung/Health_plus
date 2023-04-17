@@ -1,15 +1,17 @@
 package com.example.djsu;
 
+import static android.content.ContentValues.TAG;
+
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,19 +19,23 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
+import com.prolificinteractive.materialcalendarview.DayViewFacade;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.OnRangeSelectedListener;
+import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter;
+import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter;
+import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
 
-import org.checkerframework.checker.units.qual.C;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -37,12 +43,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class CalendarActivity extends AppCompatActivity {
@@ -56,7 +58,8 @@ public class CalendarActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    public CalendarView calendarView;
+    public MaterialCalendarView calendarView;
+    public int count = 0;
     int FcCode;
     int KcalNum,CarbohydrateNum,proteinNum,FatNum,sodiumNum,SugarNum;
     User user1 = new User();
@@ -65,29 +68,53 @@ public class CalendarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 캘린더, 버튼 선언
         setContentView(R.layout.activity_calendar);
+        Button imageButton = (Button) findViewById(R.id.btn_exercise);
+        Button UserFoodBtn = (Button) findViewById(R.id.FoodGoBtn);
+
+        // 이미지 버튼을 누르면 ?
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ExerciseRecordActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // 이게 뭐지? 
         Intent intent = getIntent();
+        
+        // 섭취, 운동 선언
         TextView KcalSum = findViewById(R.id.kcalSum);
         TextView CarbohydrateSum = findViewById(R.id.carbohydrateSum);
         TextView proteinSum = findViewById(R.id.ProteinSum);
         TextView FatSum = findViewById(R.id.fatSum);
         TextView sodiumSum = findViewById(R.id.SodiumSum);
         TextView SugarSum = findViewById(R.id.sugarSum);
+
+        // 캘린더 뷰
         calendarView = findViewById(R.id.calendarView);
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
-        {
+        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth)
-            {
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 KcalSum.setText("");
                 CarbohydrateSum.setText("");
                 proteinSum.setText("");
                 FatSum.setText("");
                 sodiumSum.setText("");
                 SugarSum.setText("");
-                Year = String.valueOf(year);
-                Month = String.valueOf(month + 1);
-                DayOfMonth = String.valueOf(dayOfMonth);
+                int KcalNum = 0,CarbohydrateNum = 0,proteinNum = 0,FatNum = 0,sodiumNum = 0,SugarNum = 0;;
+                Intent intent = getIntent();
+                User user1 = new User();
+                int year = date.getYear(); // 선택된 날짜의 연도 정보 추출
+                int month = date.getMonth() + 1; // 선택된 날짜의 월 정보 추출 (0부터 시작하므로 +1 필요)
+                int dayOfMonth = date.getDay(); // 선택된 날짜의 일 정보 추출
+
+                String Year = String.valueOf(year); // 연도 정보를 문자열로 변환
+                String Month = String.valueOf(month); // 월 정보를 문자열로 변환
+                String DayOfMonth = String.valueOf(dayOfMonth); // 일 정보를 문자열로 변환
                 Date = Year + "-" + Month + "-" + DayOfMonth;
                 String eatingTime,Date1,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
                 KcalNum = 0;
@@ -146,6 +173,34 @@ public class CalendarActivity extends AppCompatActivity {
         Button UserFoodBtn = (Button) findViewById(R.id.FoodGoBtn);
         extras = getIntent().getExtras();
 
+        // 캘린더 커스텀 (이수정이 만지는 중)
+        calendarView.state()
+                .edit()
+                .commit();
+
+        // 월, 요일을 한글로 보이게 설정 (MonthArrayTitleFormatter의 작동을 확인하려면 밑의 setTitleFormatter()를 지운다)
+        calendarView.setTitleFormatter(new MonthArrayTitleFormatter(getResources().getTextArray(R.array.custom_months)));
+        calendarView.setWeekDayFormatter(new ArrayWeekDayFormatter(getResources().getTextArray(R.array.custom_weekdays)));
+
+        // 좌우 화살표 사이 연, 월의 폰트 스타일 설정
+        calendarView.setHeaderTextAppearance(R.style.CalendarWidgetHeader);
+
+        // 요일 선택 시 내가 정의한 드로어블이 적용되도록 함
+        calendarView.setOnRangeSelectedListener(new OnRangeSelectedListener() {
+            @Override
+            public void onRangeSelected(@NonNull MaterialCalendarView widget, @NonNull List<CalendarDay> dates) {
+                // 아래 로그를 통해 시작일, 종료일이 어떻게 찍히는지 확인하고 본인이 필요한 방식에 따라 바꿔 사용한다
+                // UTC 시간을 구하려는 경우 이 라이브러리에서 제공하지 않으니 별도의 로직을 짜서 만들어내 써야 한다
+                String startDay = dates.get(0).getDate().toString();
+                String endDay = dates.get(dates.size() - 1).getDate().toString();
+                Log.e(TAG, "시작일 : " + startDay + ", 종료일 : " + endDay);
+            }
+        });
+
+        // 일자 선택 시 내가 정의한 드로어블이 적용되도록 한다
+        calendarView.addDecorators(new DayDecorator(this));
+
+        // 날짜 가져오기
         date = getTime();
 
         if(Date.equals("")){
@@ -193,17 +248,19 @@ public class CalendarActivity extends AppCompatActivity {
                 }
                 count++;
             };
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        // 당일 음식 목록
         UserFoodBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new UserFoodBackgroundTask(Date).execute();
             }
-
         });
+
+        // 햄버거 버튼
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -253,6 +310,8 @@ public class CalendarActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        // 플로팅 버튼 선언
         fabMain = findViewById(R.id.floatingMain);
         fabHealth = findViewById(R.id.floatingHealth);
         fabFood = findViewById(R.id.floatingFood);
@@ -265,6 +324,7 @@ public class CalendarActivity extends AppCompatActivity {
                 toggleFab();
             }
         });
+
         // 식단 플로팅 버튼 클릭
         fabFood.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -282,6 +342,7 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
+        // 체중 플로팅 버튼 클릭
         fabKg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -290,6 +351,29 @@ public class CalendarActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    // 선택된 요일의 background를 설정하는 Decorator 클래스
+    private static class DayDecorator implements DayViewDecorator {
+
+        private final Drawable drawable;
+
+        public DayDecorator(Context context) {
+            drawable = ContextCompat.getDrawable(context, R.drawable.calendar_selector);
+        }
+
+        // true를 리턴 시 모든 요일에 내가 설정한 드로어블이 적용된다
+        @Override
+        public boolean shouldDecorate(CalendarDay day) {
+            return true;
+        }
+
+        // 일자 선택 시 내가 정의한 드로어블이 적용되도록 한다
+        @Override
+        public void decorate(DayViewFacade view) {
+            view.setSelectionDrawable(drawable);
+//            view.addSpan(new StyleSpan(Typeface.BOLD));   // 달력 안의 모든 숫자들이 볼드 처리됨
+        }
     }
 
     // 플로팅 액션 버튼 클릭시 애니메이션 효과
@@ -423,6 +507,8 @@ public class CalendarActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    // 햄버거
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -434,6 +520,7 @@ public class CalendarActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // 날짜 가져오기
     private String getTime() {
         long now = System.currentTimeMillis();
         Date date = new Date(now);

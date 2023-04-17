@@ -8,6 +8,7 @@ public class User {
     static private int CurrentSteps;
     int FcCode,quantity;
     static private String Water;
+    static private String WalkGoal;
 
     public User() {}
 
@@ -191,4 +192,9 @@ public class User {
     public static String getWater() { return Water; }
 
     public static void setWater(String water) { Water = water; }
+
+    public static String getwalkGoal() { return WalkGoal; }
+
+    public static void setwalk_goal(String walkGoal) { WalkGoal = walkGoal; }
+
 }
