@@ -3,6 +3,7 @@ package com.example.djsu;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,14 +59,9 @@ public class friendAdd extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-
-    RecyclerView recyclerView;
-    DatabaseReference databaseReference;
-    memberAdapter memberAdapter;
-    ArrayList<member> list;
-
     private EditText editText;
 
+    List<member> filteredList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,85 +72,71 @@ public class friendAdd extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ArrayList<member> search_list = new ArrayList<>();
-
-        editText = findViewById(R.id.searchtext);
-
-        // editText 리스터 작성
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String searchText = editText.getText().toString();
-                search_list.clear();
-
-                if(searchText.equals("")){
-                    memberAdapter.setItems(list);
-                }
-                else {
-                    // 검색 단어를 포함하는지 확인
-                    for (int a = 0; a < list.size(); a++) {
-                        if (list.get(a).getName().toLowerCase().contains(searchText.toLowerCase())) {
-                            search_list.add(list.get(a));
-                        }
-                        memberAdapter.setItems(search_list);
-                    }
-                }
-            }
-
-        });
-
         //뒤로가기버튼 이미지 적용
         actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
 
-        recyclerView = findViewById(R.id.UserList);
+        ListView listView = findViewById(R.id.UserList);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("User");
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        User user = new User();
+        String userid = user.getId();
 
-        list = new ArrayList<>();
-        memberAdapter = new memberAdapter(this, list);
-        recyclerView.setAdapter(memberAdapter);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("User").child(userid).child("friend");
+
+        databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    member member = dataSnapshot.getValue(member.class);
-                    list.add(member);
+                List<String> excludedIds = new ArrayList<>();
+                for (DataSnapshot excludedIdSnapshot : snapshot.getChildren()) {
+                    String excludedId = excludedIdSnapshot.getKey();
+                    excludedIds.add(excludedId);
                 }
-                memberAdapter.notifyDataSetChanged();
+
+                DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("User");
+                databaseReference2.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        List<member> postList = new ArrayList<>();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            member member = snapshot.getValue(member.class);
+                            if (!excludedIds.contains(member.getId()) && !member.getId().equals(userid)) {
+                                // 위에서 가져온 친구 목록에 포함되지 않고, 로그인한 유저가 아닌 경우에만 리스트에 추가합니다.
+                                postList.add(member);
+                            }
+                        }
+                        // ListView에 데이터를 표시하는 코드 작성
+                        friendAddAdapter friendAddAdapter = new friendAddAdapter(friendAdd.this, postList);
+                        listView.setAdapter(friendAddAdapter);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // 데이터 읽기에 실패한 경우 호출되는 콜백 메서드
+                    }
+                });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // 처리 중 오류 발생 시
             }
         });
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home:
-                        Intent homeintent = new Intent(getApplicationContext(), main_user.class);
-                        startActivity(homeintent);
+                        mainkcalBackgroundTask mainkcalBackgroundTask = new mainkcalBackgroundTask(friendAdd.this);
+                        mainkcalBackgroundTask.execute();
                         return true;
                     case R.id.calender:
-                        Intent calenderintent = new Intent(getApplicationContext(), CalendarActivity.class);
-                        startActivity(calenderintent);
+                        UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(friendAdd.this);
+                        userFoodListBackgroundTask.execute();
                         return true;
                     case R.id.communety:
                         Intent communetyintent = new Intent(getApplicationContext(), community.class);
@@ -173,13 +155,12 @@ public class friendAdd extends AppCompatActivity {
                         startActivity(manbogiintent);
                         return true;
                     case R.id.annoucement:
-                        Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
-                        startActivity(annoucementintent);
+                        NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(friendAdd.this);
+                        noticeBackgroundTask.execute();
                         return true;
                 }
                 return false;
             }
         });
     } //onCreate
-
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/FoodName"
+            android:layout_width="130dp"
+            android:layout_height="25dp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:text="음식 이름"
+            android:fontFamily="@font/a10091"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/foodTime"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
+            android:text="먹은 때"
+            android:gravity="center"
+            android:fontFamily="@font/a10091"
+            android:layout_marginLeft="15dp"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/foodcal"
+            android:layout_width="120dp"
+            android:layout_height="25dp"
+            android:gravity="center"
+            android:text="칼로리"
+            android:fontFamily="@font/a10091"
+            android:layout_marginLeft="15dp"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</LinearLayout>

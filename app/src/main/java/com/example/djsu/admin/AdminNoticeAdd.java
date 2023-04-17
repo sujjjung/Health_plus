@@ -48,7 +48,7 @@ public class AdminNoticeAdd extends AppCompatActivity {
                 RequestQueue queue = Volley.newRequestQueue(AdminNoticeAdd.this);
                 queue.add(noticeRequest);
                 Toast.makeText(getApplicationContext(),"공지가 등록되었습니다.",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(AdminNoticeAdd.this, AdminNoticeAdd.class);
+                Intent intent = new Intent(AdminNoticeAdd.this, AdminNoticeMain.class);
                 startActivity(intent);
             }
         });

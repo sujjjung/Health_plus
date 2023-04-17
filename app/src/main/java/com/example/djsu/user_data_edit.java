@@ -26,6 +26,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,29 +49,45 @@ public class user_data_edit extends AppCompatActivity {
     User user = new User();
     String UserID = user.getId();
 
+    private static final String TAG = user_data_edit.class.getSimpleName();
+    private EditText et_id, et_pass, et_name, et_age, et_pass2, et_state;
+    // private Button btn_logout, btn_photo;
+    // SessionManager sessionManager;
+    // String getId;
+    private static final String URL_EDIT = "http://enejd0613.dothome.co.kr/user_info_edit.php";
+    private static final String URL_UPLOAD = "http://enejd0613.dothome.co.kr/upload_profile.php";
+    private Bitmap bitmap;
+    CircleImageView user;
+
+    DatabaseReference databaseReference;
+
+    FirebaseDatabase mDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_data_edit);
 
-        User user = new User();
         et_id = findViewById(R.id.name_editText);
-        et_id.setText(user.getId());
         et_pass = findViewById(R.id.password_editText);
-        et_pass.setText(user.getPassword());
         et_pass2 = findViewById(R.id.password_editText2);
-        et_pass2.setText(user.getPassword());
         et_name = findViewById(R.id.name_editText);
-        et_name.setText(user.getName());
         et_age = findViewById(R.id.birth_editText);
+        et_state = findViewById(R.id.state_editText);
+        btn_register = findViewById(R.id.signup_btn);
+
+        User user = new User();
+        et_id.setText(user.getId());
+        et_pass.setText(user.getPassword());
+        et_pass2.setText(user.getPassword());
+        et_name.setText(user.getName());
         et_age.setText(user.getAge());
         et_status = findViewById(R.id.status_editText);
         et_status.setText(user.getState());
         btn_photo = findViewById(R.id.btn_photo);
         UserProfile = findViewById(R.id.profile);
-
+        
         // 회원가입 버튼 클릭 시 수행
-        btn_register = findViewById(R.id.signup_btn);
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

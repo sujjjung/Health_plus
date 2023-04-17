@@ -11,15 +11,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-class UserFoodListBackgroundTask extends AsyncTask<Void, Void, String> {
+class mainkcalBackgroundTask extends AsyncTask<Void, Void, String> {
     String target;
     Context context;
 
     protected void onPreExecute() {
         //List.php은 파싱으로 가져올 웹페이지
-        target = "http://enejd0613.dothome.co.kr/foodcalendarlist.php";
+        target = "http://enejd0613.dothome.co.kr/usersteat.php";
     }
-    public UserFoodListBackgroundTask(Context context) {
+    public mainkcalBackgroundTask(Context context) {
         this.context = context;
     }
 
@@ -53,7 +53,7 @@ class UserFoodListBackgroundTask extends AsyncTask<Void, Void, String> {
     }
 
     protected void onPostExecute(String result) {
-        Intent intent = new Intent(context, CalendarActivity.class);
+        Intent intent = new Intent(context, main_user.class);
         intent.putExtra("UserFood", result);
         context.startActivity(intent);
 

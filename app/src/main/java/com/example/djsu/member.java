@@ -11,11 +11,12 @@ public class member {
     public member() {
     }
 
-    public member(String id, String password, String age, String name) {
+    public member(String id, String password, String age, String name, String profile) {
         Id = id;
         Password = password;
         Age = age;
         Name = name;
+        Profile = profile;
     }
 
     public String getId() {

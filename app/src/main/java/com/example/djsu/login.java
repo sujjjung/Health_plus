@@ -106,7 +106,6 @@ public class login extends AppCompatActivity {
                                 String age = jsonObject.getString("UserAge");
                                 String password = jsonObject.getString("UserPassword");
                                 Toast.makeText(getApplicationContext(), "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(login.this, main_user.class);
                                 User user = new User();
                                 user.setName(name);
                                 user.setId(UserID);
@@ -114,7 +113,8 @@ public class login extends AppCompatActivity {
                                 user.setProfile(profile);
                                 user.setAge(age);
                                 user.setPassword(password);
-                                startActivity(intent);
+                                mainkcalBackgroundTask mainkcalBackgroundTask = new mainkcalBackgroundTask(login.this);
+                                mainkcalBackgroundTask.execute();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

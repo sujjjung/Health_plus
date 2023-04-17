@@ -24,6 +24,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".FoodUpdate"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".userEx"
             android:exported="false">
             <meta-data
@@ -58,6 +65,7 @@
         </activity>
         <activity
             android:name=".userFood"
+            android:noHistory="true"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -198,7 +206,8 @@
             android:exported="false" />
         <activity
             android:name=".FoodAddActivity"
-            android:exported="false">
+            android:exported="false"
+            android:noHistory="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -282,7 +291,7 @@
         </activity>
         <activity
             android:name=".CalendarActivity"
-            android:exported="true">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -295,7 +304,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="com.example.djsu.user_data_edit"
+            android:name=".user_data_edit"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

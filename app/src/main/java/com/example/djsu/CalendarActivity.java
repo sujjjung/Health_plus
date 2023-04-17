@@ -48,7 +48,7 @@ import java.util.Date;
 import java.util.List;
 
 public class CalendarActivity extends AppCompatActivity {
-
+    Bundle extras;
     // 플로팅버튼 상태
     private boolean fabMain_status = false;
     private FloatingActionButton fabMain;
@@ -60,7 +60,11 @@ public class CalendarActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     public MaterialCalendarView calendarView;
     public int count = 0;
+    int FcCode;
+    int KcalNum,CarbohydrateNum,proteinNum,FatNum,sodiumNum,SugarNum;
+    User user1 = new User();
     String Year,Month,DayOfMonth,Date = "",date;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +83,9 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
+        // 이게 뭐지? 
+        Intent intent = getIntent();
+        
         // 섭취, 운동 선언
         TextView KcalSum = findViewById(R.id.kcalSum);
         TextView CarbohydrateSum = findViewById(R.id.carbohydrateSum);
@@ -108,23 +115,18 @@ public class CalendarActivity extends AppCompatActivity {
                 String Year = String.valueOf(year); // 연도 정보를 문자열로 변환
                 String Month = String.valueOf(month); // 월 정보를 문자열로 변환
                 String DayOfMonth = String.valueOf(dayOfMonth); // 일 정보를 문자열로 변환
-
                 Date = Year + "-" + Month + "-" + DayOfMonth;
-                KcalSum.setVisibility(View.VISIBLE);
-                CarbohydrateSum.setVisibility(View.VISIBLE);
-                proteinSum.setVisibility(View.VISIBLE);
-                FatSum.setVisibility(View.VISIBLE);
-                sodiumSum.setVisibility(View.VISIBLE);
-                SugarSum.setVisibility(View.VISIBLE);
-               // UserFoodBtn.setVisibility(View.VISIBLE);
-                Toast.makeText(getApplicationContext(), String.format("%d - %d - %d", year, month + 1, dayOfMonth), Toast.LENGTH_SHORT).show();
+                String eatingTime,Date1,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
+                KcalNum = 0;
+                int count = 0;
+                CarbohydrateNum = 0;proteinNum = 0;FatNum = 0;sodiumNum = 0;SugarNum = 0;
                 try {
                     JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserFood"));
                     JSONArray jsonArray = jsonObject.getJSONArray("response");
-                    int count = 0,FcCode;
-                    String eatingTime,Date1,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
+                    int a = jsonArray.length();
+                    int b = a + 3;
                     //JSON 배열 길이만큼 반복문을 실행
-                    while (count < jsonArray.length()) {
+                    while (count < b) {
                         //count는 배열의 인덱스를 의미
                         JSONObject object = jsonArray.getJSONObject(count);
                         Date1 = object.getString("Date");
@@ -142,12 +144,12 @@ public class CalendarActivity extends AppCompatActivity {
                         UserID = object.getString("UserID");
                         if(UserID.equals(user1.getId())) {
                             if(Date.equals(Date1)) {
-                                KcalNum +=  Integer.parseInt(FoodKcal) * Integer.parseInt(FoodKg);
-                                CarbohydrateNum += Integer.parseInt(FoodCarbohydrate) * Integer.parseInt(FoodKg);
-                                proteinNum += Integer.parseInt(FoodProtein) * Integer.parseInt(FoodKg);
-                                FatNum += Integer.parseInt(FoodFat) * Integer.parseInt(FoodKg);
-                                sodiumNum += Integer.parseInt(FoodSodium) * Integer.parseInt(FoodKg);
-                                SugarNum += Integer.parseInt(FoodSugar) * Integer.parseInt(FoodKg);
+                                KcalNum +=  Integer.parseInt(FoodKcal);
+                                CarbohydrateNum += Integer.parseInt(FoodCarbohydrate);
+                                proteinNum += Integer.parseInt(FoodProtein);
+                                FatNum += Integer.parseInt(FoodFat);
+                                sodiumNum += Integer.parseInt(FoodSodium);
+                                SugarNum += Integer.parseInt(FoodSugar);
                                 KcalSum.setText(String.valueOf(KcalNum));
                                 CarbohydrateSum.setText(String.valueOf(CarbohydrateNum));
                                 proteinSum.setText(String.valueOf(proteinNum));
@@ -162,8 +164,14 @@ public class CalendarActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+                // UserFoodBtn.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(), String.format("%d - %d - %d", year, month + 1, dayOfMonth), Toast.LENGTH_SHORT).show();
+
             }
         });
+        Button UserFoodBtn = (Button) findViewById(R.id.FoodGoBtn);
+        extras = getIntent().getExtras();
 
         // 캘린더 커스텀 (이수정이 만지는 중)
         calendarView.state()
@@ -198,7 +206,52 @@ public class CalendarActivity extends AppCompatActivity {
         if(Date.equals("")){
             Date = date;
         }
-
+        String eatingTime,Date1,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
+        int count = 0;
+        try {
+            JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserFood"));
+            JSONArray jsonArray = jsonObject.getJSONArray("response");
+            int a = jsonArray.length();
+            int b = a + 3;
+            //JSON 배열 길이만큼 반복문을 실행
+            while (count < b) {
+                //count는 배열의 인덱스를 의미
+                JSONObject object = jsonArray.getJSONObject(count);
+                Date1 = object.getString("Date");
+                FoodName = object.getString("FoodName");
+                FoodKcal = object.getString("FoodKcal");
+                FoodCarbohydrate = object.getString("FoodCarbohydrate");
+                FoodProtein = object.getString("FoodProtein");
+                FoodFat = object.getString("FoodFat");
+                FoodSodium = object.getString("FoodSodium");
+                FoodSugar = object.getString("FoodSugar");
+                FoodKg = object.getString("FoodKg");
+                eatingTime = object.getString("eatingTime");
+                FcCode = object.getInt("FcCode");
+                //값들을 User클래스에 묶어줍니다
+                UserID = object.getString("UserID");
+                if(UserID.equals(user1.getId())) {
+                    if(Date.equals(Date1)) {
+                        KcalNum +=  Integer.parseInt(FoodKcal);
+                        CarbohydrateNum += Integer.parseInt(FoodCarbohydrate);
+                        proteinNum += Integer.parseInt(FoodProtein);
+                        FatNum += Integer.parseInt(FoodFat);
+                        sodiumNum += Integer.parseInt(FoodSodium);
+                        SugarNum += Integer.parseInt(FoodSugar);
+                        KcalSum.setText(String.valueOf(KcalNum));
+                        CarbohydrateSum.setText(String.valueOf(CarbohydrateNum));
+                        proteinSum.setText(String.valueOf(proteinNum));
+                        FatSum.setText(String.valueOf(FatNum));
+                        sodiumSum.setText(String.valueOf(sodiumNum));
+                        SugarSum.setText(String.valueOf(SugarNum));
+                    }
+                }
+                count++;
+            };
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         // 당일 음식 목록
         UserFoodBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,8 +275,8 @@ public class CalendarActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home:
-                        Intent homeintent = new Intent(getApplicationContext(), main_user.class);
-                        startActivity(homeintent);
+                        mainkcalBackgroundTask mainkcalBackgroundTask = new mainkcalBackgroundTask(CalendarActivity.this);
+                        mainkcalBackgroundTask.execute();
                         return true;
                     case R.id.calender:
                         UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(CalendarActivity.this);
@@ -295,6 +348,7 @@ public class CalendarActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarActivity.this, WeightActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -362,7 +416,7 @@ public class CalendarActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             //List.php은 파싱으로 가져올 웹페이지
-            target = "http://enejd0613.dothome.co.kr/foodlist.php";
+            target = "http://enejd0613.dothome.co.kr/foodcalendarlist.php";
         }
 
         @Override
@@ -395,11 +449,11 @@ public class CalendarActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-            Intent intent = new Intent(CalendarActivity.this, Food_List.class);
-            intent.putExtra("Food",result);
+            Intent intent = new Intent(CalendarActivity.this, FoodAddActivity.class);
+            intent.putExtra("UserFood", result);
             intent.putExtra("Date", Date);
             startActivity(intent);
-            CalendarActivity.this.startActivity(intent);
+            finish();
         }
     }
 
@@ -451,7 +505,6 @@ public class CalendarActivity extends AppCompatActivity {
             intent.putExtra("UserFood", result);
             intent.putExtra("Date", Date);
             startActivity(intent);
-            CalendarActivity.this.startActivity(intent);
         }
     }
 

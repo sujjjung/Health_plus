@@ -11,7 +11,7 @@ public class CalendatRequest extends StringRequest{
     private Map<String, String> map;
 
     public CalendatRequest(String userId, String date, int FoodCood,String FoodName, String FoodKcal, String FoodCarbohydrate, String FoodProtein, String FoodFat
-            , String FoodSodium, String FoodSugar, String FoodKg,String eatingTime) {
+            , String FoodSodium, String FoodSugar, String FoodKg,String eatingTime,String quantity) {
         super(Method.POST, URL, null, null);
         map = new HashMap<>();
         map.put("userId",userId);
@@ -26,6 +26,7 @@ public class CalendatRequest extends StringRequest{
         map.put("FoodSugar", FoodSugar + "");
         map.put("FoodKg", FoodKg + "");
         map.put("eatingTime",eatingTime);
+        map.put("quantity", quantity + "");
     }
 
 
