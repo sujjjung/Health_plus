@@ -23,17 +23,20 @@
         app:srcCompat="@drawable/logo3"
         tools:ignore="MissingConstraints" />
 
-    <CalendarView
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="325dp"
+        android:layout_height="351dp"
         android:layout_marginBottom="36dp"
         app:layout_constraintBottom_toTopOf="@+id/view3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.727"
+        app:mcv_selectionColor="#d2d2d2"
+        android:theme="@style/CalenderViewCustom"
+        app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
+        app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText"/>
 
     <View
         android:id="@+id/view3"
@@ -52,9 +55,10 @@
         android:id="@+id/imageView5"
         android:layout_width="380dp"
         android:layout_height="320dp"
+        android:layout_marginTop="24dp"
         android:src="@drawable/roundsquare2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 

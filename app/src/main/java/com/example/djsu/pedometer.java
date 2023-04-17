@@ -15,6 +15,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -36,9 +37,11 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.navigation.NavigationView;
 
@@ -74,7 +77,7 @@ public class pedometer extends AppCompatActivity {
     int currentSteps = 0;
 
     // 차트 선언
-    private BarChart walkChart;
+    private BarChart walkChart, goalChart;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
 
@@ -85,7 +88,7 @@ public class pedometer extends AppCompatActivity {
 
         // 걷는 움짤
         ImageView walk = (ImageView)findViewById(R.id.walk_lion);
-        Glide.with(this).load(R.raw.girl).into(walk);
+        Glide.with(this).load(R.raw.rununscreen).into(walk);
 
         // 햄버거 버튼 구현부
         toolbar = findViewById(R.id.toolBar);
@@ -134,6 +137,36 @@ public class pedometer extends AppCompatActivity {
                         return true;
                 }
                 return false;
+            }
+        });
+
+        User user = new User();
+
+        // 목표 설정
+        Button goal = findViewById(R.id.setGoal);
+        goal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
+                String UserID = user.getId();
+
+                dialog_set_goal alert = new dialog_set_goal(pedometer.this);
+                alert.callFunction();
+                alert.setModifyReturnListener(new dialog_set_goal.ModifyReturnListener() {
+                    @Override
+                    public void afterModify(String text) {
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                System.out.println("!!!!!!!!!!!!!: " +text);
+                                String goal = text.toString();
+                                User user = new User();
+                                user.setwalk_goal(goal);
+                                Toast.makeText(getApplicationContext(), "한줄소개가 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        };
+                    }
+                });
             }
         });
 
@@ -187,6 +220,21 @@ public class pedometer extends AppCompatActivity {
         walkChart.clear();
         // Set data
         setWalkData();
+
+
+        // 당일 목표 차트
+        goalChart = (BarChart) findViewById(R.id.goalChart);
+        // Disable description
+        goalChart.getDescription().setEnabled(false);
+        // Enable touch gestures
+        goalChart.setTouchEnabled(true);
+        // Enable scaling and dragging
+        goalChart.setDragEnabled(true);
+        goalChart.setScaleEnabled(true);
+        // 데이터 초기화
+        goalChart.clear();
+        // Set data
+        setGoalData();
     }
 
     public void onStart() {
@@ -239,6 +287,12 @@ public class pedometer extends AppCompatActivity {
         Log.d("resetAlarm", "ResetHour : " + setResetTime);
     }
 
+    private void setGoalData() {
+        ArrayList<BarEntry> entry_chart = new ArrayList<>();
+
+        entry_chart.add(new BarEntry(1,currentSteps));
+    }
+
     private void setWalkData() {
         String url = "http://enejd0613.dothome.co.kr/getWalk.php";
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -247,12 +301,15 @@ public class pedometer extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 ArrayList<BarEntry> values = new ArrayList<>();
+                ArrayList<String> labels = new ArrayList<>();
 
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
                         int walk = jsonObject.getInt("walk");
                         values.add(new BarEntry(i, new float[] {walk}));
+                        String date = jsonObject.getString("date");
+                        labels.add(date);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -268,6 +325,17 @@ public class pedometer extends AppCompatActivity {
                 walkChart.setData(data);
                 walkChart.setFitBars(true);
                 walkChart.invalidate();
+                walkChart.setTouchEnabled(false); // 터치 막기
+                walkChart.setMaxVisibleValueCount(7); // 그래프 최대 갯수
+                walkChart.getXAxis().setDrawGridLines(false); // X축 및 Y축 격자선 없애기
+                walkChart.getAxisLeft().setDrawGridLines(false);
+                walkChart.getAxisRight().setDrawGridLines(false);
+                walkChart.getAxisLeft().setDrawLabels(false); // 왼쪽 값 없애기
+                // weightChart.getXAxis().setDrawLabels(false); // 위쪽 라벨 없애기
+                XAxis xAxis = walkChart.getXAxis(); // x축 설정
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(labels)); // 라벨 붙이기
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // 라벨 위치 설정
+                walkChart.getLegend().setEnabled(false); // 레전드 제거
             }
         }, new Response.ErrorListener() {
             @Override

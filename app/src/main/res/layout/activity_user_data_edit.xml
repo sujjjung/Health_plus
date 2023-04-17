@@ -29,8 +29,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.83" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_photo"
+        app:layout_constraintVertical_bias="0.523" />
 
     <EditText
         android:id="@+id/birth_editText"
@@ -41,11 +41,11 @@
         android:fontFamily="@font/a1009_1"
         android:hint="　생년월일 예) 20020613"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+        app:layout_constraintBottom_toBottomOf="@+id/birth_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.396"
-        app:layout_constraintStart_toEndOf="@+id/imageView7"
-        app:layout_constraintTop_toTopOf="@+id/imageView7"
+        app:layout_constraintStart_toEndOf="@+id/birth_image"
+        app:layout_constraintTop_toTopOf="@+id/birth_image"
         app:layout_constraintVertical_bias="1.0" />
 
     <EditText
@@ -57,11 +57,11 @@
         android:fontFamily="@font/a1009_1"
         android:hint="　8자 - 16자의 비밀번호"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView9"
+        app:layout_constraintBottom_toBottomOf="@+id/password_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.396"
-        app:layout_constraintStart_toEndOf="@+id/imageView9"
-        app:layout_constraintTop_toTopOf="@+id/imageView9"
+        app:layout_constraintStart_toEndOf="@+id/password_image"
+        app:layout_constraintTop_toTopOf="@+id/password_image"
         app:layout_constraintVertical_bias="1.0" />
 
     <EditText
@@ -73,11 +73,27 @@
         android:fontFamily="@font/a1009_1"
         android:hint="　비밀번호 확인"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+        app:layout_constraintBottom_toBottomOf="@+id/password2_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.396"
-        app:layout_constraintStart_toEndOf="@+id/imageView10"
-        app:layout_constraintTop_toTopOf="@+id/imageView10"
+        app:layout_constraintStart_toEndOf="@+id/password2_image"
+        app:layout_constraintTop_toTopOf="@+id/password2_image"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/status_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#ffdc01"
+        android:ems="13"
+        android:fontFamily="@font/a1009_1"
+        android:hint="　상태메시지"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toBottomOf="@+id/status_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintStart_toEndOf="@+id/status_image"
+        app:layout_constraintTop_toTopOf="@+id/status_image"
         app:layout_constraintVertical_bias="1.0" />
 
     <EditText
@@ -89,15 +105,15 @@
         android:fontFamily="@font/a1009_1"
         android:hint="　이름"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+        app:layout_constraintBottom_toBottomOf="@+id/name_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.396"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toTopOf="@+id/imageView6"
+        app:layout_constraintStart_toEndOf="@+id/name_image"
+        app:layout_constraintTop_toTopOf="@+id/name_image"
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/name_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -107,67 +123,74 @@
         app:srcCompat="@drawable/idcard" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/status_image"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_image"
+        app:srcCompat="@drawable/status"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/birth_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="56dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:layout_constraintTop_toBottomOf="@+id/status_image"
         app:srcCompat="@drawable/birthday"
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/password_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="56dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:layout_constraintTop_toBottomOf="@+id/birth_image"
         app:srcCompat="@drawable/password"
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/imageView10"
+        android:id="@+id/password2_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="56dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView9"
+        app:layout_constraintTop_toBottomOf="@+id/password_image"
         app:srcCompat="@drawable/check" />
 
     <ImageView
-        android:id="@+id/user"
+        android:id="@+id/profile"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="17dp"
         android:layout_marginTop="56dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView10"
-        app:srcCompat="@drawable/profile_image" />
+        app:layout_constraintTop_toBottomOf="@+id/password2_image"
+        app:srcCompat="@drawable/profile_image"/>
 
     <Button
-        android:id="@+id/button6"
-        android:layout_width="270dp"
+        android:id="@+id/btn_photo"
+        android:layout_width="220dp"
         android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="264dp"
         android:background="#00000000"
         android:fontFamily="@font/a1009_1"
         android:gravity=""
         android:text=" 프로필 사진 변경"
         android:textColor="#9e9e9e"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/profile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/user"
-        app:layout_constraintTop_toBottomOf="@+id/password_editText2"
+        app:layout_constraintHorizontal_bias="0.188"
+        app:layout_constraintStart_toEndOf="@+id/profile"
+        app:layout_constraintTop_toTopOf="@+id/profile"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
