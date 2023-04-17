@@ -1,43 +1,24 @@
 package com.example.djsu.admin;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.djsu.EerciseRequest;
-import com.example.djsu.FoodRequest;
+import com.example.djsu.ExerciseRequest;
 import com.example.djsu.R;
-import com.example.djsu.login;
-import com.example.djsu.signup;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class AdminExerciseSubAdd extends AppCompatActivity {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -100,9 +81,9 @@ public class AdminExerciseSubAdd extends AppCompatActivity {
                     }
                 };
                 // 서버로 Volley를 이용해서 요청을 함.
-                EerciseRequest eerciseRequest = new EerciseRequest(s,hName,hExplanation,hKcal,hunit,responseListener);
+                ExerciseRequest exerciseRequest = new ExerciseRequest(s,hName,hExplanation,hKcal,hunit,responseListener);
                 RequestQueue queue = Volley.newRequestQueue(AdminExerciseSubAdd.this);
-                queue.add(eerciseRequest);
+                queue.add(exerciseRequest);
 
             }
         });

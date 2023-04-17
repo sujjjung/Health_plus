@@ -7,11 +7,11 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EerciseRequest extends StringRequest {
+public class ExerciseRequest extends StringRequest {
     final static private String URL = "http://enejd0613.dothome.co.kr/exercise.php";
     private Map<String, String> map;
 
-    public EerciseRequest(String ExPart,String ExName, String ExExplanation, String ExCalorie, String ExUnit, Response.Listener<String> listener) {
+    public ExerciseRequest(String ExPart, String ExName, String ExExplanation, String ExCalorie, String ExUnit, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
         map = new HashMap<>();
         map.put("ExPart", ExPart);

@@ -7,20 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.djsu.CalendarActivity;
-import com.example.djsu.EerciseRequest;
 import com.example.djsu.NoticeRequest;
 import com.example.djsu.R;
-import com.example.djsu.WeightActivity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

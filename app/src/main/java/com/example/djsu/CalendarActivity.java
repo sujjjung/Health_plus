@@ -72,7 +72,6 @@ public class CalendarActivity extends AppCompatActivity {
         // 캘린더, 버튼 선언
         setContentView(R.layout.activity_calendar);
         Button imageButton = (Button) findViewById(R.id.btn_exercise);
-        Button UserFoodBtn = (Button) findViewById(R.id.FoodGoBtn);
 
         // 이미지 버튼을 누르면 ?
         imageButton.setOnClickListener(new View.OnClickListener() {
