@@ -32,7 +32,7 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
     public exerciserecodeAdapter(ArrayList<exrecode> exArrayList, Context context) {
         this.exArrayList = exArrayList;
         this.context = context;
-        mCheckedList = new ArrayList<>(Collections.nCopies(this.setArrayList.size(), false));
+
     }
 
     @NonNull
@@ -50,15 +50,14 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
         number.setText(exeLsit.getNumber());
         Unit.setText(exeLsit.getUnit());
 
-        holder.checkbox.setChecked(mCheckedList.get(position));
-
         holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mCheckedList.set(position, isChecked);
+                // CheckBox의 상태가 변경되었을 때 호출되는 콜백
+                exeLsit.setSelected(isChecked);
+                Toast.makeText(buttonView.getContext(), "선택된 데이터: " + exeLsit.getSetNumber(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     @Override
@@ -78,16 +77,10 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
             number = itemView.findViewById(R.id.number);
             Unit = itemView.findViewById(R.id.unit);
             checkbox = itemView.findViewById(R.id.checkbox);
+
+
         }
     }
-    public List<Set> getCheckedItems() {
-        List<Set> checkedItems = new ArrayList<>();
-        for (int i = 0; i < setArrayList.size(); i++) {
-            if (mCheckedList.get(i)) {
-                checkedItems.add(setArrayList.get(i));
-            }
-        }
-        return checkedItems;
-    }
+
 
 }
