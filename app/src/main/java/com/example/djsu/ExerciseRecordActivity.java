@@ -47,7 +47,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exercise_record);
         TextView unit = findViewById(R.id.unittext);
         exrecodeList = new ArrayList<>();
-        setArrayList = new ArrayList<>();
+        //setArrayList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -120,17 +120,14 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                     setcount++;}
             }
         });
-        List<Set> checkedItems = exAdapter.getCheckedItems();
-        ImageButton deleteBtn = (ImageButton) findViewById(R.id.Save);
-        deleteBtn.setOnClickListener(new View.OnClickListener(){
+
+        ImageButton SaveBtn = (ImageButton) findViewById(R.id.Save);
+        SaveBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Toast.makeText(ExerciseRecordActivity.this, "삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ExerciseRecordActivity.this, ExerciseRecordActivity.class);
-                Set set = setArrayList.get(position);
-                System.out.println("hongchul" + checkedItems.toString());
-               // intent.putExtra("FoodKcal", String.valueOf(exeLsit.getSetNumber()));
-               // intent.putExtra("FoodKcal", String.valueOf(exeLsit.getNumber()));
+
                 startActivity(intent);
             }
         });
