@@ -3,6 +3,7 @@ package com.example.djsu;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -12,6 +13,14 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class friend_invite extends AppCompatActivity {
     private Toolbar toolbar;
@@ -25,10 +34,36 @@ public class friend_invite extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-//뒤로가기버튼 이미지 적용
+        //뒤로가기버튼 이미지 적용
         actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
+
+        ListView listView = findViewById(R.id.recycler_messages);
+
+        User user = new User();
+        String userName = user.getId();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User").child(userName).child("friend");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<member> postList = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    member member = snapshot.getValue(member.class);
+                    postList.add(member);
+                }
+                // ListView에 데이터를 표시하는 코드 작성
+                friend_invite_Adapter friend_invite_Adapter = new friend_invite_Adapter(friend_invite.this, postList);
+                listView.setAdapter(friend_invite_Adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // 데이터 읽기에 실패한 경우 호출되는 콜백 메서드
+            }
+        });
+
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
