@@ -2,6 +2,8 @@ package com.example.djsu;
 
 import static android.content.ContentValues.TAG;
 
+import static com.example.djsu.R.style.CalendarWidgetHeader;
+
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
@@ -182,7 +184,7 @@ public class CalendarActivity extends AppCompatActivity {
         calendarView.setWeekDayFormatter(new ArrayWeekDayFormatter(getResources().getTextArray(R.array.custom_weekdays)));
 
         // 좌우 화살표 사이 연, 월의 폰트 스타일 설정
-        calendarView.setHeaderTextAppearance(R.style.CalendarWidgetHeader);
+        calendarView.setHeaderTextAppearance(CalendarWidgetHeader);
 
         // 요일 선택 시 내가 정의한 드로어블이 적용되도록 함
         calendarView.setOnRangeSelectedListener(new OnRangeSelectedListener() {
@@ -196,8 +198,24 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
+        // 주말 색깔 다르게
+        calendarView.addDecorators(
+                new SundayDecorator(),
+                new SaturdayDecorator()
+        );
+
+        // 오늘 날짜 표시
+        OneDayDecorator oneDayDecorator = new OneDayDecorator();
+        calendarView.addDecorators(
+                oneDayDecorator
+        );
+
         // 일자 선택 시 내가 정의한 드로어블이 적용되도록 한다
         calendarView.addDecorators(new DayDecorator(this));
+
+        // CustomDayView 객체를 Material CalendarView 에 적용하는 코드
+        CustomDayViewDecorator customDayViewDecorator = new CustomDayViewDecorator(10); // 왼쪽 여백 값을 10으로 설정
+        calendarView.addDecorators(customDayViewDecorator);
 
         // 날짜 가져오기
         date = getTime();
