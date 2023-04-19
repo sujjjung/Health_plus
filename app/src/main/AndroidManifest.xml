@@ -24,6 +24,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".dialog_friend_list"
+            android:exported="false" />
+        <activity
+            android:name=".friends_list"
+            android:exported="false" />
+        <activity
+            android:name=".dialog_friend_user"
+            android:exported="false" />
+        <activity
             android:name=".FoodUpdate"
             android:exported="false">
             <meta-data
@@ -65,8 +74,8 @@
         </activity>
         <activity
             android:name=".userFood"
-            android:noHistory="true"
-            android:exported="false">
+            android:exported="false"
+            android:noHistory="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
