@@ -25,6 +25,6 @@ public class SaturdayDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new ForegroundColorSpan(Color.parseColor("#800898D8")));
+        view.addSpan(new ForegroundColorSpan(Color.parseColor("#0055FF")));
     }
 }
