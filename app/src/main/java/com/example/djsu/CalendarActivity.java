@@ -46,6 +46,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -57,10 +58,17 @@ public class CalendarActivity extends AppCompatActivity {
     private FloatingActionButton fabHealth;
     private FloatingActionButton fabFood;
     private FloatingActionButton fabKg;
+
+    // 햄버거 버튼
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+
+    // 캘린더
     public MaterialCalendarView calendarView;
+    private final String TAG = this.getClass().getSimpleName();
+
+    // 섭취, 운동
     public int count = 0;
     int FcCode;
     int KcalNum,CarbohydrateNum,proteinNum,FatNum,sodiumNum,SugarNum;
@@ -198,6 +206,9 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
+        // 일자 선택 시 내가 정의한 드로어블이 적용되도록 한다
+        calendarView.addDecorators(new DayDecorator(this));
+
         // 주말 색깔 다르게
         calendarView.addDecorators(
                 new SundayDecorator(),
@@ -223,6 +234,7 @@ public class CalendarActivity extends AppCompatActivity {
         if(Date.equals("")){
             Date = date;
         }
+
         String eatingTime,Date1,UserID,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
         int count = 0;
         try {
