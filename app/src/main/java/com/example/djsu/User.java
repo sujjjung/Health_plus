@@ -104,11 +104,12 @@ public class User {
         FcCode = fccode;
     }
 
-    public User(String id, String name, String profile, String age) {
+    public User(String id, String name, String profile, String age, String state) {
         Id = id;
         Name = name;
         Profile = profile;
         Age = age;
+        State = state;
     }
 
     public User(String date, String foodName, String eatingTime) {

@@ -6,6 +6,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,38 +61,53 @@ public class friendAddAdapter extends ArrayAdapter<member> {
         String userItem = memberItem.getId();
         String userName = memberItem.getName();
         String userPro = memberItem.getProfile();
+        String userState = memberItem.getState();
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = v.getContext();
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle("친구 추가");
-                builder.setMessage(userName+" 님을 추가하시겠습니까?");
+                showDialog(memberItem);
+            }
 
-                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            private void showDialog(member memberItem) {
+                // 커스텀 다이얼로그 보이기
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                View view = LayoutInflater.from(context).inflate(R.layout.activity_dialog_friend_user, null, false);
+                builder.setView(view);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                // 다이얼로그에 데이터 설정
+                TextView name = view.findViewById(R.id.userName);
+                name.setText(memberItem.getName());
+                TextView state = view.findViewById(R.id.state);
+                state.setText(memberItem.getState());
+
+                // 다이얼로그 버튼 이벤트 처리
+                Button addButton = view.findViewById(R.id.conformBtn);
+                Button backButton = view.findViewById(R.id.backBtn);
+                addButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(View v) {
+                        Context context = v.getContext();
                         // 확인 버튼을 눌렀을 때 처리할 코드
                         databaseReference.child("User").child(userID).child("friend").child(userItem).child("id").setValue(userItem);
                         databaseReference.child("User").child(userID).child("friend").child(userItem).child("name").setValue(userName);
                         databaseReference.child("User").child(userID).child("friend").child(userItem).child("profile").setValue(userPro);
+                        databaseReference.child("User").child(userID).child("friend").child(userItem).child("state").setValue(userState);
                         Toast.makeText(context, "Button clicked for " + memberItem.getName(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(v.getContext(), friends_remove.class);
+                        dialog.dismiss();
+                        Intent intent = new Intent(v.getContext(), friends_list.class);
                         context.startActivity(intent);
                     }
                 });
-                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+
+                backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // 취소 버튼을 눌렀을 때 처리할 코드
+                    public void onClick(View v) {
                         dialog.dismiss();
                     }
                 });
-
-                // dialog 생성
-                AlertDialog dialog = builder.create();
-                dialog.show();
             }
         });
 
