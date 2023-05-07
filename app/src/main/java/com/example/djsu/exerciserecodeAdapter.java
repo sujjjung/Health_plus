@@ -54,8 +54,11 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // CheckBox의 상태가 변경되었을 때 호출되는 콜백
-                exeLsit.setSelected(isChecked);
-                Toast.makeText(buttonView.getContext(), "선택된 데이터: " + exeLsit.getSetNumber(), Toast.LENGTH_SHORT).show();
+                exeLsit.setSelected(isChecked == true);
+                Toast.makeText(buttonView.getContext(), "선택된 데이터: " + number.getText().toString(), Toast.LENGTH_SHORT).show();
+                Set set = new Set(setnumber.getText().toString(),number.getText().toString(),Unit.getText().toString());
+                setArrayList.add(set);
+
             }
         });
     }

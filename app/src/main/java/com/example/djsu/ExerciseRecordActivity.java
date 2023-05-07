@@ -21,13 +21,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Response;
 import com.google.android.material.navigation.NavigationView;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class ExerciseRecordActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -48,7 +44,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exercise_record);
         TextView unit = findViewById(R.id.unittext);
         exrecodeList = new ArrayList<>();
-        //setArrayList = new ArrayList<>();
+        setArrayList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -130,7 +126,8 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                     //mArrayList.add(dict); //마지막 줄에 삽입됨
                     // 6. 어댑터에서 RecyclerView에 반영하도록 합니다.
                     exAdapter.notifyItemInserted(0);
-                    setcount++;}
+                    setcount++;
+                }
             }
         });
 
@@ -138,10 +135,9 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         SaveBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(ExerciseRecordActivity.this, "삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(ExerciseRecordActivity.this, ExerciseRecordActivity.class);
-
-                startActivity(intent);
+                ArrayList<Set> setList = setArrayList;
+                Set set =  setList.get(1);
+                Toast.makeText(ExerciseRecordActivity.this, set.getNumber(), Toast.LENGTH_SHORT).show();
             }
         });
         Bundle extras = getIntent().getExtras();
