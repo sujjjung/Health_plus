@@ -8,15 +8,26 @@ public class member {
 
     private String Profile;
 
+    public String getState() {
+        return State;
+    }
+
+    public void setState(String state) {
+        State = state;
+    }
+
+    private String State;
+
     public member() {
     }
 
-    public member(String id, String password, String age, String name, String profile) {
+    public member(String id, String password, String age, String name, String profile, String state) {
         Id = id;
         Password = password;
         Age = age;
         Name = name;
         Profile = profile;
+        State = state;
     }
 
     public String getId() {

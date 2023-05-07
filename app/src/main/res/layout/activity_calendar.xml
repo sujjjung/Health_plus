@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="800dp"
     android:fitsSystemWindows="true">
     <ScrollView
         android:id="@+id/bio_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".CalendarActivity"
-            >
+            tools:context=".CalendarActivity">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -25,18 +25,19 @@
 
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                 android:id="@+id/calendarView"
-                android:layout_width="325dp"
-                android:layout_height="351dp"
+                android:layout_width="390dp"
+                android:layout_height="350dp"
                 android:layout_marginBottom="36dp"
+                android:theme="@style/CalenderViewCustom"
                 app:layout_constraintBottom_toTopOf="@+id/view3"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.333"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView"
-                app:layout_constraintVertical_bias="0.727"
-                app:mcv_selectionColor="#d2d2d2"
-                android:theme="@style/CalenderViewCustom"
+                app:layout_constraintVertical_bias="0.552"
                 app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
-                app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText"/>
+                app:mcv_selectionColor="#d2d2d2"
+                app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
 
             <View
                 android:id="@+id/view3"
@@ -55,7 +56,7 @@
                 android:id="@+id/imageView5"
                 android:layout_width="380dp"
                 android:layout_height="320dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/roundsquare2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.461"
@@ -109,7 +110,7 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="25dp"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="475"
+                android:text="0"
                 android:textColor="#393939"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView16"
@@ -135,7 +136,7 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="25dp"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="200"
+                android:text="0"
                 android:textColor="#393939"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView17"
@@ -161,7 +162,7 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="25dp"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="200"
+                android:text="0"
                 android:textColor="#393939"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView18"
@@ -187,7 +188,7 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="25dp"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="130"
+                android:text="0"
                 android:textColor="#393939"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView22"
@@ -213,7 +214,7 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="25dp"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="130"
+                android:text="0"
                 android:textColor="#393939"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView19"
@@ -241,7 +242,7 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="25dp"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="130"
+                android:text="0"
                 android:textColor="#393939"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView20"
@@ -267,7 +268,7 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="25dp"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="130"
+                android:text="0"
                 android:textColor="#393939"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView21"
@@ -308,7 +309,7 @@
                 android:layout_width="60dp"
                 android:layout_height="24dp"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="475"
+                android:text="0"
                 android:textColor="#393939"
                 android:textSize="16dp"
 
@@ -339,7 +340,7 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="32dp"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="130"
+                android:text="0"
                 android:textColor="#393939"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/weight"
@@ -395,14 +396,13 @@
                 android:id="@+id/floatingMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="8dp"
                 android:backgroundTint="#FFCBCB"
                 android:src="@drawable/ic_action_plus"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_goneMarginBottom="30dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
