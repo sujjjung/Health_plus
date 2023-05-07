@@ -65,7 +65,7 @@ public class Food_List extends AppCompatActivity {
         setContentView(R.layout.activity_food_list);
         Intent intent = getIntent();
         ArrayList<Food> search_list = new ArrayList<>();
-        foodArrayList = new ArrayList<Food>();
+        foodArrayList = new ArrayList<>();
         editText = findViewById(R.id.searchtext);
         // editText 리스터 작성
 

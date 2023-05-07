@@ -1,38 +1,39 @@
 package com.example.djsu;
 
 public class Set {
-    static int SetNumber,Calorie,Weight;
-
-    public Set(int setNumber, int calorie, int weight) {
-        SetNumber = setNumber;
-        Calorie = calorie;
-        Weight = weight;
-    }
+    static private String setNumber, Number,unit;
 
     public Set() {
     }
 
-    public int getSetNumber() {
-        return SetNumber;
+    public Set(String setNumber, String unit, String number) {
+        this.setNumber = setNumber;
+        Number = number;
+        this.unit = unit;
     }
 
-    public void setSetNumber(int setNumber) {
-        SetNumber = setNumber;
+    public String getSetNumber() {
+        return setNumber;
     }
 
-    public int getCalorie() {
-        return Calorie;
+    public void setSetNumber(String setNumber) {
+        this.setNumber = setNumber;
     }
 
-    public void setCalorie(int calorie) {
-        Calorie = calorie;
+    public String getNumber() {
+        return Number;
     }
 
-    public int getWeight() {
-        return Weight;
+    public void setNumber(String number) {
+        Number = number;
     }
 
-    public void setWeight(int weight) {
-        Weight = weight;
+    public String getUnit() {
+        return unit;
     }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
 }
