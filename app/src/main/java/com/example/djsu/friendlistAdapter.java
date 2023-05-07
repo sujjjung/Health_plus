@@ -46,41 +46,52 @@ public class friendlistAdapter extends ArrayAdapter<member> {
         }
         TextView nameTextView = convertView.findViewById(R.id.name);
         ImageView imageView = convertView.findViewById(R.id.profile);
-        ListView listview = convertView.findViewById(R.id.recycler_messages);
+        Button checkBtn = convertView.findViewById(R.id.delete);
 
         final member memberItem = postList.get(position);
 
-//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//        checkBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                showDialog(memberItem);
-//            }
-//            private void showDialog(member memberItem) {
-//                // 커스텀 다이얼로그 보이기
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                View view = LayoutInflater.from(context).inflate(R.layout.activity_dialog_friend_list, null, false);
-//                builder.setView(view);
-//                AlertDialog dialog = builder.create();
-//                dialog.show();
-//
-//                // 다이얼로그에 데이터 설정
-//                TextView name = view.findViewById(R.id.userName);
-//                name.setText(memberItem.getName());
-//                TextView state = view.findViewById(R.id.state);
-//                state.setText(memberItem.getState());
-//
-//                // 다이얼로그 버튼 이벤트 처리
-//                Button backButton = view.findViewById(R.id.backBtn);
-//
-//                backButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                    }
-//                });
+//            public void onClick(View view) {
+//                Toast.makeText(context, "Button clicked for " + memberItem.getName(), Toast.LENGTH_SHORT).show();
 //            }
 //        });
 
+        checkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(memberItem);
+            }
+
+            private void showDialog(member memberItem) {
+                // 커스텀 다이얼로그 보이기
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                View view = LayoutInflater.from(context).inflate(R.layout.activity_dialog_friend_list, null, false);
+                builder.setView(view);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                // 다이얼로그에 데이터 설정
+                TextView name = view.findViewById(R.id.userName);
+                name.setText(memberItem.getName());
+                TextView state = view.findViewById(R.id.state);
+                state.setText(memberItem.getState());
+                // 이미지 나오게 했음 -> 근데 사이즈 다 깨짐 ㅅㅂ ;;;
+                ImageView profile = view.findViewById(R.id.profile);
+                Glide.with(context)
+                        .load(memberItem.getProfile())
+                        .into(profile);
+
+                // 다이얼로그 버튼 이벤트 처리
+                Button backButton = view.findViewById(R.id.backBtn);
+                backButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
 
         member member = postList.get(position);
         nameTextView.setText(member.getName());

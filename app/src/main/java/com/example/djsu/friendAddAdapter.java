@@ -6,6 +6,8 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +86,11 @@ public class friendAddAdapter extends ArrayAdapter<member> {
                 name.setText(memberItem.getName());
                 TextView state = view.findViewById(R.id.state);
                 state.setText(memberItem.getState());
+                // 이미지 나오게 했음 -> 근데 사이즈 다 깨짐 ㅅㅂ ;;;
+                ImageView profile = view.findViewById(R.id.profile);
+                Glide.with(context)
+                        .load(memberItem.getProfile())
+                        .into(profile);
 
                 // 다이얼로그 버튼 이벤트 처리
                 Button addButton = view.findViewById(R.id.conformBtn);
@@ -95,7 +104,7 @@ public class friendAddAdapter extends ArrayAdapter<member> {
                         databaseReference.child("User").child(userID).child("friend").child(userItem).child("name").setValue(userName);
                         databaseReference.child("User").child(userID).child("friend").child(userItem).child("profile").setValue(userPro);
                         databaseReference.child("User").child(userID).child("friend").child(userItem).child("state").setValue(userState);
-                        Toast.makeText(context, "Button clicked for " + memberItem.getName(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "Button clicked for " + memberItem.getName(), Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                         Intent intent = new Intent(v.getContext(), friends_list.class);
                         context.startActivity(intent);
