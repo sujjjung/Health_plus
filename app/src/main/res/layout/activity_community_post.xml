@@ -9,19 +9,20 @@
 
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="351dp"
-        android:layout_height="271dp"
-        android:layout_marginStart="28dp"
+        android:id="@+id/image_view"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
         android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="33dp"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/email_editText"
-        android:layout_width="348dp"
-        android:layout_height="179dp"
+        android:id="@+id/content_text"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
         android:backgroundTint="#ffdc01"
         android:ems="15"
         android:fontFamily="@font/a1009_1"
@@ -29,25 +30,26 @@
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.372"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.588" />
+        app:layout_constraintTop_toBottomOf="@+id/image_view"
+        app:layout_constraintVertical_bias="0.104" />
 
     <Button
-        android:id="@+id/mypage_btn"
+        android:id="@+id/upload_btn"
         android:layout_width="152dp"
         android:layout_height="65dp"
         android:backgroundTint="@color/yellow"
         android:fontFamily="@font/a10092"
         android:text="게시"
         android:textColor="#444444"
-        android:textSize="40dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.913" />
+        app:layout_constraintTop_toBottomOf="@+id/content_text"
+        app:layout_constraintVertical_bias="0.377" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,12 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/back"
     tools:context=".community">
 
     <ImageView
@@ -25,47 +22,43 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo3" />
 
-    <Button
-        android:id="@+id/mypage_btn"
-        android:layout_width="126dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="284dp"
-        android:background="#00000000"
-        android:backgroundTint="@color/white"
-        android:fontFamily="@font/a10092"
-        android:text="마이페이지"
-        android:textColor="#444444"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.064"
-        tools:ignore="MissingConstraints" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_messages"
-        android:layout_width="409dp"
-        android:layout_height="663dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+    <ListView
+        android:id="@+id/community"
+        android:layout_width="390dp"
+        android:layout_height="795dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_community" />
-
 
     <ImageButton
         android:id="@+id/button2"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/shape_for_circle_button"
-        android:text="+"
-        android:src="@drawable/ic_action_plus"
         android:layout_marginTop="680dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/shape_for_circle_button"
+        android:src="@drawable/ic_action_plus"
+        android:text="+"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.867" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/mypage_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="340dp"
+        android:background="@drawable/settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.069"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
