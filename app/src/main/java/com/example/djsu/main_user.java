@@ -86,7 +86,7 @@ public class main_user extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    
+
     // 프로필
     private TextView name, state,kcalText;
     private String profile, ID, date;
@@ -117,7 +117,7 @@ public class main_user extends AppCompatActivity {
         water = findViewById(R.id.water_tv);
         water.setText(count+"");
         date = getTime();
-        
+
         // 물 + 100
 
         ImageButton plus = (ImageButton) findViewById(R.id.plusBtn);
