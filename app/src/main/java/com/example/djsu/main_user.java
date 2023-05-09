@@ -95,6 +95,7 @@ public class main_user extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private static final String URL_UPLOAD = "http://enejd0613.dothome.co.kr/upload_profile.php";
+    private static final String TAG = "main_user";
 
     // 물
     private TextView water;
@@ -348,11 +349,10 @@ public class main_user extends AppCompatActivity {
 
     private void chooseFile()
     {
-        mGetContent.launch("image/*");
-        // Intent intent = new Intent();
-        // intent.setType("image/*");
-        // intent.setAction(Intent.ACTION_GET_CONTENT);
-        // startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
     }
 
     @Override
@@ -436,7 +436,7 @@ public class main_user extends AppCompatActivity {
         return encodedImage;
     }
 
-
+    // 햄버거
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -447,6 +447,8 @@ public class main_user extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    // 시간
     private String getTime() {
         long now = System.currentTimeMillis();
         Date date = new Date(now);
