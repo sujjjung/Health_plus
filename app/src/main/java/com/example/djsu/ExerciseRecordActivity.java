@@ -37,7 +37,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
     int num,position;
     int n;
     String number, unitnum;
-    private int count = -1;
+    int count = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,8 +95,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                                             number = editTextID1.getText().toString();
                                             // 5. ArrayList에 추가하고
                                             exrecode dict = new exrecode(setnumber, unitnum, number);
-                                            exrecodeList.add(0, dict); //첫번째 줄에 삽입됨
-                                            //mArrayList.add(dict); //마지막 줄에 삽입됨
+                                            exrecodeList.add(dict); //첫번째 줄에 삽입됨
                                             // 6. 어댑터에서 RecyclerView에 반영하도록 합니다.
                                             exAdapter.notifyItemInserted(0);
                                             //mAdapter.notifyDataSetChanged();
@@ -104,6 +103,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                                             dialog.dismiss();
                                             setcount++;
                                             num = Integer.parseInt(unitnum);
+
                                         }
                                     }
                                 });
@@ -122,10 +122,11 @@ public class ExerciseRecordActivity extends AppCompatActivity {
 
                     // 5. ArrayList에 추가하고
                     exrecode dict = new exrecode(setnumber, unit,number);
-                    exrecodeList.add(0, dict); //첫번째 줄에 삽입됨
+                    exrecodeList.add(dict); //첫번째 줄에 삽입됨
                     //mArrayList.add(dict); //마지막 줄에 삽입됨
                     // 6. 어댑터에서 RecyclerView에 반영하도록 합니다.
-                    exAdapter.notifyItemInserted(0);
+                    exAdapter.notifyItemInserted(count);
+                    count++;
                     setcount++;
                 }
             }
@@ -135,9 +136,14 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         SaveBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                ArrayList<Set> setList = setArrayList;
-                Set set =  setList.get(1);
-                Toast.makeText(ExerciseRecordActivity.this, set.getNumber(), Toast.LENGTH_SHORT).show();
+                Set set = new Set();
+                set.getSetArrayList();
+                ArrayList<Set> setList = set.getSetArrayList();
+                Toast.makeText(ExerciseRecordActivity.this, setList.get(0).getNumber()+ setList.get(1).getNumber(), Toast.LENGTH_SHORT).show();
+                for (int i = 0; i < setList.size(); i++){
+                    System.out.println("hongchul" + setList.get(i).getNumber());
+                }
+
             }
         });
         Bundle extras = getIntent().getExtras();
