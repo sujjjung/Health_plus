@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
@@ -35,14 +36,6 @@ public class friends_list extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
-        toolbar = findViewById(R.id.toolBar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        //뒤로가기버튼 이미지 적용
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
-        navigationView = findViewById(R.id.navigationView);
-        drawerLayout = findViewById(R.id.drawerLayout);
 
         ListView listView = findViewById(R.id.recycler_messages);
 
@@ -88,17 +81,28 @@ public class friends_list extends AppCompatActivity {
             }
         });
 
+        // 햄버거
+        toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        //뒤로가기버튼 이미지 적용
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
+        navigationView = findViewById(R.id.navigationView);
+        drawerLayout = findViewById(R.id.drawerLayout);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home:
-                        Intent homeintent = new Intent(getApplicationContext(), main_user.class);
-                        startActivity(homeintent);
+                        mainkcalBackgroundTask mainkcalBackgroundTask = new mainkcalBackgroundTask(friends_list.this);
+                        mainkcalBackgroundTask.execute();
                         return true;
                     case R.id.calender:
-                        Intent calenderintent = new Intent(getApplicationContext(), CalendarActivity.class);
-                        startActivity(calenderintent);
+                        UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(friends_list.this);
+                        userFoodListBackgroundTask.execute();
+
                         return true;
                     case R.id.communety:
                         Intent communetyintent = new Intent(getApplicationContext(), community.class);
@@ -117,12 +121,27 @@ public class friends_list extends AppCompatActivity {
                         startActivity(manbogiintent);
                         return true;
                     case R.id.annoucement:
-                        Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
-                        startActivity(annoucementintent);
+                        NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(friends_list.this);
+                        noticeBackgroundTask.execute();
+                        return true;
+                    case R.id.friend:
+                        Intent friend = new Intent(getApplicationContext(), chatList.class);
+                        startActivity(friend);
                         return true;
                 }
                 return false;
             }
         });
+    }
+    // 햄버거
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

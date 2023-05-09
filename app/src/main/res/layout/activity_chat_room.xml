@@ -132,7 +132,7 @@
         android:fontFamily="@font/a10092"
         android:textSize="18dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
         android:id="@+id/recycler_messages"
         android:layout_width="match_parent"
         android:layout_height="0dp"

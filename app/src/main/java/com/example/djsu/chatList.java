@@ -2,11 +2,16 @@ package com.example.djsu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,15 +19,75 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class chatList extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+
+    private ListView mChatRoomListView;
+
+    private chatListAdapter mAdapter;
+    private DatabaseReference mDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_list);
+
+        mChatRoomListView = findViewById(R.id.recycler_messages);
+
+        List<String> chatList = null; // 예시 코드, null 대신에 적절한 값을 할당해야 합니다.
+
+        //mAdapter = new chatListAdapter(this, R.layout.item_chat_list);
+        mAdapter = new chatListAdapter(this, R.layout.item_chat_list);
+        mChatRoomListView.setAdapter(mAdapter);
+
+        User user = new User();
+        String userId = user.getId();
+
+        // Firebase Realtime Database에서 채팅방 목록을 가져옴
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("User").child(userId).child("chatRooms");
+        mDatabase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                // 채팅방이 추가될 때마다 ListView를 업데이트
+                ChatRoom chatRoom = snapshot.getValue(ChatRoom.class);
+                mAdapter.add(chatRoom);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                // 채팅방이 수정될 때마다 ListView를 업데이트
+                ChatRoom chatRoom = snapshot.getValue(ChatRoom.class);
+                mAdapter.update(chatRoom);
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                // 채팅방이 삭제될 때마다 ListView를 업데이트
+                ChatRoom chatRoom = snapshot.getValue(ChatRoom.class);
+                mAdapter.remove(chatRoom);
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+
+        });
 
         Button imageButton = (Button) findViewById(R.id.button2);
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +121,7 @@ public class chatList extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.home:
                         Intent homeintent = new Intent(getApplicationContext(), main_user.class);
                         startActivity(homeintent);
@@ -94,15 +159,21 @@ public class chatList extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private List<ChatRoom> getChatRooms() {
+        // 채팅방 데이터를 가져오는 로직을 구현합니다.
+        return null;
     }
 }

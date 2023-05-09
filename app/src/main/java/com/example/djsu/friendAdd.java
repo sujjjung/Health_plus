@@ -158,9 +158,24 @@ public class friendAdd extends AppCompatActivity {
                         NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(friendAdd.this);
                         noticeBackgroundTask.execute();
                         return true;
+                    case R.id.friend:
+                        Intent friend = new Intent(getApplicationContext(), chatList.class);
+                        startActivity(friend);
+                        return true;
                 }
                 return false;
             }
         });
     } //onCreate
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
