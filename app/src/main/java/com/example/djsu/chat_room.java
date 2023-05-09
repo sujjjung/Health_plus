@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class chat_room extends AppCompatActivity {
 
+    public chat_room(String chatRoomId) {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
