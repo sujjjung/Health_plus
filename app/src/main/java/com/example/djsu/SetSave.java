@@ -2,21 +2,24 @@ package com.example.djsu;
 
 import java.util.ArrayList;
 
-public class Set {
+public class SetSave {
     static private String setNumber, Number,unit;
+    int count = 0;
     static private ArrayList<Set> setArrayList = new ArrayList<>();
-    public Set() {
+    public SetSave() {
     }
-    public Set( ArrayList<Set> setArrayList) {
+    public SetSave( ArrayList<Set> setArrayList) {
         this.setArrayList = setArrayList;
     }
-    public Set(String setNumber, String number, String unit) {
+    public SetSave(String setNumber, String number, String unit) {
         this.setNumber = setNumber;
         Number = number;
         this.unit = unit;
     }
-    public void setList(Set set) {
-        setArrayList.add(set);
+
+    public void setList(Set set){
+        this.setArrayList.add(count,set);
+        count++;
     }
 
     public String getSetNumber() {
@@ -51,3 +54,4 @@ public class Set {
         this.setArrayList = setArrayList;
     }
 }
+

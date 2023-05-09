@@ -34,13 +34,11 @@ public class exrecode {
         this.unit = unit;
     }
 
-    public boolean getSelected()
-    {
+    public boolean isSelected() {
         return isSelected;
     }
 
-    public static void setSelected(boolean selected)
-    {
+    public void setSelected(boolean selected) {
         isSelected = selected;
     }
 

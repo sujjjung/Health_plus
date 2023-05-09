@@ -23,16 +23,14 @@ import java.util.List;
 public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAdapter.ViewHolder> {
     // creating variables for our ArrayList and context
     private ArrayList<exrecode> exArrayList;
-    private ArrayList<Set> setArrayList;
+    private ArrayList<Set> setArrayList = new ArrayList<>();
     private Context context;
-    private TextView setnumber,number,Unit;
-    private List<Boolean> mCheckedList;
-    // creating constructor for our adapter class
+    int count = 0;
 
+    // creating constructor for our adapter class
     public exerciserecodeAdapter(ArrayList<exrecode> exArrayList, Context context) {
         this.exArrayList = exArrayList;
         this.context = context;
-
     }
 
     @NonNull
@@ -46,22 +44,29 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
     public void onBindViewHolder(@NonNull exerciserecodeAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // setting data to our text views from our modal class.
         exrecode exeLsit = exArrayList.get(position);
-        setnumber.setText(exeLsit.getSetNumber());
-        number.setText(exeLsit.getNumber());
-        Unit.setText(exeLsit.getUnit());
-
+        holder.setnumber.setText(exeLsit.getSetNumber());
+        holder.number.setText(exeLsit.getNumber());
+        holder.Unit.setText(exeLsit.getUnit());
         holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // CheckBox의 상태가 변경되었을 때 호출되는 콜백
-                exeLsit.setSelected(isChecked == true);
-                Toast.makeText(buttonView.getContext(), "선택된 데이터: " + number.getText().toString(), Toast.LENGTH_SHORT).show();
-                Set set = new Set(setnumber.getText().toString(),number.getText().toString(),Unit.getText().toString());
-                setArrayList.add(set);
-
+                if (isChecked) {
+                    String setNumber = holder.setnumber.getText().toString();
+                    String number = holder.number.getText().toString();
+                    String unit = holder.Unit.getText().toString();
+                    Set set = new Set(setNumber, number, unit);
+                    setArrayList.add(set); // 해당 포지션에 값을 추가합니다.
+                    set.setSetArrayList(setArrayList);
+                    Toast.makeText(buttonView.getContext(), "선택된 데이터: " + number, Toast.LENGTH_SHORT).show();
+                    for (int i = 0; i < setArrayList.size(); i++) {
+                        System.out.println("hongchul" + setArrayList.get(i).getNumber());
+                    }
+                }
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -69,10 +74,11 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
         return exArrayList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         // creating variables for our text views.
         public CompoundButton checkbox;
-
+        public TextView setnumber, number, Unit;
+        public ArrayList<Set> setArrayList = new ArrayList<>();
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // initializing our text views.
@@ -84,6 +90,4 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
 
         }
     }
-
-
 }
