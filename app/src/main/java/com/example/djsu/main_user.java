@@ -375,9 +375,9 @@ public class main_user extends AppCompatActivity {
 
     private void uploadPicture(final String UserID, final String UserProfile)
     {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Uploading...");
-        progressDialog.show();
+        // final ProgressDialog progressDialog = new ProgressDialog(this);
+        // progressDialog.setMessage("Uploading...");
+        // progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD, new Response.Listener<String>() {
             @Override
@@ -389,20 +389,20 @@ public class main_user extends AppCompatActivity {
                     String success = jsonObject.getString("success");
                     if (success.equals("1"))
                     {
-                        progressDialog.dismiss();
-                        Toast.makeText(main_user.this, "Success!", Toast.LENGTH_SHORT).show();
+                        // progressDialog.dismiss();
+                        Toast.makeText(main_user.this, "프로필 사진을 성공적으로 변경했습니다.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    progressDialog.dismiss();
-                    Toast.makeText(main_user.this, "Try Again! error : " + e.toString(), Toast.LENGTH_SHORT).show();
+                    // progressDialog.dismiss();
+                    Toast.makeText(main_user.this, "프로필 사진 변경에 실패했습니다. 다시 시도해주세요." + e.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                progressDialog.dismiss();
+                // progressDialog.dismiss();
                 Toast.makeText(main_user.this, "Error : " + error.toString(), Toast.LENGTH_SHORT).show();
             }
         }
