@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -34,6 +35,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,15 +58,7 @@ public class community extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
-    // 게시글 출력 v1
-    // String profile, name, photo, content, date;
-    // private communityAdapter communityAdapter;
-    // private List<communityData> communityList;
-    // ArrayList<HashMap<String, String>> mArrayList;
-    // ListView mListView;
-    // String mJsonString;
-
-    // 게시글 출력v2
+    // 게시글 출력
     String myJSON;
 
     private static final String TAG_RESULTS = "result";
@@ -76,22 +70,10 @@ public class community extends AppCompatActivity {
     ArrayList<HashMap<String, String>> personList;
     ListView list;
 
-    // 게시글 출력 v3
-    String content, id, image, date;
-
-    private PostAdapter postAdapter;
-    private List<Post> postList;
-    ArrayList<HashMap<String, String>> mArrayList;
-    ListView mlistView;
-    String mJsonString;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community);
-
-        Intent intent = getIntent();
-
         // 마이페이지
         Button mypage_btn = (Button) findViewById(R.id.mypage_btn);
         mypage_btn.setOnClickListener(new View.OnClickListener() {
@@ -174,11 +156,12 @@ public class community extends AppCompatActivity {
                 return false;
             }
         });
-
+        Intent intent = getIntent();
         // 게시글
         list = (ListView) findViewById(R.id.community);
         personList = new ArrayList<HashMap<String, String>>();
-        getData("http://enejd0613.dothome.co.kr/community_list.php");
+        getData("http://enejd0613.dothome.co.kr/filedownload.php");
+
     }
 
     protected void showList() {
@@ -207,7 +190,12 @@ public class community extends AppCompatActivity {
                     community.this, personList, R.layout.item_community,
                     new String[]{TAG_CONTENT, TAG_ID, TAG_IMAGE, TAG_DATE},
                     new int[]{R.id.content, R.id.name_textView, R.id.photo, R.id.date }
-            );
+            ) {
+                @Override
+                public void setViewImage(ImageView imageView, String url) {
+                    Picasso.get().load(url).into(imageView);
+                }
+            };
 
             list.setAdapter(adapter);
 
@@ -255,6 +243,7 @@ public class community extends AppCompatActivity {
         }
         GetDataJSON g = new GetDataJSON();
         g.execute(url);
+
     }
 
     // 햄버거

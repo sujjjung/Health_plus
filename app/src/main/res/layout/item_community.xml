@@ -3,45 +3,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="300dp">
-
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView2"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_alignParentStart="true"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_marginStart="15dp"-->
-<!--        android:layout_marginTop="9dp"-->
-<!--        android:layout_marginEnd="334dp"-->
-<!--        android:background="#00000000"-->
-<!--        android:src="@drawable/ic_woman" />-->
+    android:layout_marginBottom="200dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile"
         android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="334dp"
+        android:layout_marginLeft="10dp"
+        android:layout_height="50dp"
         android:background="#00000000"
-        android:src="@drawable/profile2"
-        />
+        android:src="@drawable/profile_image" />
 
     <TextView
+        android:id="@+id/name_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/profile"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@+id/profile"
+        android:fontFamily="@font/a10092"
+        android:text="회원 이름"
+        android:textColor="#444444"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/content"
+        android:layout_alignStart="@+id/content"
+        android:layout_marginStart="-8dp"
+        android:layout_marginTop="9dp"
+        android:fontFamily="@font/a10091"
+        android:paddingBottom="20dp"
+        android:text="20230507"
+        android:textColor="#444444"
+        android:textSize="15dp" />
+
+    <ImageView
         android:id="@+id/photo"
-        android:layout_width="330dp"
-        android:layout_height="330dp"
+        android:layout_width="390dp"
+        android:layout_height="390dp"
+        android:layout_below="@+id/profile"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="81dp"
-        android:layout_marginEnd="22dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="3dp"
         android:background="#00000000"
         android:padding="0dp"
         android:scaleType="centerCrop"
@@ -49,12 +58,12 @@
 
     <ImageButton
         android:id="@+id/siren_btn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignBottom="@+id/photo"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="223dp"
-        android:layout_marginBottom="-53dp"
+        android:layout_marginEnd="260dp"
+        android:layout_marginBottom="-37dp"
         android:backgroundTint="#00000000"
         android:focusableInTouchMode="true"
         android:padding="0dp"
@@ -65,13 +74,30 @@
         tools:layout_editor_absoluteY="486dp" />
 
     <ImageButton
-        android:id="@+id/chat_bubble_btn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:id="@+id/heart_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignBottom="@+id/photo"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="326dp"
-        android:layout_marginBottom="-53dp"
+        android:layout_marginEnd="300dp"
+        android:layout_marginBottom="-38dp"
+        android:backgroundTint="#00000000"
+        android:focusableInTouchMode="true"
+        android:padding="0dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/heart"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="90dp"
+        tools:layout_editor_absoluteY="486dp" />
+
+    <ImageButton
+        android:id="@+id/chat_bubble_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/photo"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="339dp"
+        android:layout_marginBottom="-38dp"
         android:backgroundTint="#00000000"
         android:focusableInTouchMode="true"
         android:padding="0dp"
@@ -83,61 +109,17 @@
 
     <TextView
         android:id="@+id/content"
-        android:layout_width="380dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/photo"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="27dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="6dp"
-        android:paddingBottom="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="39dp"
         android:fontFamily="@font/a10092"
-        android:text="희망이 오운완"
+        android:text="귀여워"
         android:textColor="#444444"
         android:textSize="20dp" />
-
-    <ImageButton
-        android:id="@+id/heart_btn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignBottom="@+id/photo"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="273dp"
-        android:layout_marginBottom="-53dp"
-        android:backgroundTint="#00000000"
-        android:focusableInTouchMode="true"
-        android:padding="0dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/heart"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="90dp"
-        tools:layout_editor_absoluteY="486dp" />
-
-    <TextView
-        android:id="@+id/name_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/photo"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="249dp"
-        android:layout_marginBottom="-48dp"
-        android:fontFamily="@font/a10092"
-        android:text="김수빈님"
-        android:textColor="#444444"
-        android:textSize="20dp" />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/photo"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="258dp"
-        android:layout_marginBottom="-70dp"
-        android:fontFamily="@font/a10091"
-        android:text="20230507"
-        android:textColor="#444444"
-        android:textSize="15dp" />
 
 </RelativeLayout>
