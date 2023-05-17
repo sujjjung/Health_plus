@@ -26,7 +26,7 @@
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                 android:id="@+id/calendarView"
                 android:layout_width="390dp"
-                android:layout_height="350dp"
+                android:layout_height="400dp"
                 android:layout_marginBottom="36dp"
                 android:theme="@style/CalenderViewCustom"
                 app:layout_constraintBottom_toTopOf="@+id/view3"
@@ -56,7 +56,7 @@
                 android:id="@+id/imageView5"
                 android:layout_width="380dp"
                 android:layout_height="320dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:src="@drawable/roundsquare2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.461"

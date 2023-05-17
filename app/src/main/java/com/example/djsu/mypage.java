@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.navigation.NavigationView;
 
@@ -39,6 +40,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class mypage extends AppCompatActivity {
     //햄버거 선언부
@@ -55,13 +58,16 @@ public class mypage extends AppCompatActivity {
     private BarChart muscleChart;
     private BarChart fatChart;
 
+    // 로그인 데이터
+    User user = new User();
+    String ID = user.getId(); // 아이디
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
 
         // User Data 불러오기
-        User user = new User();
         name = findViewById(R.id.name_textView);
         name.setText(user.getName());
         state = findViewById(R.id.Status_message_text);
@@ -219,58 +225,67 @@ public class mypage extends AppCompatActivity {
     }
 
     private void setWeightData() {
-        String url = "http://enejd0613.dothome.co.kr/getWeight.php";
-        RequestQueue queue = Volley.newRequestQueue(this);
+            String url = "http://enejd0613.dothome.co.kr/getWeight.php";
+            RequestQueue queue = Volley.newRequestQueue(this);
 
-        JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                ArrayList<BarEntry> values = new ArrayList<>();
-                ArrayList<String> labels = new ArrayList<>();
+            JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    ArrayList<BarEntry> values = new ArrayList<>();
+                    ArrayList<String> labels = new ArrayList<>();
 
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        JSONObject jsonObject = response.getJSONObject(i);
-                        int weight = jsonObject.getInt("weight");
-                        values.add(new BarEntry(i, new float[] {weight}));
-                        String date = jsonObject.getString("date");
-                        labels.add(date);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            int weight = jsonObject.getInt("weight");
+                            values.add(new BarEntry(i, new float[] {weight}));
+                            String date = jsonObject.getString("date");
+                            labels.add(date);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
+
+                    if (response.length() > 7) {
+                        int startIndex = response.length() - 7;
+                        values = new ArrayList<>(values.subList(startIndex, response.length()));
+                        labels = new ArrayList<>(labels.subList(startIndex, response.length()));
+                    }
+
+                    BarDataSet set1 = new BarDataSet(values, "weight Data");
+                    set1.setColors(Color.rgb(255, 222, 0));
+                    set1.setDrawValues(false);
+                    // 데이터 레이블 설정 추가
+                    set1.setDrawValues(true);
+                    set1.setValueTextSize(12f);
+                    set1.setValueTextColor(Color.BLACK);
+
+                    BarData data = new BarData(set1);
+                    data.setBarWidth(0.45f);
+
+                    weightChart.setData(data);
+                    weightChart.setFitBars(true);
+                    weightChart.invalidate();
+                    weightChart.setTouchEnabled(false); // 터치 막기
+                    weightChart.setMaxVisibleValueCount(7); // 그래프 최대 갯수
+                    weightChart.getXAxis().setDrawGridLines(false); // X축 및 Y축 격자선 없애기
+                    weightChart.getAxisLeft().setDrawGridLines(false);
+                    weightChart.getAxisRight().setDrawGridLines(false);
+                    weightChart.getAxisLeft().setDrawLabels(false); // 왼쪽 값 없애기
+                    // weightChart.getXAxis().setDrawLabels(false); // 위쪽 라벨 없애기
+                    XAxis xAxis = weightChart.getXAxis(); // x축 설정
+                    xAxis.setValueFormatter(new IndexAxisValueFormatter(labels)); // 라벨 붙이기
+                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // 라벨 위치 설정
+                    weightChart.getLegend().setEnabled(false); // 레전드 제거
                 }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(mypage.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-                BarDataSet set1 = new BarDataSet(values, "weight Data");
-                set1.setColors(Color.rgb(255, 222, 0));
-                set1.setDrawValues(false);
-
-                BarData data = new BarData(set1);
-                data.setBarWidth(0.45f);
-
-                weightChart.setData(data);
-                weightChart.setFitBars(true);
-                weightChart.invalidate();
-                weightChart.setTouchEnabled(false); // 터치 막기
-                weightChart.setMaxVisibleValueCount(7); // 그래프 최대 갯수
-                weightChart.getXAxis().setDrawGridLines(false); // X축 및 Y축 격자선 없애기
-                weightChart.getAxisLeft().setDrawGridLines(false);
-                weightChart.getAxisRight().setDrawGridLines(false);
-                weightChart.getAxisLeft().setDrawLabels(false); // 왼쪽 값 없애기
-                // weightChart.getXAxis().setDrawLabels(false); // 위쪽 라벨 없애기
-                XAxis xAxis = weightChart.getXAxis(); // x축 설정
-                xAxis.setValueFormatter(new IndexAxisValueFormatter(labels)); // 라벨 붙이기
-                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // 라벨 위치 설정
-                weightChart.getLegend().setEnabled(false); // 레전드 제거
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(mypage.this, "Error loading data", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        queue.add(request);
+            queue.add(request);
     }
 
     private void setFatData() {
@@ -295,10 +310,20 @@ public class mypage extends AppCompatActivity {
                     }
                 }
 
+                if (response.length() > 7) {
+                    int startIndex = response.length() - 7;
+                    values = new ArrayList<>(values.subList(startIndex, response.length()));
+                    labels = new ArrayList<>(labels.subList(startIndex, response.length()));
+                }
+
                 BarDataSet set1 = new BarDataSet(values, "fat Data");
                 set1.setColors(Color.rgb(255, 222, 0));
-                set1.setColors(ColorTemplate.MATERIAL_COLORS);
+                // set1.setColors(ColorTemplate.MATERIAL_COLORS);
                 set1.setDrawValues(false);
+                // 데이터 레이블 설정 추가
+                set1.setDrawValues(true);
+                set1.setValueTextSize(12f);
+                set1.setValueTextColor(Color.BLACK);
 
                 BarData data = new BarData(set1);
                 data.setBarWidth(0.45f);
@@ -332,6 +357,10 @@ public class mypage extends AppCompatActivity {
         String url = "http://enejd0613.dothome.co.kr/getMuscle.php";
         RequestQueue queue = Volley.newRequestQueue(this);
 
+        // POST 파라미터 설정
+        HashMap<String, String> params = new HashMap<>();
+        params.put("userId", ID);
+
         JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -350,10 +379,20 @@ public class mypage extends AppCompatActivity {
                     }
                 }
 
+                if (response.length() > 7) {
+                    int startIndex = response.length() - 7;
+                    values = new ArrayList<>(values.subList(startIndex, response.length()));
+                    labels = new ArrayList<>(labels.subList(startIndex, response.length()));
+                }
+
                 BarDataSet set1 = new BarDataSet(values, "muscle Data");
                 set1.setColors(Color.rgb(255, 222, 0));
-                set1.setColors(ColorTemplate.MATERIAL_COLORS);
+                // set1.setColors(ColorTemplate.MATERIAL_COLORS);
                 set1.setDrawValues(false);
+                // 데이터 레이블 설정 추가
+                set1.setDrawValues(true);
+                set1.setValueTextSize(12f);
+                set1.setValueTextColor(Color.BLACK);
 
                 BarData data = new BarData(set1);
                 data.setBarWidth(0.45f);
@@ -377,7 +416,13 @@ public class mypage extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(mypage.this, "Error loading data", Toast.LENGTH_SHORT).show();
             }
-        });
+        }
+        ) {
+                @Override
+                protected Map<String, String> getParams() {
+                    return params;
+                }
+        };
 
         queue.add(request);
     }

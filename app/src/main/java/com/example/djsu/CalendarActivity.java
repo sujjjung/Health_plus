@@ -228,6 +228,8 @@ public class CalendarActivity extends AppCompatActivity {
         CustomDayViewDecorator customDayViewDecorator = new CustomDayViewDecorator(10); // 왼쪽 여백 값을 10으로 설정
         calendarView.addDecorators(customDayViewDecorator);
 
+        calendarView.setDateTextAppearance(R.style.CalendarDateTextAppearance);
+
         // 날짜 가져오기
         date = getTime();
 
