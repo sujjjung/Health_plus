@@ -33,15 +33,15 @@ public class chatting extends AppCompatActivity {
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
 
-        Button imageButton = (Button) findViewById(R.id.battle_btn);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), battle.class);
-                startActivity(intent);
-            }
-        });
+        //Button imageButton = (Button) findViewById(R.id.battle_btn);
+//        imageButton.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), battle.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

@@ -12,21 +12,21 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-        <Button
-            android:id="@+id/battle_btn"
-            android:layout_width="104dp"
-            android:layout_height="36dp"
-            android:layout_gravity="right"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="-8dp"
-            android:background="#00000000"
-            android:backgroundTint="@color/white"
-            android:fontFamily="@font/a10092"
-            android:text="운동 대결"
-            android:textColor="#444444"
-            android:textSize="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+<!--        <Button-->
+<!--            android:id="@+id/battle_btn"-->
+<!--            android:layout_width="104dp"-->
+<!--            android:layout_height="36dp"-->
+<!--            android:layout_gravity="right"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:layout_marginEnd="-8dp"-->
+<!--            android:background="#00000000"-->
+<!--            android:backgroundTint="@color/white"-->
+<!--            android:fontFamily="@font/a10092"-->
+<!--            android:text="운동 대결"-->
+<!--            android:textColor="#444444"-->
+<!--            android:textSize="15dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/imageView" />-->
 
         <ImageView
         android:id="@+id/imageView"
@@ -132,14 +132,11 @@
         android:fontFamily="@font/a10092"
         android:textSize="18dp"/>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_messages"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+
         app:layout_constraintBottom_toTopOf="@+id/edt_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
