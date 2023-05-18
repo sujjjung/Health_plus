@@ -22,10 +22,11 @@ public class exerciseAdapter extends BaseAdapter {
     private Context context;
     private List<exerciseLsit> exList;
     private Activity parentActivity;
-
-    public exerciseAdapter(Context context, List<exerciseLsit> exList) {
+    String Date;
+    public exerciseAdapter(Context context, List<exerciseLsit> exList,String Date) {
         this.context = context;
         this.exList = exList;
+        this.Date = Date;
         this.parentActivity = parentActivity;
     }
     @Override
@@ -48,10 +49,12 @@ public class exerciseAdapter extends BaseAdapter {
     //리스트뷰에서 실질적으로 뿌려주는 부분임
     @Override
     public View getView (final int position, View convertView, ViewGroup parent){
-        String ExExplanation,ExCalorie,ExUnit;
+        String ExCode,ExPart,ExExplanation,ExCalorie,ExUnit;
         View v = View.inflate(context, R.layout.item_frag, null);
         // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
         TextView ExName = (TextView) v.findViewById(R.id.ExName);
+        ExCode = exList.get(position).getExCode();
+        ExPart = exList.get(position).getExPart();
         ExName.setText(exList.get(position).getExerciseName());
         ExExplanation = exList.get(position).getExerciseExplanation();
         ExCalorie = exList.get(position).getExerciseCalorie();
@@ -61,12 +64,15 @@ public class exerciseAdapter extends BaseAdapter {
         selectBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                        Intent intent = new Intent(view.getContext(), ExerciseRecordActivity.class);
-                        intent.putExtra("exName", ExName.getText().toString());
-                        view.getContext().startActivity(intent);
-
-                };
-
+                Intent intent = new Intent(view.getContext(), ExerciseRecordActivity.class);
+                intent.putExtra("exName", ExName.getText().toString());
+                intent.putExtra("Date",Date);
+                intent.putExtra("ExCode",ExCode);
+                intent.putExtra("ExPart",ExPart);
+                intent.putExtra("ExCalorie",ExCalorie);
+                intent.putExtra("ExUnit",ExUnit);
+                view.getContext().startActivity(intent);
+            };
         });
 
         Button DetailBtn = (Button) v.findViewById(R.id.Detail);

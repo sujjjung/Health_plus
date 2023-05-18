@@ -73,7 +73,7 @@ public class CalendarActivity extends AppCompatActivity {
     int FcCode;
     int KcalNum,CarbohydrateNum,proteinNum,FatNum,sodiumNum,SugarNum;
     User user1 = new User();
-    String Year,Month,DayOfMonth,Date = "",date;
+    String Date = "",date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +115,6 @@ public class CalendarActivity extends AppCompatActivity {
                 sodiumSum.setText("");
                 SugarSum.setText("");
                 int KcalNum = 0,CarbohydrateNum = 0,proteinNum = 0,FatNum = 0,sodiumNum = 0,SugarNum = 0;;
-                Intent intent = getIntent();
                 User user1 = new User();
                 int year = date.getYear(); // 선택된 날짜의 연도 정보 추출
                 int month = date.getMonth() + 1; // 선택된 날짜의 월 정보 추출 (0부터 시작하므로 +1 필요)
@@ -180,6 +179,7 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
         Button UserFoodBtn = (Button) findViewById(R.id.FoodGoBtn);
+        Button UserExBtn = (Button) findViewById(R.id.ExGoBtn);
         extras = getIntent().getExtras();
 
         // 캘린더 커스텀 (이수정이 만지는 중)
@@ -291,6 +291,13 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
+        UserExBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new UserFoodBackgroundTask(Date).execute();
+            }
+        });
+
         // 햄버거 버튼
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
@@ -369,6 +376,7 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarActivity.this, HealthAddActivity.class);
+                intent.putExtra("Date", Date);
                 startActivity(intent);
             }
         });
@@ -488,6 +496,7 @@ public class CalendarActivity extends AppCompatActivity {
         }
     }
 
+    //음식리스트 불러오기
     class UserFoodBackgroundTask extends AsyncTask<Void, Void, String> {
         String target;
         String Date;
@@ -534,6 +543,58 @@ public class CalendarActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Intent intent = new Intent(CalendarActivity.this, userFood.class);
             intent.putExtra("UserFood", result);
+            intent.putExtra("Date", Date);
+            startActivity(intent);
+        }
+    }
+    
+    //운동 리스트 불러오기
+    class UserExBackgroundTask extends AsyncTask<Void, Void, String> {
+        String target;
+        String Date;
+        public UserExBackgroundTask(String date) {
+            this.Date = date;
+        }
+        @Override
+        protected void onPreExecute() {
+            //List.php은 파싱으로 가져올 웹페이지
+            target = "http://enejd0613.dothome.co.kr/excalendarlist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);//URL 객체 생성
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
+                }
+
+                //사용했던 것도 다 닫아줌
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        protected void onPostExecute(String result) {
+            Intent intent = new Intent(CalendarActivity.this, userEx.class);
+            intent.putExtra("UserEx", result);
             intent.putExtra("Date", Date);
             startActivity(intent);
         }

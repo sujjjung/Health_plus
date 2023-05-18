@@ -1,8 +1,11 @@
 package com.example.djsu;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +24,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -31,20 +36,76 @@ public class ExerciseRecordActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private RecyclerView recyclerView;
     private ArrayList<exrecode> exrecodeList;
-    private ArrayList<Set> setArrayList;
     private exerciserecodeAdapter exAdapter;
+    private Thread timeThread = null;
+    TextView mTimeTextView;
     int setcount = 1;
-    int num,position;
-    int n;
-    String number, unitnum;
+    int num;
+    private Boolean isRunning = true;
+    String number, unitnum,Date,ExCalorie,ExUnit,ExCode,ExPart,Name;
     int count = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_record);
+        Bundle extras = getIntent().getExtras();
+        Name = extras.getString("exName");
+        Date = extras.getString("Date");
+        ExCode = extras.getString("ExCode");
+        ExPart = extras.getString("ExPart");
+        ExCalorie = extras.getString("ExCalorie");
+        ExUnit = extras.getString("ExUnit");
+        TextView NameText = (TextView) findViewById(R.id.exname);
+        TextView PartText = (TextView) findViewById(R.id.expart);
+        TextView monthText = (TextView) findViewById(R.id.month);
+        TextView DayText = (TextView) findViewById(R.id.Day);
+        mTimeTextView = findViewById(R.id.timeView);
+        ImageButton TimerStartBtn = (ImageButton) findViewById(R.id.TimerStart);
+        ImageButton TimerPauseBtn = (ImageButton) findViewById(R.id.TimerPause);
+        ImageButton TimerStopBtn = (ImageButton) findViewById(R.id.TimerStop);
+        TimerStartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setVisibility(View.GONE);
+                isRunning = true;
+                TimerStopBtn.setVisibility(View.VISIBLE);
+                TimerPauseBtn.setVisibility(View.VISIBLE);
+
+                if (timeThread == null || !timeThread.isAlive()) {
+                    timeThread = new Thread(new timeThread());
+                    timeThread.start();
+                }
+            }
+        });
+
+        TimerStopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimerStartBtn.setVisibility(View.VISIBLE);
+                TimerPauseBtn.setVisibility(View.GONE);
+                isRunning = false;
+
+                if (timeThread != null) {
+                    timeThread.interrupt();
+                    timeThread = null;
+                }
+            }
+        });
+
+        TimerPauseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setVisibility(View.GONE);
+                isRunning = false;
+                TimerStartBtn.setVisibility(View.VISIBLE);
+            }
+        });
+
+        String Namestr = Name;
+        NameText.setText(Namestr);
+        PartText.setText(ExPart);
         TextView unit = findViewById(R.id.unittext);
         exrecodeList = new ArrayList<>();
-        setArrayList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -131,27 +192,26 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                 }
             }
         });
+        User user = new User();
 
         ImageButton SaveBtn = (ImageButton) findViewById(R.id.Save);
         SaveBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
                 Set set = new Set();
                 set.getSetArrayList();
                 ArrayList<Set> setList = set.getSetArrayList();
-                Toast.makeText(ExerciseRecordActivity.this, setList.get(0).getNumber()+ setList.get(1).getNumber(), Toast.LENGTH_SHORT).show();
                 for (int i = 0; i < setList.size(); i++){
-                    System.out.println("hongchul" + setList.get(i).getNumber());
+                    ExSelectRequest exSelectRequest = new ExSelectRequest(user.getId(),Date,ExCode,Name,ExPart,setList.get(i).getSetNumber(),setList.get(i).getNumber(),setList.get(i).getUnit());
+                    RequestQueue queue = Volley.newRequestQueue(ExerciseRecordActivity.this);
+                    queue.add(exSelectRequest);
                 }
-
+                Toast.makeText(ExerciseRecordActivity.this, "등록 완료되었습니다!", Toast.LENGTH_SHORT).show();
+                UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(ExerciseRecordActivity.this);
+                userFoodListBackgroundTask.execute();
             }
         });
-        Bundle extras = getIntent().getExtras();
-        String Name = "";
-        Name = extras.getString("exName");
-        TextView NameText = (TextView) findViewById(R.id.exname);
-        String Namestr = Name;
-        NameText.setText(Namestr);
 
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
@@ -212,4 +272,48 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //둘다 타이머 관려된건데 뭘 의미하는지는 모르겠네
+    @SuppressLint("HandlerLeak")
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            int mSec = msg.arg1 % 100;
+            int sec = (msg.arg1 / 100) % 60;
+            int min = (msg.arg1 / 100) / 60;
+            int hour = (msg.arg1 / 100) / 360;
+            //1000이 1초 1000*60 은 1분 1000*60*10은 10분 1000*60*60은 한시간
+
+            @SuppressLint("DefaultLocale") String result = String.format("%02d:%02d:%02d:%02d", hour, min, sec, mSec);
+            mTimeTextView.setText(result);
+        }
+    };
+
+    public class timeThread implements Runnable {
+        @Override
+        public void run() {
+            int i = 0;
+
+            while (true) {
+                while (isRunning) { //일시정지를 누르면 멈춤
+                    Message msg = new Message();
+                    msg.arg1 = i++;
+                    handler.sendMessage(msg);
+
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        runOnUiThread(new Runnable(){
+                            @Override
+                            public void run() {
+                                mTimeTextView.setText("");
+                                mTimeTextView.setText("00:00:00:00");
+                            }
+                        });
+                        return; // 인터럽트 받을 경우 return
+                    }
+                }
+            }
+        }
+    }
 }

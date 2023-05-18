@@ -1,9 +1,11 @@
 package com.example.djsu;
 
+import static com.example.djsu.exrecode.isSelected;
+
 import java.util.ArrayList;
 
 public class Set {
-    static private String setNumber, Number,unit;
+    private String setNumber, Number,unit;
     static private ArrayList<Set> setArrayList = new ArrayList<>();
     public Set() {
     }
@@ -49,5 +51,9 @@ public class Set {
 
     public void setSetArrayList(ArrayList<Set> setArrayList) {
         this.setArrayList = setArrayList;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
     }
 }
