@@ -39,6 +39,7 @@ public class HealthAddActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    String Date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +52,9 @@ public class HealthAddActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
+        Bundle extras = getIntent().getExtras();
 
+        Date = extras.getString("Date");
 
         new ExBackgroundTask(a= 0,target = "http://enejd0613.dothome.co.kr/exlist.php").execute();
 
@@ -201,6 +204,7 @@ public class HealthAddActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             //2. 데이터 담기
             bundle.putString("exercise",result);
+            bundle.putString("Date",Date);
             switch (a){
                 case 0:  fragment1 = new Fragment1();
                     //4. 프래그먼트에 데이터 넘기기

@@ -44,7 +44,7 @@ public class Fragment3 extends Fragment {
         View view = inflater.inflate(R.layout.fragment3, container, false);
         search_list = new ArrayList<>();
         editText = view.findViewById(R.id.searchtext);
-
+        String Date = getArguments().getString("Date");
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -77,7 +77,7 @@ public class Fragment3 extends Fragment {
         });
         exerciseLsits =new ArrayList<>();
 
-        exerciseAdapter = new exerciseAdapter(getActivity(),exerciseLsits);
+        exerciseAdapter = new exerciseAdapter(getActivity(),exerciseLsits,Date);
 
         ListView exListView = (ListView) view.findViewById(R.id.ExView);
         exListView.setAdapter(exerciseAdapter);
@@ -87,18 +87,19 @@ public class Fragment3 extends Fragment {
             JSONObject jsonObject = new JSONObject(this.getArguments().getString("exercise"));
             JSONArray jsonArray = jsonObject.getJSONArray("response");
             int count = 0;
-            String ExName,ExExplanation,ExCalorie,ExUnit;
+            String ExCode,ExPart,ExName,ExExplanation,ExCalorie,ExUnit;
             //JSON 배열 길이만큼 반복문을 실행
             while (count < jsonArray.length()) {
                 //count는 배열의 인덱스를 의미
                 JSONObject object = jsonArray.getJSONObject(count);
-
+                ExCode = object.getString("ExCode");
+                ExPart = object.getString("ExPart");
                 ExName = object.getString("ExName");
                 ExExplanation = object.getString("ExExplanation");
                 ExCalorie = object.getString("ExCalorie");
                 ExUnit = object.getString("ExUnit");
                 //값들을 User클래스에 묶어줍니다
-                exerciseLsit exlist = new exerciseLsit(ExName,ExExplanation,ExCalorie,ExUnit);
+                exerciseLsit exlist = new exerciseLsit(ExCode,ExPart,ExName,ExExplanation,ExCalorie,ExUnit);
                 exerciseLsits.add(exlist);//리스트뷰에 값을 추가해줍니다
                 count++;
 

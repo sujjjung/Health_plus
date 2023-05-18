@@ -1,9 +1,8 @@
 package com.example.djsu;
 
-import java.net.IDN;
-
 public class User {
     private String Date,FoodName,EatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
+    private String ExerciseName,ExercisePart,ExercisesetNumber, ExerciseNumber,Exerciseunit;
     static private String Id, Name, State, Profile, Age, Password;
     static private int CurrentSteps;
     int FcCode,quantity;

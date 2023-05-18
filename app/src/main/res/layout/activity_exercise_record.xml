@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toTopOf="@id/imageView" />
 
             <TextView
-                android:id="@+id/textView43"
+                android:id="@+id/month"
                 android:layout_width="36dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="120dp"
@@ -57,12 +57,12 @@
                 android:textColor="#2E2E2E"
                 android:textSize="32dp"
                 android:layout_marginStart="6dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView43"
-                app:layout_constraintStart_toEndOf="@+id/textView43"
-                app:layout_constraintTop_toTopOf="@+id/textView43" />
+                app:layout_constraintBottom_toBottomOf="@+id/month"
+                app:layout_constraintStart_toEndOf="@+id/month"
+                app:layout_constraintTop_toTopOf="@+id/month" />
 
             <TextView
-                android:id="@+id/textView45"
+                android:id="@+id/Day"
                 android:layout_width="42dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
@@ -85,9 +85,9 @@
                 android:text="일"
                 android:textColor="#2E2E2E"
                 android:textSize="32dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView45"
-                app:layout_constraintStart_toEndOf="@+id/textView45"
-                app:layout_constraintTop_toTopOf="@+id/textView45" />
+                app:layout_constraintBottom_toBottomOf="@+id/Day"
+                app:layout_constraintStart_toEndOf="@+id/Day"
+                app:layout_constraintTop_toTopOf="@+id/Day" />
 
             <View
                 android:id="@+id/view4"
@@ -97,14 +97,14 @@
                 android:background="#FFFFDE00"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView43" />
+                app:layout_constraintTop_toBottomOf="@+id/month" />
 
             <TextView
-                android:id="@+id/textView46"
-                android:layout_width="5dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="26dp"
+                android:id="@+id/expart"
+                android:layout_width="127dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="28dp"
                 android:fontFamily="@font/a10092"
                 android:gravity="center_horizontal|center_vertical"
                 android:textColor="#323232"
@@ -116,24 +116,25 @@
                 android:id="@+id/view5"
                 android:layout_width="4dp"
                 android:layout_height="24dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="16dp"
                 android:background="#00000000"
-                app:layout_constraintBottom_toBottomOf="@+id/textView46"
-                app:layout_constraintStart_toEndOf="@+id/textView46"
-                app:layout_constraintTop_toTopOf="@+id/textView46" />
+                app:layout_constraintBottom_toBottomOf="@+id/expart"
+                app:layout_constraintStart_toEndOf="@+id/expart"
+                app:layout_constraintTop_toTopOf="@+id/expart"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/exname"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_width="127dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
                 android:fontFamily="@font/a10092"
                 android:textColor="#323232"
                 android:textSize="24dp"
                 app:layout_constraintBottom_toBottomOf="@+id/view5"
                 app:layout_constraintStart_toEndOf="@+id/view5"
                 app:layout_constraintTop_toTopOf="@+id/view5"
-                app:layout_constraintVertical_bias="0.666" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageButton
                 android:layout_width="42dp"
@@ -156,7 +157,7 @@
                 android:textColor="#323232"
                 android:textSize="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView46" />
+                app:layout_constraintTop_toBottomOf="@+id/expart" />
 
             <TextView
                 android:id="@+id/textView50"
@@ -183,17 +184,52 @@
                 app:layout_constraintStart_toEndOf="@+id/textView50"
                 app:layout_constraintTop_toTopOf="@+id/textView50" />
 
-            <EditText
-                android:id="@+id/editText5"
-                android:layout_width="340dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="16dp"
-                android:background="#FFFFF5B3"
-                android:hint="  MEMO"
+
+            <TextView
+                android:id="@+id/timeView"
+                android:layout_width="239dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="00:00:00:00"
+                android:textSize="35dp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.218"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView49" />
 
+            <ImageButton
+                android:id="@+id/TimerStart"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginEnd="84dp"
+                android:background="#00000000"
+                android:src="@drawable/start"
+                app:layout_constraintBottom_toBottomOf="@+id/timeView"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageButton
+                android:id="@+id/TimerPause"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginEnd="84dp"
+                android:background="#00000000"
+                android:src="@drawable/pause"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/timeView"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageButton
+                android:id="@+id/TimerStop"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginEnd="28dp"
+                android:background="#00000000"
+                android:src="@drawable/stop"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/timeView"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/textView51"
@@ -207,7 +243,7 @@
                 android:textColor="#323232"
                 android:textSize="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText5" />
+                app:layout_constraintTop_toBottomOf="@+id/timeView" />
 
             <ImageButton
                 android:id="@+id/unitBtn"
@@ -271,7 +307,7 @@
                 android:scrollbarSize="5dp"
                 android:scrollbarThumbVertical="@android:color/darker_gray"
                 android:scrollbars="vertical"
-                app:layout_constraintTop_toTopOf="@+id/editText5"
+                app:layout_constraintTop_toTopOf="@+id/timeView"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="0dp" />
 

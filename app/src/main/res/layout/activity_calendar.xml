@@ -78,6 +78,19 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageView"
                 tools:ignore="MissingConstraints" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/ExGoBtn"
+                android:layout_width="121dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/shape_no_btn"
+                android:fontFamily="@font/a10091"
+                android:gravity="center"
+                android:text="당일 운동목록"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/Exweight"
+                app:layout_constraintEnd_toEndOf="@+id/imageView"
+                tools:ignore="MissingConstraints" />
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"

@@ -2,7 +2,6 @@ package com.example.djsu;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,20 +10,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.checkerframework.checker.units.qual.C;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAdapter.ViewHolder> {
     // creating variables for our ArrayList and context
     private ArrayList<exrecode> exArrayList;
     private ArrayList<Set> setArrayList = new ArrayList<>();
+    private ArrayList<ArrayList<Set>> SelectArrayList = new ArrayList<ArrayList<Set>>();
     private Context context;
+    Set set;
     int count = 0;
 
     // creating constructor for our adapter class
@@ -51,13 +47,14 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // CheckBox의 상태가 변경되었을 때 호출되는 콜백
-                if (isChecked) {
+                if (isChecked == true) {
                     String setNumber = holder.setnumber.getText().toString();
                     String number = holder.number.getText().toString();
                     String unit = holder.Unit.getText().toString();
-                    Set set = new Set(setNumber, number, unit);
-                    setArrayList.add(set); // 해당 포지션에 값을 추가합니다.
-                    set.setSetArrayList(setArrayList);
+                    holder.set = new Set(setNumber, number, unit);
+                    setArrayList.add(position,holder.set);
+                    holder.set.setSetArrayList(setArrayList);
+                   // holder.set.setSetArrayList(holder.setArrayList);
                     Toast.makeText(buttonView.getContext(), "선택된 데이터: " + number, Toast.LENGTH_SHORT).show();
                     for (int i = 0; i < setArrayList.size(); i++) {
                         System.out.println("hongchul" + setArrayList.get(i).getNumber());
@@ -78,6 +75,7 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
         // creating variables for our text views.
         public CompoundButton checkbox;
         public TextView setnumber, number, Unit;
+        Set set;
         public ArrayList<Set> setArrayList = new ArrayList<>();
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
