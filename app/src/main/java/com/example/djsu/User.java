@@ -2,7 +2,7 @@ package com.example.djsu;
 
 public class User {
     private String Date,FoodName,EatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
-    private String ExerciseName,ExercisePart,ExercisesetNumber, ExerciseNumber,Exerciseunit;
+    private String ExerciseName,ExercisePart,ExercisesetNumber, ExerciseNumber,Exerciseunit,Time;
     static private String Id, Name, State, Profile, Age, Password;
     static private int CurrentSteps;
     int FcCode,quantity;
@@ -10,6 +10,16 @@ public class User {
     static private String WalkGoal;
 
     public User() {}
+
+    public User(String date, String exerciseName, String exercisePart, String exercisesetNumber, String exerciseNumber, String exerciseunit, String time) {
+        Date = date;
+        ExerciseName = exerciseName;
+        ExercisePart = exercisePart;
+        ExercisesetNumber = exercisesetNumber;
+        ExerciseNumber = exerciseNumber;
+        Exerciseunit = exerciseunit;
+        Time = time;
+    }
 
     public String getFoodKcal() {
         return FoodKcal;
@@ -197,4 +207,60 @@ public class User {
 
     public static void setwalk_goal(String walkGoal) { WalkGoal = walkGoal; }
 
+
+    public String getExerciseName() {
+        return ExerciseName;
+    }
+
+    public void setExerciseName(String exerciseName) {
+        ExerciseName = exerciseName;
+    }
+
+    public String getExercisePart() {
+        return ExercisePart;
+    }
+
+    public void setExercisePart(String exercisePart) {
+        ExercisePart = exercisePart;
+    }
+
+    public String getExercisesetNumber() {
+        return ExercisesetNumber;
+    }
+
+    public void setExercisesetNumber(String exercisesetNumber) {
+        ExercisesetNumber = exercisesetNumber;
+    }
+
+    public String getExerciseNumber() {
+        return ExerciseNumber;
+    }
+
+    public void setExerciseNumber(String exerciseNumber) {
+        ExerciseNumber = exerciseNumber;
+    }
+
+    public String getExerciseunit() {
+        return Exerciseunit;
+    }
+
+    public void setExerciseunit(String exerciseunit) {
+        Exerciseunit = exerciseunit;
+    }
+
+    public String getTime() {
+        return Time;
+    }
+
+    public void setTime(String time) {
+        Time = time;
+    }
+
+    public static String getWalkGoal() {
+        return WalkGoal;
+    }
+
+    public static void setWalkGoal(String walkGoal) {
+        WalkGoal = walkGoal;
+    }
 }

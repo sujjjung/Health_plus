@@ -5,17 +5,18 @@ import static com.example.djsu.exrecode.isSelected;
 import java.util.ArrayList;
 
 public class Set {
-    private String setNumber, Number,unit;
+    private String setNumber, Number,unit,time;
     static private ArrayList<Set> setArrayList = new ArrayList<>();
     public Set() {
     }
     public Set( ArrayList<Set> setArrayList) {
         this.setArrayList = setArrayList;
     }
-    public Set(String setNumber, String number, String unit) {
+    public Set(String setNumber, String number, String unit, String time) {
         this.setNumber = setNumber;
         Number = number;
         this.unit = unit;
+        this.time = time;
     }
     public void setList(Set set) {
         setArrayList.add(set);
@@ -53,7 +54,11 @@ public class Set {
         this.setArrayList = setArrayList;
     }
 
-    public boolean isSelected() {
-        return isSelected;
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

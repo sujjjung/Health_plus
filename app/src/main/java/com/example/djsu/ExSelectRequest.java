@@ -11,7 +11,7 @@ public class ExSelectRequest  extends StringRequest {
     final static private String URL = "http://enejd0613.dothome.co.kr/excalendar.php";
     private Map<String, String> map;
 
-    public ExSelectRequest(String userId, String date,String ExerciseCode, String ExerciseName, String ExercisePart, String ExerciseSetNumber,String ExerciseNumber, String ExerciseUnit) {
+    public ExSelectRequest(String userId, String date,String ExerciseCode, String ExerciseName, String ExercisePart, String ExerciseSetNumber,String ExerciseNumber, String ExerciseUnit,String Time) {
         super(Method.POST, URL, null, null);
         map = new HashMap<>();
         map.put("userId",userId);
@@ -22,6 +22,7 @@ public class ExSelectRequest  extends StringRequest {
         map.put("ExerciseSetNumber", ExerciseSetNumber+ "");
         map.put("ExerciseNumber", ExerciseNumber+ "");
         map.put("ExerciseUnit",ExerciseUnit + "");
+        map.put("Time",Time );
     }
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {

@@ -291,10 +291,11 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
+        // 당일 운동 목록
         UserExBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new UserFoodBackgroundTask(Date).execute();
+                new UserExBackgroundTask(Date).execute();
             }
         });
 

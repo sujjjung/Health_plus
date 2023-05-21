@@ -110,10 +110,9 @@ public class AdminMainActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-            Intent intent = new Intent(getApplication(), AdminFoodMain.class);
+            Intent intent = new Intent(AdminMainActivity.this, AdminFoodMain.class);
             intent.putExtra("Food",result);
             startActivity(intent);
-            getApplication().startActivity(intent);
         }
     }
     class NoticeBackgroundTask extends AsyncTask<Void, Void, String> {
@@ -154,7 +153,7 @@ public class AdminMainActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-            Intent intent = new Intent(getApplication(), AdminNoticeMain.class);
+            Intent intent = new Intent(AdminMainActivity.this, AdminNoticeMain.class);
             intent.putExtra("Notice",result);
             startActivity(intent);
         }
@@ -197,10 +196,9 @@ public class AdminMainActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-            Intent intent = new Intent(getApplication(), AdminExerciseMain.class);
+            Intent intent = new Intent(AdminMainActivity.this, AdminExerciseMain.class);
             intent.putExtra("Ex",result);
             startActivity(intent);
-            getApplication().startActivity(intent);
         }
     }
 

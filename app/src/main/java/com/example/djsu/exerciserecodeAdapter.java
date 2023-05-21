@@ -21,8 +21,8 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
     private ArrayList<ArrayList<Set>> SelectArrayList = new ArrayList<ArrayList<Set>>();
     private Context context;
     Set set;
+    private String timerValue;
     int count = 0;
-
     // creating constructor for our adapter class
     public exerciserecodeAdapter(ArrayList<exrecode> exArrayList, Context context) {
         this.exArrayList = exArrayList;
@@ -35,7 +35,10 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_exerciserecord,parent,false);
         return new ViewHolder(v);
     }
-
+    public void setTimerValue(String value) {
+        this.timerValue = value;
+        notifyDataSetChanged(); // Notify adapter about the data change
+    }
     @Override
     public void onBindViewHolder(@NonNull exerciserecodeAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // setting data to our text views from our modal class.
@@ -43,6 +46,7 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
         holder.setnumber.setText(exeLsit.getSetNumber());
         holder.number.setText(exeLsit.getNumber());
         holder.Unit.setText(exeLsit.getUnit());
+        holder.timerValue = timerValue;
         holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -51,14 +55,10 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
                     String setNumber = holder.setnumber.getText().toString();
                     String number = holder.number.getText().toString();
                     String unit = holder.Unit.getText().toString();
-                    holder.set = new Set(setNumber, number, unit);
+                    String time = holder.timerValue;
+                    holder.set = new Set(setNumber, number, unit,time);
                     setArrayList.add(position,holder.set);
                     holder.set.setSetArrayList(setArrayList);
-                   // holder.set.setSetArrayList(holder.setArrayList);
-                    Toast.makeText(buttonView.getContext(), "선택된 데이터: " + number, Toast.LENGTH_SHORT).show();
-                    for (int i = 0; i < setArrayList.size(); i++) {
-                        System.out.println("hongchul" + setArrayList.get(i).getNumber());
-                    }
                 }
             }
         });
@@ -76,6 +76,7 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
         public CompoundButton checkbox;
         public TextView setnumber, number, Unit;
         Set set;
+        private String timerValue;
         public ArrayList<Set> setArrayList = new ArrayList<>();
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,4 +89,6 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
 
         }
     }
+
+
 }
