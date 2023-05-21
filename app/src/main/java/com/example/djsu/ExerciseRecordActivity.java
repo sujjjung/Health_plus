@@ -1,5 +1,7 @@
 package com.example.djsu;
 
+import static android.media.CamcorderProfile.get;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -98,6 +100,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                 v.setVisibility(View.GONE);
                 isRunning = false;
                 TimerStartBtn.setVisibility(View.VISIBLE);
+                updateAdapterTimerValue( mTimeTextView.getText().toString());
             }
         });
 
@@ -203,7 +206,8 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                 set.getSetArrayList();
                 ArrayList<Set> setList = set.getSetArrayList();
                 for (int i = 0; i < setList.size(); i++){
-                    ExSelectRequest exSelectRequest = new ExSelectRequest(user.getId(),Date,ExCode,Name,ExPart,setList.get(i).getSetNumber(),setList.get(i).getNumber(),setList.get(i).getUnit());
+                    ExSelectRequest exSelectRequest = new ExSelectRequest(user.getId(),Date,ExCode,Name,ExPart,
+                            setList.get(i).getSetNumber(),setList.get(i).getNumber(),setList.get(i).getUnit(),setList.get(i).getTime());
                     RequestQueue queue = Volley.newRequestQueue(ExerciseRecordActivity.this);
                     queue.add(exSelectRequest);
                 }
@@ -284,6 +288,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
             //1000이 1초 1000*60 은 1분 1000*60*10은 10분 1000*60*60은 한시간
 
             @SuppressLint("DefaultLocale") String result = String.format("%02d:%02d:%02d:%02d", hour, min, sec, mSec);
+
             mTimeTextView.setText(result);
         }
     };
@@ -315,5 +320,9 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void updateAdapterTimerValue(String value) {
+        exAdapter.setTimerValue(value);
     }
 }

@@ -39,7 +39,7 @@
         >
 
         <ListView
-            android:id="@+id/FoodView"
+            android:id="@+id/exView"
             android:layout_width="410dp"
             android:layout_height="673dp"
             android:layout_alignParentStart="true"

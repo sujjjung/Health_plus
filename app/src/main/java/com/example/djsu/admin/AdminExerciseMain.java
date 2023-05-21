@@ -33,6 +33,16 @@ public class AdminExerciseMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_exercise_main);
+
+        ExerciseAddBtn = (ImageButton)findViewById(R.id.exerciseaddBtn);
+
+        ExerciseAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminExerciseMain.this, AdminExerciseSubAdd.class);
+                startActivity(intent);
+            }
+        });
         Intent intent = getIntent();
         exerciselsit = new ArrayList<>();
 
