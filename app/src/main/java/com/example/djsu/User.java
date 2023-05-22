@@ -5,13 +5,13 @@ public class User {
     private String ExerciseName,ExercisePart,ExercisesetNumber, ExerciseNumber,Exerciseunit,Time;
     static private String Id, Name, State, Profile, Age, Password;
     static private int CurrentSteps;
-    int FcCode,quantity;
+    int FcCode,EcCode,quantity;
     static private String Water;
     static private String WalkGoal;
 
     public User() {}
 
-    public User(String date, String exerciseName, String exercisePart, String exercisesetNumber, String exerciseNumber, String exerciseunit, String time) {
+    public User(String date, String exerciseName, String exercisePart, String exercisesetNumber, String exerciseNumber, String exerciseunit, String time,int EcCode) {
         Date = date;
         ExerciseName = exerciseName;
         ExercisePart = exercisePart;
@@ -19,6 +19,7 @@ public class User {
         ExerciseNumber = exerciseNumber;
         Exerciseunit = exerciseunit;
         Time = time;
+        this.EcCode = EcCode;
     }
 
     public String getFoodKcal() {
@@ -262,5 +263,13 @@ public class User {
 
     public static void setWalkGoal(String walkGoal) {
         WalkGoal = walkGoal;
+    }
+
+    public int getEcCode() {
+        return EcCode;
+    }
+
+    public void setEcCode(int ecCode) {
+        EcCode = ecCode;
     }
 }
