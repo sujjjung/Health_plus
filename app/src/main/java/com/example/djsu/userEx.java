@@ -48,11 +48,10 @@ public class userEx extends AppCompatActivity {
         try {
             userExAdapter.notifyDataSetChanged();
             JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserEx"));
-            System.out.println(intent.getStringExtra("UserEx"));
             JSONArray jsonArray = jsonObject.getJSONArray("response");
             int count = 0;
             String Date,UserID,ExerciseCode,ExerciseName,ExercisePart,Time;
-            int ExerciseSetNumber,ExerciseNumber,ExerciseUnit;
+            int ExerciseSetNumber,ExerciseNumber,ExerciseUnit,EcCode;
             //JSON 배열 길이만큼 반복문을 실행
             while (count < jsonArray.length()) {
                 //count는 배열의 인덱스를 의미
@@ -66,9 +65,9 @@ public class userEx extends AppCompatActivity {
                 ExerciseNumber = Integer.parseInt(object.getString("ExerciseNumber"));
                 ExerciseUnit = Integer.parseInt(object.getString("ExerciseUnit"));
                 Time = object.getString("Time");
-
+                EcCode = Integer.parseInt(object.getString("EcCode"));
                 //값들을 User클래스에 묶어줍니다
-                User user = new User(Date,ExerciseName,ExercisePart,String.valueOf(ExerciseSetNumber),String.valueOf(ExerciseNumber),String.valueOf(ExerciseUnit),Time);
+                User user = new User(Date,ExerciseName,ExercisePart,String.valueOf(ExerciseSetNumber),String.valueOf(ExerciseNumber),String.valueOf(ExerciseUnit),Time,EcCode);
                 UserID = object.getString("UserID");
                 if(UserID.equals(user1.getId())) {
                     if(date.equals(Date)) {

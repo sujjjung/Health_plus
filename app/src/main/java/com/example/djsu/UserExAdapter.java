@@ -31,6 +31,7 @@ public class UserExAdapter extends BaseAdapter {
     private List<User> userList;
     private Activity parentActivity;
     String ExerciseCode,ExerciseSetNumber,ExerciseNumber,ExerciseUnit,Time;
+    int ExCode;
     TextView ExName,ExPart;
     String date,name ="";
     public UserExAdapter(Context context, List<User> userList) {
@@ -66,9 +67,10 @@ public class UserExAdapter extends BaseAdapter {
             ExPart = v.findViewById(R.id.exPart);
             ExName.setText(userList.get(position).getExerciseName());
             ExPart.setText(userList.get(position).getExercisePart());
-            date = userList.get(position).getDate();
             name = userList.get(position).getExerciseName();
         }
+        date = userList.get(position).getDate();
+        ExCode = userList.get(position).getEcCode();
         v.setTag(userList.get(position).getId());
         Button DetailBtn = (Button) v.findViewById(R.id.Detail);
 
@@ -84,7 +86,7 @@ public class UserExAdapter extends BaseAdapter {
                             boolean success = jsonResponse.getBoolean("success");
                             //받아온 값이 success면 정상적으로 서버로부터 값을 받은 것을 의미함
                             if (success) {
-                                Toast.makeText(context.getApplicationContext(), "삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context.getApplicationContext(),  "삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 userList.remove(position);//리스트에서 해당부분을 지워줌
                                 notifyDataSetChanged();//데이터가 변경된 것을 어댑터에 알려줌
                             }
@@ -93,6 +95,9 @@ public class UserExAdapter extends BaseAdapter {
                         }
                     }
                 };
+                UserExDelete deleteRequest = new UserExDelete(name, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(context);
+                queue.add(deleteRequest);
             }
         });
         Button update = (Button) v.findViewById(R.id.Update);
