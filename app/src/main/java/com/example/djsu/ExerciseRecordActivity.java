@@ -207,7 +207,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                 ArrayList<Set> setList = set.getSetArrayList();
                 for (int i = 0; i < setList.size(); i++){
                     ExSelectRequest exSelectRequest = new ExSelectRequest(user.getId(),Date,ExCode,Name,ExPart,
-                            setList.get(i).getSetNumber(),setList.get(i).getNumber(),setList.get(i).getUnit(),setList.get(i).getTime());
+                            setList.get(i).getSetNumber(),setList.get(i).getNumber(),setList.get(i).getUnit()+unit.getText(),setList.get(i).getTime());
                     RequestQueue queue = Volley.newRequestQueue(ExerciseRecordActivity.this);
                     queue.add(exSelectRequest);
                 }

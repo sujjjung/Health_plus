@@ -172,10 +172,6 @@ public class CalendarActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                // UserFoodBtn.setVisibility(View.VISIBLE);
-                Toast.makeText(getApplicationContext(), String.format("%d - %d - %d", year, month + 1, dayOfMonth), Toast.LENGTH_SHORT).show();
-
             }
         });
         Button UserFoodBtn = (Button) findViewById(R.id.FoodGoBtn);

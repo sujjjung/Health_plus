@@ -73,6 +73,35 @@ public class UserExAdapter extends BaseAdapter {
         ExCode = userList.get(position).getEcCode();
         v.setTag(userList.get(position).getId());
         Button DetailBtn = (Button) v.findViewById(R.id.Detail);
+        DetailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dlg = new AlertDialog.Builder(context);
+                dlg.setTitle(userList.get(position).getExerciseName() + "상세정보"); // Set title
+
+                StringBuilder messageBuilder = new StringBuilder();
+                for (int i = 0; i < userList.size(); i++) {
+                    if (userList.get(position).getExerciseName().equals(userList.get(i).getExerciseName())) {
+                        messageBuilder.append(userList.get(i).getExercisesetNumber() + "세트\n");
+                        messageBuilder.append(" 횟수 " + userList.get(i).getExerciseNumber());
+                        messageBuilder.append(" 무게 " + userList.get(i).getExerciseunit());
+                        messageBuilder.append(" 시간 " + userList.get(i).getTime());
+                        messageBuilder.append("\n"); // Add a new line for each entry
+                    }
+                }
+                dlg.setMessage(messageBuilder.toString()); // Set the message
+
+                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Display a toast message
+                        Toast.makeText(context, "확인을 눌르셨습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                dlg.show();
+            }
+        });
+
 
         Button deleteBtn = (Button) v.findViewById(R.id.Delete);
         deleteBtn.setOnClickListener(new View.OnClickListener(){
