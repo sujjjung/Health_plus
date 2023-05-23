@@ -21,7 +21,7 @@ public class ExSelectRequest  extends StringRequest {
         map.put("ExercisePart", ExercisePart);
         map.put("ExerciseSetNumber", ExerciseSetNumber+ "");
         map.put("ExerciseNumber", ExerciseNumber+ "");
-        map.put("ExerciseUnit",ExerciseUnit + "");
+        map.put("ExerciseUnit",ExerciseUnit);
         map.put("Time",Time );
     }
     @Override

@@ -50,8 +50,8 @@ public class userEx extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserEx"));
             JSONArray jsonArray = jsonObject.getJSONArray("response");
             int count = 0;
-            String Date,UserID,ExerciseCode,ExerciseName,ExercisePart,Time;
-            int ExerciseSetNumber,ExerciseNumber,ExerciseUnit,EcCode;
+            String Date,UserID,ExerciseCode,ExerciseName,ExercisePart,Time,ExerciseUnit;
+            int ExerciseSetNumber,ExerciseNumber,EcCode;
             //JSON 배열 길이만큼 반복문을 실행
             while (count < jsonArray.length()) {
                 //count는 배열의 인덱스를 의미
@@ -63,11 +63,11 @@ public class userEx extends AppCompatActivity {
                 ExercisePart = object.getString("ExercisePart");
                 ExerciseSetNumber = Integer.parseInt(object.getString("ExerciseSetNumber"));
                 ExerciseNumber = Integer.parseInt(object.getString("ExerciseNumber"));
-                ExerciseUnit = Integer.parseInt(object.getString("ExerciseUnit"));
+                ExerciseUnit = object.getString("ExerciseUnit");
                 Time = object.getString("Time");
                 EcCode = Integer.parseInt(object.getString("EcCode"));
                 //값들을 User클래스에 묶어줍니다
-                User user = new User(Date,ExerciseName,ExercisePart,String.valueOf(ExerciseSetNumber),String.valueOf(ExerciseNumber),String.valueOf(ExerciseUnit),Time,EcCode);
+                User user = new User(Date,ExerciseName,ExercisePart,String.valueOf(ExerciseSetNumber),String.valueOf(ExerciseNumber),ExerciseUnit,Time,EcCode);
                 UserID = object.getString("UserID");
                 if(UserID.equals(user1.getId())) {
                     if(date.equals(Date)) {
