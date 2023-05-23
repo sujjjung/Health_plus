@@ -110,9 +110,9 @@ public class friend_invite extends AppCompatActivity {
                 } //여기 부분 돌아감
 
                 // 채팅방 생성
-                String chatRoomId = database.child("User").child(userName).child("chatRooms").push().getKey();
+                String chatRoomId = database.child("chatRooms").push().getKey();
                 ChatRoom chatRoom = new ChatRoom(chatRoomId);
-                database.child("User").child(userName).child("chatRooms").child(chatRoomId).setValue(chatRoom);
+                database.child("chatRooms").child(chatRoomId).setValue(chatRoom);
 
                 // 선택된 회원들을 채팅방에 참여시킴
                 for (String member : selectedMembers) {
@@ -123,7 +123,7 @@ public class friend_invite extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
                                 String memberId = dataSnapshot.getChildren().iterator().next().getKey();
-                                database.child("User").child(userName).child("chatRooms").child(chatRoomId).child("users").child(memberId).setValue(true);
+                                database.child("chatRooms").child(chatRoomId).child("users").child(memberId).setValue(true);
                             }
                         }
 
@@ -135,7 +135,7 @@ public class friend_invite extends AppCompatActivity {
                 }
 
                 // 채팅방 화면으로 이동
-                Intent intent = new Intent(friend_invite.this, chatList.class);
+                Intent intent = new Intent(friend_invite.this, chat_room.class);
                 intent.putExtra("chatRooms", chatRoomId);
                 startActivity(intent);
             }

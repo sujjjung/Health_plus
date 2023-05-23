@@ -225,7 +225,7 @@ public class main_user extends AppCompatActivity {
                         noticeBackgroundTask.execute();
                         return true;
                     case R.id.friend:
-                        Intent friend = new Intent(getApplicationContext(), chat_room.class);
+                        Intent friend = new Intent(getApplicationContext(), chatList.class);
                         startActivity(friend);
                         return true;
                 }
