@@ -206,6 +206,7 @@
                 android:layout_marginEnd="84dp"
                 android:background="#00000000"
                 android:src="@drawable/start"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="@+id/timeView"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -216,6 +217,7 @@
                 android:layout_marginEnd="84dp"
                 android:background="#00000000"
                 android:src="@drawable/pause"
+                android:scaleType="centerCrop"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/timeView"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -226,6 +228,7 @@
                 android:layout_height="42dp"
                 android:layout_marginEnd="28dp"
                 android:background="#00000000"
+                android:scaleType="centerCrop"
                 android:src="@drawable/stop"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/timeView"
@@ -237,7 +240,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
                 android:layout_marginTop="32dp"
-
                 android:fontFamily="@font/a10092"
                 android:text="세트"
                 android:textColor="#323232"

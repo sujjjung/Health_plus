@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
     <androidx.constraintlayout.widget.ConstraintLayout
-        tools:context=".main_user"
+        tools:context=".community_mypage"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -114,14 +114,15 @@
             app:layout_constraintTop_toTopOf="@+id/following"
             tools:ignore="DuplicateIds,NotSibling" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/postRecyclerView"
+        <GridView
+            android:id="@+id/grid_view"
             android:layout_width="391dp"
             android:layout_height="631dp"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/imageView2"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="1dp" />
+            tools:layout_editor_absoluteX="1dp"
+            android:numColumns="3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
