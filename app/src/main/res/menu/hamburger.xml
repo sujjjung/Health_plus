@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/home"
-        android:title="홈"
+        android:title="메인"
         style="@style/menu">
     </item>
     <item android:id="@+id/calender"
         android:title="캘린더">
     </item>
+    <item android:id="@+id/mypage"
+        android:title="마이페이지">
+    </item>
     <item android:id="@+id/communety"
         android:title="커뮤니티">
     </item>
-    <item android:id="@+id/mypage"
-    android:title="마이페이지">
+    <item android:id="@+id/friend"
+        android:title="더하기톡">
     </item>
     <item android:id="@+id/map"
-    android:title="근처 핼스장 찾기">
+    android:title="근처 헬스장 찾기">
     </item>
     <item android:id="@+id/manbogi"
         android:title="만보기">
@@ -22,7 +25,4 @@
     <item android:id="@+id/annoucement"
         android:title="공지사항">
     </item>
-   <item android:id="@+id/friend"
-       android:title="친구">
-   </item>
 </menu>

@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp">
 
     <TextView
         android:id="@+id/emote"
-        android:layout_width="40dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:fontFamily="@font/a10092"
+        android:paddingLeft="10dp"
         android:scaleType="centerInside"
         android:text="❤"
-        android:textSize="29dp"
-        />
+        android:textSize="29dp" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -26,7 +28,8 @@
             android:layout_weight="2"
             android:fontFamily="@font/a10093"
             android:gravity="center_vertical"
-            android:paddingRight="20dp"
+            android:paddingRight="25dp"
+            android:paddingLeft="10dp"
             android:scaleType="centerInside"
             android:text="건강더하기 어플 구현 시작"
             android:textSize="24dp" />

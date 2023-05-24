@@ -119,13 +119,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
         android:text="전송"
         android:textColor="@color/black"
-        app:backgroundTint="@android:color/transparent"
+        android:background="@drawable/shape_yes_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/edt_message"
