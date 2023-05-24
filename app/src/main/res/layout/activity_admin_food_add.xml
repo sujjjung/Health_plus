@@ -8,6 +8,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
 android:layout_width="match_parent"
 android:layout_height="match_parent"
+    android:paddingBottom="20dp"
 tools:context=".admin.AdminFoodAdd"
 android:background="#FFF5B3">
 
@@ -250,14 +251,14 @@ android:background="#FFF5B3">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ImgaddBtn" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/SaveBtn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="130dp"
+    android:layout_height="50dp"
     android:fontFamily="@font/a10093"
     android:text="추가하기"
     android:textColor="#2E2E2E"
-        android:backgroundTint="#ff9898"
+        android:background="@drawable/shape_yes_btn"
     android:textSize="24dp"
     app:layout_constraintBottom_toBottomOf="@+id/addBtn"
     app:layout_constraintEnd_toEndOf="@+id/addBtn"

@@ -21,7 +21,7 @@
         android:layout_width="99dp"
         android:layout_height="41dp"
         android:layout_margin="10dp"
-        android:backgroundTint="#ff9898"
+        android:backgroundTint="#ffdd00"
         android:fontFamily="@font/a10091"
 
         android:text="상세 성분"
