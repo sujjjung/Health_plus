@@ -1,7 +1,9 @@
 package com.example.djsu;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class friend_invite extends AppCompatActivity {
@@ -109,35 +112,90 @@ public class friend_invite extends AppCompatActivity {
                     return;
                 } //여기 부분 돌아감
 
-                // 채팅방 생성
-                String chatRoomId = database.child("chatRooms").push().getKey();
-                ChatRoom chatRoom = new ChatRoom(chatRoomId);
-                database.child("chatRooms").child(chatRoomId).setValue(chatRoom);
+                // 나의 아이디를 추가
+                User user = new User();
+                String myId = user.getName();
+                selectedMembers.add(myId);
 
-                // 선택된 회원들을 채팅방에 참여시킴
-                for (String member : selectedMembers) {
-                    // 회원 이름으로 회원의 UID를 가져옴
-                    DatabaseReference memberRef = database.child("User").orderByChild("name").equalTo(member).getRef();
-                    memberRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                String memberId = dataSnapshot.getChildren().iterator().next().getKey();
-                                database.child("chatRooms").child(chatRoomId).child("users").child(memberId).setValue(true);
-                            }
+                // 선택된 회원들을 정렬하여 chatRoomId 생성
+                Collections.sort(selectedMembers);
+                String chatRoomId = TextUtils.join(", ", selectedMembers);
+
+                // 중복 체크를 위해 ChatRoom 레퍼런스에 해당 chatRoomId가 이미 있는지 확인
+                DatabaseReference chatRoomRef = database.child("ChatRoom").child(chatRoomId);
+                chatRoomRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            // 이미 존재하는 채팅방일 경우 중복 메시지를 띄우고 함수를 종료
+                            Toast.makeText(friend_invite.this, "이미 존재하는 채팅방입니다.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // 채팅방 생성 및 저장
+                            ChatRoom chatRoom = new ChatRoom(chatRoomId);
+                            database.child("ChatRoom").child(chatRoomId).setValue(chatRoom);
+
+                            // 채팅방 화면으로 이동
+                            Intent intent = new Intent(friend_invite.this, chatList.class);
+                            intent.putExtra("chatRooms", chatRoomId);
+                            startActivity(intent);
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Log.e("friend_invite", "Failed to get member ID", databaseError.toException());
-                        }
-                    });
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("friend_invite", "Failed to check chatRoomId duplication", databaseError.toException());
+                    }
+                });
 
-                // 채팅방 화면으로 이동
-                Intent intent = new Intent(friend_invite.this, chat_room.class);
-                intent.putExtra("chatRooms", chatRoomId);
-                startActivity(intent);
+//                // 채팅방 생성 및 저장
+//                ChatRoom chatRoom = new ChatRoom(chatRoomId);
+//                database.child("ChatRoom").child(chatRoomId).setValue(chatRoom);
+//
+//                // chatRoomId를 SharedPreferences에 저장
+//                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.putString("chatRoomId", chatRoomId);
+//                editor.apply();
+
+//                // 채팅방 생성
+////                String chatRoomId = database.child("ChatRoom").push().getKey();
+////                ChatRoom chatRoom = new ChatRoom(chatRoomId);
+////                database.child("ChatRoom").child(chatRoomId).setValue(chatRoom);
+//                String selectedMembersId = TextUtils.join("", selectedMembers);
+//                String chatRoomId = database.child("ChatRoom").child(selectedMembersId).getKey();
+//                ChatRoom chatRoom = new ChatRoom(chatRoomId);
+//                database.child("ChatRoom").child(chatRoomId).setValue(chatRoom);
+//
+//                // chatRoomId를 SharedPreferences에 저장
+//                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.putString("chatRoomId", chatRoomId);
+//                editor.apply();
+
+//                // 선택된 회원들을 채팅방에 참여시킴
+//                for (String member : selectedMembers) {
+//                    // 회원 이름으로 회원의 UID를 가져옴
+//                    DatabaseReference memberRef = database.child("User").orderByChild("name").equalTo(member).getRef();
+//                    memberRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                            if (dataSnapshot.exists()) {
+//                                String memberId = dataSnapshot.getChildren().iterator().next().getKey();
+//                                database.child("ChatRoom").child(chatRoomId).child("Users").child(memberId).setValue(true);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//                            Log.e("friend_invite", "Failed to get member ID", databaseError.toException());
+//                        }
+//                    });
+//                }
+//
+//                // 채팅방 화면으로 이동
+//                Intent intent = new Intent(friend_invite.this, chat_room.class);
+//                intent.putExtra("chatRooms", chatRoomId);
+//                startActivity(intent);
             }
         });
 

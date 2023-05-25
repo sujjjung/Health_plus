@@ -1,10 +1,12 @@
 package com.example.djsu;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +34,10 @@ public class chat_room extends AppCompatActivity {
     private List<ChatData> chatList;
     private EditText EditText_chat;
     private Button Button_send;
-    private DatabaseReference myRef;
+    private DatabaseReference myRef, openRoom;
+
+    private TextView roomName;
+
     public static String getCurrentTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         String currentTime = sdf.format(new Date());
@@ -46,6 +51,7 @@ public class chat_room extends AppCompatActivity {
 
         Button_send = findViewById(R.id.btn_submit);
         EditText_chat = findViewById(R.id.edt_message);
+        roomName = findViewById(R.id.txt_TItle);
 
         User user = new User();
         String userId = user.getId();
@@ -80,15 +86,18 @@ public class chat_room extends AppCompatActivity {
 
         mRecyclerView.setAdapter(mAdapter);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Message");
-        //myRef = database.getReference("User").child(userId).child("Message");
-        //DatabaseReference myRef = database.getReference("Message");
+        //chatList 에서 클릭된 아이템의 텍스트를 가져온다
+        Intent intent = getIntent();
+        String roomId = intent.getStringExtra("chatRoomId");
 
-//        ChatData chat = new ChatData();
-//        chat.setUserName(userName);
-//        chat.setMsg("hi");
-//        myRef.setValue(chat);
+        // SharedPreferences에서 chatRoomId를 불러옴
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String chatRoomId = sharedPreferences.getString("chatRoomId", ", ");
+
+        roomName.setText(roomId);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("ChatRoom").child(roomId).child("Message");
 
         myRef.addChildEventListener(new ChildEventListener() {
             @Override

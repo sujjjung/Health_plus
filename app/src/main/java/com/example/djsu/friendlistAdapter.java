@@ -46,18 +46,10 @@ public class friendlistAdapter extends ArrayAdapter<member> {
         }
         TextView nameTextView = convertView.findViewById(R.id.name);
         ImageView imageView = convertView.findViewById(R.id.profile);
-        Button checkBtn = convertView.findViewById(R.id.delete);
 
         final member memberItem = postList.get(position);
 
-//        checkBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(context, "Button clicked for " + memberItem.getName(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-        checkBtn.setOnClickListener(new View.OnClickListener() {
+        convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog(memberItem);
