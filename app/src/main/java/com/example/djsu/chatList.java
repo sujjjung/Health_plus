@@ -1,10 +1,12 @@
 package com.example.djsu;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -36,57 +38,109 @@ public class chatList extends AppCompatActivity {
 
     private ListView mChatRoomListView;
 
-    private chatListAdapter mAdapter;
     private DatabaseReference mDatabase;
+
+    private chatListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_list);
 
-        mChatRoomListView = findViewById(R.id.recycler_messages);
-
-        List<String> chatList = null; // 예시 코드, null 대신에 적절한 값을 할당해야 합니다.
-
-        //mAdapter = new chatListAdapter(this, R.layout.item_chat_list);
-        mAdapter = new chatListAdapter(this, R.layout.item_chat_list);
-        mChatRoomListView.setAdapter(mAdapter);
+        ListView listview = findViewById(R.id.recycler_messages);
 
         User user = new User();
-        String userId = user.getId();
+        String userName = user.getName();
 
-        // Firebase Realtime Database에서 채팅방 목록을 가져옴
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("User").child(userId).child("chatRooms");
-        mDatabase.addChildEventListener(new ChildEventListener() {
+        List<ChatRoom> postList = new ArrayList<>();
+
+        mAdapter = new chatListAdapter(chatList.this, postList);
+        listview.setAdapter(mAdapter);
+
+        DatabaseReference roomList = FirebaseDatabase.getInstance().getReference("ChatRoom");
+       // DatabaseReference roomList1 = FirebaseDatabase.getInstance().getReference("ChatRoom");
+//        roomList.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+////                ChatRoom chatroom = new ChatRoom();
+////                String roomName = chatroom.getChatRoomId();
+//////                    if (!roomName.contains(userName)) {
+//////                        // 위에서 가져온 친구 목록에 포함되지 않고, 로그인한 유저가 아닌 경우에만 리스트에 추가합니다.
+//////                        postList.add(chatroom);
+//////                    }
+////                if (roomName != null && roomName.contains(userName)) {
+////                    postList.add(chatroom);
+////                }
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    String roomId = snapshot.getKey();
+//                    if (roomId != null && roomId.contains(userName)) {
+//                        // userName이 포함된 roomId를 찾았을 때 처리할 작업 수행
+//                        // 예를 들어, ChatRoom 객체를 생성하여 postList에 추가하는 등의 작업 수행
+//                        ChatRoom chatRoom = snapshot.getValue(ChatRoom.class);
+//                        postList.add(chatRoom);
+//                    }
+//                }
+//                // ListView에 데이터를 표시하는 코드 작성
+//                chatListAdapter chatListAdapter = new chatListAdapter(chatList.this, postList);
+//                listview.setAdapter(chatListAdapter);
+//            }
+
+        roomList.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // 채팅방이 추가될 때마다 ListView를 업데이트
-                ChatRoom chatRoom = snapshot.getValue(ChatRoom.class);
-                mAdapter.add(chatRoom);
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+                String roomId = dataSnapshot.getKey();
+                if (roomId != null && roomId.contains(userName)) {
+                    ChatRoom chatRoom = dataSnapshot.getValue(ChatRoom.class);
+                    postList.add(chatRoom);
+                    mAdapter.notifyDataSetChanged(); // 리스트뷰 업데이트
+                }
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // 채팅방이 수정될 때마다 ListView를 업데이트
-                ChatRoom chatRoom = snapshot.getValue(ChatRoom.class);
-                mAdapter.update(chatRoom);
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+                // 채팅방이 변경되었을 때 필요한 작업 수행
+                // 예를 들어, 변경된 채팅방을 postList에서 찾아 업데이트
+                String roomId = dataSnapshot.getKey();
+                if (roomId != null && roomId.contains(userName)) {
+                    ChatRoom updatedChatRoom = dataSnapshot.getValue(ChatRoom.class);
+                    for (int i = 0; i < postList.size(); i++) {
+                        ChatRoom chatRoom = postList.get(i);
+                        if (chatRoom.getChatRoomId().equals(updatedChatRoom.getChatRoomId())) {
+                            postList.set(i, updatedChatRoom);
+                            mAdapter.notifyDataSetChanged(); // 리스트뷰 업데이트
+                            break;
+                        }
+                    }
+                }
             }
 
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                // 채팅방이 삭제될 때마다 ListView를 업데이트
-                ChatRoom chatRoom = snapshot.getValue(ChatRoom.class);
-                mAdapter.remove(chatRoom);
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                // 채팅방이 제거되었을 때 필요한 작업 수행
+                // 예를 들어, 제거된 채팅방을 postList에서 찾아 제거
+                String roomId = dataSnapshot.getKey();
+                if (roomId != null && roomId.contains(userName)) {
+                    ChatRoom removedChatRoom = dataSnapshot.getValue(ChatRoom.class);
+                    for (int i = 0; i < postList.size(); i++) {
+                        ChatRoom chatRoom = postList.get(i);
+                        if (chatRoom.getChatRoomId().equals(removedChatRoom.getChatRoomId())) {
+                            postList.remove(i);
+                            mAdapter.notifyDataSetChanged(); // 리스트뷰 업데이트
+                            break;
+                        }
+                    }
+                }
             }
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+                // 채팅방의 순서가 변경되었을 때 필요한 작업 수행
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                // 취소되었을 때 처리
             }
-
         });
 
         Button imageButton = (Button) findViewById(R.id.button2);
@@ -112,7 +166,7 @@ public class chatList extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-//뒤로가기버튼 이미지 적용
+        //뒤로가기버튼 이미지 적용
         actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
@@ -170,10 +224,5 @@ public class chatList extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private List<ChatRoom> getChatRooms() {
-        // 채팅방 데이터를 가져오는 로직을 구현합니다.
-        return null;
     }
 }
