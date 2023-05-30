@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="15dp">
+
+        <!--프로필 사진-->
+        <!--        <ImageView-->
+        <!--            android:id="@+id/profile"-->
+        <!--            android:layout_width="50dp"-->
+        <!--            android:layout_height="50dp"-->
+        <!--            android:src="@drawable/user"/>-->
+
+        <!--이름-->
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:text="루틴 이름"
+            android:textSize="20dp"
+            android:gravity="center_vertical"
+            android:textColor="#000"/>
+
+        <!--상태 메시지
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:text="상태메시지"
+            android:textSize="12sp"
+            android:textColor="#444"
+            android:maxLines="1"/>
+        -->
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@drawable/shape_yes_btn"
+            android:id="@+id/shape_yes_btn"
+            android:layout_width="65dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="18dp"
+            android:fontFamily="@font/a10091"
+            android:gravity="center"
+            android:text="선택"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+</LinearLayout>
