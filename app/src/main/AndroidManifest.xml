@@ -24,7 +24,13 @@
         android:theme="@style/Theme.DJSU"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".routine"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".admin.AdminUserListActivity"
             android:exported="false">
