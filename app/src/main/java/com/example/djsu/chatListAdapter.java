@@ -1,6 +1,10 @@
 package com.example.djsu;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,53 +17,57 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
+import java.util.List;
+
 public class chatListAdapter extends ArrayAdapter<ChatRoom> {
 
-        public chatListAdapter(Context context, int chatRooms) {
-            super(context, 0, chatRooms);
+    private Context context;
+
+    private List<ChatRoom> postList;
+
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = database.getReference();
+
+        public chatListAdapter(Context context, List<ChatRoom> postList) {
+            super(context, 0, postList);
+            this.context = context;
+            this.postList = postList;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_chat_list, parent, false);
+                convertView = LayoutInflater.from(context).inflate(R.layout.item_chat_list, parent, false);
             }
 
-            ChatRoom chatRoom = getItem(position);
-
-            User user = new User();
-            String userId = user.getId();
-
             TextView roomNameTextView = convertView.findViewById(R.id.txt_message);
-            roomNameTextView.setText(chatRoom.getTitle());
 
-            // Firebase Realtime Database의 데이터 경로 설정
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User").child(userId).child("chatRooms");
+            final ChatRoom chatRoom = getItem(position);
 
-            // ValueEventListener 객체 생성 및 이벤트 리스너 등록
-            ValueEventListener valueEventListener = new ValueEventListener() {
+            roomNameTextView.setText(chatRoom.getChatRoomId());
+
+            convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // "chatRooms" 하위 노드의 데이터를 가져옴
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        String chatRoomId = snapshot.getKey(); // ChatRoom 객체의 ID
-                        String chatRoomTitle = snapshot.child("chatRooms").getValue(String.class); // ChatRoom 객체의 title
-                        // 가져온 데이터를 리스트에 추가 또는 업데이트
-                        // 예시) mAdapter.add(new ChatRoom(chatRoomId, chatRoomTitle));
-                    }
-                }
+                public void onClick(View view) {
+                    String chatRoomId = chatRoom.getChatRoomId();
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // 데이터 읽기가 취소되었을 때 호출됨
+                    moveToChatRoom(chatRoomId);
                 }
-            };
-            // ValueEventListener 등록
-            databaseReference.addValueEventListener(valueEventListener);
+            });
 
 
             return convertView;
         }
+
+    private void moveToChatRoom(String chatRoomId) {
+        // 채팅방 액티비티로 이동하는 코드를 작성합니다.
+        // 예시: ChatRoomActivity.class는 채팅방 액티비티의 클래스명입니다.
+        Intent intent = new Intent(context, chat_room.class);
+        intent.putExtra("chatRoomId", chatRoomId);
+        context.startActivity(intent);
+    }
 
 
     public void update(ChatRoom chatRoom) {
