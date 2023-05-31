@@ -1,10 +1,9 @@
-package com.example.djsu.HealthAddList;
+package com.example.djsu.Fragment.HealthAddList;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 
 import com.example.djsu.R;
 

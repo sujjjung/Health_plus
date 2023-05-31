@@ -138,7 +138,7 @@
             android:name=".admin.AdminFoodMain"
             android:exported="false" />
         <activity
-            android:name=".HealthAddList.HealthAddMainActivity"
+            android:name=".Fragment.HealthAddList.HealthAddMainActivity"
             android:exported="false" />
         <activity
             android:name=".map"

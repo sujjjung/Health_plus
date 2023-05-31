@@ -1,7 +1,5 @@
 package com.example.djsu;
 
-import static android.media.CamcorderProfile.get;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -60,7 +58,9 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         TextView NameText = (TextView) findViewById(R.id.exname);
         TextView PartText = (TextView) findViewById(R.id.expart);
         TextView monthText = (TextView) findViewById(R.id.month);
-        TextView DayText = (TextView) findViewById(R.id.Day);
+        int dashIndex = Date.indexOf("-");
+        String extractedDate = Date.substring(dashIndex+1);
+        monthText.setText(extractedDate);
         mTimeTextView = findViewById(R.id.timeView);
         ImageButton TimerStartBtn = (ImageButton) findViewById(R.id.TimerStart);
         ImageButton TimerPauseBtn = (ImageButton) findViewById(R.id.TimerPause);
@@ -212,8 +212,6 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                     queue.add(exSelectRequest);
                 }
                 Toast.makeText(ExerciseRecordActivity.this, "등록 완료되었습니다!", Toast.LENGTH_SHORT).show();
-                UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(ExerciseRecordActivity.this);
-                userFoodListBackgroundTask.execute();
             }
         });
 
