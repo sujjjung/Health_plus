@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="8dp"
     android:background="@color/background_gray"
-    tools:context=".HealthAddList.HealthAddMainActivity">
+    tools:context=".Fragment.HealthAddList.HealthAddMainActivity">
 
     <ExpandableListView
         android:id="@+id/eListView"

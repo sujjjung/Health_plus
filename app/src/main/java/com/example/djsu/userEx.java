@@ -56,7 +56,6 @@ public class userEx extends AppCompatActivity {
             while (count < jsonArray.length()) {
                 //count는 배열의 인덱스를 의미
                 JSONObject object = jsonArray.getJSONObject(count);
-                System.out.println(object);
                 Date = object.getString("Date");
                 ExerciseCode = object.getString("ExerciseCode");
                 ExerciseName = object.getString("ExerciseName");
@@ -72,7 +71,6 @@ public class userEx extends AppCompatActivity {
                 if(UserID.equals(user1.getId())) {
                     if(date.equals(Date)) {
                         userList.add(user);//리스트뷰에 값을 추가해줍니다
-
                     }
                 }
                 count++;
