@@ -372,9 +372,7 @@ public class CalendarActivity extends AppCompatActivity {
         fabHealth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CalendarActivity.this, HealthAddActivity.class);
-                intent.putExtra("Date", Date);
-                startActivity(intent);
+               new RoutineBackgroundTask(Date).execute();
             }
         });
 
@@ -594,6 +592,58 @@ public class CalendarActivity extends AppCompatActivity {
             intent.putExtra("UserEx", result);
             intent.putExtra("Date", Date);
             startActivity(intent);
+        }
+    }
+
+    class RoutineBackgroundTask extends AsyncTask<Void, Void, String> {
+        String target;
+        String Date;
+
+        public RoutineBackgroundTask(String date) {
+            this.Date = date;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            //List.php은 파싱으로 가져올 웹페이지
+            target = "http://enejd0613.dothome.co.kr/Routinelist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);//URL 객체 생성
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
+                }
+
+                //사용했던 것도 다 닫아줌
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        protected void onPostExecute(String result) {
+            Intent intent = new Intent(CalendarActivity.this, routine.class);
+            intent.putExtra("UserRoutine", result);
+            intent.putExtra("Date", Date);
+            startActivity(intent);
+            finish();
         }
     }
 

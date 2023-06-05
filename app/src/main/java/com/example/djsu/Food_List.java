@@ -31,8 +31,6 @@ public class Food_List extends AppCompatActivity {
         editText = findViewById(R.id.searchtext);
         // editText 리스터 작성
 
-        // recyclerView1.bringToFront();
-        foodArrayList =new ArrayList<>();
         Bundle extras = getIntent().getExtras();
 
         Date = extras.getString("Date");

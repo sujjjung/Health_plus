@@ -1,15 +1,33 @@
 package com.example.djsu;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String Date,FoodName,EatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
-    private String ExerciseName,ExercisePart,ExercisesetNumber, ExerciseNumber,Exerciseunit,Time;
+    private String ExerciseName,ExercisePart,ExercisesetNumber, ExerciseNumber,Exerciseunit,Time,ExerciseCode;
+    private String RoutineName;
     static private String Id, Name, State, Profile, Age, Password;
     static private int CurrentSteps;
     int FcCode,EcCode,quantity;
     static private String Water;
     static private String WalkGoal;
 
+    public String getExerciseCode() {
+        return ExerciseCode;
+    }
+
+    public void setExerciseCode(String exerciseCode) {
+        ExerciseCode = exerciseCode;
+    }
+
     public User() {}
+
+    public void AddRoutine(String RoutineName,String ExerciseCode,String ExerciseName,String exercisePart) {
+        this.RoutineName = RoutineName;
+        this.ExerciseCode = ExerciseCode;
+        this.ExerciseName = ExerciseName;
+        ExercisePart = exercisePart;
+    }
 
     public User(String date, String exerciseName, String exercisePart, String exercisesetNumber, String exerciseNumber, String exerciseunit, String time,int EcCode) {
         Date = date;
@@ -20,6 +38,14 @@ public class User {
         Exerciseunit = exerciseunit;
         Time = time;
         this.EcCode = EcCode;
+    }
+
+    public String getRoutineName() {
+        return RoutineName;
+    }
+
+    public void setRoutineName(String routineName) {
+        RoutineName = routineName;
     }
 
     public String getFoodKcal() {
