@@ -107,7 +107,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.975"
             tools:ignore="MissingConstraints" />
-
+        <android.widget.Button
+            android:id="@+id/RoutineAdd"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/logo4"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.955"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.976"
+            tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout

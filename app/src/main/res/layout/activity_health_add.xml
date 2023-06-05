@@ -116,7 +116,36 @@
         app:layout_constraintTop_toBottomOf="@+id/tabs"
         tools:layout_editor_absoluteX="0dp"></FrameLayout>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/BackBtn"
+        android:layout_width="95dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="80dp"
+        android:background="@drawable/shape_no_btn"
+        android:fontFamily="@font/a10092"
+        android:text="취소"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976"
+        tools:ignore="MissingConstraints" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/AddBtn"
+        android:layout_width="95dp"
+        android:layout_height="45dp"
+        android:background="@drawable/shape_yes_btn"
+        android:fontFamily="@font/a10092"
+        android:text="만들기"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.756"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 <LinearLayout
 android:layout_width="match_parent"

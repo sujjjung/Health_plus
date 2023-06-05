@@ -1,9 +1,14 @@
 package com.example.djsu;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -15,6 +20,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.example.djsu.Fragment.Fragment1;
 import com.example.djsu.Fragment.Fragment2;
 import com.example.djsu.Fragment.Fragment3;
@@ -31,6 +38,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class HealthAddActivity extends AppCompatActivity {
     String target;
@@ -39,7 +47,8 @@ public class HealthAddActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    String Date;
+    String Date,RoutineNameText;
+    private Button BackBtn, AddBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +62,33 @@ public class HealthAddActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
         Bundle extras = getIntent().getExtras();
-
+        AddBtn = findViewById(R.id.AddBtn);
+        BackBtn = findViewById(R.id.BackBtn);
         Date = extras.getString("Date");
+        RoutineNameText = extras.getString("RoutineNameText");
+
+        AddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                User user = new User();
+                UserRoutine userRoutine = new UserRoutine();
+                for (int i = 0; i < userRoutine.getRoutineArrayList().size(); i++){
+                    RoutineRequest routineRequest = new RoutineRequest(user.getId(),userRoutine.getRoutineArrayList().get(i).getRoutineName(),
+                            userRoutine.getRoutineArrayList().get(i).getExCode(),userRoutine.getRoutineArrayList().get(i).getExerciseName(),userRoutine.getRoutineArrayList().get(i).getExPart());
+                    RequestQueue queue = Volley.newRequestQueue(HealthAddActivity.this);
+                    queue.add(routineRequest);
+                }
+                Toast.makeText(HealthAddActivity.this, "등록 완료되었습니다!", Toast.LENGTH_SHORT).show();
+                UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(HealthAddActivity.this);
+                userFoodListBackgroundTask.execute();
+            }
+        });
+
+        BackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
 
         new ExBackgroundTask(a= 0,target = "http://enejd0613.dothome.co.kr/exlist.php").execute();
 
@@ -109,14 +143,14 @@ public class HealthAddActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.home:
-                        Intent homeintent = new Intent(getApplicationContext(), main_user.class);
-                        startActivity(homeintent);
+                        mainkcalBackgroundTask mainkcalBackgroundTask = new mainkcalBackgroundTask(HealthAddActivity.this);
+                        mainkcalBackgroundTask.execute();
                         return true;
                     case R.id.calender:
-                        Intent calenderintent = new Intent(getApplicationContext(), CalendarActivity.class);
-                        startActivity(calenderintent);
+                        UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(HealthAddActivity.this);
+                        userFoodListBackgroundTask.execute();
                         return true;
                     case R.id.communety:
                         Intent communetyintent = new Intent(getApplicationContext(), community.class);
@@ -135,11 +169,11 @@ public class HealthAddActivity extends AppCompatActivity {
                         startActivity(manbogiintent);
                         return true;
                     case R.id.annoucement:
-                        Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);
-                        startActivity(annoucementintent);
+                        NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(HealthAddActivity.this);
+                        noticeBackgroundTask.execute();
                         return true;
                     case R.id.friend:
-                        Intent friend = new Intent(getApplicationContext(), friends_list.class);
+                        Intent friend = new Intent(getApplicationContext(), chatList.class);
                         startActivity(friend);
                         return true;
                 }
@@ -205,6 +239,7 @@ public class HealthAddActivity extends AppCompatActivity {
             //2. 데이터 담기
             bundle.putString("exercise",result);
             bundle.putString("Date",Date);
+            bundle.putString("RoutineNameText",RoutineNameText);
             switch (a){
                 case 0:  fragment1 = new Fragment1();
                     //4. 프래그먼트에 데이터 넘기기

@@ -43,9 +43,9 @@ public class Fragment1 extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment1, container, false);
         search_list = new ArrayList<>();
-        String Date = getArguments().getString("Date");
         editText = view.findViewById(R.id.searchtext);
-
+        String Date = getArguments().getString("Date");
+        String RoutineNameText = getArguments().getString("RoutineNameText");
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -78,7 +78,7 @@ public class Fragment1 extends Fragment {
         });
         exerciseLsits =new ArrayList<>();
 
-      exerciseAdapter = new exerciseAdapter(getActivity(),exerciseLsits,Date);
+        exerciseAdapter = new exerciseAdapter(getActivity(),exerciseLsits,Date,RoutineNameText);
 
         ListView exListView = (ListView) view.findViewById(R.id.ExView);
         exListView.setAdapter(exerciseAdapter);

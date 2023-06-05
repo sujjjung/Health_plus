@@ -30,8 +30,7 @@ public class UserExAdapter extends BaseAdapter {
     private Context context;
     private List<User> userList;
     private Activity parentActivity;
-    String ExerciseCode,ExerciseSetNumber,ExerciseNumber,ExerciseUnit,Time;
-    int ExCode;
+       int ExCode;
     TextView ExName,ExPart;
     String date,name ="";
     public UserExAdapter(Context context, List<User> userList) {
