@@ -96,16 +96,6 @@ public class community extends AppCompatActivity {
             }
         });
 
-        // 댓글
-        // ImageButton commentButton=findViewById(R.id.chat_bubble_btn);
-        // findViewById(R.id.button4) : 버튼의 text가 아니라 Id값을 넣어줘야한다.
-        // commentButton.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-        //        Intent intent=new Intent(getApplicationContext(),comment.class);
-        //        startActivity(intent);
-        //    }
-
         // 햄버거
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
