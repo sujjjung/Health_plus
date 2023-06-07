@@ -19,7 +19,8 @@
             android:gravity="center_vertical"
             android:text="루틴 이름"
             android:textColor="#000"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:fontFamily="@font/a10091"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/detail_btn"

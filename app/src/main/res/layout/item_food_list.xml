@@ -19,7 +19,7 @@
             android:layout_marginLeft="15dp"
             android:text="음식 이름"
             android:fontFamily="@font/a10091"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:textColor="#000"
             android:textSize="20sp" />
 
