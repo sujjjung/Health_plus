@@ -272,7 +272,8 @@
                 android:scrollbars="vertical"
                 app:layout_constraintTop_toTopOf="@+id/timeView"
                 tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="0dp" />
+                tools:layout_editor_absoluteX="0dp"
+                tools:listitem="@layout/item_exerciserecord"/>
 
             <ImageButton
                 android:id="@+id/add"

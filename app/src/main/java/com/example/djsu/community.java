@@ -42,6 +42,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -66,6 +67,7 @@ public class community extends AppCompatActivity {
     private static final String TAG_ID = "id";
     private static final String TAG_IMAGE = "image";
     private static final String TAG_DATE = "date";
+    private static final String TAG_USER_PROFILE = "UserProfile";
     JSONArray peoples = null;
     ArrayList<HashMap<String, String>> personList;
     ListView list;
@@ -148,10 +150,9 @@ public class community extends AppCompatActivity {
         });
         Intent intent = getIntent();
         // 게시글
-        list = (ListView) findViewById(R.id.community);
-        personList = new ArrayList<HashMap<String, String>>();
+        list = findViewById(R.id.community);
+        personList = new ArrayList<>();
         getData("http://enejd0613.dothome.co.kr/filedownload.php");
-
     }
 
     protected void showList() {
@@ -165,21 +166,23 @@ public class community extends AppCompatActivity {
                 String id = c.getString(TAG_ID);
                 String image = c.getString(TAG_IMAGE);
                 String date = c.getString(TAG_DATE);
+                String userProfile = c.getString(TAG_USER_PROFILE);
 
-                HashMap<String, String> persons = new HashMap<String, String>();
+                HashMap<String, String> persons = new HashMap<>();
 
                 persons.put(TAG_CONTENT, content);
                 persons.put(TAG_ID, id);
                 persons.put(TAG_IMAGE, image);
                 persons.put(TAG_DATE, date);
+                persons.put(TAG_USER_PROFILE, userProfile);
 
                 personList.add(persons);
             }
 
             ListAdapter adapter = new SimpleAdapter(
                     community.this, personList, R.layout.item_community,
-                    new String[]{TAG_CONTENT, TAG_ID, TAG_IMAGE, TAG_DATE},
-                    new int[]{R.id.content, R.id.name_textView, R.id.photo, R.id.date }
+                    new String[]{TAG_CONTENT, TAG_ID, TAG_IMAGE, TAG_DATE, TAG_USER_PROFILE},
+                    new int[]{R.id.content, R.id.name_textView, R.id.photo, R.id.date, R.id.profile}
             ) {
                 @Override
                 public void setViewImage(ImageView imageView, String url) {
@@ -192,7 +195,6 @@ public class community extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
     public void getData(String url) {
@@ -200,29 +202,29 @@ public class community extends AppCompatActivity {
 
             @Override
             protected String doInBackground(String... params) {
-
                 String uri = params[0];
-
                 BufferedReader bufferedReader = null;
                 try {
                     URL url = new URL(uri);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     StringBuilder sb = new StringBuilder();
-
                     bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-
                     String json;
                     while ((json = bufferedReader.readLine()) != null) {
-                        sb.append(json + "\n");
+                        sb.append(json).append("\n");
                     }
-
                     return sb.toString().trim();
-
                 } catch (Exception e) {
                     return null;
+                } finally {
+                    if (bufferedReader != null) {
+                        try {
+                            bufferedReader.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
-
-
             }
 
             @Override
@@ -233,7 +235,6 @@ public class community extends AppCompatActivity {
         }
         GetDataJSON g = new GetDataJSON();
         g.execute(url);
-
     }
 
     // 햄버거

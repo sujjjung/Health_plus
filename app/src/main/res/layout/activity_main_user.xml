@@ -34,8 +34,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="18dp"
             android:background="#00000000"
@@ -54,15 +54,15 @@
             android:gravity="center_horizontal|center_vertical"
             android:text="김수빈"
             android:textColor="@color/black"
-            android:textSize="24dp"
+            android:textSize="26dp"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
 
         <View
             android:id="@+id/view"
-            android:layout_width="374dp"
-            android:layout_height="399dp"
+            android:layout_width="375dp"
+            android:layout_height="380dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="32dp"
             android:background="@drawable/roundsquare"
@@ -76,8 +76,8 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="40dp"
             android:fontFamily="@font/a10094"
             android:text="오늘의 더하기"
             android:textColor="#FF3B3B3B"
@@ -285,52 +285,6 @@
             app:layout_constraintStart_toEndOf="@+id/water_tv"
             app:layout_constraintTop_toTopOf="@+id/water_tv" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="0dp"
-            android:layout_height="22dp"
-            android:background="@color/white"
-            android:src="@drawable/ic_action_arrow"
-            app:layout_constraintBottom_toBottomOf="@+id/textView13"
-            app:layout_constraintStart_toEndOf="@+id/textView13"
-            app:layout_constraintTop_toTopOf="@+id/textView13" />
-
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="36dp"
-            android:fontFamily="@font/a10093"
-            android:text="걸음"
-            android:textColor="#FF3B3B3B"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="@+id/view"
-            app:layout_constraintTop_toBottomOf="@+id/textView11"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="126dp"
-            android:fontFamily="@font/a10092"
-            android:text="15000"
-            android:textSize="18dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton"
-            app:layout_constraintStart_toEndOf="@+id/imageButton"
-            app:layout_constraintTop_toTopOf="@+id/imageButton" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:fontFamily="@font/a10092"
-            android:text="걸음"
-            android:textSize="18dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView14"
-            app:layout_constraintStart_toEndOf="@+id/textView14"
-            app:layout_constraintTop_toTopOf="@+id/textView14" />
 
         <TextView
             android:id="@+id/textView8"
@@ -347,8 +301,8 @@
 
         <View
             android:id="@+id/view2"
-            android:layout_width="380dp"
-            android:layout_height="107dp"
+            android:layout_width="375dp"
+            android:layout_height="120dp"
             android:layout_marginTop="36dp"
             android:background="@drawable/roundsquare2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -385,8 +339,8 @@
 
         <View
             android:id="@+id/view1"
-            android:layout_width="269dp"
-            android:layout_height="38dp"
+            android:layout_width="260dp"
+            android:layout_height="50dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/roundsquare"
