@@ -3,7 +3,14 @@ package com.example.djsu;
 public class User {
     private String Date,FoodName,EatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
     private String ExerciseName,ExercisePart,ExercisesetNumber, ExerciseNumber,Exerciseunit,Time;
-    static private String Id, Name, State, Profile, Age, Password;
+    static private String Id;
+    static private String Name;
+    static private String State;
+    static private String Profile;
+    static private String Age;
+    static private String Password;
+
+    static private String Nondisclosure;
     static private int CurrentSteps;
     int FcCode,EcCode,quantity;
     static private String Water;
@@ -114,12 +121,13 @@ public class User {
         FcCode = fccode;
     }
 
-    public User(String id, String name, String profile, String age, String state) {
+    public User(String id, String name, String profile, String age, String state, String Nondisclosure) {
         Id = id;
         Name = name;
         Profile = profile;
         Age = age;
         State = state;
+        Nondisclosure = Nondisclosure;
     }
 
     public User(String date, String foodName, String eatingTime) {
@@ -271,5 +279,13 @@ public class User {
 
     public void setEcCode(int ecCode) {
         EcCode = ecCode;
+    }
+
+    public static String getNondisclosure() {
+        return Nondisclosure;
+    }
+
+    public static void setNondisclosure(String nondisclosure) {
+        Nondisclosure = nondisclosure;
     }
 }

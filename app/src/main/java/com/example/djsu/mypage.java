@@ -34,6 +34,11 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +54,7 @@ public class mypage extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
-    private TextView name, state;
+    private TextView name, state, nondisclosure;
     private ImageView ivImage;
     private String profile;
 
@@ -70,8 +75,8 @@ public class mypage extends AppCompatActivity {
         // User Data 불러오기
         name = findViewById(R.id.name_textView);
         name.setText(user.getName());
-        state = findViewById(R.id.Status_message_text);
-        state.setText(user.getState());
+//        state = findViewById(R.id.Status_message_text);
+//        state.setText(user.getState());
 
         profile = user.getProfile();
 
@@ -90,14 +95,72 @@ public class mypage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        TextView nondisclosure = findViewById(R.id.Nondisclosure);
+
+        String UserID = user.getId();
+
+        DatabaseReference nondisclosureText = FirebaseDatabase.getInstance().getReference("User").child(UserID).child("nondisclosure");
+        
+        //텍스트뷰에 데이터 값을 유지시켜주기
+        nondisclosureText.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // dataSnapshot을 통해 데이터베이스에서 읽어온 값을 가져올 수 있습니다.
+                String value = dataSnapshot.getValue(String.class);
+
+                // 값을 TextView에 설정합니다.
+                if (value != null) {
+                    nondisclosure.setText(value);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // 데이터베이스 읽기 작업이 취소되었거나 실패한 경우 처리할 내용을 여기에 작성하세요.
+            }
+        });
+
+        //계정 공개, 비공개
+        Button nondisclosureBtn = (Button)findViewById(R.id.Nondisclosure);
+
+        nondisclosureBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nondisclosureText.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // dataSnapshot을 통해 데이터베이스에서 읽어온 값을 가져올 수 있습니다.
+                        Object value = dataSnapshot.getValue();
+                        System.out.println(value);
+
+                        // 값을 확인한 후에 원하는 로직을 수행할 수 있습니다.
+                        if (value != null && value.equals("공개")) {
+                            nondisclosure.setText("비공개");
+
+                            // "비공개"로 업데이트된 값을 데이터베이스에 저장합니다.
+                            nondisclosureText.setValue("비공개");
+                        } else {
+                            nondisclosure.setText("공개");
+
+                            // "비공개"로 업데이트된 값을 데이터베이스에 저장합니다.
+                            nondisclosureText.setValue("공개");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // 데이터베이스 읽기 작업이 취소되었거나 실패한 경우 처리할 내용을 여기에 작성하세요.
+                    }
+                });
+
+            }
+        });
 
         // 회원 탈퇴 버튼
         Button user_delete = (Button) findViewById(R.id.secession_btn);
         user_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String UserID = user.getId();
-
                 dialog_del alert = new dialog_del(mypage.this, UserID);
                 alert.callFunction();
                 alert.setModifyReturnListener(new dialog_del.ModifyReturnListener() {

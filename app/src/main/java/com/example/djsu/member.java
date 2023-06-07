@@ -8,6 +8,16 @@ public class member {
 
     private String Profile;
 
+    private String Nondisclosure;
+
+    public String getNondisclosure() {
+        return Nondisclosure;
+    }
+
+    public void setNondisclosure(String nondisclosure) {
+        Nondisclosure = nondisclosure;
+    }
+
     public String getState() {
         return State;
     }
@@ -21,13 +31,14 @@ public class member {
     public member() {
     }
 
-    public member(String id, String password, String age, String name, String profile, String state) {
+    public member(String id, String password, String age, String name, String profile, String state, String nondisclosure) {
         Id = id;
         Password = password;
         Age = age;
         Name = name;
         Profile = profile;
         State = state;
+        Nondisclosure = nondisclosure;
     }
 
     public String getId() {

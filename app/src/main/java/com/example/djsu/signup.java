@@ -69,11 +69,12 @@ public class signup extends AppCompatActivity {
                 String UserAge = et_age.getText().toString();
                 String profile = "http://enejd0613.dothome.co.kr/photo/null.jpg";
                 String State = "상태 메시지를 입력해주세요";
+                String Nondisclosure = "공개";
 
                 if (UserID.length() >= 5 && UserID.length() <= 20) { // 아이디가 5자 - 20자
                     if (UserPass.length() >= 8 && UserPass.length() <= 16) { // 비밀번호가 8자 - 16자
                         if (UserPass.equals(UserPass2)){ // 비밀번호, 비밀번호 확인이 같은지
-                            addUser(et_id.getText().toString(),et_pass.getText().toString(), et_age.getText().toString(), et_name.getText().toString(), profile, State);
+                            addUser(et_id.getText().toString(),et_pass.getText().toString(), et_age.getText().toString(), et_name.getText().toString(), profile, State, Nondisclosure);
 
                             Response.Listener<String> responseListener = new Response.Listener<String>() {
                                 @Override
@@ -118,14 +119,14 @@ public class signup extends AppCompatActivity {
 
 
     //값을 파이어베이스 Realtime database로 넘기는 함수
-    public void addUser(String UserId, String UserPass, String UserAge, String UserName, String Profile, String State) {
+    public void addUser(String UserId, String UserPass, String UserAge, String UserName, String Profile, String State, String Nondisclosure) {
 
         //여기에서 직접 변수를 만들어서 값을 직접 넣는것도 가능합니다.
         // ex) 갓 태어난 동물만 입력해서 int age=1; 등을 넣는 경우
         //String profileTest = "http://enejd0613.dothome.co.kr/photo/null.jpg";
 
         //animal.java에서 선언했던 함수.
-        member member = new member(UserId,UserPass,UserAge,UserName,Profile,State);
+        member member = new member(UserId,UserPass,UserAge,UserName,Profile,State,Nondisclosure);
 
         //child는 해당 키 위치로 이동하는 함수입니다.
         //키가 없는데 "zoo"와 name같이 값을 지정한 경우 자동으로 생성합니다.
