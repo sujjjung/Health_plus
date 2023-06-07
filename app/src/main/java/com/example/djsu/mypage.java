@@ -34,6 +34,11 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +54,7 @@ public class mypage extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
-    private TextView name, state;
+    private TextView name, state, nondisclosure;
     private ImageView ivImage;
     private String profile;
 
@@ -70,8 +75,8 @@ public class mypage extends AppCompatActivity {
         // User Data 불러오기
         name = findViewById(R.id.name_textView);
         name.setText(user.getName());
-        state = findViewById(R.id.Status_message_text);
-        state.setText(user.getState());
+//        state = findViewById(R.id.Status_message_text);
+//        state.setText(user.getState());
 
         profile = user.getProfile();
 
@@ -90,14 +95,72 @@ public class mypage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        TextView nondisclosure = findViewById(R.id.Nondisclosure);
+
+        String UserID = user.getId();
+
+        DatabaseReference nondisclosureText = FirebaseDatabase.getInstance().getReference("User").child(UserID).child("nondisclosure");
+
+        //텍스트뷰에 데이터 값을 유지시켜주기
+        nondisclosureText.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // dataSnapshot을 통해 데이터베이스에서 읽어온 값을 가져올 수 있습니다.
+                String value = dataSnapshot.getValue(String.class);
+
+                // 값을 TextView에 설정합니다.
+                if (value != null) {
+                    nondisclosure.setText(value);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // 데이터베이스 읽기 작업이 취소되었거나 실패한 경우 처리할 내용을 여기에 작성하세요.
+            }
+        });
+
+        //계정 공개, 비공개
+        Button nondisclosureBtn = (Button)findViewById(R.id.Nondisclosure);
+
+        nondisclosureBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nondisclosureText.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // dataSnapshot을 통해 데이터베이스에서 읽어온 값을 가져올 수 있습니다.
+                        Object value = dataSnapshot.getValue();
+                        System.out.println(value);
+
+                        // 값을 확인한 후에 원하는 로직을 수행할 수 있습니다.
+                        if (value != null && value.equals("공개")) {
+                            nondisclosure.setText("비공개");
+
+                            // "비공개"로 업데이트된 값을 데이터베이스에 저장합니다.
+                            nondisclosureText.setValue("비공개");
+                        } else {
+                            nondisclosure.setText("공개");
+
+                            // "비공개"로 업데이트된 값을 데이터베이스에 저장합니다.
+                            nondisclosureText.setValue("공개");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // 데이터베이스 읽기 작업이 취소되었거나 실패한 경우 처리할 내용을 여기에 작성하세요.
+                    }
+                });
+
+            }
+        });
 
         // 회원 탈퇴 버튼
         Button user_delete = (Button) findViewById(R.id.secession_btn);
         user_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String UserID = user.getId();
-
                 dialog_del alert = new dialog_del(mypage.this, UserID);
                 alert.callFunction();
                 alert.setModifyReturnListener(new dialog_del.ModifyReturnListener() {
@@ -218,6 +281,10 @@ public class mypage extends AppCompatActivity {
                         NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(mypage.this);
                         noticeBackgroundTask.execute();
                         return true;
+                    case R.id.friend:
+                        Intent friend = new Intent(getApplicationContext(), chatList.class);
+                        startActivity(friend);
+                        return true;
                 }
                 return false;
             }
@@ -225,67 +292,67 @@ public class mypage extends AppCompatActivity {
     }
 
     private void setWeightData() {
-            String url = "http://enejd0613.dothome.co.kr/getWeight.php";
-            RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://enejd0613.dothome.co.kr/getWeight.php";
+        RequestQueue queue = Volley.newRequestQueue(this);
 
-            JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
-                    ArrayList<BarEntry> values = new ArrayList<>();
-                    ArrayList<String> labels = new ArrayList<>();
+        JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                ArrayList<BarEntry> values = new ArrayList<>();
+                ArrayList<String> labels = new ArrayList<>();
 
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject jsonObject = response.getJSONObject(i);
-                            int weight = jsonObject.getInt("weight");
-                            values.add(new BarEntry(i, new float[] {weight}));
-                            String date = jsonObject.getString("date");
-                            labels.add(date);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        int weight = jsonObject.getInt("weight");
+                        values.add(new BarEntry(i, new float[] {weight}));
+                        String date = jsonObject.getString("date");
+                        labels.add(date);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-                    if (response.length() > 7) {
-                        int startIndex = response.length() - 7;
-                        values = new ArrayList<>(values.subList(startIndex, response.length()));
-                        labels = new ArrayList<>(labels.subList(startIndex, response.length()));
-                    }
-
-                    BarDataSet set1 = new BarDataSet(values, "weight Data");
-                    set1.setColors(Color.rgb(255, 222, 0));
-                    set1.setDrawValues(false);
-                    // 데이터 레이블 설정 추가
-                    set1.setDrawValues(true);
-                    set1.setValueTextSize(12f);
-                    set1.setValueTextColor(Color.BLACK);
-
-                    BarData data = new BarData(set1);
-                    data.setBarWidth(0.45f);
-
-                    weightChart.setData(data);
-                    weightChart.setFitBars(true);
-                    weightChart.invalidate();
-                    weightChart.setTouchEnabled(false); // 터치 막기
-                    weightChart.setMaxVisibleValueCount(7); // 그래프 최대 갯수
-                    weightChart.getXAxis().setDrawGridLines(false); // X축 및 Y축 격자선 없애기
-                    weightChart.getAxisLeft().setDrawGridLines(false);
-                    weightChart.getAxisRight().setDrawGridLines(false);
-                    weightChart.getAxisLeft().setDrawLabels(false); // 왼쪽 값 없애기
-                    // weightChart.getXAxis().setDrawLabels(false); // 위쪽 라벨 없애기
-                    XAxis xAxis = weightChart.getXAxis(); // x축 설정
-                    xAxis.setValueFormatter(new IndexAxisValueFormatter(labels)); // 라벨 붙이기
-                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // 라벨 위치 설정
-                    weightChart.getLegend().setEnabled(false); // 레전드 제거
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(mypage.this, "Error loading data", Toast.LENGTH_SHORT).show();
-                }
-            });
 
-            queue.add(request);
+                if (response.length() > 7) {
+                    int startIndex = response.length() - 7;
+                    values = new ArrayList<>(values.subList(startIndex, response.length()));
+                    labels = new ArrayList<>(labels.subList(startIndex, response.length()));
+                }
+
+                BarDataSet set1 = new BarDataSet(values, "weight Data");
+                set1.setColors(Color.rgb(255, 222, 0));
+                set1.setDrawValues(false);
+                // 데이터 레이블 설정 추가
+                set1.setDrawValues(true);
+                set1.setValueTextSize(12f);
+                set1.setValueTextColor(Color.BLACK);
+
+                BarData data = new BarData(set1);
+                data.setBarWidth(0.45f);
+
+                weightChart.setData(data);
+                weightChart.setFitBars(true);
+                weightChart.invalidate();
+                weightChart.setTouchEnabled(false); // 터치 막기
+                weightChart.setMaxVisibleValueCount(7); // 그래프 최대 갯수
+                weightChart.getXAxis().setDrawGridLines(false); // X축 및 Y축 격자선 없애기
+                weightChart.getAxisLeft().setDrawGridLines(false);
+                weightChart.getAxisRight().setDrawGridLines(false);
+                weightChart.getAxisLeft().setDrawLabels(false); // 왼쪽 값 없애기
+                // weightChart.getXAxis().setDrawLabels(false); // 위쪽 라벨 없애기
+                XAxis xAxis = weightChart.getXAxis(); // x축 설정
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(labels)); // 라벨 붙이기
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // 라벨 위치 설정
+                weightChart.getLegend().setEnabled(false); // 레전드 제거
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(mypage.this, "Error loading data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        queue.add(request);
     }
 
     private void setFatData() {
@@ -418,10 +485,10 @@ public class mypage extends AppCompatActivity {
             }
         }
         ) {
-                @Override
-                protected Map<String, String> getParams() {
-                    return params;
-                }
+            @Override
+            protected Map<String, String> getParams() {
+                return params;
+            }
         };
 
         queue.add(request);

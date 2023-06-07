@@ -57,6 +57,11 @@ public class chat_room extends AppCompatActivity {
         String userId = user.getId();
         String userName = user.getName();
 
+        mRecyclerView = findViewById(R.id.recycler_messages);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
         Button_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,14 +80,9 @@ public class chat_room extends AppCompatActivity {
             }
         });
 
-        mRecyclerView = findViewById(R.id.recycler_messages);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
 
         chatList = new ArrayList<>();
-        mAdapter = new ChatRoomAdapter(chatList, chat_room.this, userName);
+        mAdapter = new ChatRoomAdapter(chatList, chat_room.this, userName, mRecyclerView);
 
         mRecyclerView.setAdapter(mAdapter);
 

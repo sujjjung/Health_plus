@@ -4,9 +4,13 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     private String Date,FoodName,EatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
+
+    static private String Nondisclosure;
+
     private String ExerciseName,ExercisePart,ExercisesetNumber, ExerciseNumber,Exerciseunit,Time,ExerciseCode;
     private String RoutineName;
     static private String Id, Name, State, Profile, Age, Password;
+
     static private int CurrentSteps;
     int FcCode,EcCode,quantity;
     static private String Water;
@@ -139,13 +143,15 @@ public class User implements Serializable {
         FoodKg = foodKg;
         FcCode = fccode;
     }
+    //
 
-    public User(String id, String name, String profile, String age, String state) {
+    public User(String id, String name, String profile, String age, String state, String Nondisclosure) {
         Id = id;
         Name = name;
         Profile = profile;
         Age = age;
         State = state;
+        Nondisclosure = Nondisclosure;
     }
 
     public User(String date, String foodName, String eatingTime) {
@@ -297,5 +303,13 @@ public class User implements Serializable {
 
     public void setEcCode(int ecCode) {
         EcCode = ecCode;
+    }
+
+    public static String getNondisclosure() {
+        return Nondisclosure;
+    }
+
+    public static void setNondisclosure(String nondisclosure) {
+        Nondisclosure = nondisclosure;
     }
 }
