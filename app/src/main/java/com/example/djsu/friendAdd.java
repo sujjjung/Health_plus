@@ -106,6 +106,7 @@ public class friendAdd extends AppCompatActivity {
                                 // 위에서 가져온 친구 목록에 포함되지 않고, 로그인한 유저가 아닌 경우에만 리스트에 추가합니다.
                                 postList.add(member);
                             }
+
                         }
                         // ListView에 데이터를 표시하는 코드 작성
                         friendAddAdapter friendAddAdapter = new friendAddAdapter(friendAdd.this, postList);

@@ -6,163 +6,163 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".mypage">
-
-    <ImageView
-        android:id="@+id/imageView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo3" />
+        android:layout_height="match_parent"
+        tools:context=".mypage">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile"
-        android:layout_width="97dp"
-        android:layout_height="93dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo3" />
 
-    <TextView
-        android:id="@+id/name_textView"
-        android:layout_width="130dp"
-        android:layout_height="41dp"
-        android:fontFamily="@font/a10092"
-        android:text="이수정님"
-        android:textColor="#444444"
-        android:textSize="30dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/profile"
-        app:layout_constraintStart_toEndOf="@+id/profile"
-        app:layout_constraintTop_toTopOf="@+id/profile" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile"
+            android:layout_width="97dp"
+            android:layout_height="93dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/change_btn"
-        android:layout_width="120dp"
-        android:layout_height="35dp"
-        android:background="@drawable/shape_yes_btn"
-        android:fontFamily="@font/a10092"
-        android:text="회원정보 변경"
-        android:textColor="#444444"
-        android:textSize="14dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginLeft="22dp"
-        app:layout_constraintBottom_toBottomOf="@+id/profile"
-        app:layout_constraintStart_toEndOf="@+id/profile"
-        app:layout_constraintTop_toTopOf="@+id/profile" />
+        <TextView
+            android:id="@+id/name_textView"
+            android:layout_width="130dp"
+            android:layout_height="41dp"
+            android:fontFamily="@font/a10092"
+            android:text="이수정님"
+            android:textColor="#444444"
+            android:textSize="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/profile"
+            app:layout_constraintStart_toEndOf="@+id/profile"
+            app:layout_constraintTop_toTopOf="@+id/profile" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/secession_btn"
-        android:layout_width="120dp"
-        android:layout_height="35dp"
-        android:background="@drawable/shape_no_btn"
-        android:fontFamily="@font/a10092"
-        android:text="회원탈퇴"
-        android:textColor="#444444"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/change_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/change_btn"
-        app:layout_constraintTop_toTopOf="@+id/change_btn" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/change_btn"
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:background="@drawable/shape_yes_btn"
+            android:fontFamily="@font/a10092"
+            android:text="회원정보 변경"
+            android:textColor="#444444"
+            android:textSize="14dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="22dp"
+            app:layout_constraintBottom_toBottomOf="@+id/profile"
+            app:layout_constraintStart_toEndOf="@+id/profile"
+            app:layout_constraintTop_toTopOf="@+id/profile" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/Nondisclosure"
-        android:layout_width="120dp"
-        android:layout_height="35dp"
-        android:background="@drawable/shape_no_btn"
-        android:fontFamily="@font/a10092"
-        android:text="계정 비공개"
-        app:layout_constraintBottom_toBottomOf="@+id/name_textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/name_textView"
-        app:layout_constraintTop_toTopOf="@+id/name_textView" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/secession_btn"
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:background="@drawable/shape_no_btn"
+            android:fontFamily="@font/a10092"
+            android:text="회원탈퇴"
+            android:textColor="#444444"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/change_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/change_btn"
+            app:layout_constraintTop_toTopOf="@+id/change_btn" />
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/muscles_chart"
-        android:layout_width="390dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/muscles"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/Nondisclosure"
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:background="@drawable/shape_no_btn"
+            android:fontFamily="@font/a10092"
+            android:text="계정 비공개"
+            app:layout_constraintBottom_toBottomOf="@+id/name_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/name_textView"
+            app:layout_constraintTop_toTopOf="@+id/name_textView" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/muscles_chart"
+            android:layout_width="390dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/muscles"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp" />
 
 
-    <TextView
-        android:id="@+id/muscles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/a10092"
-        android:gravity="center"
-        android:text="골격근량 그래프"
-        android:textColor="#444444"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weight_chart"
-        tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/muscles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/a10092"
+            android:gravity="center"
+            android:text="골격근량 그래프"
+            android:textColor="#444444"
+            android:textSize="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.08"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weight_chart"
+            tools:ignore="MissingConstraints" />
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/weight_chart"
-        android:layout_width="390dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/weight"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp" />
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/weight_chart"
+            android:layout_width="390dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/weight"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp" />
 
-    <TextView
-        android:id="@+id/weight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/a10092"
-        android:gravity="center"
-        android:text="체중 그래프"
-        android:textColor="#444444"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.061"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/change_btn"
-        tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/a10092"
+            android:gravity="center"
+            android:text="체중 그래프"
+            android:textColor="#444444"
+            android:textSize="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.061"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/change_btn"
+            tools:ignore="MissingConstraints" />
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/fat_chart"
-        android:layout_width="390dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/fat"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp" />
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/fat_chart"
+            android:layout_width="390dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/fat"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp" />
 
-    <TextView
-        android:id="@+id/fat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/a10092"
-        android:gravity="center"
-        android:text="체지방률 그래프"
-        android:textColor="#444444"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/muscles_chart"
-        tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/fat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/a10092"
+            android:gravity="center"
+            android:text="체지방률 그래프"
+            android:textColor="#444444"
+            android:textSize="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.08"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/muscles_chart"
+            tools:ignore="MissingConstraints" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

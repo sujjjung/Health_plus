@@ -100,7 +100,7 @@ public class mypage extends AppCompatActivity {
         String UserID = user.getId();
 
         DatabaseReference nondisclosureText = FirebaseDatabase.getInstance().getReference("User").child(UserID).child("nondisclosure");
-        
+
         //텍스트뷰에 데이터 값을 유지시켜주기
         nondisclosureText.addValueEventListener(new ValueEventListener() {
             @Override
@@ -281,6 +281,10 @@ public class mypage extends AppCompatActivity {
                         NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(mypage.this);
                         noticeBackgroundTask.execute();
                         return true;
+                    case R.id.friend:
+                        Intent friend = new Intent(getApplicationContext(), chatList.class);
+                        startActivity(friend);
+                        return true;
                 }
                 return false;
             }
@@ -288,67 +292,67 @@ public class mypage extends AppCompatActivity {
     }
 
     private void setWeightData() {
-            String url = "http://enejd0613.dothome.co.kr/getWeight.php";
-            RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://enejd0613.dothome.co.kr/getWeight.php";
+        RequestQueue queue = Volley.newRequestQueue(this);
 
-            JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
-                    ArrayList<BarEntry> values = new ArrayList<>();
-                    ArrayList<String> labels = new ArrayList<>();
+        JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                ArrayList<BarEntry> values = new ArrayList<>();
+                ArrayList<String> labels = new ArrayList<>();
 
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject jsonObject = response.getJSONObject(i);
-                            int weight = jsonObject.getInt("weight");
-                            values.add(new BarEntry(i, new float[] {weight}));
-                            String date = jsonObject.getString("date");
-                            labels.add(date);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        int weight = jsonObject.getInt("weight");
+                        values.add(new BarEntry(i, new float[] {weight}));
+                        String date = jsonObject.getString("date");
+                        labels.add(date);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-                    if (response.length() > 7) {
-                        int startIndex = response.length() - 7;
-                        values = new ArrayList<>(values.subList(startIndex, response.length()));
-                        labels = new ArrayList<>(labels.subList(startIndex, response.length()));
-                    }
-
-                    BarDataSet set1 = new BarDataSet(values, "weight Data");
-                    set1.setColors(Color.rgb(255, 222, 0));
-                    set1.setDrawValues(false);
-                    // 데이터 레이블 설정 추가
-                    set1.setDrawValues(true);
-                    set1.setValueTextSize(12f);
-                    set1.setValueTextColor(Color.BLACK);
-
-                    BarData data = new BarData(set1);
-                    data.setBarWidth(0.45f);
-
-                    weightChart.setData(data);
-                    weightChart.setFitBars(true);
-                    weightChart.invalidate();
-                    weightChart.setTouchEnabled(false); // 터치 막기
-                    weightChart.setMaxVisibleValueCount(7); // 그래프 최대 갯수
-                    weightChart.getXAxis().setDrawGridLines(false); // X축 및 Y축 격자선 없애기
-                    weightChart.getAxisLeft().setDrawGridLines(false);
-                    weightChart.getAxisRight().setDrawGridLines(false);
-                    weightChart.getAxisLeft().setDrawLabels(false); // 왼쪽 값 없애기
-                    // weightChart.getXAxis().setDrawLabels(false); // 위쪽 라벨 없애기
-                    XAxis xAxis = weightChart.getXAxis(); // x축 설정
-                    xAxis.setValueFormatter(new IndexAxisValueFormatter(labels)); // 라벨 붙이기
-                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // 라벨 위치 설정
-                    weightChart.getLegend().setEnabled(false); // 레전드 제거
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(mypage.this, "Error loading data", Toast.LENGTH_SHORT).show();
-                }
-            });
 
-            queue.add(request);
+                if (response.length() > 7) {
+                    int startIndex = response.length() - 7;
+                    values = new ArrayList<>(values.subList(startIndex, response.length()));
+                    labels = new ArrayList<>(labels.subList(startIndex, response.length()));
+                }
+
+                BarDataSet set1 = new BarDataSet(values, "weight Data");
+                set1.setColors(Color.rgb(255, 222, 0));
+                set1.setDrawValues(false);
+                // 데이터 레이블 설정 추가
+                set1.setDrawValues(true);
+                set1.setValueTextSize(12f);
+                set1.setValueTextColor(Color.BLACK);
+
+                BarData data = new BarData(set1);
+                data.setBarWidth(0.45f);
+
+                weightChart.setData(data);
+                weightChart.setFitBars(true);
+                weightChart.invalidate();
+                weightChart.setTouchEnabled(false); // 터치 막기
+                weightChart.setMaxVisibleValueCount(7); // 그래프 최대 갯수
+                weightChart.getXAxis().setDrawGridLines(false); // X축 및 Y축 격자선 없애기
+                weightChart.getAxisLeft().setDrawGridLines(false);
+                weightChart.getAxisRight().setDrawGridLines(false);
+                weightChart.getAxisLeft().setDrawLabels(false); // 왼쪽 값 없애기
+                // weightChart.getXAxis().setDrawLabels(false); // 위쪽 라벨 없애기
+                XAxis xAxis = weightChart.getXAxis(); // x축 설정
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(labels)); // 라벨 붙이기
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // 라벨 위치 설정
+                weightChart.getLegend().setEnabled(false); // 레전드 제거
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(mypage.this, "Error loading data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        queue.add(request);
     }
 
     private void setFatData() {
@@ -481,10 +485,10 @@ public class mypage extends AppCompatActivity {
             }
         }
         ) {
-                @Override
-                protected Map<String, String> getParams() {
-                    return params;
-                }
+            @Override
+            protected Map<String, String> getParams() {
+                return params;
+            }
         };
 
         queue.add(request);
