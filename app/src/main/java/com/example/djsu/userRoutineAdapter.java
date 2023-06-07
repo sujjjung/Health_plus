@@ -1,6 +1,8 @@
 package com.example.djsu;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.view.View;
@@ -23,7 +25,9 @@ public class userRoutineAdapter extends BaseAdapter {
     private Context context;
     private List<User> routineList;
     TextView name;
-    String RoutineName ="",Date,ExPart,ExName,ExCode;
+    Button shape_yes_btn,detailBtn;
+    int num = 0;
+    String RoutineName ="",Date,ExPart,ExName,ExCode,BtnText = "선택";
     public userRoutineAdapter(Context context, List<User> routineList, String Date) {
         this.context = context;
         this.routineList = routineList;
@@ -60,20 +64,91 @@ public class userRoutineAdapter extends BaseAdapter {
             ExPart = routineList.get(position).getExercisePart();
             RoutineName = name.getText().toString();
         }
-        Button shape_yes_btn = (Button) v.findViewById(R.id.shape_yes_btn);
+        shape_yes_btn = v.findViewById(R.id.shape_yes_btn);
+        detailBtn = v.findViewById(R.id.detail_btn);
+        shape_yes_btn.setText(BtnText);
+        if(BtnText.equals("선택")){
+        }else if(BtnText.equals("삭제")){
+            detailBtn.setVisibility(View.VISIBLE);
+        }
         shape_yes_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(context, ExerciseRecordActivity.class);
-                intent.putExtra("routineList", (Serializable) routineList);
-                intent.putExtra("Date", Date);
-                intent.putExtra("RoutineCount", 0);
-                intent.putExtra("index", 0);
-                intent.putExtra("RoutineNameText", routineList.get(position).getRoutineName());
-                context.startActivity(intent);
+                if(BtnText.equals("선택")){
+                    Intent intent = new Intent(context, ExerciseRecordActivity.class);
+                    intent.putExtra("routineList", (Serializable) routineList);
+                    intent.putExtra("Date", Date);
+                    intent.putExtra("RoutineCount", 0);
+                    intent.putExtra("index", 0);
+                    intent.putExtra("RoutineNameText", routineList.get(position).getRoutineName());
+                    context.startActivity(intent);
+                } else if(BtnText.equals("삭제")){
+                    for(int i =0; i < routineList.size(); i++) {
+                        if(routineList.get(i).getRoutineName().equals(routineList.get(position).getRoutineName())) {
+                            Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
+                                        JSONObject jsonResponse = new JSONObject(response);
+                                        boolean success = jsonResponse.getBoolean("success");
+                                        //받아온 값이 success면 정상적으로 서버로부터 값을 받은 것을 의미함
+                                        if (success) {
+                                            Toast.makeText(context.getApplicationContext(), "삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                            routineList.remove(position);//리스트에서 해당부분을 지워줌
+                                            notifyDataSetChanged();//데이터가 변경된 것을 어댑터에 알려줌
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            };
+                            UserRoutineDelete deleteRequest = new UserRoutineDelete(routineList.get(i).getRoutineName(), responseListener);
+                            RequestQueue queue = Volley.newRequestQueue(context);
+                            queue.add(deleteRequest);
+                        }
+                    }
+                }
+            }
+        });
+
+        detailBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                AlertDialog.Builder dlg = new AlertDialog.Builder(context);
+                dlg.setTitle(routineList.get(position).getRoutineName() + "상세정보"); // Set title
+
+                StringBuilder messageBuilder = new StringBuilder();
+                for (int i = 0; i < routineList.size(); i++) {
+                    if (routineList.get(position).getRoutineName().equals(routineList.get(i).getRoutineName())) {
+                        messageBuilder.append("설정운동 : " + routineList.get(i).getExerciseName());
+                        messageBuilder.append("\n"); // Add a new line for each entry
+                    }
+                }
+                dlg.setMessage(messageBuilder.toString()); // Set the message
+
+                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Display a toast message
+                        Toast.makeText(context, "확인을 눌르셨습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                dlg.show();
             }
         });
         return v;
 
     }
+
+    public void ButtonChange(int num) {
+        this.num += num;
+
+        if (this.num % 2 == 0 || this.num == 0) {
+            BtnText = "선택";
+        } else {
+            BtnText = "삭제";
+        }
+        notifyDataSetChanged();
+    }
+
 }

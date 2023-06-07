@@ -112,7 +112,6 @@ public class ExerciseRecordActivity extends AppCompatActivity {
             if(RoutineList.get(i).getRoutineName().equals(RoutineNameText)){
                 userRoutine = new UserRoutine(RoutineList.get(i).getRoutineName(),RoutineList.get(i).getExerciseCode(), RoutineList.get(i).getExercisePart(), RoutineList.get(i).getExerciseName());
                 RoutineListResult.add(userRoutine);
-                System.out.println("gg" + RoutineListResult.get(i).getExerciseName());
             }
         }
 
@@ -311,10 +310,9 @@ public class ExerciseRecordActivity extends AppCompatActivity {
             int mSec = msg.arg1 % 100;
             int sec = (msg.arg1 / 100) % 60;
             int min = (msg.arg1 / 100) / 60;
-            int hour = (msg.arg1 / 100) / 360;
             //1000이 1초 1000*60 은 1분 1000*60*10은 10분 1000*60*60은 한시간
 
-            @SuppressLint("DefaultLocale") String result = String.format("%02d:%02d:%02d:%02d", hour, min, sec, mSec);
+            @SuppressLint("DefaultLocale") String result = String.format("%02d:%02d:%02d",  min, sec, mSec);
 
             mTimeTextView.setText(result);
         }
@@ -339,7 +337,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 mTimeTextView.setText("");
-                                mTimeTextView.setText("00:00:00:00");
+                                mTimeTextView.setText("00:00:00");
                             }
                         });
                         return; // 인터럽트 받을 경우 return
