@@ -16,15 +16,22 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DJSU"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".routine"
+            android:exported="false"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".admin.AdminUserListActivity"
             android:exported="false">
@@ -138,8 +145,9 @@
             android:name=".admin.AdminFoodMain"
             android:exported="false" />
         <activity
-            android:name=".HealthAddList.HealthAddMainActivity"
-            android:exported="false" />
+            android:name=".Fragment.HealthAddList.HealthAddMainActivity"
+            android:exported="false"
+            android:noHistory="true"/>
         <activity
             android:name=".map"
             android:exported="false">
@@ -316,6 +324,12 @@
         </activity>
         <activity
             android:name=".user_data_edit"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity android:name=".comment"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

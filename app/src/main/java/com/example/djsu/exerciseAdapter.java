@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -21,14 +22,16 @@ import java.util.List;
 public class exerciseAdapter extends BaseAdapter {
     private Context context;
     private List<exerciseLsit> exList;
-    private Activity parentActivity;
-    String Date;
-    public exerciseAdapter(Context context, List<exerciseLsit> exList,String Date) {
+    static private ArrayList<String> selectedPositions = new ArrayList<>();
+    String Date,RoutineNameText;
+    static private ArrayList<UserRoutine> selectedItems = new ArrayList<>();
+    static int count = 0;
+    public exerciseAdapter(Context context, List<exerciseLsit> exList,String Date,String RoutineNameText) {
         this.context = context;
         this.exList = exList;
         this.Date = Date;
-        this.parentActivity = parentActivity;
-    }
+        this.RoutineNameText = RoutineNameText;
+     }
     @Override
     public int getCount () {
         return exList.size();//리스트뷰의 총 갯수
@@ -51,6 +54,7 @@ public class exerciseAdapter extends BaseAdapter {
     public View getView (final int position, View convertView, ViewGroup parent){
         String ExCode,ExPart,ExExplanation,ExCalorie,ExUnit;
         View v = View.inflate(context, R.layout.item_frag, null);
+        UserRoutine userRoutine = new UserRoutine();
         // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
         TextView ExName = (TextView) v.findViewById(R.id.ExName);
         ExCode = exList.get(position).getExCode();
@@ -61,19 +65,41 @@ public class exerciseAdapter extends BaseAdapter {
         ExUnit = exList.get(position).getExerciseUnit();
         v.setTag(exList.get(position).getExerciseName());
         Button selectBtn = (Button) v.findViewById(R.id.select);
-        selectBtn.setOnClickListener(new View.OnClickListener(){
+        selectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                Intent intent = new Intent(view.getContext(), ExerciseRecordActivity.class);
-                intent.putExtra("exName", ExName.getText().toString());
-                intent.putExtra("Date",Date);
-                intent.putExtra("ExCode",ExCode);
-                intent.putExtra("ExPart",ExPart);
-                intent.putExtra("ExCalorie",ExCalorie);
-                intent.putExtra("ExUnit",ExUnit);
-                view.getContext().startActivity(intent);
-            };
+            public void onClick(View view) {
+                if (selectedItems.contains(userRoutine)) {
+                    // Already selected item, deselect it
+                    Toast.makeText(context, "이미 선택한 항목입니다.", Toast.LENGTH_SHORT).show();
+                    selectedItems.remove(count - 1); // Remove at the correct index
+                } else {
+                    // Not selected item, select it
+                    userRoutine.AddUserRoutine(RoutineNameText, ExCode, ExPart, ExName.getText().toString(), ExCalorie, ExUnit);
+                    selectedItems.add(count, userRoutine); // Add at the correct index
+                    userRoutine.setRoutineArrayList(selectedItems);
+                }
+
+                if (selectedPositions.contains(ExName.getText().toString())) {
+                    selectedPositions.remove(ExName.getText().toString());
+                } else {
+                    selectedPositions.add(ExName.getText().toString());
+                }
+
+                count++; // Increment count after adding the item
+
+                notifyDataSetChanged(); // Update the ListView
+            }
         });
+
+        if (selectedPositions.contains(ExName.getText().toString())) {
+            // 선택된 아이템인 경우 배경 색상 변경
+            selectBtn.setText("해제");
+            v.setBackgroundColor(context.getResources().getColor(R.color.color_yellow));
+        } else {
+            // 선택되지 않은 아이템인 경우 기본 배경 색상
+            selectBtn.setText("선택");
+            v.setBackgroundColor(context.getResources().getColor(R.color.white));
+        }
 
         Button DetailBtn = (Button) v.findViewById(R.id.Detail);
         DetailBtn.setOnClickListener(new View.OnClickListener() {
@@ -96,4 +122,12 @@ public class exerciseAdapter extends BaseAdapter {
         return v;
 
     }
+    public void resetSelectedPositions() {
+        selectedPositions.clear();
+        selectedItems.clear();
+        count = 0;
+        notifyDataSetChanged();
+    }
+
+
 }

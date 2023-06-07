@@ -30,7 +30,6 @@ public class UserExAdapter extends BaseAdapter {
     private Context context;
     private List<User> userList;
     private Activity parentActivity;
-    String ExerciseCode,ExerciseSetNumber,ExerciseNumber,ExerciseUnit,Time;
     int ExCode;
     TextView ExName,ExPart;
     String date,name ="";
@@ -107,26 +106,30 @@ public class UserExAdapter extends BaseAdapter {
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            //받아온 값이 success면 정상적으로 서버로부터 값을 받은 것을 의미함
-                            if (success) {
-                                Toast.makeText(context.getApplicationContext(),  "삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                                userList.remove(position);//리스트에서 해당부분을 지워줌
-                                notifyDataSetChanged();//데이터가 변경된 것을 어댑터에 알려줌
+                for(int i =0; i < userList.size(); i++) {
+                    if(userList.get(i).getExerciseName().equals(userList.get(position).getExerciseName())) {
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(response);
+                                    boolean success = jsonResponse.getBoolean("success");
+                                    //받아온 값이 success면 정상적으로 서버로부터 값을 받은 것을 의미함
+                                    if (success) {
+                                        Toast.makeText(context.getApplicationContext(), "삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                        userList.remove(position);//리스트에서 해당부분을 지워줌
+                                        notifyDataSetChanged();//데이터가 변경된 것을 어댑터에 알려줌
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        };
+                        UserExDelete deleteRequest = new UserExDelete(userList.get(i).getEcCode(), responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(context);
+                        queue.add(deleteRequest);
                     }
-                };
-                UserExDelete deleteRequest = new UserExDelete(name, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(context);
-                queue.add(deleteRequest);
+                }
             }
         });
         Button update = (Button) v.findViewById(R.id.Update);

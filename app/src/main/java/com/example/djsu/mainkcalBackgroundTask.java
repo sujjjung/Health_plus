@@ -12,7 +12,7 @@ import java.net.URL;
 
 
 class mainkcalBackgroundTask extends AsyncTask<Void, Void, String> {
-    String target;
+    String target,target1;
     Context context;
 
     protected void onPreExecute() {
@@ -46,6 +46,7 @@ class mainkcalBackgroundTask extends AsyncTask<Void, Void, String> {
             e.printStackTrace();
         }
         return null;
+
     }
 
     protected void onProgressUpdate(Void... values) {
@@ -54,7 +55,7 @@ class mainkcalBackgroundTask extends AsyncTask<Void, Void, String> {
 
     protected void onPostExecute(String result) {
         Intent intent = new Intent(context, main_user.class);
-        intent.putExtra("UserFood", result);
+        intent.putExtra("UserState", result);
         context.startActivity(intent);
 
     }

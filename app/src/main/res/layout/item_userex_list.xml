@@ -24,17 +24,20 @@
                 android:id="@+id/exName"
                 android:layout_width="130dp"
                 android:layout_height="40dp"
-                android:text="이름"
+                android:text="운동 이름"
                 android:textColor="#000"
-                android:textSize="20sp" />
+                android:textSize="25sp"
+                android:fontFamily="@font/a10091"/>
 
             <TextView
                 android:id="@+id/exPart"
                 android:layout_width="148dp"
-                android:layout_height="30dp"
-                android:text="이름"
+                android:layout_height="20dp"
+                android:text="부위"
                 android:textColor="#000"
-                android:textSize="20sp" />
+                android:textSize="15sp"
+                android:paddingLeft="20dp"
+                android:fontFamily="@font/a10091" />
 
             <!--구분선-->
         </LinearLayout>

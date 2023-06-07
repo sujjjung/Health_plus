@@ -12,7 +12,7 @@ public class waterRequest extends StringRequest {
     final static private String URL = "http://enejd0613.dothome.co.kr/waterRequest.php";
     private Map<String, String> map;
 
-    public waterRequest(String userID, int water,String date) {
+    public waterRequest(String userID, String water,String date) {
         super(Request.Method.POST, URL, null, null);
 
         map = new HashMap<>();

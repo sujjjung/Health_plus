@@ -9,9 +9,7 @@ public class Set {
     static private ArrayList<Set> setArrayList = new ArrayList<>();
     public Set() {
     }
-    public Set( ArrayList<Set> setArrayList) {
-        this.setArrayList = setArrayList;
-    }
+
     public Set(String setNumber, String number, String unit, String time) {
         this.setNumber = setNumber;
         Number = number;

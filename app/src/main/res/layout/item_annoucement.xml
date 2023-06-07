@@ -13,6 +13,7 @@
         android:paddingLeft="10dp"
         android:scaleType="centerInside"
         android:text="❤"
+        android:paddingTop="10dp"
         android:textSize="29dp" />
 
     <LinearLayout
@@ -29,8 +30,9 @@
             android:fontFamily="@font/a10093"
             android:gravity="center_vertical"
             android:paddingRight="25dp"
-            android:paddingLeft="10dp"
+            android:paddingLeft="8dp"
             android:scaleType="centerInside"
+            android:paddingTop="10dp"
             android:text="건강더하기 어플 구현 시작"
             android:textSize="24dp" />
 

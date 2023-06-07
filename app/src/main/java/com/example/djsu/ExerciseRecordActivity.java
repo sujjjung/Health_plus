@@ -1,7 +1,5 @@
 package com.example.djsu;
 
-import static android.media.CamcorderProfile.get;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -30,7 +28,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExerciseRecordActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -39,28 +39,32 @@ public class ExerciseRecordActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<exrecode> exrecodeList;
     private exerciserecodeAdapter exAdapter;
+    private ArrayList<UserRoutine> RoutineListResult = new ArrayList<>();
+    private UserRoutine userRoutine;
+    private  ArrayList <User> RoutineList;
     private Thread timeThread = null;
     TextView mTimeTextView;
-    int setcount = 1;
-    int num;
     private Boolean isRunning = true;
-    String number, unitnum,Date,ExCalorie,ExUnit,ExCode,ExPart,Name;
-    int count = 1;
+    String number, unitnum,Date,ExCode,RoutineNameText;
+    int count = 1, RoutineCount = 0,num,setcount=1,index = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_record);
         Bundle extras = getIntent().getExtras();
-        Name = extras.getString("exName");
         Date = extras.getString("Date");
-        ExCode = extras.getString("ExCode");
-        ExPart = extras.getString("ExPart");
-        ExCalorie = extras.getString("ExCalorie");
-        ExUnit = extras.getString("ExUnit");
+        index = extras.getInt("index");
+        RoutineCount = extras.getInt("RoutineCount");
+        System.out.println("gggg" + RoutineCount);
+        RoutineNameText = extras.getString("RoutineNameText");
+        RoutineList = (ArrayList <User>) getIntent(). getSerializableExtra("routineList");
+
         TextView NameText = (TextView) findViewById(R.id.exname);
         TextView PartText = (TextView) findViewById(R.id.expart);
         TextView monthText = (TextView) findViewById(R.id.month);
-        TextView DayText = (TextView) findViewById(R.id.Day);
+        int dashIndex = Date.indexOf("-");
+        String extractedDate = Date.substring(dashIndex+1);
+        monthText.setText( extractedDate.replace("-","월 ")+"일");
         mTimeTextView = findViewById(R.id.timeView);
         ImageButton TimerStartBtn = (ImageButton) findViewById(R.id.TimerStart);
         ImageButton TimerPauseBtn = (ImageButton) findViewById(R.id.TimerPause);
@@ -104,9 +108,20 @@ public class ExerciseRecordActivity extends AppCompatActivity {
             }
         });
 
-        String Namestr = Name;
-        NameText.setText(Namestr);
-        PartText.setText(ExPart);
+        for(int i =0; i < RoutineList.size(); i++){
+            if(RoutineList.get(i).getRoutineName().equals(RoutineNameText)){
+                userRoutine = new UserRoutine(RoutineList.get(i).getRoutineName(),RoutineList.get(i).getExerciseCode(), RoutineList.get(i).getExercisePart(), RoutineList.get(i).getExerciseName());
+                RoutineListResult.add(userRoutine);
+            }
+        }
+
+        if(RoutineCount == 0){
+            RoutineCount += RoutineListResult.size();
+        }
+
+        NameText.setText(RoutineListResult.get(index).getExerciseName());
+        PartText.setText(RoutineListResult.get(index).getExPart());
+        ExCode = RoutineListResult.get(index).getExCode();
         TextView unit = findViewById(R.id.unittext);
         exrecodeList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerview);
@@ -201,19 +216,30 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         SaveBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                System.out.println("gggg11 " + RoutineCount);
                 Set set = new Set();
                 set.getSetArrayList();
                 ArrayList<Set> setList = set.getSetArrayList();
                 for (int i = 0; i < setList.size(); i++){
-                    ExSelectRequest exSelectRequest = new ExSelectRequest(user.getId(),Date,ExCode,Name,ExPart,
+                    ExSelectRequest exSelectRequest = new ExSelectRequest(user.getId(),Date,ExCode,NameText.getText().toString(),PartText.getText().toString(),
                             setList.get(i).getSetNumber(),setList.get(i).getNumber(),setList.get(i).getUnit()+unit.getText(),setList.get(i).getTime());
                     RequestQueue queue = Volley.newRequestQueue(ExerciseRecordActivity.this);
                     queue.add(exSelectRequest);
                 }
                 Toast.makeText(ExerciseRecordActivity.this, "등록 완료되었습니다!", Toast.LENGTH_SHORT).show();
-                UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(ExerciseRecordActivity.this);
-                userFoodListBackgroundTask.execute();
+
+                if(RoutineCount == 1){
+                    UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(ExerciseRecordActivity.this);
+                    userFoodListBackgroundTask.execute();
+                }else{
+                    Intent intent = new Intent(ExerciseRecordActivity.this, ExerciseRecordActivity.class);
+                    intent.putExtra("routineList", (Serializable) RoutineList);
+                    intent.putExtra("Date", Date);
+                    intent.putExtra("RoutineCount", --RoutineCount);
+                    intent.putExtra("index", index + 1);
+                    intent.putExtra("RoutineNameText", RoutineNameText);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -284,10 +310,9 @@ public class ExerciseRecordActivity extends AppCompatActivity {
             int mSec = msg.arg1 % 100;
             int sec = (msg.arg1 / 100) % 60;
             int min = (msg.arg1 / 100) / 60;
-            int hour = (msg.arg1 / 100) / 360;
             //1000이 1초 1000*60 은 1분 1000*60*10은 10분 1000*60*60은 한시간
 
-            @SuppressLint("DefaultLocale") String result = String.format("%02d:%02d:%02d:%02d", hour, min, sec, mSec);
+            @SuppressLint("DefaultLocale") String result = String.format("%02d:%02d:%02d",  min, sec, mSec);
 
             mTimeTextView.setText(result);
         }
@@ -312,7 +337,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 mTimeTextView.setText("");
-                                mTimeTextView.setText("00:00:00:00");
+                                mTimeTextView.setText("00:00:00");
                             }
                         });
                         return; // 인터럽트 받을 경우 return

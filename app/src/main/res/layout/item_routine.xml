@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center_vertical"
+           android:padding="15dp">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="167dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center_vertical"
+            android:text="루틴 이름"
+            android:textColor="#000"
+            android:textSize="20dp"
+            android:fontFamily="@font/a10091"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/detail_btn"
+            android:layout_width="65dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@id/name"
+            android:layout_marginLeft="18dp"
+            android:background="@drawable/shape_yes_btn"
+            android:fontFamily="@font/a10091"
+            android:gravity="center"
+            android:text="상세"
+            android:textColor="@color/black"
+            android:visibility="invisible" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@drawable/shape_yes_btn"
+            android:id="@+id/shape_yes_btn"
+            android:layout_width="65dp"
+            android:layout_height="40dp"
+            android:layout_alignBaseline="@id/name"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/a10091"
+            android:gravity="center"
+            android:text="선택"
+            android:textColor="@color/black" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

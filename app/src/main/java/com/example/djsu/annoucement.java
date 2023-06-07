@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -129,24 +130,34 @@ public class annoucement extends AppCompatActivity {
                 date = object.getString("date");
                 title = object.getString("title");
                 detail = object.getString("detail");
+
                 //값들을 User클래스에 묶어줍니다
                 Notice notice = new Notice(date,title,detail,emote);
                 noticeList.add(notice);//리스트뷰에 값을 추가해줍니다
                 count++;
-                NoticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+                NoticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView parent, View v, int position, long id){
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         noticeAdapter.getItem(position);
-                        AlertDialog.Builder dlg = new AlertDialog.Builder(annoucement.this);
-                        dlg.setTitle(noticeList.get(position).getTitle()); //제목
-                        dlg.setMessage(noticeList.get(position).getContent());
-                        dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
-                            public void onClick(DialogInterface dialog, int which) {
-                                //토스트 메시지
-                                Toast.makeText(annoucement.this,"확인을 눌르셨습니다.",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        dlg.show();
+
+                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(annoucement.this);
+
+                        // 커스텀 다이얼로그 레이아웃을 inflate하여 설정
+                        LayoutInflater inflater = getLayoutInflater();
+                        View dialogView = inflater.inflate(R.layout.dialog_announcement, null);
+                        dialogBuilder.setView(dialogView);
+
+                        // 커스텀 다이얼로그 내부의 뷰 요소를 찾아서 설정
+                        TextView titleTextView = dialogView.findViewById(R.id.dialog_title);
+                        TextView contentTextView = dialogView.findViewById(R.id.dialog_content);
+
+                        titleTextView.setText(noticeList.get(position).getTitle());
+                        contentTextView.setText(noticeList.get(position).getContent());
+
+                        // 커스텀 다이얼로그를 생성하고 보여주기
+                        AlertDialog customDialog = dialogBuilder.create();
+                        customDialog.show();
                     }
                 });
             }

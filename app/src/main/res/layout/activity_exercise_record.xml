@@ -36,58 +36,19 @@
 
             <TextView
                 android:id="@+id/month"
-                android:layout_width="36dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="120dp"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/a1009_3"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="10"
+                android:text="날짜"
                 android:textColor="#2E2E2E"
                 android:textSize="32dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-            <TextView
-                android:id="@+id/textView44"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/a1009_3"
-                android:text="월"
-                android:textColor="#2E2E2E"
-                android:textSize="32dp"
-                android:layout_marginStart="6dp"
-                app:layout_constraintBottom_toBottomOf="@+id/month"
-                app:layout_constraintStart_toEndOf="@+id/month"
-                app:layout_constraintTop_toTopOf="@+id/month" />
 
-            <TextView
-                android:id="@+id/Day"
-                android:layout_width="42dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:fontFamily="@font/a1009_3"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="17"
-                android:textColor="#2E2E2E"
-                android:textSize="32dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView44"
-                app:layout_constraintStart_toEndOf="@+id/textView44"
-                app:layout_constraintTop_toTopOf="@+id/textView44" />
-
-            <TextView
-                android:id="@+id/textView47"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:fontFamily="@font/a1009_3"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="일"
-                android:textColor="#2E2E2E"
-                android:textSize="32dp"
-                app:layout_constraintBottom_toBottomOf="@+id/Day"
-                app:layout_constraintStart_toEndOf="@+id/Day"
-                app:layout_constraintTop_toTopOf="@+id/Day" />
 
             <View
                 android:id="@+id/view4"
@@ -311,7 +272,8 @@
                 android:scrollbars="vertical"
                 app:layout_constraintTop_toTopOf="@+id/timeView"
                 tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="0dp" />
+                tools:layout_editor_absoluteX="0dp"
+                tools:listitem="@layout/item_exerciserecord"/>
 
             <ImageButton
                 android:id="@+id/add"
