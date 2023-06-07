@@ -81,7 +81,7 @@
             tools:ignore="MissingConstraints" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/delete"
+            android:id="@+id/edit"
             android:layout_width="65dp"
             android:layout_height="40dp"
             android:background="@drawable/shape_yes_btn"

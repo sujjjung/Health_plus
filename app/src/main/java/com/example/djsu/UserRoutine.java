@@ -12,6 +12,7 @@ public class UserRoutine {
     private String exerciseUnit;
 
     public UserRoutine() {
+
     }
     public UserRoutine(String routineName, String exCode,String exPart, String exerciseName) {
         RoutineName = routineName;

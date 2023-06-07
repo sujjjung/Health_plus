@@ -82,7 +82,7 @@ public class Fragment1 extends Fragment {
 
         ListView exListView = (ListView) view.findViewById(R.id.ExView);
         exListView.setAdapter(exerciseAdapter);
-
+        exerciseAdapter.resetSelectedPositions();
         try {
             exerciseAdapter.notifyDataSetChanged();
             JSONObject jsonObject = new JSONObject(this.getArguments().getString("exercise"));

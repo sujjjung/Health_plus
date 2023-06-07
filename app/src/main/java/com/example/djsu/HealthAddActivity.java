@@ -48,6 +48,7 @@ public class HealthAddActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     String Date,RoutineNameText;
+    UserRoutine userRoutine = new UserRoutine();
     private Button BackBtn, AddBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,22 +72,21 @@ public class HealthAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 User user = new User();
-                UserRoutine userRoutine = new UserRoutine();
                 for (int i = 0; i < userRoutine.getRoutineArrayList().size(); i++){
-                    RoutineRequest routineRequest = new RoutineRequest(user.getId(),userRoutine.getRoutineArrayList().get(i).getRoutineName(),
+                    RoutineRequest routineRequest = new RoutineRequest(user.getId(),RoutineNameText,
                             userRoutine.getRoutineArrayList().get(i).getExCode(),userRoutine.getRoutineArrayList().get(i).getExerciseName(),userRoutine.getRoutineArrayList().get(i).getExPart());
                     RequestQueue queue = Volley.newRequestQueue(HealthAddActivity.this);
                     queue.add(routineRequest);
                 }
                 Toast.makeText(HealthAddActivity.this, "등록 완료되었습니다!", Toast.LENGTH_SHORT).show();
-                UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(HealthAddActivity.this);
-                userFoodListBackgroundTask.execute();
+                new UserFoodListBackgroundTask().execute();
             }
         });
 
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                new RoutineBackgroundTask(Date).execute();
             }
         });
 
@@ -149,8 +149,7 @@ public class HealthAddActivity extends AppCompatActivity {
                         mainkcalBackgroundTask.execute();
                         return true;
                     case R.id.calender:
-                        UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(HealthAddActivity.this);
-                        userFoodListBackgroundTask.execute();
+                        new UserFoodListBackgroundTask().execute();
                         return true;
                     case R.id.communety:
                         Intent communetyintent = new Intent(getApplicationContext(), community.class);
@@ -291,6 +290,108 @@ public class HealthAddActivity extends AppCompatActivity {
                     break;
             }
 
+        }
+    }
+
+    class RoutineBackgroundTask extends AsyncTask<Void, Void, String> {
+        String target;
+        String Date;
+
+        public RoutineBackgroundTask(String date) {
+            this.Date = date;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            //List.php은 파싱으로 가져올 웹페이지
+            target = "http://enejd0613.dothome.co.kr/Routinelist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);//URL 객체 생성
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
+                }
+
+                //사용했던 것도 다 닫아줌
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        protected void onPostExecute(String result) {
+            Intent intent = new Intent(HealthAddActivity.this, routine.class);
+            intent.putExtra("UserRoutine", result);
+            intent.putExtra("Date", Date);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    class UserFoodListBackgroundTask extends AsyncTask<Void, Void, String> {
+        String target;
+        String Date;
+
+        public UserFoodListBackgroundTask() {}
+
+        @Override
+        protected void onPreExecute() {
+            //List.php은 파싱으로 가져올 웹페이지
+            target = "http://enejd0613.dothome.co.kr/foodcalendarlist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);//URL 객체 생성
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
+                }
+
+                //사용했던 것도 다 닫아줌
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        protected void onPostExecute(String result) {
+            Intent intent = new Intent(HealthAddActivity.this, CalendarActivity.class);
+            intent.putExtra("UserFood", result);
+            userRoutine.getRoutineArrayList().clear();
+                        startActivity(intent);
+            finish();
         }
     }
 }

@@ -146,7 +146,8 @@
             android:exported="false" />
         <activity
             android:name=".Fragment.HealthAddList.HealthAddMainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true"/>
         <activity
             android:name=".map"
             android:exported="false">

@@ -65,30 +65,32 @@ public class exerciseAdapter extends BaseAdapter {
         ExUnit = exList.get(position).getExerciseUnit();
         v.setTag(exList.get(position).getExerciseName());
         Button selectBtn = (Button) v.findViewById(R.id.select);
-        selectBtn.setOnClickListener(new View.OnClickListener(){
+        selectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 if (selectedItems.contains(userRoutine)) {
-                    // 이미 선택된 항목인 경우 선택 해제
-                    Toast.makeText(context,"이미 선택한 항목입니다.",Toast.LENGTH_SHORT).show();
-                    selectedItems.remove((Integer) count);
+                    // Already selected item, deselect it
+                    Toast.makeText(context, "이미 선택한 항목입니다.", Toast.LENGTH_SHORT).show();
+                    selectedItems.remove(count - 1); // Remove at the correct index
                 } else {
-                    // 선택되지 않은 항목인 경우 선택
-                    userRoutine.AddUserRoutine(RoutineNameText,ExCode,ExPart,ExName.getText().toString(),ExCalorie,ExUnit);
-                    selectedItems.add(count,userRoutine);
+                    // Not selected item, select it
+                    userRoutine.AddUserRoutine(RoutineNameText, ExCode, ExPart, ExName.getText().toString(), ExCalorie, ExUnit);
+                    selectedItems.add(count, userRoutine); // Add at the correct index
                     userRoutine.setRoutineArrayList(selectedItems);
-                    count++;
                 }
+
                 if (selectedPositions.contains(ExName.getText().toString())) {
-                    // 이미 선택된 항목인 경우 선택 해제
                     selectedPositions.remove(ExName.getText().toString());
                 } else {
-                    // 선택되지 않은 항목인 경우 선택
                     selectedPositions.add(ExName.getText().toString());
                 }
-                notifyDataSetChanged(); // 리스트뷰 갱신
-            };
+
+                count++; // Increment count after adding the item
+
+                notifyDataSetChanged(); // Update the ListView
+            }
         });
+
         if (selectedPositions.contains(ExName.getText().toString())) {
             // 선택된 아이템인 경우 배경 색상 변경
             selectBtn.setText("해제");
@@ -120,5 +122,12 @@ public class exerciseAdapter extends BaseAdapter {
         return v;
 
     }
+    public void resetSelectedPositions() {
+        selectedPositions.clear();
+        selectedItems.clear();
+        count = 0;
+        notifyDataSetChanged();
+    }
+
 
 }
