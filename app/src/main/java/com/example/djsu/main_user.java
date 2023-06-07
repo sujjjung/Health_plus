@@ -28,6 +28,7 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -45,6 +46,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -102,9 +104,15 @@ public class main_user extends AppCompatActivity {
     waterRequest waterRequest;
     RequestQueue queue;
     String date;
+
     // 걸음수
     private int count;
     int KcalNum,waterNum;
+
+    // 공지
+    String title;
+    String detail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -373,6 +381,19 @@ public class main_user extends AppCompatActivity {
                 chooseFile();
             }
         });
+
+        fetchLatestAnnoncementTitle();
+
+        // 공지 누르기
+        TextView textView = findViewById(R.id.ann_txt);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 커스텀 다이얼로그를 생성하고 보여줍니다.
+                showDialog();
+            }
+
+        });
     }
 
     private ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
@@ -499,4 +520,57 @@ public class main_user extends AppCompatActivity {
 
         return getTime;
     }
+
+    // 공지 불러오기
+    private void fetchLatestAnnoncementTitle() {
+        String url = "http://enejd0613.dothome.co.kr/fetch_announcement.php";  // PHP 파일의 URL을 여기에 입력하세요.
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            title = response.getString("title");
+                            detail = response.getString("detail");
+
+                            TextView textView = findViewById(R.id.ann_txt);
+                            textView.setText(title);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+        // Volley 요청을 큐에 추가합니다.
+        Volley.newRequestQueue(this).add(request);
+    }
+
+    // 공지 커스텀다이얼로그
+    private void showDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(main_user.this);
+
+        // 커스텀 다이얼로그 레이아웃을 inflate하여 설정
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_announcement, null);
+        dialogBuilder.setView(dialogView);
+
+        // 커스텀 다이얼로그 내부의 뷰 요소를 찾아서 설정
+        TextView titleTextView = dialogView.findViewById(R.id.dialog_title);
+        TextView contentTextView = dialogView.findViewById(R.id.dialog_content);
+
+        // TextView에 받아온 데이터를 설정
+        titleTextView.setText(title);
+        contentTextView.setText(detail);
+
+        // 커스텀 다이얼로그를 생성하고 보여주기
+        AlertDialog customDialog = dialogBuilder.create();
+        customDialog.show();
+    }
+
 }
