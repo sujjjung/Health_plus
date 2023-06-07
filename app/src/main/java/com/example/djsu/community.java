@@ -67,6 +67,7 @@ public class community extends AppCompatActivity {
     private static final String TAG_ID = "id";
     private static final String TAG_IMAGE = "image";
     private static final String TAG_DATE = "date";
+    private static final String TAG_POSTID = "postId";
     private static final String TAG_USER_PROFILE = "UserProfile";
     JSONArray peoples = null;
     ArrayList<HashMap<String, String>> personList;
@@ -166,6 +167,7 @@ public class community extends AppCompatActivity {
                 String id = c.getString(TAG_ID);
                 String image = c.getString(TAG_IMAGE);
                 String date = c.getString(TAG_DATE);
+                String postId = c.getString(TAG_POSTID);
                 String userProfile = c.getString(TAG_USER_PROFILE);
 
                 HashMap<String, String> persons = new HashMap<>();
@@ -174,6 +176,7 @@ public class community extends AppCompatActivity {
                 persons.put(TAG_ID, id);
                 persons.put(TAG_IMAGE, image);
                 persons.put(TAG_DATE, date);
+                persons.put(TAG_POSTID, postId);
                 persons.put(TAG_USER_PROFILE, userProfile);
 
                 personList.add(persons);
