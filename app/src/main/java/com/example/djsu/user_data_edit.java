@@ -51,10 +51,7 @@ public class user_data_edit extends AppCompatActivity {
 
     User user = new User();
     String UserID = String.valueOf(user.getId());
-
-    DatabaseReference databaseReference;
-
-    FirebaseDatabase mDatabase;
+    String userId = user.getId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +77,8 @@ public class user_data_edit extends AppCompatActivity {
         et_state.setText(user.getState());
         btn_photo = findViewById(R.id.btn_photo);
         UserProfile = findViewById(R.id.profile);
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User").child(userId);
         
         // 회원가입 버튼 클릭 시 수행
         btn_register.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +89,12 @@ public class user_data_edit extends AppCompatActivity {
                 String UserAge = et_age.getText().toString();
                 String UserPass = et_pass.getText().toString();
                 String State = et_state.getText().toString();
+
+                //firebase realtime -> 회원 정보 변경
+                databaseReference.child("name").setValue(UserName);
+                databaseReference.child("password").setValue(UserPass);
+                databaseReference.child("age").setValue(UserAge);
+                databaseReference.child("state").setValue(State);
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
