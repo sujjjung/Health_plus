@@ -66,9 +66,9 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         String extractedDate = Date.substring(dashIndex+1);
         monthText.setText( extractedDate.replace("-","월 ")+"일");
         mTimeTextView = findViewById(R.id.timeView);
-        ImageButton TimerStartBtn = (ImageButton) findViewById(R.id.TimerStart);
-        ImageButton TimerPauseBtn = (ImageButton) findViewById(R.id.TimerPause);
-        ImageButton TimerStopBtn = (ImageButton) findViewById(R.id.TimerStop);
+        Button TimerStartBtn = (Button) findViewById(R.id.TimerStart);
+        Button TimerPauseBtn = (Button) findViewById(R.id.TimerPause);
+        Button TimerStopBtn = (Button) findViewById(R.id.TimerStop);
         TimerStartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

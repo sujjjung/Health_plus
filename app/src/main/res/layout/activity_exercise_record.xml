@@ -44,11 +44,9 @@
                 android:gravity="center_horizontal|center_vertical"
                 android:text="날짜"
                 android:textColor="#2E2E2E"
-                android:textSize="32dp"
+                android:textSize="30dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-
 
             <View
                 android:id="@+id/view4"
@@ -60,136 +58,82 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/month" />
 
+
             <TextView
                 android:id="@+id/expart"
-                android:layout_width="127dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="28dp"
-                android:fontFamily="@font/a10092"
-                android:gravity="center_horizontal|center_vertical"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/a10091"
+                android:gravity="center_vertical"
+                android:text="가슴"
                 android:textColor="#323232"
-                android:textSize="24dp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="20dp"
+                app:layout_constraintStart_toEndOf="@+id/exname"
                 app:layout_constraintTop_toBottomOf="@+id/view4" />
-
-            <View
-                android:id="@+id/view5"
-                android:layout_width="4dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="16dp"
-                android:background="#00000000"
-                app:layout_constraintBottom_toBottomOf="@+id/expart"
-                app:layout_constraintStart_toEndOf="@+id/expart"
-                app:layout_constraintTop_toTopOf="@+id/expart"
-                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/exname"
-                android:layout_width="127dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="16dp"
+                android:layout_width="300dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/a10092"
+                android:gravity="center"
+                android:text="인클라인 덤벨 벤치 프레스"
                 android:textColor="#323232"
                 android:textSize="24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/view5"
-                app:layout_constraintStart_toEndOf="@+id/view5"
-                app:layout_constraintTop_toTopOf="@+id/view5"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <ImageButton
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:background="#00000000"
-                android:src="@drawable/delete_xml"
-                android:layout_marginStart="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/exname"
-                app:layout_constraintStart_toEndOf="@+id/exname"
-                app:layout_constraintTop_toTopOf="@+id/exname" />
-
-            <TextView
-                android:id="@+id/textView49"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="42dp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/a10091"
-                android:text="총"
-                android:textColor="#323232"
-                android:textSize="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expart" />
-
-            <TextView
-                android:id="@+id/textView50"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/a10092"
-                android:text="1350"
-                android:textColor="#323232"
-                android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView49"
-                app:layout_constraintStart_toEndOf="@+id/textView49"
-                app:layout_constraintTop_toTopOf="@+id/textView49" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/a10092"
-                android:text="kg"
-                android:textColor="#323232"
-                android:textSize="20dp"
-                android:layout_marginStart="6dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView50"
-                app:layout_constraintStart_toEndOf="@+id/textView50"
-                app:layout_constraintTop_toTopOf="@+id/textView50" />
-
+                app:layout_constraintTop_toBottomOf="@+id/view4"
+                tools:layout_editor_absoluteX="46dp"
+                tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/timeView"
-                android:layout_width="239dp"
-                android:layout_height="54dp"
-                android:layout_marginTop="12dp"
+                android:layout_width="144dp"
+                android:layout_height="41dp"
                 android:gravity="center"
                 android:text="00:00:00:00"
-                android:textSize="35dp"
+                android:textSize="22dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.218"
+                app:layout_constraintHorizontal_bias="0.301"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView49" />
-
-            <ImageButton
-                android:id="@+id/TimerStart"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_marginEnd="84dp"
-                android:background="#00000000"
-                android:src="@drawable/start"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="@+id/timeView"
-                app:layout_constraintEnd_toEndOf="parent" />
+                tools:layout_editor_absoluteY="196dp"
+                tools:ignore="MissingConstraints" />
 
             <ImageButton
                 android:id="@+id/TimerPause"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_marginEnd="84dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="132dp"
+                android:layout_marginBottom="8dp"
                 android:background="#00000000"
+                android:scaleType="centerInside"
                 android:src="@drawable/pause"
-                android:scaleType="centerCrop"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/timeView"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <ImageButton
-                android:id="@+id/TimerStop"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_marginEnd="28dp"
+                android:id="@+id/TimerStart"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="132dp"
+                android:layout_marginBottom="8dp"
                 android:background="#00000000"
-                android:scaleType="centerCrop"
+                android:scaleType="centerInside"
+                android:src="@drawable/start"
+                app:layout_constraintBottom_toBottomOf="@+id/timeView"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageButton
+                android:id="@+id/TimerStop"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="92dp"
+                android:layout_marginBottom="8dp"
+                android:background="#00000000"
+                android:scaleType="centerInside"
                 android:src="@drawable/stop"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/timeView"
@@ -200,7 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:fontFamily="@font/a10092"
                 android:text="세트"
                 android:textColor="#323232"
@@ -263,8 +207,8 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview"
-                android:layout_width="413dp"
-                android:layout_height="306dp"
+                android:layout_width="match_parent"
+                android:layout_height="410dp"
                 android:layout_marginTop="104dp"
                 android:scrollbarFadeDuration="0"
                 android:scrollbarSize="5dp"
@@ -275,53 +219,34 @@
                 tools:layout_editor_absoluteX="0dp"
                 tools:listitem="@layout/item_exerciserecord"/>
 
-            <ImageButton
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/add"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="62dp"
-                android:layout_marginBottom="30dp"
-                android:background="#00000000"
-                android:src="@drawable/roundsquare4"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/shape_no_btn"
                 android:fontFamily="@font/a10092"
                 android:text="세트 추가"
                 android:textColor="#393939"
                 android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/add"
-                app:layout_constraintEnd_toEndOf="@+id/add"
-                app:layout_constraintStart_toStartOf="@+id/add"
-                app:layout_constraintTop_toTopOf="@+id/add" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-
-            <ImageButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/Save"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="48dp"
-                android:layout_marginBottom="28dp"
-                android:background="#00000000"
-                android:src="@drawable/roundsquare4"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/add" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginStart="44dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/shape_yes_btn"
                 android:fontFamily="@font/a10092"
                 android:text="세트 저장"
                 android:textColor="#393939"
                 android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/Save"
-                app:layout_constraintEnd_toEndOf="@+id/Save"
-                app:layout_constraintStart_toStartOf="@+id/Save"
-                app:layout_constraintTop_toTopOf="@+id/Save" />
-
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/add" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

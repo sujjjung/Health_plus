@@ -35,11 +35,11 @@
         app:layout_constraintTop_toBottomOf="@+id/image_view"
         app:layout_constraintVertical_bias="0.104" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/upload_btn"
         android:layout_width="152dp"
         android:layout_height="65dp"
-        android:backgroundTint="@color/yellow"
+        android:background="@drawable/shape_yes_btn"
         android:fontFamily="@font/a10092"
         android:text="게시"
         android:textColor="#444444"

@@ -49,7 +49,7 @@
                 android:fontFamily="@font/a10093"
                 android:text="식단 추가"
                 android:textColor="#2E2E2E"
-                android:textSize="24dp"
+                android:textSize="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +75,7 @@
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:layout_marginStart="24dp"
-                android:background="#DBDBDB"
+                android:background="@color/background_gray"
                 android:fontFamily="@font/a1009_1"
                 app:layout_constraintBottom_toBottomOf="@+id/textView24"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -126,7 +126,7 @@
                 android:id="@+id/radioGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="18dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -217,12 +217,12 @@
                 android:id="@+id/searchText"
                 android:layout_width="320dp"
                 android:layout_height="34dp"
-                android:layout_marginTop="24dp"
-                android:background="#DBDBDB"
-                android:hint="　다른 음식 검색"
+                android:layout_marginTop="20dp"
+                android:background="@color/background_gray"
                 android:fontFamily="@font/a1009_1"
+                android:hint="　다른 음식 검색"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.534"
+                app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
@@ -243,8 +243,8 @@
                 android:id="@+id/ftext"
                 android:layout_width="72dp"
                 android:layout_height="25dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/a10092"
                 android:gravity="center"
                 android:text="음식 명"
@@ -377,7 +377,7 @@
                 android:fontFamily="@font/a10094"
                 android:text="상세 영양소"
                 android:textColor="#535353"
-                android:textSize="25dp"
+                android:textSize="24dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/imageView12" />
 
@@ -626,11 +626,27 @@
                 tools:layout_editor_absoluteY="48dp" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/addtoBtn"
+                android:layout_width="110dp"
+                android:layout_height="45dp"
+                android:background="@drawable/shape_yes_btn"
+                android:fontFamily="@font/a10093"
+                android:text="계속 등록하기"
+                android:textColor="#2E2E2E"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/addBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.447"
+                app:layout_constraintStart_toEndOf="@+id/addBtn"
+                app:layout_constraintTop_toTopOf="@+id/addBtn"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/backBtn"
                 android:layout_width="110dp"
                 android:layout_height="45dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/shape_yes_btn"
                 android:fontFamily="@font/a10093"
                 android:text="뒤로가기"
@@ -650,26 +666,20 @@
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/backBtn"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.098"
+                app:layout_constraintHorizontal_bias="0.105"
                 app:layout_constraintStart_toEndOf="@+id/backBtn"
                 app:layout_constraintTop_toTopOf="@+id/backBtn"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/addtoBtn"
-                android:layout_width="110dp"
-                android:layout_height="45dp"
-                android:background="@drawable/shape_yes_btn"
-                android:fontFamily="@font/a10093"
-                android:text="계속 등록하기"
-                android:textColor="#2E2E2E"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/addBtn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.464"
-                app:layout_constraintStart_toEndOf="@+id/addBtn"
-                app:layout_constraintTop_toTopOf="@+id/addBtn"
-                app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="abbbb"
+                android:textColor="#00000000"
+                tools:layout_editor_absoluteX="358dp"
+                tools:layout_editor_absoluteY="715dp"
+                tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

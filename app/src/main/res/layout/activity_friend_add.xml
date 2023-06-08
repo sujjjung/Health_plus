@@ -41,7 +41,7 @@
             android:layout_margin="20dp"
             android:fontFamily="@font/a10092"
             android:text="회원 목록"
-            android:textSize="20sp"
+            android:textSize="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
         <ListView
             android:id="@+id/UserList"
             android:layout_width="390dp"
-            android:layout_height="551dp"
+            android:layout_height="610dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="16dp"
@@ -76,11 +76,11 @@
 
         <EditText
             android:id="@+id/searchtext"
-            android:layout_width="273dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="40dp"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="44dp"
             android:layout_marginTop="12dp"
-            android:background="@null"
+            android:background="@color/background_gray"
             android:ems="10"
             android:fontFamily="@font/a1009_2"
             android:hint="검색할 닉네임"
@@ -92,16 +92,19 @@
 
         <ImageButton
             android:id="@+id/button"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:background="@color/white"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:layout_margin="3dp"
             android:scaleType="centerInside"
             android:text="Button"
+            android:background="@color/background_gray"
+            android:src="@drawable/search_black_24dp"
             app:layout_constraintBottom_toBottomOf="@+id/searchtext"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/searchtext"
+            app:layout_constraintHorizontal_bias="0.834"
+            app:layout_constraintStart_toStartOf="@+id/searchtext"
             app:layout_constraintTop_toTopOf="@+id/searchtext"
-            app:srcCompat="@drawable/search"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
