@@ -21,7 +21,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AdminExerciseSubAdd extends AppCompatActivity {
-    final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Button saveBtn;
     String s;
     @Override
@@ -57,8 +56,6 @@ public class AdminExerciseSubAdd extends AppCompatActivity {
             public void onClick(View view) {
                 String hName=((EditText)findViewById(R.id.HealthNameEdit)).getText().toString();
                 String hExplanation=((EditText)findViewById(R.id.HealthExplanationEdit)).getText().toString();
-                String hKcal=((EditText)findViewById(R.id.FHealthKcalEdit)).getText().toString();
-                String hunit=((EditText)findViewById(R.id.HealthunitEdit)).getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -81,7 +78,7 @@ public class AdminExerciseSubAdd extends AppCompatActivity {
                     }
                 };
                 // 서버로 Volley를 이용해서 요청을 함.
-                ExerciseRequest exerciseRequest = new ExerciseRequest(s,hName,hExplanation,hKcal,hunit,responseListener);
+                ExerciseRequest exerciseRequest = new ExerciseRequest(s,hName,hExplanation,responseListener);
                 RequestQueue queue = Volley.newRequestQueue(AdminExerciseSubAdd.this);
                 queue.add(exerciseRequest);
 

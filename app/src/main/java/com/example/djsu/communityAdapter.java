@@ -10,24 +10,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 public class communityAdapter extends BaseAdapter {
     private Context context;
     private List<User> Communitylist;
     private TextView name_textView,date,content;
     private ImageView photo;
+    private String Date = "";
     private ImageButton heart_btn,chat_bubble_btn,siren_btn;
+    User user = new User();
     public communityAdapter(Context context, List<User> Communitylist) {
         this.context = context;
         this.Communitylist = Communitylist;
@@ -53,7 +60,7 @@ public class communityAdapter extends BaseAdapter {
     @Override
     public View getView (final int position, View convertView, ViewGroup parent){
         View v = View.inflate(context, R.layout.item_community, null);
-        System.out.println("Dffds " + Communitylist.size());
+        Date = getTime();
         name_textView = v.findViewById(R.id.name_textView);
         name_textView.setText(Communitylist.get(position).getPostid());
 
@@ -72,9 +79,51 @@ public class communityAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, comment.class);
+                intent.putExtra("postId",Communitylist.get(position).getPostKey());
                 context.startActivity(intent);
             }
         });
+
+        siren_btn =  v.findViewById(R.id.siren_btn);
+        siren_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                view = LayoutInflater.from(context).inflate(R.layout.dialog_declaration, null, false);
+                builder.setView(view);
+                final Button SaveButton = (Button) view.findViewById(R.id.saveBtn);
+                final Button BackButton = (Button) view.findViewById(R.id.backBtn);
+                final EditText declarationText = (EditText) view.findViewById(R.id.declaration);
+                final AlertDialog dialog = builder.create();
+                SaveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        declarationRequest declarationRequest = new declarationRequest(user.getId(),String.valueOf(Communitylist.get(position).getPostKey()),
+                                Communitylist.get(position).getPostid(),declarationText.getText().toString(),Date);
+                        RequestQueue queue = Volley.newRequestQueue(context);
+                        queue.add(declarationRequest);
+                        Toast.makeText(context, "신고되었습니다.", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+                BackButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
         return v;
+    }
+
+    private String getTime() {
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String getTime = dateFormat.format(date);
+
+        return getTime;
     }
 }

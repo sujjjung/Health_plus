@@ -45,6 +45,7 @@ public class comment extends AppCompatActivity {
     private static final String TAG_CONTENT = "content";
     private static final String TAG_CREATED_AT = "created_at";
     private static final String TAG_USERID = "userId";
+    private static final String TAG_postId = "postId";
     JSONArray peoples = null;
     ArrayList<HashMap<String, String>> personList;
     ListView list;
@@ -54,7 +55,7 @@ public class comment extends AppCompatActivity {
     private Button post;
     User user = new User();
     private String userId = user.getId();
-    private int postId = 1; // 게시물 ID 불러오기
+    private int postId = 0; // 게시물 ID 불러오기
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +79,9 @@ public class comment extends AppCompatActivity {
                 return false;
             }
         });
+        Bundle extras = getIntent().getExtras();
 
-        Intent intent = getIntent();
+        postId = extras.getInt("postId");
 
         // 수정된 부분: 댓글 작성에 필요한 뷰 초기화
         et = findViewById(R.id.et);
@@ -115,17 +117,22 @@ public class comment extends AppCompatActivity {
 
             for (int i = 0; i < peoples.length(); i++) {
                 JSONObject c = peoples.getJSONObject(i);
-                String content = c.getString(TAG_CONTENT);
-                String created_at = c.getString(TAG_CREATED_AT);
-                String userId = c.getString(TAG_USERID);
+                int postId = Integer.parseInt(c.getString(TAG_postId));
+                if(this.postId == postId) {
+                    String content = c.getString(TAG_CONTENT);
+                    String created_at = c.getString(TAG_CREATED_AT);
+                    String userId = c.getString(TAG_USERID);
+                    HashMap<String, String> persons = new HashMap<>();
+                    persons.put(TAG_CONTENT, content);
+                    persons.put(TAG_CREATED_AT, created_at);
+                    persons.put(TAG_USERID, userId);
 
-                HashMap<String, String> persons = new HashMap<>();
-                persons.put(TAG_CONTENT, content);
-                persons.put(TAG_CREATED_AT, created_at);
-                persons.put(TAG_USERID, userId);
+                    personList.add(persons);
+                }
 
-                personList.add(persons);
             }
+
+
 
             ListAdapter adapter = new SimpleAdapter(
                     comment.this, personList, R.layout.item_comment,

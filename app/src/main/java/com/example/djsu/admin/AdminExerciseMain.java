@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,13 +12,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.example.djsu.Food;
 import com.example.djsu.Notice;
 import com.example.djsu.R;
 import com.example.djsu.exerciseLsit;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +33,10 @@ public class AdminExerciseMain extends AppCompatActivity {
     private AdminExerciseAdapter exerciseAdapter;
     ImageButton ExerciseAddBtn;
 
-    private AdminExerciseAdapter adapter;
-    private ListView listView;
-
+    private static final String TAG_RESULTS = "result";
+    private static final String TAG_ExName = "ExerciseName";
+    String myJSON;
+    JSONArray peoples = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +51,7 @@ public class AdminExerciseMain extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Intent intent = getIntent();
+
         exerciselsit = new ArrayList<>();
 
         exerciseAdapter = new AdminExerciseAdapter(this, exerciselsit);
@@ -51,29 +59,67 @@ public class AdminExerciseMain extends AppCompatActivity {
         ListView exListView = (ListView) findViewById(R.id.listView);
         exListView.setAdapter(exerciseAdapter);
 
+        getData("http://enejd0613.dothome.co.kr/exlist.php");
+    }
+    protected void showList() {
+        exerciseAdapter.notifyDataSetChanged();
         try {
-            exerciseAdapter.notifyDataSetChanged();
-            JSONObject jsonObject = new JSONObject(intent.getStringExtra("Ex"));
-            JSONArray jsonArray = jsonObject.getJSONArray("response");
-            int count = 0;
-            String ExName;
-            //JSON 배열 길이만큼 반복문을 실행
-            while (count < jsonArray.length()) {
-                //count는 배열의 인덱스를 의미
-                JSONObject object = jsonArray.getJSONObject(count);
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
 
-                ExName = object.getString("ExName");
-                //값들을 User클래스에 묶어줍니다
-                exerciseLsit exlsit = new exerciseLsit(ExName);
-                exerciselsit.add(exlsit);//리스트뷰에 값을 추가해줍니다
-                count++;
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String ExName = c.getString(TAG_ExName);
+                    exerciseLsit exlsit = new exerciseLsit(ExName);
+                    exerciselsit.add(exlsit);
+                }
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
 
             }
 
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showList();
+            }
         }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
 
     }
 }

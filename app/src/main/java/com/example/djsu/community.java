@@ -76,7 +76,6 @@ public class community extends AppCompatActivity {
     private static final String TAG_following_id = "following_id";
     JSONArray peoples = null;
     JSONArray peoples1 = null;
-    ArrayList<HashMap<String, String>> personList,FriendList;
     ListView list;
 
     @Override
@@ -165,14 +164,13 @@ public class community extends AppCompatActivity {
                 return false;
             }
         });
-        Intent intent = getIntent();
+
         // 게시글
         list = (ListView) findViewById(R.id.community);
         communityAdapter = new communityAdapter(this,Communitylist);
 
         list.setAdapter(communityAdapter);
-        personList = new ArrayList<HashMap<String, String>>();
-        FriendList = new ArrayList<HashMap<String, String>>();
+
         getFriendData("http://enejd0613.dothome.co.kr/FriendList.php");
         getData("http://enejd0613.dothome.co.kr/filedownload.php");
     }
@@ -192,7 +190,6 @@ public class community extends AppCompatActivity {
                         persons.put(TAG_following_id, following_id);
                         user1 = new User(following_id);
                         Friendlist.add(i, user1);
-                        FriendList.add(persons);
                     }
                 }
             }
@@ -259,7 +256,8 @@ public class community extends AppCompatActivity {
                             String image = c.getString(TAG_IMAGE);
                             String date = c.getString(TAG_DATE);
                             String content = c.getString(TAG_CONTENT);
-                            User user = new User(id,content,image,date);
+                            String postId = c.getString(TAG_postId);
+                            User user = new User(Integer.parseInt(postId),id,content,image,date);
                             Communitylist.add(user);
                         }
                     }
@@ -272,7 +270,8 @@ public class community extends AppCompatActivity {
                         String image = c.getString(TAG_IMAGE);
                         String date = c.getString(TAG_DATE);
                         String content = c.getString(TAG_CONTENT);
-                        User user = new User(id,content,image,date);
+                        String postId = c.getString(TAG_postId);
+                        User user = new User(Integer.parseInt(postId),id,content,image,date);
                         Communitylist.add(user);
                     }
                 }

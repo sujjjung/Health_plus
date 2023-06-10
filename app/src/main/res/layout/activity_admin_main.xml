@@ -99,7 +99,7 @@
         app:layout_constraintTop_toTopOf="@+id/exerciseBtn" />
 
     <ImageButton
-        android:id="@+id/imageButton5"
+        android:id="@+id/declarationBtn"
         android:layout_width="340dp"
         android:layout_height="70dp"
         android:layout_marginTop="40dp"
@@ -116,10 +116,10 @@
         android:text="신고 관리"
         android:textColor="#333333"
         android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton5"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton5"
-        app:layout_constraintStart_toStartOf="@+id/imageButton5"
-        app:layout_constraintTop_toTopOf="@+id/imageButton5" />
+        app:layout_constraintBottom_toBottomOf="@+id/declarationBtn"
+        app:layout_constraintEnd_toEndOf="@+id/declarationBtn"
+        app:layout_constraintStart_toStartOf="@+id/declarationBtn"
+        app:layout_constraintTop_toTopOf="@+id/declarationBtn" />
 
     <ImageButton
         android:id="@+id/NoticeBtn"
@@ -131,7 +131,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton5" />
+        app:layout_constraintTop_toBottomOf="@+id/declarationBtn" />
 
     <TextView
         android:layout_width="wrap_content"
