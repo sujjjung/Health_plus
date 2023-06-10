@@ -3,14 +3,38 @@ package com.example.djsu;
 import java.io.Serializable;
 
 public class User implements Serializable {
+    // 음식관련 변수
     private String Date,FoodName,EatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
+    int FcCode,EcCode,quantity;
+    // 운동관련 변수
     private String ExerciseName,ExercisePart,ExercisesetNumber, ExerciseNumber,Exerciseunit,Time,ExerciseCode;
-    private String RoutineName;
+    // 루틴관련 변수
+    private String RoutineName, friend;
+    // 사용자관련 변수
     static private String Id, Name, State, Profile, Age, Password;
     static private int CurrentSteps;
-    int FcCode,EcCode,quantity;
+    // 물관련 변수
     static private String Water;
+    // 만보기관련 변수
     static private String WalkGoal;
+    // 커뮤니티관련 변수
+    private String postid,content,image , postdate;
+
+    public User(String postid,String content,String image,String postdate) {
+        this.postid = postid;
+        this.content = content;
+        this.image = image;
+        this.postdate = postdate;
+    }
+
+
+    public String getFriend() {
+        return friend;
+    }
+
+    public void setFriend(String friend) {
+        this.friend = friend;
+    }
 
     public String getExerciseCode() {
         return ExerciseCode;
@@ -21,6 +45,8 @@ public class User implements Serializable {
     }
 
     public User() {}
+
+    public User(String Friend) {this.friend = Friend; }
 
     public void AddRoutine(String RoutineName,String ExerciseCode,String ExerciseName,String exercisePart) {
         this.RoutineName = RoutineName;
@@ -297,5 +323,38 @@ public class User implements Serializable {
 
     public void setEcCode(int ecCode) {
         EcCode = ecCode;
+    }
+
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getPostdate() {
+        return postdate;
+    }
+
+    public void setPostdate(String postdate) {
+        this.postdate = postdate;
+    }
+
+    public String getPostid() {
+        return postid;
+    }
+
+    public void setPostid(String postid) {
+        this.postid = postid;
     }
 }
