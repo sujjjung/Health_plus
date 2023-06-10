@@ -5,13 +5,18 @@ import java.io.Serializable;
 public class User implements Serializable {
     // 음식관련 변수
     private String Date,FoodName,EatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
+
     int FcCode,EcCode,quantity;
     // 운동관련 변수
+
+    static private String Nondisclosure;
+
     private String ExerciseName,ExercisePart,ExercisesetNumber, ExerciseNumber,Exerciseunit,Time,ExerciseCode;
     // 루틴관련 변수
     private String RoutineName, friend;
     // 사용자관련 변수
     static private String Id, Name, State, Profile, Age, Password;
+
     static private int CurrentSteps;
     // 물관련 변수
     static private String Water;
@@ -165,13 +170,15 @@ public class User implements Serializable {
         FoodKg = foodKg;
         FcCode = fccode;
     }
+    //
 
-    public User(String id, String name, String profile, String age, String state) {
+    public User(String id, String name, String profile, String age, String state, String Nondisclosure) {
         Id = id;
         Name = name;
         Profile = profile;
         Age = age;
         State = state;
+        Nondisclosure = Nondisclosure;
     }
 
     public User(String date, String foodName, String eatingTime) {
@@ -325,7 +332,6 @@ public class User implements Serializable {
         EcCode = ecCode;
     }
 
-
     public String getContent() {
         return content;
     }
@@ -356,5 +362,13 @@ public class User implements Serializable {
 
     public void setPostid(String postid) {
         this.postid = postid;
+
+    public static String getNondisclosure() {
+        return Nondisclosure;
+    }
+
+    public static void setNondisclosure(String nondisclosure) {
+        Nondisclosure = nondisclosure;
+
     }
 }

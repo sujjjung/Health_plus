@@ -7,6 +7,9 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class dialog_status {
     private Context context;
     private String text;
@@ -43,12 +46,18 @@ public class dialog_status {
                 dlg.onBackPressed();
             }
         });
+        User user = new User();
+        String userID = user.getId();
+
+        //Firebase realtime -> 한줄메시지 변경
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User").child(userID);
 
         conformBtn.setOnClickListener(new View.OnClickListener() { // 수정 버튼 눌렀을 때
             @Override
             public void onClick(View view) {
                 String ModifyedText = scaneET.getText().toString(); //스케너에 있는 텍스트 String으로 가져오기
                 modifyReturnListener.afterModify(ModifyedText);
+                databaseReference.child("state").setValue(ModifyedText);
                 dlg.onBackPressed();
             }
         });

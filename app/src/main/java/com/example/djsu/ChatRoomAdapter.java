@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import kotlin.jvm.Volatile;
+
 public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyViewHolder> {
+    private final RecyclerView mRecyclerView;
     private List<ChatData> mDataSet;
     private String myNickName;
 
@@ -36,9 +39,10 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
         }
     }
 
-    public ChatRoomAdapter(List<ChatData> myDataset, Context context, String myNickName) {
+    public ChatRoomAdapter(List<ChatData> myDataset, Context context, String myNickName, RecyclerView recyclerView) {
         mDataSet = myDataset;
         this.myNickName = myNickName;
+        this.mRecyclerView = recyclerView;
     }
 
     // Create new views (invoked by the layout manager)
@@ -89,6 +93,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
     public void addChat(ChatData chat) {
         mDataSet.add(chat);
         notifyItemInserted(mDataSet.size()-1);
-
+        mRecyclerView.smoothScrollToPosition(mDataSet.size() - 1);
     }
+
 }

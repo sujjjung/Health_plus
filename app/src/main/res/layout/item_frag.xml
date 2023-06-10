@@ -12,24 +12,14 @@
         android:orientation="horizontal"
         android:padding="20dp">
 
-
-        <ImageView
-            android:id="@+id/profile"
-            android:layout_width="64dp"
-            android:layout_height="59dp"
-            android:src="@drawable/ic_man" />-->
-
-        <!--이름-->
-
-        <!--상태 메시지-->
-
-
         <TextView
             android:id="@+id/ExName"
-            android:layout_width="105dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:text="이름"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/a10091"
+            android:text="운동 이름"
             android:textColor="#000"
             android:textSize="20sp" />
 

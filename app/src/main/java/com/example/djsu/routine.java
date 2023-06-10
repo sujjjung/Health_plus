@@ -31,19 +31,29 @@ import java.util.List;
 public class routine extends AppCompatActivity {
     private List<User> routineList;
     private userRoutineAdapter userRoutineAdapter;
+    private ArrayList<User> search_list;
     private EditText editText;
     // 햄버거 버튼
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    String Date;
-    Button RoutineAddBtn;
+    String Date, searchName = "";
+    Button RoutineAddBtn, editBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routine);
         Bundle extras = getIntent().getExtras();
+        search_list = new ArrayList<>();
         editText = findViewById(R.id.search_routine);
+
+
+        Date = extras.getString("Date");
+        Intent intent = getIntent();
+        routineList = new ArrayList<>();
+        userRoutineAdapter = new userRoutineAdapter(this,routineList,Date);
+        ListView exView = (ListView) findViewById(R.id.recycler_routine);
+        exView.setAdapter(userRoutineAdapter);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -52,37 +62,31 @@ public class routine extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                ArrayList<User> search_list = new ArrayList<>();
+
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
                 String searchText = editText.getText().toString();
                 search_list.clear();
 
-                if (searchText.equals("")) {
+                if(searchText.equals("")){
                     userRoutineAdapter.setItems((ArrayList<User>) routineList);
-                } else {
+                }
+                else {
                     // 검색 단어를 포함하는지 확인
                     for (int a = 0; a < routineList.size(); a++) {
                         if (routineList.get(a).getRoutineName().toLowerCase().contains(searchText.toLowerCase())) {
-                            search_list.add(routineList.get(a));
+                            if(searchName.equals(routineList.get(a).getRoutineName()) == false){
+                                search_list.add(routineList.get(a));
+                                searchName = routineList.get(a).getRoutineName();
+                            }
                         }
                         userRoutineAdapter.setItems(search_list);
                     }
                 }
             }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-
         });
-        Date = extras.getString("Date");
-        Intent intent = getIntent();
-        routineList = new ArrayList<>();
-        userRoutineAdapter = new userRoutineAdapter(this,routineList,Date);
-        ListView exView = (ListView) findViewById(R.id.recycler_routine);
-        exView.setAdapter(userRoutineAdapter);
-        User user1 = new User();
-
         try {
             userRoutineAdapter.notifyDataSetChanged();
             JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserRoutine"));
@@ -100,19 +104,16 @@ public class routine extends AppCompatActivity {
                 User user = new User();
                 user.AddRoutine(RoutineName,ExerciseCode,ExerciseName,ExercisePart);
                 UserID = object.getString("UserID");
-                if(UserID.equals(user1.getId())) {
+                if(UserID.equals(user.getId())) {
                     routineList.add(user);//리스트뷰에 값을 추가해줍니다
                 }
                 count++;
             };
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         RoutineAddBtn = findViewById(R.id.RoutineAdd);
-
+        editBtn = findViewById(R.id.edit);
         RoutineAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,10 +128,18 @@ public class routine extends AppCompatActivity {
                 SaveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        for (int i = 0; i < routineList.size(); i++) {
+                            if (routineList.get(i).getRoutineName().equals(RoutineNameText.getText().toString())) {
+                                Toast.makeText(routine.this, "동일한 이름의 루틴이 있습니다!", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                                return;
+                            }
+                        }
                         Intent intent = new Intent(routine.this, HealthAddActivity.class);
                         intent.putExtra("Date", Date);
                         intent.putExtra("RoutineNameText", RoutineNameText.getText().toString());
                         startActivity(intent);
+                        dialog.dismiss();
                         finish();
                     }
                 });
@@ -143,7 +152,13 @@ public class routine extends AppCompatActivity {
                 dialog.show();
             }
         });
-
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userRoutineAdapter.ButtonChange(1);
+                userRoutineAdapter.notifyDataSetChanged();
+            }
+        });
         // 햄버거 버튼
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
