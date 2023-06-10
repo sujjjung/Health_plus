@@ -11,14 +11,12 @@ public class ExerciseRequest extends StringRequest {
     final static private String URL = "http://enejd0613.dothome.co.kr/exercise.php";
     private Map<String, String> map;
 
-    public ExerciseRequest(String ExPart, String ExName, String ExExplanation, String ExCalorie, String ExUnit, Response.Listener<String> listener) {
+    public ExerciseRequest(String ExPart, String ExName, String ExExplanation, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
         map = new HashMap<>();
         map.put("ExPart", ExPart);
         map.put("ExName", ExName);
         map.put("ExExplanation", ExExplanation);
-        map.put("ExCalorie", ExCalorie);
-        map.put("ExUnit",ExUnit);
     }
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {

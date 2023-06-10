@@ -19,8 +19,10 @@ import java.io.Serializable;
         static private String WalkGoal;
         // 커뮤니티관련 변수
         private String postid,content,image , postdate;
+        private int postKey;
         static private String Nondisclosure;
-        public User(String postid,String content,String image,String postdate) {
+        public User(int postKey,String postid,String content,String image,String postdate) {
+            this.postKey = postKey;
             this.postid = postid;
             this.content = content;
             this.image = image;
@@ -364,5 +366,13 @@ import java.io.Serializable;
 
         public static void setNondisclosure(String nondisclosure) {
             Nondisclosure = nondisclosure;
+        }
+
+        public int getPostKey() {
+            return postKey;
+        }
+
+        public void setPostKey(int postKey) {
+            this.postKey = postKey;
         }
     }

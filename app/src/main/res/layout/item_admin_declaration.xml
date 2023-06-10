@@ -12,7 +12,6 @@
         android:orientation="horizontal"
         android:padding="20dp">
 
-
         <TextView
             android:id="@+id/FoodName"
             android:layout_width="118dp"
@@ -33,11 +32,11 @@
             android:textColor="@color/black" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:background="@drawable/shape_yes_btn"
             android:id="@+id/delete"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:background="@drawable/shape_yes_btn"
             android:fontFamily="@font/a10091"
             android:text="삭제"
             android:textColor="@color/black"
