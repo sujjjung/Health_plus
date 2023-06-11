@@ -186,8 +186,6 @@ public class community extends AppCompatActivity {
                     String id = c.getString(TAG_USER_ID);
                     if (user1.getId().equals(id)) {
                         String following_id = c.getString(TAG_following_id);
-                        HashMap<String, String> persons = new HashMap<String, String>();
-                        persons.put(TAG_following_id, following_id);
                         user1 = new User(following_id);
                         Friendlist.add(i, user1);
                     }

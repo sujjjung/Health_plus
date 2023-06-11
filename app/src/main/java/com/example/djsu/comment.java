@@ -37,7 +37,8 @@ public class comment extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-
+    private ArrayList<User> commentList = new ArrayList<>();
+    private commentAdapter commentAdapter;
     // 댓글 출력
     String myJSON;
 
@@ -46,8 +47,8 @@ public class comment extends AppCompatActivity {
     private static final String TAG_CREATED_AT = "created_at";
     private static final String TAG_USERID = "userId";
     private static final String TAG_postId = "postId";
+    private static final String TAG_id = "id";
     JSONArray peoples = null;
-    ArrayList<HashMap<String, String>> personList;
     ListView list;
 
     // 수정된 부분: 댓글 작성에 필요한 변수 추가
@@ -96,7 +97,9 @@ public class comment extends AppCompatActivity {
 
         // 댓글 출력
         list = findViewById(R.id.comment_list);
-        personList = new ArrayList<>();
+        commentAdapter = new commentAdapter(this,commentList);
+
+        list.setAdapter(commentAdapter);
         getData("http://enejd0613.dothome.co.kr/get_comments.php");
     }
 
@@ -111,10 +114,10 @@ public class comment extends AppCompatActivity {
     }
 
     protected void showList() {
+        commentAdapter.notifyDataSetChanged();
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
             peoples = jsonObj.getJSONArray(TAG_RESULTS);
-
             for (int i = 0; i < peoples.length(); i++) {
                 JSONObject c = peoples.getJSONObject(i);
                 int postId = Integer.parseInt(c.getString(TAG_postId));
@@ -122,25 +125,14 @@ public class comment extends AppCompatActivity {
                     String content = c.getString(TAG_CONTENT);
                     String created_at = c.getString(TAG_CREATED_AT);
                     String userId = c.getString(TAG_USERID);
-                    HashMap<String, String> persons = new HashMap<>();
-                    persons.put(TAG_CONTENT, content);
-                    persons.put(TAG_CREATED_AT, created_at);
-                    persons.put(TAG_USERID, userId);
+                    int commentId = Integer.parseInt(c.getString(TAG_id));
+                    user = new User(commentId,postId,content,created_at,userId);
+                    commentList.add(user);
 
-                    personList.add(persons);
                 }
 
             }
 
-
-
-            ListAdapter adapter = new SimpleAdapter(
-                    comment.this, personList, R.layout.item_comment,
-                    new String[]{TAG_CONTENT, TAG_CREATED_AT, TAG_USERID},
-                    new int[]{R.id.userComment, R.id.date, R.id.userName}
-            );
-
-            list.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -221,6 +213,7 @@ public class comment extends AppCompatActivity {
                 if (result != null) {
                     // 댓글 저장 성공
                     // 댓글 리스트를 다시 가져와서 업데이트
+                    commentList.clear();
                     getData("http://enejd0613.dothome.co.kr/get_comments.php");
                 } else {
                     // 댓글 저장 실패

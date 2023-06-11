@@ -56,11 +56,12 @@ public class userFood extends AppCompatActivity {
         userFoodAdapter = new UserFoodAdapter(this,userList);
         ListView userfoodListView = (ListView) findViewById(R.id.FoodView);
         userfoodListView.setAdapter(userFoodAdapter);
+
         Bundle extras = getIntent().getExtras();
         datetext = findViewById(R.id.date_textView);
         date = extras.getString("Date");
         datetext.setText(date);
-
+        userList.clear();
         getData("http://enejd0613.dothome.co.kr/foodcalendarlist.php");
     }
     protected void showList() {
