@@ -41,8 +41,6 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class HealthAddActivity extends AppCompatActivity {
-    String target;
-    int a;
     Fragment fragment1, fragment2, fragment3, fragment4, fragment5, fragment6, fragment7, fragment8;
     private Toolbar toolbar;
     private NavigationView navigationView;
@@ -79,52 +77,91 @@ public class HealthAddActivity extends AppCompatActivity {
                     queue.add(routineRequest);
                 }
                 Toast.makeText(HealthAddActivity.this, "등록 완료되었습니다!", Toast.LENGTH_SHORT).show();
-                new UserFoodListBackgroundTask().execute();
+                Intent intent = new Intent(HealthAddActivity.this, routine.class);
+                intent.putExtra("Date", Date);
+                startActivity(intent);
+                finish();
             }
         });
 
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new RoutineBackgroundTask(Date).execute();
+                Intent intent = new Intent(HealthAddActivity.this, routine.class);
+                intent.putExtra("Date", Date);
+                startActivity(intent);
+                finish();
             }
         });
-
-        new ExBackgroundTask(a= 0,target = "http://enejd0613.dothome.co.kr/exlist.php").execute();
+        Bundle bundle = new Bundle();
+        fragment1 = new Fragment1();
+        //4. 프래그먼트에 데이터 넘기기
+        fragment1.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment1).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment1).commit();
 
         TabLayout tabs = (TabLayout)findViewById(R.id.tabs);
 
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
+                Bundle bundle = new Bundle();
+                //2. 데이터 담기
+                bundle.putString("Date",Date);
+                bundle.putString("RoutineNameText",RoutineNameText);
                 int position = tab.getPosition();
                 if(position == 0){
-                    new ExBackgroundTask(a= 0,target = "http://enejd0613.dothome.co.kr/exlist.php").execute();
+                    fragment1 = new Fragment1();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment1.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment1).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment1).commit();
                 }else if (position == 1){
-
-                    new ExBackgroundTask(a= 1,target = "http://enejd0613.dothome.co.kr/rowexlist.php").execute();
-
+                    fragment2 = new Fragment2();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment2.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment2).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment2).commit();
                 }else if (position == 2){
-                    new ExBackgroundTask(a= 2,target = "http://enejd0613.dothome.co.kr/chestexlist.php").execute();
-
+                    fragment3 = new Fragment3();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment3.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment3).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment3).commit();
                 }else if (position == 3){
-                    new ExBackgroundTask(a= 3,target = "http://enejd0613.dothome.co.kr/etcexlist.php").execute();
+                    fragment4 = new Fragment4();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment4.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment4).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment4).commit();
                 }
                 else if (position == 4){
-                    new ExBackgroundTask(a= 4,target = "http://enejd0613.dothome.co.kr/Absexlist.php").execute();
+                    fragment5 = new Fragment5();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment5.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment5).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment5).commit();
                 }
                 else if (position == 5){
-
-                    new ExBackgroundTask(a= 5,target = "http://enejd0613.dothome.co.kr/shoulderexlist.php").execute();
+                    fragment6 = new Fragment6();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment6.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment6).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment6).commit();
                 }
                 else if (position == 6){
-
-                    new ExBackgroundTask(a= 6,target = "http://enejd0613.dothome.co.kr/eightexlist.php").execute();
+                    fragment7 = new Fragment7();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment7.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment7).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment7).commit();
                 }
                 else if (position == 7){
-
-                    new ExBackgroundTask(a= 7,target = "http://enejd0613.dothome.co.kr/aerobicexlist.php").execute();
+                    fragment8 = new Fragment8();
+                    //4. 프래그먼트에 데이터 넘기기
+                    fragment8.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment8).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment8).commit();
                 }
 
             }
@@ -145,11 +182,12 @@ public class HealthAddActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home:
-                        mainkcalBackgroundTask mainkcalBackgroundTask = new mainkcalBackgroundTask(HealthAddActivity.this);
-                        mainkcalBackgroundTask.execute();
+                        Intent Mainintent = new Intent(getApplicationContext(), main_user.class);
+                        startActivity(Mainintent);
                         return true;
                     case R.id.calender:
-                        new UserFoodListBackgroundTask().execute();
+                        Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
+                        startActivity(intent);
                         return true;
                     case R.id.communety:
                         Intent communetyintent = new Intent(getApplicationContext(), community.class);
@@ -168,8 +206,8 @@ public class HealthAddActivity extends AppCompatActivity {
                         startActivity(manbogiintent);
                         return true;
                     case R.id.annoucement:
-                        NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(HealthAddActivity.this);
-                        noticeBackgroundTask.execute();
+                        Intent Noticeintent = new Intent(getApplicationContext(), annoucement.class);
+                        startActivity(Noticeintent);
                         return true;
                     case R.id.friend:
                         Intent friend = new Intent(getApplicationContext(), chatList.class);
@@ -190,208 +228,5 @@ public class HealthAddActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    class ExBackgroundTask extends AsyncTask<Void, Void, String> {
-        String target;
-        int a;
-        public ExBackgroundTask(int i,String target) {
-            this.a = i;
-            this.target = target;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            //List.php은 파싱으로 가져올 웹페이지
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-
-            try {
-                URL url = new URL(target);//URL 객체 생성
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String temp;StringBuilder stringBuilder = new StringBuilder();
-                while ((temp = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
-                }
-
-                //사용했던 것도 다 닫아줌
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        protected void onPostExecute(String result) {
-            Bundle bundle = new Bundle();
-            //2. 데이터 담기
-            bundle.putString("exercise",result);
-            bundle.putString("Date",Date);
-            bundle.putString("RoutineNameText",RoutineNameText);
-            switch (a){
-                case 0:  fragment1 = new Fragment1();
-                    //4. 프래그먼트에 데이터 넘기기
-                    fragment1.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment1).commit();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment1).commit();
-                    break;
-                case 1:  fragment2 = new Fragment2();
-                    //4. 프래그먼트에 데이터 넘기기
-                    fragment2.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment2).commit();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment2).commit();
-                    break;
-                case 2:  fragment3 = new Fragment3();
-                    //4. 프래그먼트에 데이터 넘기기
-                    fragment3.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment3).commit();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment3).commit();
-                    break;
-                case 3:  fragment4 = new Fragment4();
-                    //4. 프래그먼트에 데이터 넘기기
-                    fragment4.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment4).commit();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment4).commit();
-                    break;
-                case 4:  fragment5 = new Fragment5();
-                    //4. 프래그먼트에 데이터 넘기기
-                    fragment5.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment5).commit();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment5).commit();
-                    break;
-                case 5:  fragment6 = new Fragment6();
-                    //4. 프래그먼트에 데이터 넘기기
-                    fragment6.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment6).commit();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment6).commit();
-                    break;
-                case 6:  fragment7 = new Fragment7();
-                    //4. 프래그먼트에 데이터 넘기기
-                    fragment7.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment7).commit();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment7).commit();
-                    break;
-                case 7:  fragment8 = new Fragment8();
-                    //4. 프래그먼트에 데이터 넘기기
-                    fragment8.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment8).commit();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment8).commit();
-                    break;
-            }
-
-        }
-    }
-
-    class RoutineBackgroundTask extends AsyncTask<Void, Void, String> {
-        String target;
-        String Date;
-
-        public RoutineBackgroundTask(String date) {
-            this.Date = date;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            //List.php은 파싱으로 가져올 웹페이지
-            target = "http://enejd0613.dothome.co.kr/Routinelist.php";
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-
-            try {
-                URL url = new URL(target);//URL 객체 생성
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String temp;StringBuilder stringBuilder = new StringBuilder();
-                while ((temp = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
-                }
-
-                //사용했던 것도 다 닫아줌
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        protected void onPostExecute(String result) {
-            Intent intent = new Intent(HealthAddActivity.this, routine.class);
-            intent.putExtra("UserRoutine", result);
-            intent.putExtra("Date", Date);
-            startActivity(intent);
-            finish();
-        }
-    }
-
-    class UserFoodListBackgroundTask extends AsyncTask<Void, Void, String> {
-        String target;
-        String Date;
-
-        public UserFoodListBackgroundTask() {}
-
-        @Override
-        protected void onPreExecute() {
-            //List.php은 파싱으로 가져올 웹페이지
-            target = "http://enejd0613.dothome.co.kr/foodcalendarlist.php";
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-
-            try {
-                URL url = new URL(target);//URL 객체 생성
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String temp;StringBuilder stringBuilder = new StringBuilder();
-                while ((temp = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
-                }
-
-                //사용했던 것도 다 닫아줌
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        protected void onPostExecute(String result) {
-            Intent intent = new Intent(HealthAddActivity.this, CalendarActivity.class);
-            intent.putExtra("UserFood", result);
-            userRoutine.getRoutineArrayList().clear();
-                        startActivity(intent);
-            finish();
-        }
     }
 }

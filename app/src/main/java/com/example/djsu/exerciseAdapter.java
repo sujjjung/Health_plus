@@ -55,14 +55,12 @@ public class exerciseAdapter extends BaseAdapter {
         String ExCode,ExPart,ExExplanation,ExCalorie,ExUnit;
         View v = View.inflate(context, R.layout.item_frag, null);
         UserRoutine userRoutine = new UserRoutine();
-        // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
         TextView ExName = (TextView) v.findViewById(R.id.ExName);
         ExCode = exList.get(position).getExCode();
         ExPart = exList.get(position).getExPart();
         ExName.setText(exList.get(position).getExerciseName());
         ExExplanation = exList.get(position).getExerciseExplanation();
-        ExCalorie = exList.get(position).getExerciseCalorie();
-        ExUnit = exList.get(position).getExerciseUnit();
+
         v.setTag(exList.get(position).getExerciseName());
         Button selectBtn = (Button) v.findViewById(R.id.select);
         selectBtn.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +72,7 @@ public class exerciseAdapter extends BaseAdapter {
                     selectedItems.remove(count - 1); // Remove at the correct index
                 } else {
                     // Not selected item, select it
-                    userRoutine.AddUserRoutine(RoutineNameText, ExCode, ExPart, ExName.getText().toString(), ExCalorie, ExUnit);
+                    userRoutine.AddUserRoutine(RoutineNameText, ExCode, ExPart, ExName.getText().toString());
                     selectedItems.add(count, userRoutine); // Add at the correct index
                     userRoutine.setRoutineArrayList(selectedItems);
                 }

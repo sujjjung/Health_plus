@@ -288,8 +288,7 @@
                 app:layout_constraintStart_toEndOf="@+id/textView21"
                 app:layout_constraintTop_toTopOf="@+id/textView21" />
 
-
-            <androidx.appcompat.widget.AppCompatButton
+            <TextView
                 android:id="@+id/btn_exercise"
                 android:layout_width="72dp"
                 android:layout_height="25dp"

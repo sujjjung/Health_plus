@@ -112,8 +112,8 @@ public class login extends AppCompatActivity {
                                 user.setProfile(profile);
                                 user.setAge(age);
                                 user.setPassword(password);
-                                mainkcalBackgroundTask mainkcalBackgroundTask = new mainkcalBackgroundTask(login.this);
-                                mainkcalBackgroundTask.execute();
+                                Intent Mainintent = new Intent(getApplicationContext(), main_user.class);
+                                startActivity(Mainintent);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

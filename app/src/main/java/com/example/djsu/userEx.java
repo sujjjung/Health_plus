@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -28,59 +29,107 @@ import java.util.List;
 public class userEx extends AppCompatActivity {
     private List<User> userList;
     private UserExAdapter userExAdapter;
-    private EditText editText;
     private TextView datetext;
+    private static final String TAG_RESULTS = "result";
+    private static final String TAG_Date = "Date";
+    private static final String TAG_UserId  = "UserId";
+    private static final String TAG_ExName = "ExerciseName";
+    private static final String TAG_ExPart = "ExercisePart";
+    private static final String TAG_ExerciseSetNumber = "ExerciseSetNumber";
+    private static final String TAG_ExerciseNumber = "ExerciseNumber";
+    private static final String TAG_ExerciseUnit= "ExerciseUnit";
+    private static final String TAG_Time = "Time";
+    private static final String TAG_EcCode = "EcCode";
+    String myJSON;
+    JSONArray peoples = null;
     String date;
+    User user = new User();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_ex);
-        Intent intent = getIntent();
         userList = new ArrayList<>();
         userExAdapter = new UserExAdapter(this,userList);
         ListView exView = (ListView) findViewById(R.id.exView);
         exView.setAdapter(userExAdapter);
-        User user1 = new User();
         Bundle extras = getIntent().getExtras();
         datetext = findViewById(R.id.date_textView);
         date = extras.getString("Date");
         datetext.setText(date);
+
+        getData("http://enejd0613.dothome.co.kr/excalendarlist.php");
+    }
+    protected void showList() {
+        userExAdapter.notifyDataSetChanged();
         try {
-            userExAdapter.notifyDataSetChanged();
-            JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserEx"));
-            JSONArray jsonArray = jsonObject.getJSONArray("response");
-            int count = 0;
-            String Date,UserID,ExerciseCode,ExerciseName,ExercisePart,Time,ExerciseUnit;
-            int ExerciseSetNumber,ExerciseNumber,EcCode;
-            //JSON 배열 길이만큼 반복문을 실행
-            while (count < jsonArray.length()) {
-                //count는 배열의 인덱스를 의미
-                JSONObject object = jsonArray.getJSONObject(count);
-                Date = object.getString("Date");
-                ExerciseCode = object.getString("ExerciseCode");
-                ExerciseName = object.getString("ExerciseName");
-                ExercisePart = object.getString("ExercisePart");
-                ExerciseSetNumber = Integer.parseInt(object.getString("ExerciseSetNumber"));
-                ExerciseNumber = Integer.parseInt(object.getString("ExerciseNumber"));
-                ExerciseUnit = object.getString("ExerciseUnit");
-                Time = object.getString("Time");
-                EcCode = Integer.parseInt(object.getString("EcCode"));
-                //값들을 User클래스에 묶어줍니다
-                User user = new User(Date,ExerciseName,ExercisePart,String.valueOf(ExerciseSetNumber),String.valueOf(ExerciseNumber),ExerciseUnit,Time,EcCode);
-                UserID = object.getString("UserID");
-                if(UserID.equals(user1.getId())) {
-                    if(date.equals(Date)) {
-                        userList.add(user);//리스트뷰에 값을 추가해줍니다
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String UserId = c.getString(TAG_UserId);
+                    String Date = c.getString(TAG_Date);
+                    if(UserId.equals(user.getId())) {
+                        if(date.equals(Date)) {;
+                            String ExerciseName = c.getString(TAG_ExName);
+                            String ExPart = c.getString(TAG_ExPart);
+                            String ExerciseSetNumber = c.getString(TAG_ExerciseSetNumber);
+                            String ExerciseNumber = c.getString(TAG_ExerciseNumber);
+                            String ExerciseUnit = c.getString(TAG_ExerciseUnit);
+                            String Time = c.getString(TAG_Time);
+                            String EcCode = c.getString(TAG_EcCode);
+                            User user = new User(Date,ExerciseName,ExPart,ExerciseSetNumber,ExerciseNumber,ExerciseUnit,Time,Integer.parseInt(EcCode));
+                            userList.add(user);//리스트뷰에 값을 추가해줍니다
+                        }
                     }
                 }
-                count++;
-            };
 
-
-
-        } catch (Exception e) {
+            }
+        } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void getData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
 
     }
 
