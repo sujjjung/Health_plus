@@ -24,12 +24,10 @@ import java.util.List;
 public class NoticeAdapter extends BaseAdapter {
     private Context context;
     private List<Notice> NoticeList;
-    private Activity parentActivity;
 
     public NoticeAdapter(Context context, List<Notice> NoticeList) {
         this.context = context;
         this.NoticeList = NoticeList;
-        this.parentActivity = parentActivity;
     }
     @Override
     public int getCount () {

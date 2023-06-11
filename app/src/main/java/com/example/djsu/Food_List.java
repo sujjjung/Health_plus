@@ -1,6 +1,7 @@
 package com.example.djsu;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,8 +10,13 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +27,22 @@ public class Food_List extends AppCompatActivity {
     private FoodAdapter foodAdapter;
     private EditText editText;
     String Date,search;
+    private static final String TAG_RESULTS = "result";
+    private static final String TAG_FoodCode = "FoodCode";
+    private static final String TAG_FoodName = "FoodName";
+    private static final String TAG_FoodKcal = "FoodKcal";
+    private static final String TAG_FoodCarbohydrate = "FoodCarbohydrate";
+    private static final String TAG_FoodProtein = "FoodProtein";
+    private static final String TAG_FoodFat = "FoodFat";
+    private static final String TAG_FoodSodium = "FoodSodium";
+    private static final String TAG_FoodSugar = "FoodSugar";
+    private static final String TAG_FoodKg = "FoodKg";
+    String myJSON;
+    JSONArray peoples = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
-        Intent intent = getIntent();
         ArrayList<Food> search_list = new ArrayList<>();
         foodArrayList = new ArrayList<>();
         editText = findViewById(R.id.searchtext);
@@ -40,41 +57,6 @@ public class Food_List extends AppCompatActivity {
 
         ListView foodListView = (ListView) findViewById(R.id.FoodView);
         foodListView.setAdapter(foodAdapter);
-
-        try {
-            foodAdapter.notifyDataSetChanged();
-            JSONObject jsonObject = new JSONObject(intent.getStringExtra("Food"));
-            JSONArray jsonArray = jsonObject.getJSONArray("response");
-            int count = 0;
-            String FoodName;
-            float FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg;
-            int FoodCood;
-            //JSON 배열 길이만큼 반복문을 실행
-            while (count < jsonArray.length()) {
-                //count는 배열의 인덱스를 의미
-                JSONObject object = jsonArray.getJSONObject(count);
-
-                FoodCood = Integer.parseInt(object.getString("FoodCood"));
-                FoodName = object.getString("FoodName");
-                FoodKcal = object.getInt("FoodKcal");
-                FoodCarbohydrate = object.getInt("FoodCarbohydrate");
-                FoodProtein = object.getInt("FoodProtein");
-                FoodFat = object.getInt("FoodFat");
-                FoodSodium = object.getInt("FoodSodium");
-                FoodSugar = object.getInt("FoodSugar");
-                FoodKg = object.getInt("FoodKg");
-
-                //값들을 User클래스에 묶어줍니다
-                Food food = new Food(FoodCood,FoodName,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg);
-                foodArrayList.add(food);//리스트뷰에 값을 추가해줍니다
-                count++;
-
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         int num = extras.getInt("num");
         switch (num){
             case 1: break;
@@ -124,7 +106,79 @@ public class Food_List extends AppCompatActivity {
             }
 
         });
+
+
+        getData("http://enejd0613.dothome.co.kr/foodlist.php");
+    }
+    protected void showList() {
+        foodAdapter.notifyDataSetChanged();
+        try {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String FoodCode = c.getString(TAG_FoodCode);
+                    String FoodName = c.getString(TAG_FoodName);
+                    String FoodKcal = c.getString(TAG_FoodKcal);
+                    String FoodCarbohydrate = c.getString(TAG_FoodCarbohydrate);
+                    String FoodProtein = c.getString(TAG_FoodProtein);
+                    String FoodFat = c.getString(TAG_FoodFat);
+                    String FoodSodium = c.getString(TAG_FoodSodium);
+                    String FoodSugar = c.getString(TAG_FoodSugar);
+                    String FoodKg = c.getString(TAG_FoodKg);
+                    Food food = new Food(Integer.parseInt(FoodCode),FoodName,Float.parseFloat(FoodKcal),Float.parseFloat(FoodCarbohydrate),Float.parseFloat(FoodProtein)
+                            ,Float.parseFloat(FoodFat),Float.parseFloat(FoodSodium),Float.parseFloat(FoodSugar),Float.parseFloat(FoodKg));
+                    foodArrayList.add(food);
+                }
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
+
+    public void getData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+
+    }
 }
 

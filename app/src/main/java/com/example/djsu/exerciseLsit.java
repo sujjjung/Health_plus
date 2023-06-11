@@ -4,23 +4,17 @@ public class exerciseLsit {
     private String profile;
     private String ExCode,ExPart,exerciseName;
     private String exerciseExplanation;
-    private String exerciseCalorie;
-    private String exerciseUnit;
 
-    public exerciseLsit(String exCode, String exPart, String exerciseName, String exerciseExplanation, String exerciseCalorie, String exerciseUnit) {
+    public exerciseLsit(String exCode, String exPart, String exerciseName, String exerciseExplanation) {
         ExCode = exCode;
         ExPart = exPart;
         this.exerciseName = exerciseName;
         this.exerciseExplanation = exerciseExplanation;
-        this.exerciseCalorie = exerciseCalorie;
-        this.exerciseUnit = exerciseUnit;
     }
 
-    public exerciseLsit(String exerciseName, String exerciseExplanation, String exerciseCalorie, String exerciseUnit) {
+    public exerciseLsit(String exerciseName, String exerciseExplanation) {
         this.exerciseName = exerciseName;
         this.exerciseExplanation = exerciseExplanation;
-        this.exerciseCalorie = exerciseCalorie;
-        this.exerciseUnit = exerciseUnit;
     }
 
     public exerciseLsit(String exerciseName) {
@@ -50,22 +44,6 @@ public class exerciseLsit {
 
     public void setExerciseExplanation(String exerciseExplanation) {
         this.exerciseExplanation = exerciseExplanation;
-    }
-
-    public String getExerciseCalorie() {
-        return exerciseCalorie;
-    }
-
-    public void setExerciseCalorie(String exerciseCalorie) {
-        this.exerciseCalorie = exerciseCalorie;
-    }
-
-    public String getExerciseUnit() {
-        return exerciseUnit;
-    }
-
-    public void setExerciseUnit(String exerciseUnit) {
-        this.exerciseUnit = exerciseUnit;
     }
 
 

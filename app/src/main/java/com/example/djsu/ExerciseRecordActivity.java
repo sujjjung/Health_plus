@@ -66,9 +66,9 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         String extractedDate = Date.substring(dashIndex+1);
         monthText.setText( extractedDate.replace("-","월 ")+"일");
         mTimeTextView = findViewById(R.id.timeView);
-        Button TimerStartBtn = (Button) findViewById(R.id.TimerStart);
-        Button TimerPauseBtn = (Button) findViewById(R.id.TimerPause);
-        Button TimerStopBtn = (Button) findViewById(R.id.TimerStop);
+        ImageButton TimerStartBtn = (ImageButton) findViewById(R.id.TimerStart);
+        ImageButton TimerPauseBtn = (ImageButton) findViewById(R.id.TimerPause);
+        ImageButton TimerStopBtn = (ImageButton) findViewById(R.id.TimerStop);
         TimerStartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +140,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton buttonInsert = (ImageButton)findViewById(R.id.add);
+        Button buttonInsert = (Button)findViewById(R.id.add);
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             // 1. 화면 아래쪽에 있는 데이터 추가 버튼을 클릭하면
             @Override
@@ -212,7 +212,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         });
         User user = new User();
 
-        ImageButton SaveBtn = (ImageButton) findViewById(R.id.Save);
+        Button SaveBtn = (Button) findViewById(R.id.Save);
         SaveBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -229,8 +229,8 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                 Toast.makeText(ExerciseRecordActivity.this, "등록 완료되었습니다!", Toast.LENGTH_SHORT).show();
 
                 if(RoutineCount == 1){
-                    UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(ExerciseRecordActivity.this);
-                    userFoodListBackgroundTask.execute();
+                    Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
+                    startActivity(intent);
                 }else{
                     Intent intent = new Intent(ExerciseRecordActivity.this, ExerciseRecordActivity.class);
                     intent.putExtra("routineList", (Serializable) RoutineList);

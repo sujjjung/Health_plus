@@ -9,7 +9,7 @@ import java.io.Serializable;
         // 운동관련 변수
         private String ExerciseName,ExercisePart,ExercisesetNumber, ExerciseNumber,Exerciseunit,Time,ExerciseCode;
         // 루틴관련 변수
-        private String RoutineName, friend;
+        private String RoutineName;
         // 사용자관련 변수
         static private String Id, Name, State, Profile, Age, Password;
         static private int CurrentSteps;
@@ -18,7 +18,7 @@ import java.io.Serializable;
         // 만보기관련 변수
         static private String WalkGoal;
         // 커뮤니티관련 변수
-        private String postid,content,image , postdate;
+        private String postid,content,image , postdate,friend;
         private int postKey;
         static private String Nondisclosure;
         public User(int postKey,String postid,String content,String image,String postdate) {
@@ -29,6 +29,12 @@ import java.io.Serializable;
             this.postdate = postdate;
         }
 
+        public User(String routineName, String exerciseCode, String exercisePart,String exerciseName) {
+            RoutineName = routineName;
+            ExerciseCode = exerciseCode;
+            ExercisePart = exercisePart;
+            ExerciseName = exerciseName;
+        }
 
         public String getFriend() {
             return friend;
@@ -49,13 +55,6 @@ import java.io.Serializable;
         public User() {}
 
         public User(String Friend) {this.friend = Friend; }
-
-        public void AddRoutine(String RoutineName,String ExerciseCode,String ExerciseName,String exercisePart) {
-            this.RoutineName = RoutineName;
-            this.ExerciseCode = ExerciseCode;
-            this.ExerciseName = ExerciseName;
-            ExercisePart = exercisePart;
-        }
 
         public User(String date, String exerciseName, String exercisePart, String exercisesetNumber, String exerciseNumber, String exerciseunit, String time,int EcCode) {
             Date = date;

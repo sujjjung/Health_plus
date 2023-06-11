@@ -46,15 +46,20 @@ import java.util.HashMap;
 import java.util.List;
 
 public class annoucement extends AppCompatActivity {
-    String date,title,detail,emote;
+    String date, title, detail, emote;
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private NoticeAdapter noticeAdapter;
     private List<Notice> noticeList;
-    ArrayList<HashMap<String, String>> mArrayList;
-    ListView mlistView;
-    String mJsonString;
+    // 게시글 출력
+    private static final String TAG_RESULTS = "result";
+    private static final String TAG_emote = "emote";
+    private static final String TAG_title = "title";
+    private static final String TAG_detail = "detail";
+    private static final String TAG_DATE = "date";
+    JSONArray peoples = null;
+    String myJSON;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +85,8 @@ public class annoucement extends AppCompatActivity {
                         startActivity(homeintent);
                         return true;
                     case R.id.calender:
-                        UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(annoucement.this);
-                        userFoodListBackgroundTask.execute();
+                        Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
+                        startActivity(intent);
                         return true;
                     case R.id.communety:
                         Intent communetyintent = new Intent(getApplicationContext(), community.class);
@@ -100,8 +105,8 @@ public class annoucement extends AppCompatActivity {
                         startActivity(manbogiintent);
                         return true;
                     case R.id.annoucement:
-                        NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(annoucement.this);
-                        noticeBackgroundTask.execute();
+                        Intent Noticeintent = new Intent(getApplicationContext(), annoucement.class);
+                        startActivity(Noticeintent);
                         return true;
                     case R.id.friend:
                         Intent friend = new Intent(getApplicationContext(), chatList.class);
@@ -113,59 +118,100 @@ public class annoucement extends AppCompatActivity {
         });
         noticeList = new ArrayList<>();
 
-        noticeAdapter = new NoticeAdapter(this,noticeList);
+        noticeAdapter = new NoticeAdapter(this, noticeList);
 
         ListView NoticeListView = (ListView) findViewById(R.id.NoticeView);
         NoticeListView.setAdapter(noticeAdapter);
-        try {
-            noticeAdapter.notifyDataSetChanged();
-            JSONObject jsonObject = new JSONObject(intent.getStringExtra("Notice"));
-            JSONArray jsonArray = jsonObject.getJSONArray("response");
-            int count = 0;
-            //JSON 배열 길이만큼 반복문을 실행
-            while (count < jsonArray.length()) {
-                //count는 배열의 인덱스를 의미
-                JSONObject object = jsonArray.getJSONObject(count);
-                emote = object.getString("emote");
-                date = object.getString("date");
-                title = object.getString("title");
-                detail = object.getString("detail");
 
-                //값들을 User클래스에 묶어줍니다
-                Notice notice = new Notice(date,title,detail,emote);
-                noticeList.add(notice);//리스트뷰에 값을 추가해줍니다
-                count++;
+        NoticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                noticeAdapter.getItem(position);
 
-                NoticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        noticeAdapter.getItem(position);
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(annoucement.this);
 
-                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(annoucement.this);
+                // 커스텀 다이얼로그 레이아웃을 inflate하여 설정
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.dialog_announcement, null);
+                dialogBuilder.setView(dialogView);
 
-                        // 커스텀 다이얼로그 레이아웃을 inflate하여 설정
-                        LayoutInflater inflater = getLayoutInflater();
-                        View dialogView = inflater.inflate(R.layout.dialog_announcement, null);
-                        dialogBuilder.setView(dialogView);
+                // 커스텀 다이얼로그 내부의 뷰 요소를 찾아서 설정
+                TextView titleTextView = dialogView.findViewById(R.id.dialog_title);
+                TextView contentTextView = dialogView.findViewById(R.id.dialog_content);
 
-                        // 커스텀 다이얼로그 내부의 뷰 요소를 찾아서 설정
-                        TextView titleTextView = dialogView.findViewById(R.id.dialog_title);
-                        TextView contentTextView = dialogView.findViewById(R.id.dialog_content);
+                titleTextView.setText(noticeList.get(position).getTitle());
+                contentTextView.setText(noticeList.get(position).getContent());
 
-                        titleTextView.setText(noticeList.get(position).getTitle());
-                        contentTextView.setText(noticeList.get(position).getContent());
-
-                        // 커스텀 다이얼로그를 생성하고 보여주기
-                        AlertDialog customDialog = dialogBuilder.create();
-                        customDialog.show();
-                    }
-                });
+                // 커스텀 다이얼로그를 생성하고 보여주기
+                AlertDialog customDialog = dialogBuilder.create();
+                customDialog.show();
             }
+        });
+        getData("http://enejd0613.dothome.co.kr/Announcementlist.php");
+    }
+    protected void showList() {
 
+        try {
 
-        } catch (Exception e) {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String date = c.getString(TAG_DATE);
+                    String title = c.getString(TAG_title);
+                    String detail = c.getString(TAG_detail);
+                    String emote = c.getString(TAG_emote);
+                    Notice notice = new Notice(date,title,detail,emote);
+                    noticeList.add(notice);//리스트뷰에 값을 추가해줍니다
+                }
+
+            }
+            noticeAdapter.notifyDataSetChanged();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void getData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
 
     }
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
