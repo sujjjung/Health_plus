@@ -100,11 +100,11 @@ public class main_user extends AppCompatActivity {
 
     // 유저 정보 출력UserId
     private static final String TAG_RESULTS = "result";
-    private static final String TAG_Date = "date";
     private static final String TAG_FoodDate = "Date";
     private static final String TAG_FoodUserId  = "UserId";
-    private static final String TAG_UserId  = "UserID";
     private static final String TAG_FoodKcal = "FoodKcal";
+    private static final String TAG_UserId  = "UserID";
+    private static final String TAG_Date = "date";
     private static final String TAG_water = "water";
     User user = new User();
     String myJSON;
@@ -116,8 +116,7 @@ public class main_user extends AppCompatActivity {
     String date;
 
     // 걸음수
-    private int count;
-    int KcalNum = 0;
+    private int count,KcalNum = 0, watercount = 0;
 
     // 공지
     String title;
@@ -145,6 +144,7 @@ public class main_user extends AppCompatActivity {
                 count = Integer.parseInt(water.getText().toString());
                 count = count+100;
                 water.setText(count+"");
+                watercount++;
             }
         });
 
@@ -156,6 +156,7 @@ public class main_user extends AppCompatActivity {
                 count = Integer.parseInt(water.getText().toString());
                 count = count-100;
                 water.setText(count+"");
+                watercount++;
             }
         });
 
@@ -164,7 +165,7 @@ public class main_user extends AppCompatActivity {
         view_food.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (water.getText().toString().equals("0") == false) {
+                if (watercount != 0) {
                     waterRequest = new waterRequest(ID,water.getText().toString(),date);
                     queue = Volley.newRequestQueue(main_user.this);
                     queue.add(waterRequest);
@@ -182,7 +183,7 @@ public class main_user extends AppCompatActivity {
         announcement_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (water.getText().toString().equals("0") == false) {
+                if (watercount != 0) {
                     waterRequest = new waterRequest(ID,water.getText().toString(),date);
                     queue = Volley.newRequestQueue(main_user.this);
                     queue.add(waterRequest);
@@ -224,7 +225,7 @@ public class main_user extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
@@ -236,7 +237,7 @@ public class main_user extends AppCompatActivity {
                         }
                         return true;
                     case R.id.calender:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
@@ -248,7 +249,7 @@ public class main_user extends AppCompatActivity {
                         }
                         return true;
                     case R.id.communety:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
@@ -259,7 +260,7 @@ public class main_user extends AppCompatActivity {
                         }
                         return true;
                     case R.id.mypage:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
@@ -270,7 +271,7 @@ public class main_user extends AppCompatActivity {
                         }
                         return true;
                     case R.id.map:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
@@ -281,7 +282,7 @@ public class main_user extends AppCompatActivity {
                         }
                         return true;
                     case R.id.manbogi:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
@@ -292,7 +293,7 @@ public class main_user extends AppCompatActivity {
                         }
                         return true;
                     case R.id.annoucement:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
@@ -304,7 +305,7 @@ public class main_user extends AppCompatActivity {
                         }
                         return true;
                     case R.id.friend:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
@@ -499,6 +500,7 @@ public class main_user extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     protected void showFoodList() {
+
         try {
             if (myJSON != null && !myJSON.isEmpty()) {
                 JSONObject jsonObj = new JSONObject(myJSON);
@@ -508,7 +510,7 @@ public class main_user extends AppCompatActivity {
                     JSONObject c = peoples.getJSONObject(i);
                     String UserId = c.getString(TAG_FoodUserId);
                     String Date = c.getString(TAG_FoodDate);
-                    if(UserId.equals(user.getId())) {
+                    if(user.getId().equals(UserId)) {
                         if(date.equals(Date)) {
                             String FoodKcal = c.getString(TAG_FoodKcal);
                             KcalNum += Integer.parseInt(FoodKcal);
@@ -629,7 +631,7 @@ public class main_user extends AppCompatActivity {
     private String getTime() {
         long now = System.currentTimeMillis();
         Date date = new Date(now);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d");
         String getTime = dateFormat.format(date);
 
         return getTime;

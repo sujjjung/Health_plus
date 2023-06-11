@@ -27,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -46,6 +47,7 @@ public class FoodUpdate extends AppCompatActivity {
     String Namestr,Kcalstr,Carbohydratestr,Proteinstr,Fatstr,Sodiumstr,Sugarstr,Kgstr,Datestr;
     String s = "0",Time;
     int setSum;
+    User user = new User();
     ImageButton searchBtn;
     Double KcalSum,CarbohydratSum, ProteinSum, FatSum ,SodiumSum,SugarSum,KgSum,kgSum;
     private List<User> userList;
@@ -55,6 +57,22 @@ public class FoodUpdate extends AppCompatActivity {
     Double KcalNum,CarbohydratNum, ProteinNum, FatNum ,SodiumNum,SugarNum,KgNum;
     int Cood,FcCode;
     private Button addButton,backButton;
+    private static final String TAG_RESULTS = "result";
+    private static final String TAG_Date = "Date";
+    private static final String TAG_UserId  = "UserId";
+    private static final String TAG_FoodName = "FoodName";
+    private static final String TAG_FoodKcal = "FoodKcal";
+    private static final String TAG_FoodCarbohydrate = "FoodCarbohydrate";
+    private static final String TAG_FoodProtein = "FoodProtein";
+    private static final String TAG_FoodFat = "FoodFat";
+    private static final String TAG_FoodSodium = "FoodSodium";
+    private static final String TAG_FoodSugar = "FoodSugar";
+    private static final String TAG_FoodKg = "FoodKg";
+    private static final String TAG_FcCode  = "FcCode";
+    private static final String TAG_eatingTime	 = "eatingTime";
+    private static final String TAG_quantity = "quantity";
+    String myJSON;
+    JSONArray peoples = null;
     String Date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,48 +85,17 @@ public class FoodUpdate extends AppCompatActivity {
         userFoodAdapter = new FoodAddAdapter(FoodUpdate.this, userList);
         ListView userfoodListView = (ListView) findViewById(R.id.FoodView);
         userfoodListView.setAdapter(userFoodAdapter);
-        Intent intent = getIntent();
-        User user1 = new User();
-        try {
-            userFoodAdapter.notifyDataSetChanged();
-            JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserFood"));
-            JSONArray jsonArray = jsonObject.getJSONArray("response");
-            int count = 0, FcCode;
-            String eatingTime, Date, UserID, FoodName, FoodKcal, FoodCarbohydrate, FoodProtein, FoodFat, FoodSodium, FoodSugar, FoodKg;
-            //JSON 배열 길이만큼 반복문을 실행
-            while (count < jsonArray.length()) {
-                //count는 배열의 인덱스를 의미f
-                JSONObject object = jsonArray.getJSONObject(count);
-                Date = object.getString("Date");
-                FoodName = object.getString("FoodName");
-                FoodKcal = object.getString("FoodKcal");
-                FoodCarbohydrate = object.getString("FoodCarbohydrate");
-                FoodProtein = object.getString("FoodProtein");
-                FoodFat = object.getString("FoodFat");
-                FoodSodium = object.getString("FoodSodium");
-                FoodSugar = object.getString("FoodSugar");
-                FoodKg = object.getString("FoodKg");
-                eatingTime = object.getString("eatingTime");
-                FcCode = object.getInt("FcCode");
-                //값들을 User클래스에 묶어줍니다
-                User user = new User(Date, FoodName, eatingTime, FoodKcal, FoodCarbohydrate, FoodProtein, FoodFat, FoodSodium, FoodSugar, FoodKg, FcCode);
-                UserID = object.getString("UserID");
-                if (UserID.equals(user1.getId())) {
-                    if (Datestr.equals(Date)) {
-                        userList.add(user);//리스트뷰에 값을 추가해줍니다
-                    }
-                }
-                count++;
-            }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         searchBtn = (ImageButton) findViewById(R.id.SearchBtn);
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new FoodBackgroundTask().execute();
+                Intent intent = new Intent(FoodUpdate.this, Food_List.class);
+                intent.putExtra("Date",Datestr);
+                intent.putExtra("searchText",searchText.getText().toString());
+                intent.putExtra("num", 0);
+                startActivity(intent);
+                finish();
             }
         });
         searchText = (EditText) findViewById(R.id.searchText);
@@ -143,7 +130,9 @@ public class FoodUpdate extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new UserFoodBackgroundTask1(Date).execute();
+                Intent intent = new Intent(FoodUpdate.this, userFood.class);
+                intent.putExtra("Date", Date);
+                startActivity(intent);
             }
         });
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -165,7 +154,9 @@ public class FoodUpdate extends AppCompatActivity {
                 RequestQueue queue = Volley.newRequestQueue(FoodUpdate.this);
                 queue.add(UpdateRequest);
                 Toast.makeText(getApplicationContext(), "음식수정이 되었습니다.", Toast.LENGTH_SHORT).show();
-                new UserFoodBackgroundTask1(Date).execute();
+                Intent intent = new Intent(FoodUpdate.this, userFood.class);
+                intent.putExtra("Date", Date);
+                startActivity(intent);
             }
 
         });
@@ -314,8 +305,8 @@ public class FoodUpdate extends AppCompatActivity {
                         startActivity(homeintent);
                         return true;
                     case R.id.calender:
-                        FoodUpdate.UserFoodListBackgroundTask userFoodListBackgroundTask = new FoodUpdate.UserFoodListBackgroundTask();
-                        userFoodListBackgroundTask.execute();
+                        Intent intent = new Intent(FoodUpdate.this, CalendarActivity.class);
+                        startActivity(intent);
                         return true;
                     case R.id.communety:
                         Intent communetyintent = new Intent(getApplicationContext(), community.class);
@@ -347,6 +338,84 @@ public class FoodUpdate extends AppCompatActivity {
         });
 
 
+        getData("http://enejd0613.dothome.co.kr/foodcalendarlist.php");
+    }
+    protected void showList() {
+        userFoodAdapter.notifyDataSetChanged();
+        try {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String UserId = c.getString(TAG_UserId);
+                    String Date = c.getString(TAG_Date);
+                    if(UserId.equals(user.getId())) {
+                        if(Datestr.equals(Date)) {
+                            String FoodName = c.getString(TAG_FoodName);
+                            String eatingTime = c.getString(TAG_eatingTime);
+                            String FoodKcal = c.getString(TAG_FoodKcal);
+                            String FoodCarbohydrate = c.getString(TAG_FoodCarbohydrate);
+                            String FoodProtein = c.getString(TAG_FoodProtein);
+                            String FoodFat = c.getString(TAG_FoodFat);
+                            String FoodSodium = c.getString(TAG_FoodSodium);
+                            String FoodSugar = c.getString(TAG_FoodSugar);
+                            String FoodKg = c.getString(TAG_FoodKg);
+                            String FcCode = c.getString(TAG_FcCode);
+                            String quantity = c.getString(TAG_quantity);
+                            User user = new User(Date,FoodName,eatingTime,FoodKcal,FoodCarbohydrate,FoodProtein,FoodFat,FoodSodium,FoodSugar,FoodKg,Integer.parseInt(FcCode),Integer.parseInt(quantity));
+                            userList.add(user);//리스트뷰에 값을 추가해줍니다
+                        }
+                    }
+                }
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+
     }
 
     @Override
@@ -359,214 +428,5 @@ public class FoodUpdate extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    class FoodaddListBackgroundTask extends AsyncTask<Void, Void, String> {
-        String target;
-
-        protected void onPreExecute() {
-            //List.php은 파싱으로 가져올 웹페이지
-            target = "http://enejd0613.dothome.co.kr/foodcalendarlist.php";
-        }
-
-        protected String doInBackground(Void... voids) {
-
-            try {
-                URL url = new URL(target);//URL 객체 생성
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String temp;
-                StringBuilder stringBuilder = new StringBuilder();
-                while ((temp = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
-                }
-
-                //사용했던 것도 다 닫아줌
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        protected void onPostExecute(String result) {
-            Intent intent = new Intent(FoodUpdate.this, FoodAddActivity.class);
-            intent.putExtra("FoodName", String.valueOf(NameText.getText()));
-            intent.putExtra("FoodKcal", Kcalstr);
-            intent.putExtra("FoodCarbohydrate", Carbohydratestr);
-            intent.putExtra("FoodProtein", Proteinstr);
-            intent.putExtra("FoodFat", Fatstr);
-            intent.putExtra("FoodSodium", Sodiumstr);
-            intent.putExtra("FoodSugar", Sugarstr);
-            intent.putExtra("FoodKg", Kgstr);
-            intent.putExtra("FoodCood", Cood);
-            intent.putExtra("Date", Date);
-            intent.putExtra("FcCode", FcCode);
-            intent.putExtra("Time", Time);
-            intent.putExtra("UserFood", result);
-            startActivity(intent);
-            finish();
-        }
-    }
-
-    class UserFoodListBackgroundTask extends AsyncTask<Void, Void, String> {
-        String target;
-
-
-        protected void onPreExecute() {
-            //List.php은 파싱으로 가져올 웹페이지
-            target = "http://enejd0613.dothome.co.kr/foodcalendarlist.php";
-        }
-        protected String doInBackground(Void... voids) {
-
-            try {
-                URL url = new URL(target);//URL 객체 생성
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String temp;
-                StringBuilder stringBuilder = new StringBuilder();
-                while ((temp = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
-                }
-
-                //사용했던 것도 다 닫아줌
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        protected void onPostExecute(String result) {
-            Intent intent = new Intent(FoodUpdate.this, CalendarActivity.class);
-            intent.putExtra("UserFood", result);
-            startActivity(intent);
-        }
-    }
-    class UserFoodBackgroundTask1 extends AsyncTask<Void, Void, String> {
-        String target;
-        String Date;
-        public UserFoodBackgroundTask1(String date) {
-            this.Date = date;
-        }
-        @Override
-        protected void onPreExecute() {
-            //List.php은 파싱으로 가져올 웹페이지
-            target = "http://enejd0613.dothome.co.kr/foodcalendarlist.php";
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-
-            try {
-                URL url = new URL(target);//URL 객체 생성
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String temp;
-                StringBuilder stringBuilder = new StringBuilder();
-                while ((temp = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
-                }
-
-                //사용했던 것도 다 닫아줌
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        protected void onPostExecute(String result) {
-            Intent intent = new Intent(FoodUpdate.this, userFood.class);
-            intent.putExtra("UserFood", result);
-            intent.putExtra("FoodName", String.valueOf(NameText.getText()));
-            intent.putExtra("FoodKcal", Kcalstr);
-            intent.putExtra("FoodCarbohydrate", Carbohydratestr);
-            intent.putExtra("FoodProtein", Proteinstr);
-            intent.putExtra("FoodFat", Fatstr);
-            intent.putExtra("FoodSodium", Sodiumstr);
-            intent.putExtra("FoodSugar", Sugarstr);
-            intent.putExtra("FoodKg", Kgstr);
-            intent.putExtra("FoodCood", Cood);
-            intent.putExtra("Date", Date);
-
-            intent.putExtra("FcCode", FcCode);
-            intent.putExtra("Time", s);
-            startActivity(intent);
-        }
-    }
-    class FoodBackgroundTask extends AsyncTask<Void, Void, String> {
-        String target;
-        @Override
-        protected void onPreExecute() {
-            //List.php은 파싱으로 가져올 웹페이지
-            target = "http://enejd0613.dothome.co.kr/foodlist.php";
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-
-            try {
-                URL url = new URL(target);//URL 객체 생성
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String temp;StringBuilder stringBuilder = new StringBuilder();
-                while ((temp = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
-                }
-
-                //사용했던 것도 다 닫아줌
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        protected void onPostExecute(String result) {
-            Intent intent = new Intent(FoodUpdate.this, Food_List.class);
-            intent.putExtra("Food",result);
-            intent.putExtra("Date",Datestr);
-            intent.putExtra("searchText",searchText.getText().toString());
-            intent.putExtra("num", 0);
-            startActivity(intent);
-            finish();
-        }
     }
 }

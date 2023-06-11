@@ -70,7 +70,7 @@ public class CalendarActivity extends AppCompatActivity {
     private final String TAG = this.getClass().getSimpleName();
 
     // 섭취, 운동
-    int KcalNum = 0,CarbohydrateNum = 0,proteinNum = 0,FatNum = 0,sodiumNum = 0 ,SugarNum = 0;
+    int KcalNum = 0,CarbohydrateNum = 0,proteinNum = 0,FatNum = 0,sodiumNum = 0 ,SugarNum = 0,UnitNum = 0;
     String Date = "",date;
 
     // 유저 정보 출력
@@ -84,17 +84,25 @@ public class CalendarActivity extends AppCompatActivity {
     private static final String TAG_FoodSodium = "FoodSodium";
     private static final String TAG_FoodSugar = "FoodSugar";
     private static final String TAG_FoodKg = "FoodKg";
+    // 뭏
+    private static final String TAG_WaterUserid  = "UserID";
+    private static final String TAG_WaterDate = "date";
+    private static final String TAG_water = "water";
+    // 운동
+    private static final String TAG_ExerciseUnit = "ExerciseUnit";
     User user = new User();
     String myJSON;
     JSONArray peoples = null;
     // 섭취, 운동 선언
-    TextView KcalSum,CarbohydrateSum,proteinSum,FatSum,sodiumSum,SugarSum;
+    TextView KcalSum,CarbohydrateSum,proteinSum,FatSum,sodiumSum,SugarSum,WaterSum,UnitSum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 캘린더, 버튼 선언
         setContentView(R.layout.activity_calendar);
         getData("http://enejd0613.dothome.co.kr/foodcalendarlist.php");
+        getWaterData("http://enejd0613.dothome.co.kr/Waterlist.php");
+        getExData("http://enejd0613.dothome.co.kr/excalendarlist.php");
         // 섭취, 운동 선언 초기화
         KcalSum = findViewById(R.id.kcalSum);
         CarbohydrateSum = findViewById(R.id.carbohydrateSum);
@@ -102,12 +110,14 @@ public class CalendarActivity extends AppCompatActivity {
         FatSum = findViewById(R.id.fatSum);
         sodiumSum = findViewById(R.id.SodiumSum);
         SugarSum = findViewById(R.id.sugarSum);
-
-        // 캘린더 뷰
+        WaterSum = findViewById(R.id.WaterSum);
+        UnitSum = findViewById(R.id.UnitSum);
+        // 캘린더 UnitSum
         calendarView = findViewById(R.id.calendarView);
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                WaterSum.setText("");
                 int year = date.getYear(); // 선택된 날짜의 연도 정보 추출
                 int month = date.getMonth() + 1; // 선택된 날짜의 월 정보 추출 (0부터 시작하므로 +1 필요)
                 int dayOfMonth = date.getDay(); // 선택된 날짜의 일 정보 추출
@@ -117,6 +127,8 @@ public class CalendarActivity extends AppCompatActivity {
                 String DayOfMonth = String.valueOf(dayOfMonth); // 일 정보를 문자열로 변환
                 Date = Year + "-" + Month + "-" + DayOfMonth;
                 getData("http://enejd0613.dothome.co.kr/foodcalendarlist.php");
+                getWaterData("http://enejd0613.dothome.co.kr/Waterlist.php");
+                getExData("http://enejd0613.dothome.co.kr/excalendarlist.php");
             }
         });
         Button UserFoodBtn = (Button) findViewById(R.id.FoodGoBtn);
@@ -349,6 +361,8 @@ public class CalendarActivity extends AppCompatActivity {
         // 플로팅 버튼 상태 변경
         fabMain_status = !fabMain_status;
     }
+
+    // 음식 불러오기
     protected void showList() {
         KcalNum = 0;
         CarbohydrateNum = 0;
@@ -445,6 +459,139 @@ public class CalendarActivity extends AppCompatActivity {
         g.execute(url);
     }
 
+    // 물 불러오기
+    protected void showWaterList() {
+        try {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String UserId = c.getString(TAG_WaterUserid);
+                    String WaterDate = c.getString(TAG_WaterDate);
+                    if(UserId.equals(user.getId())) {
+                        if(Date.equals(WaterDate)) {
+                            String Water = c.getString(TAG_water);
+                            WaterSum.setText(Water);
+                        }
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getWaterData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showWaterList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+    }
+
+    // 운동 불러오기
+    protected void showExList() {
+        UnitNum = 0;
+        UnitSum.setText("");
+        try {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String UserId = c.getString(TAG_UserId);
+                    String Date1 = c.getString(TAG_Date);
+                    if(UserId.equals(user.getId())) {
+                        if(Date.equals(Date1)) {
+                            String ExerciseUnit = c.getString(TAG_ExerciseUnit);
+                            String numberString = ExerciseUnit.replace("kg", "");
+                            int number = Integer.parseInt(numberString);
+                            UnitNum += number;
+                            UnitSum.setText(String.valueOf(UnitNum));
+                        }
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getExData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showExList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+    }
     // 햄버거
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

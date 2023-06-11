@@ -25,7 +25,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".Admindeclaration"
+            android:name=".admin.Admindeclaration"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -345,7 +345,8 @@
         </activity>
         <activity
             android:name=".comment"
-            android:exported="false">
+            android:exported="false"
+            tools:ignore="DuplicateActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

@@ -20,8 +20,20 @@ import java.io.Serializable;
         // 커뮤니티관련 변수
         private String postid,content,image , postdate,friend;
         private int postKey;
+        // 댓글관련 변수
+        private String commentContent,createdTime, commentUser;
+        private int commentKey;
         static private String Nondisclosure;
-        public User(int postKey,String postid,String content,String image,String postdate) {
+
+        public User(int commentKey, int postKey, String commentContent, String createdTime,String commentUser) {
+            this.commentKey = commentKey;
+            this.postKey = postKey;
+            this.commentContent = commentContent;
+            this.createdTime = createdTime;
+            this.commentUser = commentUser;
+        }
+
+        public User(int postKey, String postid, String content, String image, String postdate) {
             this.postKey = postKey;
             this.postid = postid;
             this.content = content;
@@ -373,5 +385,37 @@ import java.io.Serializable;
 
         public void setPostKey(int postKey) {
             this.postKey = postKey;
+        }
+
+        public String getCommentContent() {
+            return commentContent;
+        }
+
+        public void setCommentContent(String commentContent) {
+            this.commentContent = commentContent;
+        }
+
+        public String getCreatedTime() {
+            return createdTime;
+        }
+
+        public void setCreatedTime(String createdTime) {
+            this.createdTime = createdTime;
+        }
+
+        public int getCommentKey() {
+            return commentKey;
+        }
+
+        public void setCommentKey(int commentKey) {
+            this.commentKey = commentKey;
+        }
+
+        public String getCommentUser() {
+            return commentUser;
+        }
+
+        public void setCommentUser(String commentUser) {
+            this.commentUser = commentUser;
         }
     }

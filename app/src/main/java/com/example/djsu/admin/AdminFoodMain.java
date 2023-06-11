@@ -31,7 +31,6 @@ import java.util.List;
 public class AdminFoodMain extends AppCompatActivity {
     private List<Food>foodArrayList;
     private AdminFoodAdapter foodAdapter;
-    private EditText editText;
     ImageButton foodAddBtn;
     private static final String TAG_RESULTS = "result";
     private static final String TAG_FoodName = "FoodName";
