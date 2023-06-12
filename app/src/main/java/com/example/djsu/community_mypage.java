@@ -1,10 +1,16 @@
 package com.example.djsu;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -57,12 +63,22 @@ public class community_mypage extends AppCompatActivity {
     private String profile, ID, date;
     private Bitmap bitmap;
     private ImageView ivImage;
-
+    User user = new User();
     // 게시글 출력
     private GridView gridView;
     private ImageAdapter imageAdapter;
     private ArrayList<String> imageUrls;
 
+    //팔로워, 팔로잉
+    private static final String TAG_RESULTS = "result";
+    private static final String TAG_USER_ID = "user_id";
+    private static final String TAG_following_id = "following_id";
+    JSONArray peoples = null;
+    String myJSON;
+    private List<String> followingList, followersList;
+    private Button follower_int,folloing_int;
+    private folloingAdapter folloingAdapter;
+    Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,19 +148,138 @@ public class community_mypage extends AppCompatActivity {
         String imageUrl = profile; // Glide로 이미지 표시하기
         Glide.with(this).load(imageUrl).into(ivImage);
 
+        // 팔로잉 팔로워 follower_int,folloing_int
+        followingList = new ArrayList<>();
+        followersList = new ArrayList<>();
+        getFriendData("http://enejd0613.dothome.co.kr/FriendList.php");
+        follower_int = findViewById(R.id.follower_int);
+        folloing_int = findViewById(R.id.folloing_int);
+
+        folloing_int.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(community_mypage.this);
+                View view = LayoutInflater.from(community_mypage.this).inflate(R.layout.dialog_following_list, null, false);
+                builder.setView(view);
+
+                final Button submitButton = (Button) view.findViewById(R.id.button_dialog_submit);
+                final ListView folloingView = (ListView) view.findViewById(R.id.ListView);
+                final AlertDialog dialog = builder.create();
+                folloingAdapter = new folloingAdapter(context,followingList);
+
+                folloingView.setAdapter(folloingAdapter);
+                submitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+        follower_int.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(community_mypage.this);
+                View view = LayoutInflater.from(community_mypage.this).inflate(R.layout.dialog_following_list, null, false);
+                builder.setView(view);
+                final Button submitButton = (Button) view.findViewById(R.id.button_dialog_submit);
+                final TextView TextView = (TextView) view.findViewById(R.id.textView2);
+                final ListView folloingView = (ListView) view.findViewById(R.id.ListView);
+                final AlertDialog dialog = builder.create();
+                TextView.setText("팔로워 유저");
+                folloingAdapter = new folloingAdapter(context,followersList);
+
+                folloingView.setAdapter(folloingAdapter);
+                submitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
         // 게시글
         gridView = findViewById(R.id.grid_view);
         imageUrls = new ArrayList<>();
         imageAdapter = new ImageAdapter(this, imageUrls);
         gridView.setAdapter(imageAdapter);
-
         new FetchImagesTask().execute();
     }
+    // 로그인한 유저의 친구리스트를 얻기위한 코드
+    protected void FriendList() {
+        try {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+                for (int i = 0; i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String id = c.getString(TAG_USER_ID);
+                    String following_id = c.getString(TAG_following_id);
+                    if (user.getId().equals(id)) {
+                        String followingId = c.getString(TAG_following_id);
+                        followingList.add(followingId);
+                    }
+                    if(user.getId().equals(following_id)){
+                        String FriendId = c.getString(TAG_USER_ID);
+                        followersList.add(FriendId);
+                    }
+                }
+            }
+            follower_int.setText(String.valueOf(followersList.size()));
+            folloing_int.setText(String.valueOf(followingList.size()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
+
+    public void getFriendData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                FriendList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+
+    }
     private class FetchImagesTask extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... params) {
-            String urlString = "http://enejd0613.dothome.co.kr/comm_mypage.php"; // get_images.php의 URL을 입력하세요.
+            String urlString = "http://enejd0613.dothome.co.kr/filedownload.php"; // get_images.php의 URL을 입력하세요.
             try {
                 URL url = new URL(urlString);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -181,8 +316,11 @@ public class community_mypage extends AppCompatActivity {
                     JSONArray jsonArray = jsonObject.getJSONArray("result");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject item = jsonArray.getJSONObject(i);
-                        String imageUrl = item.getString("image");
-                        imageUrls.add(imageUrl);
+                        String id = item.getString("id");
+                        if(user.getId().equals(id)) {
+                            String imageUrl = item.getString("image");
+                            imageUrls.add(imageUrl);
+                        }
                     }
                     imageAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
