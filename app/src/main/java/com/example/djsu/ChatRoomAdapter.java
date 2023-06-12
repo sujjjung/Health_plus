@@ -16,7 +16,7 @@ import kotlin.jvm.Volatile;
 
 public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyViewHolder> {
     private final RecyclerView mRecyclerView;
-    private List<ChatData> mDataSet;
+    private List<ChatRoom> mDataSet;
     private String myNickName;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -39,13 +39,12 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
         }
     }
 
-    public ChatRoomAdapter(List<ChatData> myDataset, Context context, String myNickName, RecyclerView recyclerView) {
+    public ChatRoomAdapter(List<ChatRoom> myDataset, Context context, String myNickName, RecyclerView recyclerView) {
         mDataSet = myDataset;
         this.myNickName = myNickName;
         this.mRecyclerView = recyclerView;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public ChatRoomAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
@@ -58,8 +57,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        ChatData chat = mDataSet.get(position);
-
+        ChatRoom chat = mDataSet.get(position);
 
         holder.TextView_nickname.setText(chat.getUserName());
         holder.TextView_msg.setText(chat.getMsg());
@@ -86,11 +84,11 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
         return mDataSet == null ? 0 : mDataSet.size();
     }
 
-    public ChatData getChat(int position) {
+    public ChatRoom getChat(int position) {
         return mDataSet != null ? mDataSet.get(position) : null;
     }
 
-    public void addChat(ChatData chat) {
+    public void addChat(ChatRoom chat) {
         mDataSet.add(chat);
         notifyItemInserted(mDataSet.size()-1);
         mRecyclerView.smoothScrollToPosition(mDataSet.size() - 1);
