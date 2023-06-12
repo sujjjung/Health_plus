@@ -29,6 +29,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class chatList extends AppCompatActivity {
@@ -36,9 +38,9 @@ public class chatList extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
-    private ListView mChatRoomListView;
-
-    private DatabaseReference mDatabase;
+//    private ListView mChatRoomListView;
+//
+//    private DatabaseReference mDatabase;
 
     private chatListAdapter mAdapter;
 
@@ -58,32 +60,6 @@ public class chatList extends AppCompatActivity {
         listview.setAdapter(mAdapter);
 
         DatabaseReference roomList = FirebaseDatabase.getInstance().getReference("ChatRoom");
-       // DatabaseReference roomList1 = FirebaseDatabase.getInstance().getReference("ChatRoom");
-//        roomList.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-////                ChatRoom chatroom = new ChatRoom();
-////                String roomName = chatroom.getChatRoomId();
-//////                    if (!roomName.contains(userName)) {
-//////                        // 위에서 가져온 친구 목록에 포함되지 않고, 로그인한 유저가 아닌 경우에만 리스트에 추가합니다.
-//////                        postList.add(chatroom);
-//////                    }
-////                if (roomName != null && roomName.contains(userName)) {
-////                    postList.add(chatroom);
-////                }
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    String roomId = snapshot.getKey();
-//                    if (roomId != null && roomId.contains(userName)) {
-//                        // userName이 포함된 roomId를 찾았을 때 처리할 작업 수행
-//                        // 예를 들어, ChatRoom 객체를 생성하여 postList에 추가하는 등의 작업 수행
-//                        ChatRoom chatRoom = snapshot.getValue(ChatRoom.class);
-//                        postList.add(chatRoom);
-//                    }
-//                }
-//                // ListView에 데이터를 표시하는 코드 작성
-//                chatListAdapter chatListAdapter = new chatListAdapter(chatList.this, postList);
-//                listview.setAdapter(chatListAdapter);
-//            }
 
         roomList.addChildEventListener(new ChildEventListener() {
             @Override
@@ -92,6 +68,7 @@ public class chatList extends AppCompatActivity {
                 if (roomId != null && roomId.contains(userName)) {
                     ChatRoom chatRoom = dataSnapshot.getValue(ChatRoom.class);
                     postList.add(chatRoom);
+                    //sortPostListByTimestamp(); // 최신 메시지 순으로 정렬
                     mAdapter.notifyDataSetChanged(); // 리스트뷰 업데이트
                 }
             }
@@ -142,6 +119,18 @@ public class chatList extends AppCompatActivity {
                 // 취소되었을 때 처리
             }
         });
+
+        // postList를 최신 메시지 순으로 정렬하는 메서드 추가
+//        private void sortPostListByTimestamp() {
+//            Collections.sort(postList, new Comparator<ChatRoom>() {
+//                @Override
+//                public int compare(ChatRoom chatRoom1) {
+//                    long timestamp1 = chatRoom1.getTimestamp();
+//                    long timestamp2 = chatRoom2.getTimestamp();
+//                    return Long.compare(timestamp2, timestamp1); // 내림차순 정렬
+//                }
+//            });
+//        }
 
         Button imageButton = (Button) findViewById(R.id.button2);
         imageButton.setOnClickListener(new View.OnClickListener() {

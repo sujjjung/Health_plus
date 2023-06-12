@@ -9,6 +9,12 @@ public class ChatRoom {
     private String title;
     private List<String> members;
 
+    private String msg;
+
+    private String userName;
+
+    private String Date;
+
     public ChatRoom() {}
 
     public ChatRoom(String chatRoomId) {
@@ -53,5 +59,29 @@ public class ChatRoom {
 
     public void setMembers(List<String> members) {
         this.members = members;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
     }
 }
