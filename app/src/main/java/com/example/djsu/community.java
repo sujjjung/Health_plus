@@ -37,12 +37,12 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
+import org.checkerframework.checker.units.qual.A;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -58,7 +58,10 @@ public class community extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-
+    private communityAdapter communityAdapter;
+    private User user1;
+    private ArrayList<User> Friendlist = new ArrayList<>();
+    private ArrayList<User> Communitylist = new ArrayList<>();
     // 게시글 출력
     String myJSON;
 
@@ -67,10 +70,12 @@ public class community extends AppCompatActivity {
     private static final String TAG_ID = "id";
     private static final String TAG_IMAGE = "image";
     private static final String TAG_DATE = "date";
-    private static final String TAG_POSTID = "postId";
-    private static final String TAG_USER_PROFILE = "UserProfile";
+    private static final String TAG_USER_ID = "user_id";
+    private static final String TAG_FriendCode = "FriendCode";
+    private static final String TAG_postId = "postId";
+    private static final String TAG_following_id = "following_id";
     JSONArray peoples = null;
-    ArrayList<HashMap<String, String>> personList;
+    JSONArray peoples1 = null;
     ListView list;
 
     @Override
@@ -98,6 +103,16 @@ public class community extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // 댓글
+        // ImageButton commentButton=findViewById(R.id.chat_bubble_btn);
+        // findViewById(R.id.button4) : 버튼의 text가 아니라 Id값을 넣어줘야한다.
+        // commentButton.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+        //        Intent intent=new Intent(getApplicationContext(),comment.class);
+        //        startActivity(intent);
+        //    }
 
         // 햄버거
         toolbar = findViewById(R.id.toolBar);
@@ -149,85 +164,150 @@ public class community extends AppCompatActivity {
                 return false;
             }
         });
-        Intent intent = getIntent();
+
         // 게시글
-        list = findViewById(R.id.community);
-        personList = new ArrayList<>();
+        list = (ListView) findViewById(R.id.community);
+        communityAdapter = new communityAdapter(this,Communitylist);
+
+        list.setAdapter(communityAdapter);
+
+        getFriendData("http://enejd0613.dothome.co.kr/FriendList.php");
         getData("http://enejd0613.dothome.co.kr/filedownload.php");
     }
-
-    protected void showList() {
+    // 로그인한 유저의 친구리스트를 얻기위한 코드
+    protected void FriendList() {
         try {
-            JSONObject jsonObj = new JSONObject(myJSON);
-            peoples = jsonObj.getJSONArray(TAG_RESULTS);
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples1 = jsonObj.getJSONArray(TAG_RESULTS);
 
-            for (int i = 0; i < peoples.length(); i++) {
-                JSONObject c = peoples.getJSONObject(i);
-                String content = c.getString(TAG_CONTENT);
-                String id = c.getString(TAG_ID);
-                String image = c.getString(TAG_IMAGE);
-                String date = c.getString(TAG_DATE);
-                String postId = c.getString(TAG_POSTID);
-                String userProfile = c.getString(TAG_USER_PROFILE);
-
-                HashMap<String, String> persons = new HashMap<>();
-
-                persons.put(TAG_CONTENT, content);
-                persons.put(TAG_ID, id);
-                persons.put(TAG_IMAGE, image);
-                persons.put(TAG_DATE, date);
-                persons.put(TAG_POSTID, postId);
-                persons.put(TAG_USER_PROFILE, userProfile);
-
-                personList.add(persons);
-            }
-
-            ListAdapter adapter = new SimpleAdapter(
-                    community.this, personList, R.layout.item_community,
-                    new String[]{TAG_CONTENT, TAG_ID, TAG_IMAGE, TAG_DATE, TAG_USER_PROFILE},
-                    new int[]{R.id.content, R.id.name_textView, R.id.photo, R.id.date, R.id.profile}
-            ) {
-                @Override
-                public void setViewImage(ImageView imageView, String url) {
-                    Picasso.get().load(url).into(imageView);
+                for (int i = 0; i < peoples1.length(); i++) {
+                    JSONObject c = peoples1.getJSONObject(i);
+                    String id = c.getString(TAG_USER_ID);
+                    if (user1.getId().equals(id)) {
+                        String following_id = c.getString(TAG_following_id);
+                        user1 = new User(following_id);
+                        Friendlist.add(i, user1);
+                    }
                 }
-            };
-
-            list.setAdapter(adapter);
-
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+
+    public void getFriendData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                FriendList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+
+    }
+    // 로그인한 유저의 커뮤티니 목록(본인, 친구)
+    protected void showList() {
+        communityAdapter.notifyDataSetChanged();
+        try {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+
+                for(int j = 0;j < Friendlist.size(); j++) {
+                    String FriendName = Friendlist.get(j).getFriend();
+                    for (int i = 0; i < peoples.length(); i++) {
+                        JSONObject c = peoples.getJSONObject(i);
+                        String id = c.getString(TAG_ID);
+                        if (id.equals(FriendName)) {
+                            String image = c.getString(TAG_IMAGE);
+                            String date = c.getString(TAG_DATE);
+                            String content = c.getString(TAG_CONTENT);
+                            String postId = c.getString(TAG_postId);
+                            User user = new User(Integer.parseInt(postId),id,content,image,date);
+                            Communitylist.add(user);
+                        }
+                    }
+                }
+
+                for (int i = 0; i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String id = c.getString(TAG_ID);
+                    if (user1.getId().equals(id)) {
+                        String image = c.getString(TAG_IMAGE);
+                        String date = c.getString(TAG_DATE);
+                        String content = c.getString(TAG_CONTENT);
+                        String postId = c.getString(TAG_postId);
+                        User user = new User(Integer.parseInt(postId),id,content,image,date);
+                        Communitylist.add(user);
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void getData(String url) {
         class GetDataJSON extends AsyncTask<String, Void, String> {
 
             @Override
             protected String doInBackground(String... params) {
+
                 String uri = params[0];
+
                 BufferedReader bufferedReader = null;
                 try {
                     URL url = new URL(uri);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     StringBuilder sb = new StringBuilder();
+
                     bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
                     String json;
                     while ((json = bufferedReader.readLine()) != null) {
-                        sb.append(json).append("\n");
+                        sb.append(json + "\n");
                     }
+
                     return sb.toString().trim();
+
                 } catch (Exception e) {
                     return null;
-                } finally {
-                    if (bufferedReader != null) {
-                        try {
-                            bufferedReader.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
                 }
+
+
             }
 
             @Override
@@ -238,6 +318,7 @@ public class community extends AppCompatActivity {
         }
         GetDataJSON g = new GetDataJSON();
         g.execute(url);
+
     }
 
     // 햄버거

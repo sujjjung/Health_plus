@@ -73,7 +73,6 @@ public class UserFoodAdapter extends BaseAdapter {
         FcCode = userList.get(position).getFcCode();
         quantity =  userList.get(position).getQuantity();
         date = userList.get(position).getDate();
-        //UserId = userList.get(position).getId();
 
         v.setTag(userList.get(position).getId());
         Button DetailBtn = (Button) v.findViewById(R.id.Detail);
@@ -124,71 +123,24 @@ public class UserFoodAdapter extends BaseAdapter {
         update.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                FoodaddListBackgroundTask foodaddListBackgroundTask = new FoodaddListBackgroundTask(context);
-                foodaddListBackgroundTask.execute();
+                Intent intent = new Intent(context, FoodUpdate.class);
+                intent.putExtra("FoodName", userList.get(position).getFoodName());
+                intent.putExtra("FoodKcal", userList.get(position).getFoodKcal());
+                intent.putExtra("FoodCarbohydrate", userList.get(position).getFoodCarbohydrate());
+                intent.putExtra("FoodProtein", userList.get(position).getFoodProtein());
+                intent.putExtra("FoodFat", userList.get(position).getFoodFat());
+                intent.putExtra("FoodSodium", userList.get(position).getFoodSodium());
+                intent.putExtra("FoodSugar", userList.get(position).getFoodSugar());
+                intent.putExtra("FoodKg", userList.get(position).getFoodKg());
+                intent.putExtra("Date", date);
+                intent.putExtra("FcCode", userList.get(position).getFcCode());
+                intent.putExtra("quantity", userList.get(position).getQuantity());
+                intent.putExtra("Time", String.valueOf(Time.getText()));
+                context.startActivity(intent);
             }
         });
         return v;
 
     }
-    class FoodaddListBackgroundTask extends AsyncTask<Void, Void, String> {
-        String target;
-        Context context;
 
-        FoodaddListBackgroundTask(Context context){
-            this.context = context;
-        }
-        protected void onPreExecute() {
-            //List.php은 파싱으로 가져올 웹페이지
-            target = "http://enejd0613.dothome.co.kr/foodcalendarlist.php";
-        }
-
-        protected String doInBackground(Void... voids) {
-
-            try {
-                URL url = new URL(target);//URL 객체 생성
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String temp;
-                StringBuilder stringBuilder = new StringBuilder();
-                while ((temp = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
-                }
-
-                //사용했던 것도 다 닫아줌
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        protected void onPostExecute(String result) {
-            Intent intent = new Intent(context, FoodUpdate.class);
-            intent.putExtra("FoodName", String.valueOf(FoodName.getText()));
-            intent.putExtra("FoodKcal", String.valueOf(FoodKcal));
-            intent.putExtra("FoodCarbohydrate", String.valueOf(FoodCarbohydrate));
-            intent.putExtra("FoodProtein", String.valueOf(FoodProtein));
-            intent.putExtra("FoodFat", String.valueOf(FoodFat));
-            intent.putExtra("FoodSodium", String.valueOf(FoodSodium));
-            intent.putExtra("FoodSugar", String.valueOf(FoodSugar));
-            intent.putExtra("FoodKg", String.valueOf(FoodKg));
-            intent.putExtra("Date", date);
-            intent.putExtra("FcCode", FcCode);
-            intent.putExtra("quantity", quantity);
-            intent.putExtra("Time", String.valueOf(Time.getText()));
-            intent.putExtra("UserFood", result);
-            context.startActivity(intent);
-            ((Activity)context).finish();
-        }
-    }
 }

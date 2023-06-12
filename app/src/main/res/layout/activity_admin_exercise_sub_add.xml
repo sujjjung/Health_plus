@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".admin.AdminFoodAdd"
+        tools:context=".admin.AdminExerciseSubAdd"
         android:background="#FFF5B3"
         android:paddingBottom="23dp">
 
@@ -148,51 +148,6 @@
 
 <!--    이미지 진짜 어떻게 해야될지 막막해요.. 일어나서 그 해답을 찾아보겠습니다..-->
 
-    <TextView
-        android:id="@+id/HealthKcalAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:fontFamily="@font/a1009_2"
-        android:text="소비칼로리"
-        android:textColor="@color/black"
-        android:textSize="24dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HealthExplanationEdit" />
-
-    <EditText
-        android:id="@+id/FHealthKcalEdit"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal|center_vertical"
-        android:hint="소비칼로리"
-        android:textSize="22dp"
-        app:layout_constraintStart_toStartOf="@+id/HealthKcalAdd"
-        app:layout_constraintTop_toBottomOf="@+id/HealthKcalAdd" />
-
-    <TextView
-        android:id="@+id/HealthunitAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:fontFamily="@font/a1009_2"
-        android:text="단위"
-        android:textColor="@color/black"
-        android:textSize="24dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FHealthKcalEdit" />
-
-    <EditText
-        android:id="@+id/HealthunitEdit"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal|center_vertical"
-        android:hint="단위"
-        android:textSize="22dp"
-        app:layout_constraintStart_toStartOf="@+id/HealthunitAdd"
-        app:layout_constraintTop_toBottomOf="@+id/HealthunitAdd" />
 
     <ImageButton
         android:id="@+id/ImgaddBtn"
@@ -201,7 +156,7 @@
         android:background="#75B8B8B8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HealthunitEdit"
+        app:layout_constraintTop_toBottomOf="@+id/HealthExplanationEdit"
         android:layout_marginTop="40dp"
         />
 

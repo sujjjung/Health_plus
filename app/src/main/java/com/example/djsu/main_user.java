@@ -95,10 +95,20 @@ public class main_user extends AppCompatActivity {
     private Bitmap bitmap;
     private ImageView ivImage;
     private static final int PICK_IMAGE_REQUEST = 1;
-
     private static final String URL_UPLOAD = "http://enejd0613.dothome.co.kr/upload_profile.php";
     private static final String TAG = "main_user";
 
+    // 유저 정보 출력UserId
+    private static final String TAG_RESULTS = "result";
+    private static final String TAG_FoodDate = "Date";
+    private static final String TAG_FoodUserId  = "UserId";
+    private static final String TAG_FoodKcal = "FoodKcal";
+    private static final String TAG_UserId  = "UserID";
+    private static final String TAG_Date = "date";
+    private static final String TAG_water = "water";
+    User user = new User();
+    String myJSON;
+    JSONArray peoples = null;
     // 물
     private TextView water;
     waterRequest waterRequest;
@@ -106,8 +116,7 @@ public class main_user extends AppCompatActivity {
     String date;
 
     // 걸음수
-    private int count;
-    int KcalNum,waterNum;
+    private int count,KcalNum = 0, watercount = 0;
 
     // 공지
     String title;
@@ -124,8 +133,9 @@ public class main_user extends AppCompatActivity {
         // 종하오빠가 뭐 해놓은거
         kcalText = findViewById(R.id.kcalText);
         date = getTime();
-
         // 물 + 100
+        getData("http://enejd0613.dothome.co.kr/Waterlist.php");
+        getFoodData("http://enejd0613.dothome.co.kr/foodcalendarlist.php");
 
         ImageButton plus = (ImageButton) findViewById(R.id.plusBtn);
         plus.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +144,7 @@ public class main_user extends AppCompatActivity {
                 count = Integer.parseInt(water.getText().toString());
                 count = count+100;
                 water.setText(count+"");
+                watercount++;
             }
         });
 
@@ -145,6 +156,7 @@ public class main_user extends AppCompatActivity {
                 count = Integer.parseInt(water.getText().toString());
                 count = count-100;
                 water.setText(count+"");
+                watercount++;
             }
         });
 
@@ -153,13 +165,14 @@ public class main_user extends AppCompatActivity {
         view_food.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (water.getText().toString().equals("0") == false) {
+                if (watercount != 0) {
                     waterRequest = new waterRequest(ID,water.getText().toString(),date);
                     queue = Volley.newRequestQueue(main_user.this);
                     queue.add(waterRequest);
                     Intent intent = new Intent(getApplicationContext(), FoodAddActivity.class);
                     startActivity(intent);
-                }else{        Intent intent = new Intent(getApplicationContext(), FoodAddActivity.class);
+                }else{
+                    Intent intent = new Intent(getApplicationContext(), FoodAddActivity.class);
                     startActivity(intent);
                 }
             }
@@ -170,14 +183,16 @@ public class main_user extends AppCompatActivity {
         announcement_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (water.getText().toString().equals("0") == false) {
+                if (watercount != 0) {
                     waterRequest = new waterRequest(ID,water.getText().toString(),date);
                     queue = Volley.newRequestQueue(main_user.this);
                     queue.add(waterRequest);
-                    NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(main_user.this);
-                    noticeBackgroundTask.execute();
-                }else{    NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(main_user.this);
-                    noticeBackgroundTask.execute();}
+                    Intent Noticeintent = new Intent(getApplicationContext(), annoucement.class);
+                    startActivity(Noticeintent);
+                }else{
+                    Intent Noticeintent = new Intent(getApplicationContext(), annoucement.class);
+                    startActivity(Noticeintent);
+                }
             }
         });
 
@@ -205,35 +220,36 @@ public class main_user extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
-                            mainkcalBackgroundTask mainkcalBackgroundTask = new mainkcalBackgroundTask(main_user.this);
-                            mainkcalBackgroundTask.execute();
-                        }else{    mainkcalBackgroundTask mainkcalBackgroundTask = new mainkcalBackgroundTask(main_user.this);
-                            mainkcalBackgroundTask.execute();
+                            Intent intent = new Intent(getApplicationContext(), main_user.class);
+                            startActivity(intent);
+                        }else{
+                            Intent intent = new Intent(getApplicationContext(), main_user.class);
+                            startActivity(intent);
                         }
                         return true;
                     case R.id.calender:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
-                            UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(main_user.this);
-                            userFoodListBackgroundTask.execute();
-                        }else{    UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(main_user.this);
-                            userFoodListBackgroundTask.execute();
+                            Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
+                            startActivity(intent);
+                        }else{
+                            Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
+                            startActivity(intent);
                         }
                         return true;
                     case R.id.communety:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
@@ -244,7 +260,7 @@ public class main_user extends AppCompatActivity {
                         }
                         return true;
                     case R.id.mypage:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
@@ -255,7 +271,7 @@ public class main_user extends AppCompatActivity {
                         }
                         return true;
                     case R.id.map:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
@@ -266,7 +282,7 @@ public class main_user extends AppCompatActivity {
                         }
                         return true;
                     case R.id.manbogi:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
@@ -277,24 +293,26 @@ public class main_user extends AppCompatActivity {
                         }
                         return true;
                     case R.id.annoucement:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
-                            NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(main_user.this);
-                            noticeBackgroundTask.execute();
-                        }else{           NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(main_user.this);
-                            noticeBackgroundTask.execute();
+                            Intent Noticeintent = new Intent(getApplicationContext(), annoucement.class);
+                            startActivity(Noticeintent);
+                        }else{
+                            Intent Noticeintent = new Intent(getApplicationContext(), annoucement.class);
+                            startActivity(Noticeintent);
                         }
                         return true;
                     case R.id.friend:
-                        if (water.getText().toString().equals("0") == false) {
+                        if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);
                             queue = Volley.newRequestQueue(main_user.this);
                             queue.add(waterRequest);
                             Intent friend = new Intent(getApplicationContext(), chatList.class);
                             startActivity(friend);
-                        }else{         Intent friend = new Intent(getApplicationContext(), chatList.class);
+                        }else{
+                            Intent friend = new Intent(getApplicationContext(), chatList.class);
                             startActivity(friend);
                         }
                         return true;
@@ -302,35 +320,6 @@ public class main_user extends AppCompatActivity {
                 return false;
             }
         });
-        // 식단 칼로리 합
-        Intent intent = getIntent();
-        User user1 = new User();
-        try {
-            JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserState"));
-            JSONArray jsonArray = jsonObject.getJSONArray("response");
-            String Date, UserID, FoodKcal;
-            int Water, count = 0;
-
-            while (count < jsonArray.length()) {
-                JSONObject object = jsonArray.getJSONObject(count);
-                Date = object.getString("date");
-                FoodKcal = object.getString("FoodKcal");
-                Water = object.getInt("water");
-                UserID = object.getString("UserID");
-                if (UserID.equals(user1.getId())) {
-                    if (date.equals(Date)) {
-                        KcalNum += Integer.parseInt(FoodKcal);
-                        kcalText.setText(String.valueOf(KcalNum));
-                        water.setText(String.valueOf(Water));
-                    }
-                }
-
-                count++;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         // 상태메시지 변경
         TextView text1 = findViewById(R.id.Status_message_text);
         text1.setOnClickListener(new View.OnClickListener() {
@@ -510,12 +499,139 @@ public class main_user extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    protected void showFoodList() {
 
+        try {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String UserId = c.getString(TAG_FoodUserId);
+                    String Date = c.getString(TAG_FoodDate);
+                    if(user.getId().equals(UserId)) {
+                        if(date.equals(Date)) {
+                            String FoodKcal = c.getString(TAG_FoodKcal);
+                            KcalNum += Integer.parseInt(FoodKcal);
+                            kcalText.setText(String.valueOf(KcalNum));
+                        }
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getFoodData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showFoodList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+    }
+    protected void showList() {
+        try {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String UserId = c.getString(TAG_UserId);
+                    String Date = c.getString(TAG_Date);
+                    if(UserId.equals(user.getId())) {
+                        if(date.equals(Date)) {
+                            String Water = c.getString(TAG_water);
+                            water.setText(Water);
+                        }
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+    }
     // 시간
     private String getTime() {
         long now = System.currentTimeMillis();
         Date date = new Date(now);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d");
         String getTime = dateFormat.format(date);
 
         return getTime;

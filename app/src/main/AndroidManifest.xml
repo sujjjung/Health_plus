@@ -25,6 +25,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".admin.Admindeclaration"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".routine"
             android:exported="false"
             android:noHistory="true">
@@ -147,7 +154,7 @@
         <activity
             android:name=".Fragment.HealthAddList.HealthAddMainActivity"
             android:exported="false"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity
             android:name=".map"
             android:exported="false">
@@ -288,6 +295,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".comment"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".community_post"
             android:exported="false">
             <meta-data
@@ -329,8 +343,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".comment"
-            android:exported="false">
+        <activity
+            android:name=".comment"
+            android:exported="false"
+            tools:ignore="DuplicateActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

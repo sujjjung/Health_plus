@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,8 +24,13 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +39,15 @@ public class routine extends AppCompatActivity {
     private userRoutineAdapter userRoutineAdapter;
     private ArrayList<User> search_list;
     private EditText editText;
+    private static final String TAG_RESULTS = "result";
+    private static final String TAG_UserId  = "userId";
+    private static final String TAG_ExName = "ExerciseName";
+    private static final String TAG_ExPart = "ExercisePart";
+    private static final String TAG_RoutineName = "RoutineName";
+    private static final String TAG_ExerciseCode = "ExerciseCode";
+    String myJSON;
+    JSONArray peoples = null;
+    User user;
     // 햄버거 버튼
     private Toolbar toolbar;
     private NavigationView navigationView;
@@ -49,7 +64,6 @@ public class routine extends AppCompatActivity {
 
 
         Date = extras.getString("Date");
-        Intent intent = getIntent();
         routineList = new ArrayList<>();
         userRoutineAdapter = new userRoutineAdapter(this,routineList,Date);
         ListView exView = (ListView) findViewById(R.id.recycler_routine);
@@ -87,31 +101,6 @@ public class routine extends AppCompatActivity {
             }
 
         });
-        try {
-            userRoutineAdapter.notifyDataSetChanged();
-            JSONObject jsonObject = new JSONObject(intent.getStringExtra("UserRoutine"));
-            JSONArray jsonArray = jsonObject.getJSONArray("response");
-            int count = 0;
-            String RoutineName,UserID,ExerciseCode,ExerciseName,ExercisePart;
-            //JSON 배열 길이만큼 반복문을 실행
-            while (count < jsonArray.length()) {
-                //count는 배열의 인덱스를 의미
-                JSONObject object = jsonArray.getJSONObject(count);
-                RoutineName = object.getString("RoutineName");
-                ExerciseCode = object.getString("ExerciseCode");
-                ExerciseName = object.getString("ExerciseName");
-                ExercisePart = object.getString("ExercisePart");
-                User user = new User();
-                user.AddRoutine(RoutineName,ExerciseCode,ExerciseName,ExercisePart);
-                UserID = object.getString("UserID");
-                if(UserID.equals(user.getId())) {
-                    routineList.add(user);//리스트뷰에 값을 추가해줍니다
-                }
-                count++;
-            };
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         RoutineAddBtn = findViewById(R.id.RoutineAdd);
         editBtn = findViewById(R.id.edit);
         RoutineAddBtn.setOnClickListener(new View.OnClickListener() {
@@ -174,12 +163,12 @@ public class routine extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home:
-                        mainkcalBackgroundTask mainkcalBackgroundTask = new mainkcalBackgroundTask(routine.this);
-                        mainkcalBackgroundTask.execute();
+                        Intent Mainintent = new Intent(getApplicationContext(), main_user.class);
+                        startActivity(Mainintent);
                         return true;
                     case R.id.calender:
-                        UserFoodListBackgroundTask userFoodListBackgroundTask = new UserFoodListBackgroundTask(routine.this);
-                        userFoodListBackgroundTask.execute();
+                        Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
+                        startActivity(intent);
                         return true;
                     case R.id.communety:
                         Intent communetyintent = new Intent(getApplicationContext(), community.class);
@@ -198,8 +187,8 @@ public class routine extends AppCompatActivity {
                         startActivity(manbogiintent);
                         return true;
                     case R.id.annoucement:
-                        NoticeBackgroundTask noticeBackgroundTask = new NoticeBackgroundTask(routine.this);
-                        noticeBackgroundTask.execute();
+                        Intent Noticeintent = new Intent(getApplicationContext(), annoucement.class);
+                        startActivity(Noticeintent);
                         return true;
                     case R.id.friend:
                         Intent friend = new Intent(getApplicationContext(), chatList.class);
@@ -209,6 +198,75 @@ public class routine extends AppCompatActivity {
                 return false;
             }
         });
+        getData("http://enejd0613.dothome.co.kr/Routinelist.php");
+    }
+    protected void showList() {
+
+        try {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String UserId = c.getString(TAG_UserId);
+
+                    if(UserId.equals(user.getId())) {
+                        String ExerciseName = c.getString(TAG_ExName);
+                        String ExercisePart = c.getString(TAG_ExPart);
+                        String RoutineName = c.getString(TAG_RoutineName);
+                        String ExerciseCode = c.getString(TAG_ExerciseCode);
+                        user = new User(RoutineName,ExerciseCode,ExercisePart,ExerciseName);
+                        routineList.add(user);//리스트뷰에 값을 추가해줍니다
+                    }
+                }
+
+            }
+            userRoutineAdapter.notifyDataSetChanged();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+
     }
 
 
