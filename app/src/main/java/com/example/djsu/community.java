@@ -70,9 +70,9 @@ public class community extends AppCompatActivity {
     private static final String TAG_ID = "id";
     private static final String TAG_IMAGE = "image";
     private static final String TAG_DATE = "date";
-    private static final String TAG_USER_ID = "user_id";
     private static final String TAG_FriendCode = "FriendCode";
     private static final String TAG_postId = "postId";
+    private static final String TAG_USER_ID = "user_id";
     private static final String TAG_following_id = "following_id";
     JSONArray peoples = null;
     JSONArray peoples1 = null;
