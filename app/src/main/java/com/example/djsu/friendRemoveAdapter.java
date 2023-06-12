@@ -3,6 +3,7 @@ package com.example.djsu;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +67,7 @@ public class friendRemoveAdapter extends ArrayAdapter<member> {
 
         User user = new User();
         String userid = user.getId();
+        String unfollowID = memberItem.getId();
 
         //DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("User").child(userid).child("friend").equalTo(memberItem.getName());
 
@@ -72,6 +83,9 @@ public class friendRemoveAdapter extends ArrayAdapter<member> {
                 // 해당 아이템의 리얼타임 데이터 삭제
                 DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("User").child(userid).child("friend").child(memberItem.getId());
 
+                // mysql
+                new UnfollowUserTask().execute(userid, unfollowID);
+
                 databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -84,6 +98,8 @@ public class friendRemoveAdapter extends ArrayAdapter<member> {
                         Log.e("TAG", "Failed to delete value.", databaseError.toException());
                     }
                 });
+
+
             }
         });
 
@@ -95,5 +111,49 @@ public class friendRemoveAdapter extends ArrayAdapter<member> {
                 .into(imageView);
 
         return convertView;
+    }
+
+    private class UnfollowUserTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String userID = params[0];
+            String unfollowID = params[1];
+
+            try {
+                // 서버에 요청 보내기
+                URL url = new URL("http://enejd0613.dothome.co.kr/unfollow.php");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+
+                // POST 데이터 보내기
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                String data = URLEncoder.encode("userID", "UTF-8") + "=" + URLEncoder.encode(userID, "UTF-8") + "&" +
+                        URLEncoder.encode("unfollowID", "UTF-8") + "=" + URLEncoder.encode(unfollowID, "UTF-8");
+                writer.write(data);
+                writer.flush();
+                writer.close();
+                os.close();
+
+                // 서버 응답 받기
+                InputStream is = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+                reader.close();
+                is.close();
+
+                // 결과 반환
+                return result.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "언팔로우에 실패하였습니다: " + e.getMessage();
+            }
+        }
     }
 }
