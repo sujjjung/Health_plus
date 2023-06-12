@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +29,16 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,6 +115,10 @@ public class friendAddAdapter extends ArrayAdapter<member> {
                         databaseReference.child("User").child(userID).child("friend").child(userItem).child("profile").setValue(userPro);
                         databaseReference.child("User").child(userID).child("friend").child(userItem).child("state").setValue(userState);
 //                        Toast.makeText(context, "Button clicked for " + memberItem.getName(), Toast.LENGTH_SHORT).show();
+
+                        // mysql
+                        new FollowUserTask().execute(userID, userItem);
+
                         dialog.dismiss();
                         Intent intent = new Intent(v.getContext(), friends_list.class);
                         context.startActivity(intent);
@@ -128,5 +141,49 @@ public class friendAddAdapter extends ArrayAdapter<member> {
                 .into(imageView);
 
         return convertView;
+    }
+
+    private class FollowUserTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String userID = params[0];
+            String followingID = params[1];
+
+            try {
+                // 서버에 요청 보내기
+                URL url = new URL("http://enejd0613.dothome.co.kr/follow.php");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+
+                // POST 데이터 보내기
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                String data = URLEncoder.encode("userID", "UTF-8") + "=" + URLEncoder.encode(userID, "UTF-8") + "&" +
+                        URLEncoder.encode("followingID", "UTF-8") + "=" + URLEncoder.encode(followingID, "UTF-8");
+                writer.write(data);
+                writer.flush();
+                writer.close();
+                os.close();
+
+                // 서버 응답 받기
+                InputStream is = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+                reader.close();
+                is.close();
+
+                // 결과 반환
+                return result.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "팔로우 정보 추가 중 오류 발생: " + e.getMessage();
+            }
+        }
     }
 }
