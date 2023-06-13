@@ -89,18 +89,26 @@ public class CalendarActivity extends AppCompatActivity {
     private static final String TAG_WaterDate = "date";
     private static final String TAG_water = "water";
     // 운동
+    // 운동시간(분) * (6 X 0.0175 X 몸무게)
     private static final String TAG_ExerciseUnit = "ExerciseUnit";
+    private static final String TAG_weight = "weight";
+    private static final String TAG_FatId  = "userId";
+    private static final String TAG_Time  = "Time";
+    private float weight;
     User user = new User();
     String myJSON;
     JSONArray peoples = null;
+    float minute,second,secondSum,ExKcalNum;
+
     // 섭취, 운동 선언
-    TextView KcalSum,CarbohydrateSum,proteinSum,FatSum,sodiumSum,SugarSum,WaterSum,UnitSum;
+    TextView KcalSum,CarbohydrateSum,proteinSum,FatSum,sodiumSum,SugarSum,WaterSum,UnitSum,ExkcalSum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 캘린더, 버튼 선언
         setContentView(R.layout.activity_calendar);
         getData("http://enejd0613.dothome.co.kr/foodcalendarlist.php");
+        getFatData("http://enejd0613.dothome.co.kr/getWeight.php");
         getWaterData("http://enejd0613.dothome.co.kr/Waterlist.php");
         getExData("http://enejd0613.dothome.co.kr/excalendarlist.php");
         // 섭취, 운동 선언 초기화
@@ -112,6 +120,7 @@ public class CalendarActivity extends AppCompatActivity {
         SugarSum = findViewById(R.id.sugarSum);
         WaterSum = findViewById(R.id.WaterSum);
         UnitSum = findViewById(R.id.UnitSum);
+        ExkcalSum = findViewById(R.id.ExkcalSum);
         // 캘린더 UnitSum
         calendarView = findViewById(R.id.calendarView);
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
@@ -127,6 +136,7 @@ public class CalendarActivity extends AppCompatActivity {
                 String DayOfMonth = String.valueOf(dayOfMonth); // 일 정보를 문자열로 변환
                 Date = Year + "-" + Month + "-" + DayOfMonth;
                 getData("http://enejd0613.dothome.co.kr/foodcalendarlist.php");
+                getFatData("http://enejd0613.dothome.co.kr/getMuscle.php");
                 getWaterData("http://enejd0613.dothome.co.kr/Waterlist.php");
                 getExData("http://enejd0613.dothome.co.kr/excalendarlist.php");
             }
@@ -528,6 +538,8 @@ public class CalendarActivity extends AppCompatActivity {
     protected void showExList() {
         UnitNum = 0;
         UnitSum.setText("");
+        ExKcalNum = 0;
+        ExkcalSum.setText("");
         try {
             if (myJSON != null && !myJSON.isEmpty()) {
                 JSONObject jsonObj = new JSONObject(myJSON);
@@ -546,6 +558,23 @@ public class CalendarActivity extends AppCompatActivity {
                         }
                     }
                 }
+
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String UserId = c.getString(TAG_UserId);
+                    String Date1 = c.getString(TAG_Date);
+                    if(UserId.equals(user.getId())) {
+                        if(Date.equals(Date1)) {
+                            String Time = c.getString(TAG_Time);
+                            minute += Float.parseFloat(Time.substring(0, 2));
+                            second += Float.parseFloat(Time.substring(3, 5));
+                        }
+                    }
+                }
+                secondSum = second / 60;
+                minute += secondSum;
+                ExKcalNum = (float) (minute * (6 * 0.0175 * weight));
+                ExkcalSum.setText(String.valueOf(ExKcalNum));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -587,6 +616,68 @@ public class CalendarActivity extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 myJSON = result;
                 showExList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+    }
+
+    // 몸무게 불러오기
+    protected void showFatList() {
+        try {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String userId = c.getString(TAG_FatId);
+                    if(userId.equals(user.getId())) {
+                        String weight = c.getString(TAG_weight);
+                        this.weight =  Float.parseFloat(weight);
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getFatData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showFatList();
             }
         }
         GetDataJSON g = new GetDataJSON();

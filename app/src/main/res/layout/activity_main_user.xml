@@ -108,7 +108,7 @@
             app:layout_constraintTop_toBottomOf="@+id/healthView" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/ExkcalSum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="62dp"
@@ -126,9 +126,9 @@
             android:fontFamily="@font/a10092"
             android:text="kcal"
             android:textSize="18dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView5"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toTopOf="@+id/textView5" />
+            app:layout_constraintBottom_toBottomOf="@+id/ExkcalSum"
+            app:layout_constraintStart_toEndOf="@+id/ExkcalSum"
+            app:layout_constraintTop_toTopOf="@+id/ExkcalSum" />
 
         <TextView
             android:id="@+id/textView6"
@@ -143,7 +143,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/ExTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
@@ -174,9 +174,9 @@
             android:fontFamily="@font/a10092"
             android:text="분"
             android:textSize="18dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView7"
-            app:layout_constraintStart_toEndOf="@+id/textView7"
-            app:layout_constraintTop_toTopOf="@+id/textView7" />
+            app:layout_constraintBottom_toBottomOf="@+id/ExTime"
+            app:layout_constraintStart_toEndOf="@+id/ExTime"
+            app:layout_constraintTop_toTopOf="@+id/ExTime" />
 
         <ImageButton
             android:id="@+id/view_food"
