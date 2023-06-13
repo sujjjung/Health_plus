@@ -65,6 +65,7 @@ public class routine extends AppCompatActivity {
 
         Date = extras.getString("Date");
         routineList = new ArrayList<>();
+        routineList.clear();
         userRoutineAdapter = new userRoutineAdapter(this,routineList,Date);
         ListView exView = (ListView) findViewById(R.id.recycler_routine);
         exView.setAdapter(userRoutineAdapter);
@@ -144,8 +145,8 @@ public class routine extends AppCompatActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userRoutineAdapter.ButtonChange(1);
                 userRoutineAdapter.notifyDataSetChanged();
+                userRoutineAdapter.ButtonChange(1);
             }
         });
         // 햄버거 버튼

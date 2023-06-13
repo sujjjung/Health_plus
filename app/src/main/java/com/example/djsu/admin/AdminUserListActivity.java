@@ -2,6 +2,7 @@ package com.example.djsu.admin;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,131 +24,119 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.djsu.R;
+import com.example.djsu.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdminUserListActivity extends AppCompatActivity {
-    private Toolbar toolbar;
-    private NavigationView navigationView;
-    private DrawerLayout drawerLayout;
 
     private RecyclerView recyclerView;
 
     private ArrayList<adminUser> userArrayList;
     private adminUserAdapter adminUserAdapter;
-    private FirebaseFirestore db;
-    private EditText editText;
+
+    private static final String TAG_RESULTS = "result";
+    private static final String TAG_UserID  = "UserID";
+    private static final String TAG_UserName  = "UserName";
+    private static final String TAG_UserAge = "UserAge";
+    private static final String TAG_UserProfile = "UserProfile";
+    String myJSON;
+    JSONArray peoples = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_user_list);
-        db = FirebaseFirestore.getInstance();
-//        ArrayList<adminUser> search_list = new ArrayList<>();
-
 
         userArrayList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adminUserAdapter = new adminUserAdapter(userArrayList);
+        adminUserAdapter = new adminUserAdapter(userArrayList,AdminUserListActivity.this);
 
         recyclerView.setAdapter(adminUserAdapter);
-//        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener()  {
-//            @Override
-//            public void onClick(View view, int position) {
-//                User friend = userArrayList.get(position);
-//                Toast.makeText(getApplicationContext(), friend.getName() + ' ', Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(getBaseContext(), friendAdd.class);
-//
-////                intent.putExtra("UserProfile", friend.getProfile());
-//                intent.putExtra("Name", friend.getName());
-//
-//                startActivity(intent);
-//            }
-//            @Override
-//            public void onLongClick(View view, int position) {
-//            }
-//        }));
 
-        db.collection("member")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        List<DocumentSnapshot> list= queryDocumentSnapshots.getDocuments();
-                        for(DocumentSnapshot d:list){
-                            adminUser object=d.toObject(adminUser.class);
-                            userArrayList.add(object);
-                        }
-                        adminUserAdapter.notifyDataSetChanged();
+        getData("http://enejd0613.dothome.co.kr/getUser.php");
+    }
+    protected void showList() {
+        adminUserAdapter.notifyDataSetChanged();
+        try {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String UserID = c.getString(TAG_UserID);
+                    if(UserID.equals("admin") == false) {
+                        String UserName = c.getString(TAG_UserName);
+                        String UserAge = c.getString(TAG_UserAge);
+                        String UserProfile = c.getString(TAG_UserProfile);
+                        adminUser adminUser = new adminUser(UserID, UserProfile, UserName, UserAge);
+                        userArrayList.add(adminUser);
                     }
-                });
+                }
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 
-//        Button imageButton = (Button) findViewById(R.id.button);
-       /* imageButton.setOnClickListener(new View.OnClickListener() {
+    public void getData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
 
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), friends_remove.class);
-                startActivity(intent);
-            }
-        });*/
-    }
+            protected String doInBackground(String... params) {
 
-    public interface ClickListener {
-        void onClick(View view, int position);
+                String uri = params[0];
 
-        void onLongClick(View view, int position);
-    }
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
 
-    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
-        private GestureDetector gestureDetector;
-        private ClickListener clickListener;
-
-        public RecyclerTouchListener(Context context, RecyclerView recyclerView, ClickListener clickListener) {
-            this.clickListener = clickListener;
-            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && clickListener != null) {
-                        clickListener.onLongClick(child, recyclerView.getChildAdapterPosition(child));
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
                     }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
                 }
-            });
-        }
 
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-            View child = rv.findChildViewUnder(e.getX(), e.getY());
-            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
-                clickListener.onClick(child, rv.getChildAdapterPosition(child));
+
             }
-            return false;
-        }
 
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showList();
+            }
         }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
 
     }
-
 }

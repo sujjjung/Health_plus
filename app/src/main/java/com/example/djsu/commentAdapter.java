@@ -65,7 +65,9 @@ public class commentAdapter extends BaseAdapter {
         date = v.findViewById(R.id.date);
         date.setText(commentList.get(position).getCreatedTime());
         siren_btn =  v.findViewById(R.id.siren_btn);
-
+        if(user.getId().equals(commentList.get(position).getCommentUser())){
+            siren_btn.setVisibility(View.GONE);
+        }
         siren_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

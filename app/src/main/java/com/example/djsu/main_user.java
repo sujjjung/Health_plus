@@ -90,7 +90,7 @@ public class main_user extends AppCompatActivity {
     private DrawerLayout drawerLayout;
 
     // 프로필
-    private TextView name, state,kcalText;
+    private TextView name, state,kcalText,ExkcalSum,ExTime;
     private String profile, ID;
     private Bitmap bitmap;
     private ImageView ivImage;
@@ -106,6 +106,13 @@ public class main_user extends AppCompatActivity {
     private static final String TAG_UserId  = "UserID";
     private static final String TAG_Date = "date";
     private static final String TAG_water = "water";
+    // 운동
+    // 운동시간(분) * (6 X 0.0175 X 몸무게)
+    private static final String TAG_ExerciseUnit = "ExerciseUnit";
+    private static final String TAG_weight = "weight";
+    private static final String TAG_FatId  = "userId";
+    private static final String TAG_Time  = "Time";
+    private float weight, minute,second,secondSum,ExKcalNum;
     User user = new User();
     String myJSON;
     JSONArray peoples = null;
@@ -132,11 +139,14 @@ public class main_user extends AppCompatActivity {
 
         // 종하오빠가 뭐 해놓은거
         kcalText = findViewById(R.id.kcalText);
+        ExkcalSum = findViewById(R.id.ExkcalSum);
+        ExTime = findViewById(R.id.ExTime);
         date = getTime();
         // 물 + 100
         getData("http://enejd0613.dothome.co.kr/Waterlist.php");
         getFoodData("http://enejd0613.dothome.co.kr/foodcalendarlist.php");
-
+        getFatData("http://enejd0613.dothome.co.kr/getWeight.php");
+        getExData("http://enejd0613.dothome.co.kr/excalendarlist.php");
         ImageButton plus = (ImageButton) findViewById(R.id.plusBtn);
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -622,6 +632,155 @@ public class main_user extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 myJSON = result;
                 showList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+    }
+    // 운동 불러오기
+    protected void showExList() {
+        ExKcalNum = 0;
+        ExkcalSum.setText("");
+        minute = 0;
+        ExTime.setText("");
+        try {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String UserId = c.getString(TAG_FoodUserId);
+                    String Date1 = c.getString(TAG_FoodDate);
+                    if(UserId.equals(user.getId())) {
+                        if(date.equals(Date1)) {
+                            String ExerciseUnit = c.getString(TAG_ExerciseUnit);
+                            String numberString = ExerciseUnit.replace("kg", "");
+                            int number = Integer.parseInt(numberString);
+                        }
+                    }
+                }
+
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String UserId = c.getString(TAG_FoodUserId);
+                    String Date1 = c.getString(TAG_FoodDate);
+                    if(UserId.equals(user.getId())) {
+                        if(date.equals(Date1)) {
+                            String Time = c.getString(TAG_Time);
+                            minute += Float.parseFloat(Time.substring(0, 2));
+                            second += Float.parseFloat(Time.substring(3, 5));
+                        }
+                    }
+                }
+                secondSum = second / 60;
+                minute += secondSum;
+                ExKcalNum = (float) (minute * (6 * 0.0175 * weight));
+                ExkcalSum.setText(String.valueOf(ExKcalNum));
+
+                ExTime.setText(String.valueOf(Math.round(minute)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getExData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showExList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+    }
+
+    // 몸무게 불러오기
+    protected void showFatList() {
+        try {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String userId = c.getString(TAG_FatId);
+                    if(userId.equals(user.getId())) {
+                        String weight = c.getString(TAG_weight);
+                        this.weight =  Float.parseFloat(weight);
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getFatData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showFatList();
             }
         }
         GetDataJSON g = new GetDataJSON();
