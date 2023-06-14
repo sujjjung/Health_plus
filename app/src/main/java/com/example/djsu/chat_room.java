@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.djsu.admin.AdminMainActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,9 +40,12 @@ public class chat_room extends AppCompatActivity {
     private List<ChatRoom> chatList;
     private EditText EditText_chat;
     private Button Button_send, Button_out;
-    private DatabaseReference myRef, openRoom;
-
+    private DatabaseReference myRef, backRoom;
     private TextView roomName;
+
+    private FirebaseDatabase firebase;
+
+    private DatabaseReference database, sourceRef, destinationRef;
 
     public static String getCurrentTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -102,35 +109,33 @@ public class chat_room extends AppCompatActivity {
         Button_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseReference Room = FirebaseDatabase.getInstance().getReference("ChatRoom").child(roomId).child("chatRoomId");
+                //DatabaseReference Room = FirebaseDatabase.getInstance().getReference("ChatRoom").child(roomId).child("chatRoomId");
+                DatabaseReference RoomRemove = FirebaseDatabase.getInstance().getReference("ChatRoom").child(roomId);
+                //DatabaseReference message = FirebaseDatabase.getInstance().getReference("ChatRoom").child(roomId).child("Message");
 
-                Room.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            String chatRoomId = dataSnapshot.getValue(String.class);
+//                Room.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        if (dataSnapshot.exists()) {
+//                            String chatRoomId = dataSnapshot.getValue(String.class);
+//
+//                            // 현재 사용자 이름을 찾아 해당 부분 삭제
+//                            String name = user.getName();
+//                            chatRoomId = chatRoomId.replace(name, " ");
+//
+//                            //Toast.makeText(chat_room.this, chatRoomId + " 님 환영합니다.", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                        System.out.println("Firebase 데이터베이스에서 chatRoomId 값을 가져오는 데 실패하였습니다.");
+//                    }
+//                });
 
-                            // 현재 사용자 이름을 찾아 해당 부분 삭제
-                            String name = user.getName();
-                            chatRoomId = chatRoomId.replace(name, " ");
-
-                            // chatRoomId 값을 업데이트
-                            Room.setValue(chatRoomId)
-                                    .addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            System.out.println("chatRoomId 값이 업데이트되었습니다.");
-                                        } else {
-                                            System.out.println("chatRoomId 값 업데이트에 실패하였습니다.");
-                                        }
-                                    });
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        System.out.println("Firebase 데이터베이스에서 chatRoomId 값을 가져오는 데 실패하였습니다.");
-                    }
-                });
+                RoomRemove.removeValue();
+                Intent intent1 = new Intent(chat_room.this, chatList.class);
+                startActivity(intent1);
             }
         });
 
