@@ -47,12 +47,13 @@ public class chatListAdapter extends ArrayAdapter<ChatRoom> {
                 convertView = LayoutInflater.from(context).inflate(R.layout.item_chat_list, parent, false);
             }
 
-            TextView roomNameTextView = convertView.findViewById(R.id.txt_message);
+            TextView roomName = convertView.findViewById(R.id.roomName);
             TextView roomMsg = convertView.findViewById(R.id.message);
+            TextView msgDate = convertView.findViewById(R.id.date);
 
             final ChatRoom chatRoom = getItem(position);
 
-            roomNameTextView.setText(chatRoom.getChatRoomId());
+            roomName.setText(chatRoom.getChatRoomId());
             // ChatRoom 객체에서 최근 메시지의 내용을 가져옵니다.
             DatabaseReference chatRoomRef = databaseReference.child("ChatRoom").child(chatRoom.getChatRoomId());
             chatRoomRef.child("Message")
@@ -67,6 +68,7 @@ public class chatListAdapter extends ArrayAdapter<ChatRoom> {
                                     if (recentChat != null) {
                                         // 최근 메시지의 내용을 roomMsgTextView에 설정합니다.
                                         roomMsg.setText(recentChat.getMsg());
+                                        msgDate.setText(recentChat.getDate());
                                     }
                                 }
                             }

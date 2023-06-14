@@ -16,7 +16,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.djsu.R;
-import com.example.djsu.User;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -103,7 +102,7 @@ public class adminDeclarationAdapter extends BaseAdapter {
                 getCommentData("http://enejd0613.dothome.co.kr/get_comments.php");
                 getData("http://enejd0613.dothome.co.kr/filedownload.php", new DataCallback() {
                     @Override
-                    public void onDataFetched(String content, String date, String photo,String type) {
+                    public void onDataFetched(String content, String date, String photo) {
                         if(type.equals("게시글")) {
                             contentText.setText("해당 글:" +content);
                             dateText.setText("게시 날짜:" +date);
@@ -124,7 +123,26 @@ public class adminDeclarationAdapter extends BaseAdapter {
                 conformBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // Perform conform action
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(response);
+                                    boolean success = jsonResponse.getBoolean("success");
+                                    //받아온 값이 success면 정상적으로 서버로부터 값을 받은 것을 의미함
+                                    if (success) {
+                                        Toast.makeText(context.getApplicationContext(), "삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                        DeclarationArrayList.remove(position);//리스트에서 해당부분을 지워줌
+                                        notifyDataSetChanged();//데이터가 변경된 것을 어댑터에 알려줌
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        adminUserDelete deleteRequest = new adminUserDelete(DeclarationArrayList.get(position).getPostname(), responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(context);
+                        queue.add(deleteRequest);
                     }
                 });
 
@@ -241,7 +259,7 @@ public class adminDeclarationAdapter extends BaseAdapter {
                 showList();
 
                 if (callback != null) {
-                    callback.onDataFetched(content, date, photo,type);
+                    callback.onDataFetched(content, date, photo);
                 }
             }
         }
@@ -308,6 +326,6 @@ public class adminDeclarationAdapter extends BaseAdapter {
     }
 
     public interface DataCallback {
-        void onDataFetched(String content, String date, String photo, String type);
+        void onDataFetched(String content, String date, String photo);
     }
 }
