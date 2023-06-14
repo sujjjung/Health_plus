@@ -9,11 +9,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +61,8 @@ public class CalendarActivity extends AppCompatActivity {
     private FloatingActionButton fabHealth;
     private FloatingActionButton fabFood;
     private FloatingActionButton fabKg;
+
+    private ScrollView scrollView;
 
     // 햄버거 버튼
     private Toolbar toolbar;
@@ -278,6 +282,24 @@ public class CalendarActivity extends AppCompatActivity {
         fabHealth = findViewById(R.id.floatingHealth);
         fabFood = findViewById(R.id.floatingFood);
         fabKg = findViewById(R.id.floatingKg);
+        scrollView = findViewById(R.id.bio_scroll);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View view, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    // 스크롤 위치에 따라 버튼의 위치를 업데이트합니다.
+                    fabMain.setTranslationY(scrollY);
+                    fabMain.setTranslationX(scrollX);
+                    fabHealth.setTranslationY(scrollY);
+                    fabHealth.setTranslationX(scrollX);
+                    fabFood.setTranslationY(scrollY);
+                    fabFood.setTranslationX(scrollX);
+                    fabKg.setTranslationY(scrollY);
+                    fabKg.setTranslationX(scrollX);
+                }
+            });
+        }
 
         // 메인플로팅 버튼 클릭
         fabMain.setOnClickListener(new View.OnClickListener() {
@@ -348,22 +370,22 @@ public class CalendarActivity extends AppCompatActivity {
         if (fabMain_status) {
             // 플로팅 액션 버튼 닫기
             // 애니메이션 추가
-            ObjectAnimator fk_animation = ObjectAnimator.ofFloat(fabKg, "translationY", 0f);
+            ObjectAnimator fk_animation = ObjectAnimator.ofFloat(fabKg, "translationY", fabMain.getTranslationY()-0f);
             fk_animation.start();
-            ObjectAnimator fc_animation = ObjectAnimator.ofFloat(fabFood, "translationY", 0f);
+            ObjectAnimator fc_animation = ObjectAnimator.ofFloat(fabFood, "translationY", fabMain.getTranslationY()-0f);
             fc_animation.start();
-            ObjectAnimator fe_animation = ObjectAnimator.ofFloat(fabHealth, "translationY", 0f);
+            ObjectAnimator fe_animation = ObjectAnimator.ofFloat(fabHealth, "translationY", fabMain.getTranslationY()-0f);
             fe_animation.start();
             // 메인 플로팅 이미지 변경
             fabMain.setImageResource(R.drawable.ic_action_plus);
 
         } else {
             // 플로팅 액션 버튼 열기
-            ObjectAnimator fc_animation = ObjectAnimator.ofFloat(fabFood, "translationY", -200f);
+            ObjectAnimator fc_animation = ObjectAnimator.ofFloat(fabFood, "translationY", fabMain.getTranslationY()-200f);
             fc_animation.start();
-            ObjectAnimator fe_animation = ObjectAnimator.ofFloat(fabHealth, "translationY", -400f);
+            ObjectAnimator fe_animation = ObjectAnimator.ofFloat(fabHealth, "translationY", fabMain.getTranslationY()-400f);
             fe_animation.start();
-            ObjectAnimator fk_animation = ObjectAnimator.ofFloat(fabKg, "translationY", -600f);
+            ObjectAnimator fk_animation = ObjectAnimator.ofFloat(fabKg, "translationY", fabMain.getTranslationY()-600f);
             fk_animation.start();
             // 메인 플로팅 이미지 변경
             fabMain.setImageResource(R.drawable.ic_action_plus);
