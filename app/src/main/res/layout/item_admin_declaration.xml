@@ -18,7 +18,9 @@
             android:layout_marginLeft="10dp"
             android:text="이름"
             android:textColor="#000"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:fontFamily="@font/a10091"
+            />
 
         <TextView
             android:id="@+id/Date"
@@ -27,7 +29,9 @@
             android:layout_marginLeft="10dp"
             android:text="신고 날짜"
             android:textColor="#000"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+
+            android:fontFamily="@font/a10091"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/detail"

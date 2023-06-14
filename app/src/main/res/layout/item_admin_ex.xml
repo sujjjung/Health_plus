@@ -12,26 +12,15 @@
         android:orientation="horizontal"
         android:padding="20dp">
 
-
-        <ImageView
-            android:id="@+id/profile"
-            android:layout_width="64dp"
-            android:layout_height="59dp"
-            android:src="@drawable/ic_man" />-->
-
-        <!--이름-->
-
-        <!--상태 메시지-->
-
-
         <TextView
             android:id="@+id/ExName"
-            android:layout_width="100dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="이름"
             android:textColor="#000"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:fontFamily="@font/a10091" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/select"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="60dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="5dp"
@@ -72,7 +72,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login_btn"
             android:layout_width="96dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:background="@drawable/shape_yes_btn"
             android:fontFamily="@font/a10092"
             android:text="친구신청"

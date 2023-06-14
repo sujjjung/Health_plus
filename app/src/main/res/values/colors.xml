@@ -14,10 +14,8 @@
         <color name="schedule_week_view_line">#EEEEEE</color>
         <!--<color name="colorPrimaryDark">#59C4E4</color>-->
         <color name="colorPrimaryDark">@color/header</color>
-
         <!--<color name="colorAccent">#52BCDC</color>-->
         <color name="colorAccent">@color/header</color>
-
         <color name="colorBlack">#000000</color>
         <color name="colorWhite">#ffffff</color>
         <color name="login_gray">#cccccc</color>
@@ -28,43 +26,23 @@
         <color name="compare_decrease">#BE1E2D</color>
         <color name="compare_zero">#808080</color>
         <color name="compare_even">#333333</color>
-
         <color name="coming_soon">#59C4E4</color>
         <color name="branch_name_box">#C9EBFF</color>
-
-
         <color name="graph_gray">#dddddd</color>
-
         <color name="navigation_menu">#DDDDDD</color>
         <color name="table_header">#C8EBFF</color>
-
         <color name="lighter_gray">#ddd</color>
-
         <color name="period_report_table_green">#39B54A</color>
         <color name="period_report_table_red">#BE1E2D</color>
         <color name="period_report_table_gray">#808080</color>
-
         <color name="appcompat_light_white">#fffafafa</color>
-
         <color name="dialog_chart_vertical_line">#cccccc</color>
         <color name="dialog_chart_line">#FFC400</color>
-
-
-
         <color name="report_table_header_text">#5B5B5B</color>
-
         <color name="site_comparison_location">#F0D3A7</color>
-
-
-
-
-
-
         <color name="bargraph_axis">#C0C0C0</color>
         <color name="bargraph_grid">#EEEEEE</color>
         <color name="bargraph_label">#B3393040</color>
-
-
         <color name="colorPrimary">@color/header</color>
         <color name="header">#0898D8</color>
         <color name="background_gray">#EEEEEE</color>
@@ -109,5 +87,6 @@
         <color name="green">#6D988A</color>
         <color name="dark_green">#006666</color>
         <color name="green_variant">#2FBCA1</color>
+    <color name="mainyellow">#ffdd00</color>
 
     </resources>

@@ -1,56 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="60dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:gravity="center_vertical"
-        android:padding="20dp">
-
-        <!--이름-->
-        <TextView
-            android:id="@+id/setnumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:fontFamily="@font/a10092"
-            android:text="셋트 수"
-            android:textColor="#323232"
-            android:textSize="20dp" />
-
-        <EditText
-            android:id="@+id/unit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:fontFamily="@font/a10092"
-            android:text="단위"
-            android:textColor="#323232"
-            android:textSize="20dp" />
-
-        <EditText
-            android:id="@+id/number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:fontFamily="@font/a10092"
-            android:inputType="number"
-            android:text="몇회"
-            android:textColor="#323232"
-            android:textSize="20dp" />
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:background="@drawable/friend_invite"
+        android:button="@null"
+        android:layout_width="393dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="-2dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="0dp" />
 
 
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="60dp" />
+    <TextView
+        android:id="@+id/setnumber"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="38dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/a10092"
+        android:foregroundGravity="center_vertical"
+        android:gravity="center"
+        android:text="3"
+        android:textColor="#323232"
+        android:textSize="20dp" />
 
+    <EditText
+        android:id="@+id/unit"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
+        android:layout_alignTop="@+id/number"
+        android:layout_alignBottom="@+id/number"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="-1dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginBottom="1dp"
+        android:layout_toEndOf="@+id/number"
+        android:fontFamily="@font/a10092"
+        android:gravity="center"
+        android:text="단위"
+        android:textColor="#323232"
+        android:textSize="20dp" />
 
-    </LinearLayout>
+    <EditText
+        android:id="@+id/number"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/setnumber"
+        android:layout_alignBottom="@+id/setnumber"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/setnumber"
+        android:fontFamily="@font/a10092"
+        android:gravity="center"
+        android:inputType="number"
+        android:text="몇회"
+        android:textColor="#323232"
+        android:textSize="20dp" />
 
-</LinearLayout>
+</RelativeLayout>

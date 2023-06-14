@@ -259,4 +259,10 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="CustomDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- 다이얼로그의 밑줄 색상을 여기서 지정합니다. -->
+        <item name="colorAccent">@color/mainyellow</item>
+    </style>
+
 </resources>
