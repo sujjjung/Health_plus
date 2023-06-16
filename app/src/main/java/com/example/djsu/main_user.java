@@ -280,28 +280,6 @@ public class main_user extends AppCompatActivity {
                             startActivity(mypageintent);
                         }
                         return true;
-                    case R.id.map:
-                        if (watercount != 0) {
-                            waterRequest = new waterRequest(ID,water.getText().toString(),date);
-                            queue = Volley.newRequestQueue(main_user.this);
-                            queue.add(waterRequest);
-                            Intent mapintent = new Intent(getApplicationContext(), map.class);
-                            startActivity(mapintent);
-                        }else{  Intent mapintent = new Intent(getApplicationContext(), map.class);
-                            startActivity(mapintent);
-                        }
-                        return true;
-                    case R.id.manbogi:
-                        if (watercount != 0) {
-                            waterRequest = new waterRequest(ID,water.getText().toString(),date);
-                            queue = Volley.newRequestQueue(main_user.this);
-                            queue.add(waterRequest);
-                            Intent manbogiintent = new Intent(getApplicationContext(), pedometer.class);
-                            startActivity(manbogiintent);
-                        }else{         Intent manbogiintent = new Intent(getApplicationContext(), pedometer.class);
-                            startActivity(manbogiintent);
-                        }
-                        return true;
                     case R.id.annoucement:
                         if (watercount != 0) {
                             waterRequest = new waterRequest(ID,water.getText().toString(),date);

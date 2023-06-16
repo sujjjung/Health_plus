@@ -94,7 +94,6 @@ public class Fragment5 extends Fragment {
 
         ListView exListView = (ListView) view.findViewById(R.id.ExView);
         exListView.setAdapter(exerciseAdapter);
-        exerciseAdapter.resetSelectedPositions();
 
         getData("http://enejd0613.dothome.co.kr/Absexlist.php");
         return view;

@@ -26,7 +26,7 @@ public class userRoutineAdapter extends BaseAdapter {
     private List<User> routineList;
     TextView name;
     Button shape_yes_btn,detailBtn;
-    int num = 0;
+    int num = 0,Exnum = 0;
     String RoutineName ="",Date,ExPart,ExName,ExCode,BtnText = "선택";
     public userRoutineAdapter(Context context, List<User> routineList, String Date) {
         this.context = context;
@@ -80,6 +80,10 @@ public class userRoutineAdapter extends BaseAdapter {
                     intent.putExtra("Date", Date);
                     intent.putExtra("RoutineCount", 0);
                     intent.putExtra("index", 0);
+                    if(routineList.get(position).getExercisePart().equals("유산소")){
+                        Exnum =1;
+                    }
+                    intent.putExtra("num", Exnum);
                     intent.putExtra("RoutineNameText", routineList.get(position).getRoutineName());
                     context.startActivity(intent);
                 } else if(BtnText.equals("삭제")){
