@@ -46,7 +46,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
     TextView mTimeTextView;
     private Boolean isRunning = true;
     String number, unitnum,Date,ExCode,RoutineNameText;
-    int count = 1, RoutineCount = 0,num,setcount=1,index = 0;
+    int count = 1, RoutineCount = 0,num,setcount=1,index = 0,Exnum = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +54,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         Date = extras.getString("Date");
         index = extras.getInt("index");
+        Exnum = extras.getInt("num");
         RoutineCount = extras.getInt("RoutineCount");
         System.out.println("gggg" + RoutineCount);
         RoutineNameText = extras.getString("RoutineNameText");
@@ -131,12 +132,21 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         exAdapter = new exerciserecodeAdapter(exrecodeList,ExerciseRecordActivity.this);
         recyclerView.setAdapter(exAdapter);
         ImageButton unitbtn = (ImageButton)findViewById(R.id.unitBtn);
+        if(Exnum == 1){
+            TextView textView53 =(TextView) findViewById(R.id.textView53);
+            textView53.setVisibility(View.GONE);
+        }
         unitbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ExerciseRecordActivity.this, "단위가 변경되었습니다.", Toast.LENGTH_SHORT).show();
-                if(unit.getText().toString().equals("kg")) {unit.setText("ld");}
-                else if (unit.getText().toString().equals("ld")){ unit.setText("kg");}
+                if(Exnum == 0) {
+                    Toast.makeText(ExerciseRecordActivity.this, "단위가 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                    if (unit.getText().toString().equals("kg")) {
+                        unit.setText("ld");
+                    } else if (unit.getText().toString().equals("ld")) {
+                        unit.setText("kg");
+                    }
+                }
             }
         });
 
@@ -157,7 +167,6 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             if(editTextID.getText().toString().equals("")){Toast.makeText(ExerciseRecordActivity.this, "값을 입력해주세요", Toast.LENGTH_SHORT).show();}
-                            else {
                                 unitnum = editTextID.getText().toString();
                                 AlertDialog.Builder countbuilder = new AlertDialog.Builder(ExerciseRecordActivity.this);
                                 View viewCount = LayoutInflater.from(ExerciseRecordActivity.this).inflate(R.layout.dialog_setcount_box, null, false);
@@ -165,30 +174,45 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                                 final Button ButtonSubmit1 = (Button) viewCount.findViewById(R.id.button_dialog_submit);
                                 final EditText editTextID1 = (EditText) viewCount.findViewById(R.id.num);
                                 final AlertDialog dialog1 = countbuilder.create();
-                                ButtonSubmit1.setOnClickListener(new View.OnClickListener() {
-                                    public void onClick(View v) {
-                                        if(editTextID1.getText().toString().equals("")){ Toast.makeText(ExerciseRecordActivity.this, "값을 입력해주세요", Toast.LENGTH_SHORT).show();}
-                                        else {
-                                            // 4. 사용자가 입력한 내용을 가져와서
-                                            String setnumber = String.valueOf(setcount);
-                                            number = editTextID1.getText().toString();
-                                            // 5. ArrayList에 추가하고
-                                            exrecode dict = new exrecode(setnumber, unitnum, number);
-                                            exrecodeList.add(dict); //첫번째 줄에 삽입됨
-                                            // 6. 어댑터에서 RecyclerView에 반영하도록 합니다.
-                                            exAdapter.notifyItemInserted(0);
-                                            //mAdapter.notifyDataSetChanged();
-                                            dialog1.dismiss();
-                                            dialog.dismiss();
-                                            setcount++;
-                                            num = Integer.parseInt(unitnum);
+                                if(Exnum == 0) {
+                                    ButtonSubmit1.setOnClickListener(new View.OnClickListener() {
+                                        public void onClick(View v) {
+                                            if (editTextID1.getText().toString().equals("")) {
+                                                Toast.makeText(ExerciseRecordActivity.this, "값을 입력해주세요", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                // 4. 사용자가 입력한 내용을 가져와서
+                                                String setnumber = String.valueOf(setcount);
+                                                number = editTextID1.getText().toString();
+                                                // 5. ArrayList에 추가하고
+                                                exrecode dict = new exrecode(setnumber, unitnum, number);
+                                                exrecodeList.add(dict); //첫번째 줄에 삽입됨
+                                                // 6. 어댑터에서 RecyclerView에 반영하도록 합니다.
+                                                exAdapter.notifyItemInserted(0);
+                                                //mAdapter.notifyDataSetChanged();
+                                                dialog1.dismiss();
+                                                dialog.dismiss();
+                                                setcount++;
+                                                num = Integer.parseInt(unitnum);
 
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                                    dialog1.show();
+                                }else if(Exnum == 1){
+                                    String setnumber = String.valueOf(setcount);
+                                    number = "0";
+                                    // 5. ArrayList에 추가하고
+                                    exrecode dict = new exrecode(setnumber, unitnum, number);
+                                    exrecodeList.add(dict); //첫번째 줄에 삽입됨
+                                    // 6. 어댑터에서 RecyclerView에 반영하도록 합니다.
+                                    exAdapter.notifyItemInserted(0);
+                                    //mAdapter.notifyDataSetChanged();
+                                    dialog.dismiss();
+                                    setcount++;
+                                    num = Integer.parseInt(unitnum);
+                                }
 
-                                dialog1.show();
-                            }
+
                         }
                     });
 
@@ -237,6 +261,10 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                     intent.putExtra("Date", Date);
                     intent.putExtra("RoutineCount", --RoutineCount);
                     intent.putExtra("index", index + 1);
+                    if(RoutineListResult.get(index + 1).getExPart().equals("유산소")){
+                        Exnum =1;
+                    }
+                    intent.putExtra("num", Exnum);
                     intent.putExtra("RoutineNameText", RoutineNameText);
                     startActivity(intent);
                 }
@@ -272,14 +300,6 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                     case R.id.mypage:
                         Intent mypageintent = new Intent(getApplicationContext(), mypage.class);
                         startActivity(mypageintent);
-                        return true;
-                    case R.id.map:
-                        Intent mapintent = new Intent(getApplicationContext(), map.class);
-                        startActivity(mapintent);
-                        return true;
-                    case R.id.manbogi:
-                        Intent manbogiintent = new Intent(getApplicationContext(), pedometer.class);
-                        startActivity(manbogiintent);
                         return true;
                     case R.id.annoucement:
                         Intent annoucementintent = new Intent(getApplicationContext(), annoucement.class);

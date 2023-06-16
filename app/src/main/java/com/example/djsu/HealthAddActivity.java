@@ -45,6 +45,7 @@ public class HealthAddActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    exerciseAdapter exerciseAdapter;
     String Date,RoutineNameText;
     UserRoutine userRoutine = new UserRoutine();
     private Button BackBtn, AddBtn;
@@ -52,6 +53,7 @@ public class HealthAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health_add);
+        exerciseAdapter = new exerciseAdapter();
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -79,6 +81,7 @@ public class HealthAddActivity extends AppCompatActivity {
                 Toast.makeText(HealthAddActivity.this, "등록 완료되었습니다!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(HealthAddActivity.this, routine.class);
                 intent.putExtra("Date", Date);
+                exerciseAdapter.resetSelectedPositions();
                 startActivity(intent);
                 finish();
             }
@@ -196,14 +199,6 @@ public class HealthAddActivity extends AppCompatActivity {
                     case R.id.mypage:
                         Intent mypageintent = new Intent(getApplicationContext(), mypage.class);
                         startActivity(mypageintent);
-                        return true;
-                    case R.id.map:
-                        Intent mapintent = new Intent(getApplicationContext(), map.class);
-                        startActivity(mapintent);
-                        return true;
-                    case R.id.manbogi:
-                        Intent manbogiintent = new Intent(getApplicationContext(), pedometer.class);
-                        startActivity(manbogiintent);
                         return true;
                     case R.id.annoucement:
                         Intent Noticeintent = new Intent(getApplicationContext(), annoucement.class);

@@ -42,6 +42,9 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
         // setting data to our text views from our modal class.
         exrecode exeLsit = exArrayList.get(position);
         holder.setnumber.setText(exeLsit.getSetNumber());
+        if(exeLsit.getNumber().equals("0")){
+            holder.number.setVisibility(View.GONE);;
+        }
         holder.number.setText(exeLsit.getNumber());
         holder.Unit.setText(exeLsit.getUnit());
         holder.timerValue = timerValue;

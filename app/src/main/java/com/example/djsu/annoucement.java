@@ -96,14 +96,14 @@ public class annoucement extends AppCompatActivity {
                         Intent mypageintent = new Intent(getApplicationContext(), mypage.class);
                         startActivity(mypageintent);
                         return true;
-                    case R.id.map:
-                        Intent mapintent = new Intent(getApplicationContext(), map.class);
-                        startActivity(mapintent);
-                        return true;
-                    case R.id.manbogi:
-                        Intent manbogiintent = new Intent(getApplicationContext(), pedometer.class);
-                        startActivity(manbogiintent);
-                        return true;
+                    //case R.id.map:
+                        //Intent mapintent = new Intent(getApplicationContext(), map.class);
+                        //startActivity(mapintent);
+                        //return true;
+                    //case R.id.manbogi:
+                        //Intent manbogiintent = new Intent(getApplicationContext(), pedometer.class);
+                        //startActivity(manbogiintent);
+                        //return true;
                     case R.id.annoucement:
                         Intent Noticeintent = new Intent(getApplicationContext(), annoucement.class);
                         startActivity(Noticeintent);

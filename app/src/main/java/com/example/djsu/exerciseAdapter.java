@@ -32,6 +32,8 @@ public class exerciseAdapter extends BaseAdapter {
         this.Date = Date;
         this.RoutineNameText = RoutineNameText;
      }
+    public exerciseAdapter() {
+    }
     @Override
     public int getCount () {
         return exList.size();//리스트뷰의 총 갯수
@@ -126,6 +128,4 @@ public class exerciseAdapter extends BaseAdapter {
         count = 0;
         notifyDataSetChanged();
     }
-
-
 }
