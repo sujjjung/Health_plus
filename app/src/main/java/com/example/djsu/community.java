@@ -179,7 +179,7 @@ public class community extends AppCompatActivity {
                     if (user1.getId().equals(id)) {
                         String following_id = c.getString(TAG_following_id);
                         user1 = new User(following_id);
-                        Friendlist.add(i, user1);
+                        Friendlist.add(user1);
                     }
                 }
             }
