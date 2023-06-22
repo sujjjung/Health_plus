@@ -16,7 +16,7 @@
         android:fontFamily="@font/a1009_2"
         android:gravity="center"
         android:hint="신고사유를 입력해주세요."
-        android:textSize="20dp" />
+        android:textSize="18dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:layout_marginEnd="7dp"
             android:layout_weight="1"
             android:text="취소"
-            android:textSize="16dp"
+            android:textSize="14dp"
             android:textColor="#000000"
             android:fontFamily="@font/a10092"
             android:background="@drawable/shape_no_btn"
@@ -45,7 +45,7 @@
 
             android:text="신고"
             android:textColor="#000000"
-            android:textSize="16dp"
+            android:textSize="14dp"
 
             android:fontFamily="@font/a10092"
 
