@@ -1,31 +1,20 @@
 package com.example.djsu;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -34,18 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.time.temporal.Temporal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class friends_remove extends AppCompatActivity {
@@ -54,6 +32,9 @@ public class friends_remove extends AppCompatActivity {
     private DrawerLayout drawerLayout;
 
     private EditText editText;
+    private ArrayList<member> itemList;
+    private ArrayList<member> filteredList;
+    private friendRemoveAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +50,31 @@ public class friends_remove extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
 
         ListView listView = findViewById(R.id.recycler_messages);
+        editText = findViewById(R.id.searchtext);
+
+        itemList = new ArrayList<>();
+        filteredList = new ArrayList<>();
+        adapter = new friendRemoveAdapter(this, filteredList);
+        listView.setAdapter(adapter);
 
         User user = new User();
         String userName = user.getId();
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String searchText = charSequence.toString().toLowerCase();
+                filterList(searchText);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User").child(userName).child("friend");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -82,9 +85,11 @@ public class friends_remove extends AppCompatActivity {
                     member member = snapshot.getValue(member.class);
                     postList.add(member);
                 }
-                // ListView에 데이터를 표시하는 코드 작성
-                friendRemoveAdapter friendRemoveAdapter = new friendRemoveAdapter(friends_remove.this, postList);
-                listView.setAdapter(friendRemoveAdapter);
+                itemList.clear();
+                itemList.addAll(postList);
+                filterList("");
+
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -129,5 +134,21 @@ public class friends_remove extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void filterList(String searchText) {
+        filteredList.clear();
+
+        if (TextUtils.isEmpty(searchText)) {
+            filteredList.addAll(itemList);
+        } else {
+            for (member item : itemList) {
+                if (item.getName().toLowerCase().contains(searchText) || item.getId().toLowerCase().contains(searchText)) {
+                    filteredList.add(item);
+                }
+            }
+        }
+
+        adapter.notifyDataSetChanged();
     }
 }

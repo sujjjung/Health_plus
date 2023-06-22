@@ -1,27 +1,13 @@
 package com.example.djsu;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
-import android.app.ProgressDialog;
-import android.content.ClipData;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -29,29 +15,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.checkerframework.checker.units.qual.A;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class friendAdd extends AppCompatActivity {
@@ -59,9 +31,11 @@ public class friendAdd extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private EditText editText;
-
-    List<member> filteredList = new ArrayList<>();
+    private friendAddAdapter adapter;
+    private EditText searchEditText;
+    private ArrayList<member> itemList;
+    private ArrayList<member> filteredList;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,18 +45,39 @@ public class friendAdd extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        //뒤로가기버튼 이미지 적용
         actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger);
+
         navigationView = findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
 
         ListView listView = findViewById(R.id.UserList);
+        searchEditText = findViewById(R.id.searchtext);
+
+        itemList = new ArrayList<>();
+        filteredList = new ArrayList<>();
+        adapter = new friendAddAdapter(this, filteredList);
+        listView.setAdapter(adapter);
 
         User user = new User();
         String userid = user.getId();
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
+        databaseReference = FirebaseDatabase.getInstance().getReference("User");
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String searchText = charSequence.toString().toLowerCase();
+                filterList(searchText);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
 
         DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("User").child(userid).child("friend");
 
@@ -103,14 +98,12 @@ public class friendAdd extends AppCompatActivity {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             member member = snapshot.getValue(member.class);
                             if (member.getNondisclosure().equals("공개") && !excludedIds.contains(member.getId()) && !member.getId().equals(userid) && !member.getId().equals("admin")) {
-                                // 위에서 가져온 친구 목록에 포함되지 않고, 로그인한 유저가 아닌 경우에만 리스트에 추가합니다.
                                 postList.add(member);
                             }
-
                         }
-                        // ListView에 데이터를 표시하는 코드 작성
-                        friendAddAdapter friendAddAdapter = new friendAddAdapter(friendAdd.this, postList);
-                        listView.setAdapter(friendAddAdapter);
+                        itemList.clear();
+                        itemList.addAll(postList);
+                        filterList(""); // 초기 데이터로 검색 기능을 설정합니다.
                     }
 
                     @Override
@@ -125,7 +118,6 @@ public class friendAdd extends AppCompatActivity {
                 // 처리 중 오류 발생 시
             }
         });
-
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -167,11 +159,26 @@ public class friendAdd extends AppCompatActivity {
                 return false;
             }
         });
-    } //onCreate
+    }
+
+    private void filterList(String searchText) {
+        filteredList.clear();
+
+        if (TextUtils.isEmpty(searchText)) {
+            filteredList.addAll(itemList);
+        } else {
+            for (member item : itemList) {
+                if (item.getName().toLowerCase().contains(searchText) || item.getId().toLowerCase().contains(searchText)) {
+                    filteredList.add(item);
+                }
+            }
+        }
+
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         switch(item.getItemId()){
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);

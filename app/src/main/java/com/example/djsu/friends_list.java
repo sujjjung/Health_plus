@@ -9,6 +9,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -32,15 +35,41 @@ public class friends_list extends AppCompatActivity {
 
     private EditText editText;
 
+    private ArrayList<member> itemList;
+    private ArrayList<member> filteredList;
+    private friendlistAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
 
         ListView listView = findViewById(R.id.recycler_messages);
+        editText = findViewById(R.id.searchtext);
+
+        itemList = new ArrayList<>();
+        filteredList = new ArrayList<>();
+        adapter = new friendlistAdapter(this, filteredList);
+        listView.setAdapter(adapter);
 
         User user = new User();
         String userName = user.getId();
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String searchText = charSequence.toString().toLowerCase();
+                filterList(searchText);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User").child(userName).child("friend");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -52,8 +81,14 @@ public class friends_list extends AppCompatActivity {
                     postList.add(member);
                 }
                 // ListView에 데이터를 표시하는 코드 작성
-                friendlistAdapter friendlistAdapter = new friendlistAdapter(friends_list.this, postList);
-                listView.setAdapter(friendlistAdapter);
+//                friendlistAdapter friendlistAdapter = new friendlistAdapter(friends_list.this, postList);
+//                listView.setAdapter(friendlistAdapter);
+
+                itemList.clear();
+                itemList.addAll(postList);
+                filterList("");
+
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -131,6 +166,22 @@ public class friends_list extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void filterList(String searchText) {
+        filteredList.clear();
+
+        if (TextUtils.isEmpty(searchText)) {
+            filteredList.addAll(itemList);
+        } else {
+            for (member item : itemList) {
+                if (item.getName().toLowerCase().contains(searchText) || item.getId().toLowerCase().contains(searchText)) {
+                    filteredList.add(item);
+                }
+            }
+        }
+
+        adapter.notifyDataSetChanged();
     }
     // 햄버거
     @Override

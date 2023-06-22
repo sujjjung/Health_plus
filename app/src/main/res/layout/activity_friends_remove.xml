@@ -56,7 +56,7 @@
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/searchtext"
         tools:listitem="@layout/item_friend_add" />
 
 <!--    <androidx.appcompat.widget.AppCompatButton-->
@@ -78,7 +78,7 @@
 <!--        tools:ignore="MissingConstraints" />-->
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/searchtext"
         android:layout_width="273dp"
         android:layout_height="47dp"
         android:layout_marginTop="16dp"
@@ -103,11 +103,11 @@
         android:scaleType="centerInside"
         android:src="@drawable/search_black_24dp"
         android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/searchtext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.773"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName"
+        app:layout_constraintStart_toStartOf="@+id/searchtext"
+        app:layout_constraintTop_toTopOf="@+id/searchtext"
         app:layout_constraintVertical_bias="0.611"
         tools:ignore="MissingConstraints" />
 
