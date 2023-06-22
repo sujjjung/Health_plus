@@ -211,7 +211,6 @@ public class CalendarActivity extends AppCompatActivity {
                 Intent intent = new Intent(CalendarActivity.this, userFood.class);
                 intent.putExtra("Date", Date);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -222,7 +221,6 @@ public class CalendarActivity extends AppCompatActivity {
                 Intent intent = new Intent(CalendarActivity.this, userEx.class);
                 intent.putExtra("Date", Date);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -308,7 +306,6 @@ public class CalendarActivity extends AppCompatActivity {
                 Intent intent = new Intent(CalendarActivity.this, FoodAddActivity.class);
                 intent.putExtra("Date", Date);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -319,7 +316,6 @@ public class CalendarActivity extends AppCompatActivity {
                 Intent intent = new Intent(CalendarActivity.this, routine.class);
                 intent.putExtra("Date", Date);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -329,7 +325,6 @@ public class CalendarActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarActivity.this, WeightActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }
