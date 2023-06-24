@@ -158,7 +158,7 @@ public class community_mypage extends AppCompatActivity {
                 final ListView folloingView = (ListView) view.findViewById(R.id.ListView);
                 final AlertDialog dialog = builder.create();
                 folloingAdapter = new folloingAdapter(context,followingList);
-
+                folloingAdapter.setListView(folloingView);
                 folloingView.setAdapter(folloingAdapter);
                 submitButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -182,7 +182,7 @@ public class community_mypage extends AppCompatActivity {
                 final AlertDialog dialog = builder.create();
                 TextView.setText("팔로워 유저");
                 folloingAdapter = new folloingAdapter(context,followersList);
-
+                folloingAdapter.setListView(folloingView);
                 folloingView.setAdapter(folloingAdapter);
                 submitButton.setOnClickListener(new View.OnClickListener() {
                     @Override

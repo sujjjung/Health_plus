@@ -86,6 +86,7 @@ public class chat_room extends AppCompatActivity {
                     chat.setDate(currentTime);
 
                     myRef.push().setValue(chat);
+                    EditText_chat.setText(null);
                 }
             }
         });
