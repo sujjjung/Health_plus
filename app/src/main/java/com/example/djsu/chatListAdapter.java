@@ -41,63 +41,96 @@ public class chatListAdapter extends ArrayAdapter<ChatRoom> {
             this.postList = postList;
         }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.item_chat_list, parent, false);
-            }
-
-            TextView roomName = convertView.findViewById(R.id.roomName);
-            TextView roomMsg = convertView.findViewById(R.id.message);
-            TextView msgDate = convertView.findViewById(R.id.date);
-
-            final ChatRoom chatRoom = getItem(position);
-
-            roomName.setText(chatRoom.getChatRoomId());
-            // ChatRoom 객체에서 최근 메시지의 내용을 가져옵니다.
-            DatabaseReference chatRoomRef = databaseReference.child("ChatRoom").child(chatRoom.getChatRoomId());
-            chatRoomRef.child("Message")
-                    .orderByKey()
-                    .limitToLast(1)
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
-                                    ChatRoom recentChat = messageSnapshot.getValue(ChatRoom.class);
-                                    if (recentChat != null) {
-                                        // 최근 메시지의 내용을 roomMsgTextView에 설정합니다.
-                                        roomMsg.setText(recentChat.getMsg());
-                                        msgDate.setText(recentChat.getDate());
-                                    }
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            // 오류 처리
-                        }
-                    });
-
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String chatRoomId = chatRoom.getChatRoomId();
-
-                    moveToChatRoom(chatRoomId);
-                }
-            });
-
-
-            return convertView;
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_chat_list, parent, false);
         }
 
-    private void moveToChatRoom(String chatRoomId) {
-        // 채팅방 액티비티로 이동하는 코드를 작성합니다.
-        // 예시: ChatRoomActivity.class는 채팅방 액티비티의 클래스명입니다.
+        TextView roomName = convertView.findViewById(R.id.roomName);
+        TextView roomMsg = convertView.findViewById(R.id.message);
+        TextView msgDate = convertView.findViewById(R.id.date);
+
+        final ChatRoom chatRoom = getItem(position);
+
+        // Get the reference to the member node of the current ChatRoom
+        DatabaseReference memberRef = databaseReference.child("ChatRoom").child(chatRoom.getChatRoomId()).child("member");
+
+        View finalConvertView = convertView;
+        memberRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    StringBuilder roomNameBuilder = new StringBuilder();
+                    for (DataSnapshot memberSnapshot : dataSnapshot.getChildren()) {
+                        String memberName = memberSnapshot.child("name").getValue(String.class);
+                        if (memberName != null) {
+                            // Append the member name to the roomNameBuilder
+                            roomNameBuilder.append(memberName).append(", ");
+                        }
+                    }
+
+                    // Remove the trailing comma and space
+                    String roomNameText = roomNameBuilder.toString().trim();
+                    if (roomNameText.endsWith(",")) {
+                        roomNameText = roomNameText.substring(0, roomNameText.length() - 1);
+                    }
+
+                    roomName.setText(roomNameText);
+
+                    String finalRoomNameText = roomNameText;
+                    finalConvertView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String chatRoomId = chatRoom.getChatRoomId();
+                            String roomName = finalRoomNameText; // 수정된 부분
+
+                            moveToChatRoom(chatRoomId, roomName);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle error
+            }
+        });
+
+        roomName.setText(chatRoom.getChatRoomId());
+
+        // Get the reference to the messages node of the current ChatRoom
+        DatabaseReference messagesRef = databaseReference.child("ChatRoom").child(chatRoom.getChatRoomId()).child("Message");
+
+        messagesRef.orderByKey().limitToLast(1).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                        ChatRoom recentChat = messageSnapshot.getValue(ChatRoom.class);
+                        if (recentChat != null) {
+                            // Update the roomMsg and msgDate TextViews with the recent message content
+                            roomMsg.setText(recentChat.getMsg());
+                            msgDate.setText(recentChat.getDate());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle error
+            }
+        });
+
+        return convertView;
+    }
+
+
+    private void moveToChatRoom(String chatRoomId, String roomName) {
         Intent intent = new Intent(context, chat_room.class);
         intent.putExtra("chatRoomId", chatRoomId);
+        intent.putExtra("roomName", roomName);
         context.startActivity(intent);
     }
 

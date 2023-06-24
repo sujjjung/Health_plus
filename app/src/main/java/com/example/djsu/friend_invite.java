@@ -85,11 +85,74 @@ public class friend_invite extends AppCompatActivity {
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
+//        addBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+////                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//
+//                // 선택된 회원들을 담을 ArrayList
+//                ArrayList<String> selectedMembers = new ArrayList<>();
+//
+//                // ListView에서 체크박스에 체크된 아이템들을 찾아서 ArrayList에 담기
+//                for (int i = 0; i < listView.getCount(); i++) {
+//                    View view = listView.getChildAt(i);
+//                    CheckBox checkBox = view.findViewById(R.id.checkbox);
+//
+//                    if (checkBox.isChecked()) {
+//                        // 체크된 아이템에서 회원 이름을 가져와서 ArrayList에 추가
+//                        TextView textView = view.findViewById(R.id.name);
+//                        selectedMembers.add(textView.getText().toString());
+//                    }
+//                }
+//
+//                // 선택된 회원이 없으면 메시지를 띄우고 함수를 종료
+//                if (selectedMembers.isEmpty()) {
+//                    Toast.makeText(friend_invite.this, "선택된 회원이 없습니다.", Toast.LENGTH_SHORT).show();
+//                    return;
+//                } //여기 부분 돌아감
+//
+//                // 나의 아이디를 추가
+//                User user = new User();
+//                String myId = user.getName();
+//                selectedMembers.add(myId);
+//
+//                // 선택된 회원들을 정렬하여 chatRoomId 생성
+//                Collections.sort(selectedMembers);
+//                String chatRoomId = TextUtils.join(", ", selectedMembers);
+//
+//                // 중복 체크를 위해 ChatRoom 레퍼런스에 해당 chatRoomId가 이미 있는지 확인
+//                DatabaseReference chatRoomRef = database.child("ChatRoom").child(chatRoomId);
+//                chatRoomRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        if (dataSnapshot.exists()) {
+//                            // 이미 존재하는 채팅방일 경우 중복 메시지를 띄우고 함수를 종료
+//                            Toast.makeText(friend_invite.this, "이미 존재하는 채팅방입니다.", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            // 채팅방 생성 및 저장
+//                            ChatRoom chatRoom = new ChatRoom(chatRoomId);
+//                            database.child("ChatRoom").child(chatRoomId).setValue(chatRoom);
+//
+//                            // 채팅방 화면으로 이동
+//                            Intent intent = new Intent(friend_invite.this, chatList.class);
+//                            intent.putExtra("chatRooms", chatRoomId);
+//                            startActivity(intent);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//                        Log.e("friend_invite", "Failed to check chatRoomId duplication", databaseError.toException());
+//                    }
+//                });
+//            }
+//        });
+
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-//                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                 // 선택된 회원들을 담을 ArrayList
                 ArrayList<String> selectedMembers = new ArrayList<>();
@@ -110,44 +173,41 @@ public class friend_invite extends AppCompatActivity {
                 if (selectedMembers.isEmpty()) {
                     Toast.makeText(friend_invite.this, "선택된 회원이 없습니다.", Toast.LENGTH_SHORT).show();
                     return;
-                } //여기 부분 돌아감
+                }
 
                 // 나의 아이디를 추가
                 User user = new User();
                 String myId = user.getName();
+                String use = user.getId();
                 selectedMembers.add(myId);
+
 
                 // 선택된 회원들을 정렬하여 chatRoomId 생성
                 Collections.sort(selectedMembers);
-                String chatRoomId = TextUtils.join(", ", selectedMembers);
+                // String chatRoomName = TextUtils.join("", selectedMembers);
+                String chatRoomId = database.child("ChatRoom").push().getKey();
 
-                // 중복 체크를 위해 ChatRoom 레퍼런스에 해당 chatRoomId가 이미 있는지 확인
-                DatabaseReference chatRoomRef = database.child("ChatRoom").child(chatRoomId);
-                chatRoomRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            // 이미 존재하는 채팅방일 경우 중복 메시지를 띄우고 함수를 종료
-                            Toast.makeText(friend_invite.this, "이미 존재하는 채팅방입니다.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // 채팅방 생성 및 저장
-                            ChatRoom chatRoom = new ChatRoom(chatRoomId);
-                            database.child("ChatRoom").child(chatRoomId).setValue(chatRoom);
+                // 채팅방 생성 및 저장
+                ChatRoom chatRoom = new ChatRoom(chatRoomId);
+                database.child("ChatRoom").child(chatRoomId).setValue(chatRoom);
 
-                            // 채팅방 화면으로 이동
-                            Intent intent = new Intent(friend_invite.this, chatList.class);
-                            intent.putExtra("chatRooms", chatRoomId);
-                            startActivity(intent);
-                        }
-                    }
+                // 채팅방에 참여한 회원들을 저장
+                DatabaseReference membersRef = database.child("ChatRoom").child(chatRoomId).child("member");
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.e("friend_invite", "Failed to check chatRoomId duplication", databaseError.toException());
-                    }
-                });
+                DatabaseReference userId = database.child("User").child(use).child("state");
+
+                // 회원 이름으로 저장
+                for (String member : selectedMembers) {
+                    membersRef.push().child("name").setValue(member);
+                }
+
+                // 채팅방 화면으로 이동
+                Intent intent = new Intent(friend_invite.this, chatList.class);
+                intent.putExtra("chatRooms", chatRoomId);
+                startActivity(intent);
             }
         });
+
 
 
 

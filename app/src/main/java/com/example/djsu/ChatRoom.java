@@ -8,6 +8,7 @@ public class ChatRoom {
     private String chatRoomId;
     private String title;
     private List<String> members;
+    private String chatRoomName;
 
     private String msg;
 
@@ -83,5 +84,13 @@ public class ChatRoom {
 
     public void setDate(String date) {
         Date = date;
+    }
+
+    public String getChatRoomName() {
+        return chatRoomName;
+    }
+
+    public void setChatRoomName(String chatRoomName) {
+        this.chatRoomName = chatRoomName;
     }
 }

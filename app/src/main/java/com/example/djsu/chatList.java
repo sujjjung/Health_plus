@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class chatList extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    private DatabaseReference mDatabase;
 
 //    private ListView mChatRoomListView;
 //
@@ -59,11 +61,49 @@ public class chatList extends AppCompatActivity {
         mAdapter = new chatListAdapter(chatList.this, postList);
         listview.setAdapter(mAdapter);
 
+        ChatRoom chatRoom = new ChatRoom();
+        String chatRoomId = chatRoom.getChatRoomId();
+
+        DatabaseReference chatRoomRef = FirebaseDatabase.getInstance().getReference("ChatRoom");
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot chatRoomSnapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot memberSnapshot : chatRoomSnapshot.child("member").getChildren()) {
+                        String name = memberSnapshot.child("name").getValue(String.class);
+
+                        if (name != null && name.equals(userName)) {
+                            ChatRoom chatRoom = chatRoomSnapshot.getValue(ChatRoom.class);
+                            if (chatRoom != null) {
+                                postList.add(chatRoom);
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                // 리스트뷰에 데이터를 표시하는 작업 수행
+                // 예를 들어, 어댑터를 생성하고 데이터를 설정한 뒤, 리스트뷰에 어댑터를 연결하는 등의 작업을 수행
+
+                mAdapter.notifyDataSetChanged(); // 어댑터에 데이터 변경을 알려줍니다.
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // 데이터 읽기가 취소된 경우 호출됩니다.
+            }
+        };
+
+        chatRoomRef.addListenerForSingleValueEvent(valueEventListener);
+
         DatabaseReference roomList = FirebaseDatabase.getInstance().getReference("ChatRoom");
 
         roomList.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+                // 채팅방이 추가되었을 때 필요한 작업 수행
+                // 예를 들어, 추가된 채팅방을 postList에 추가하고 리스트뷰 업데이트
                 String roomId = dataSnapshot.getKey();
                 if (roomId != null && roomId.contains(userName)) {
                     ChatRoom chatRoom = dataSnapshot.getValue(ChatRoom.class);

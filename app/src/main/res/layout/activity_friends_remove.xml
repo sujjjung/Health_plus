@@ -49,33 +49,23 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:ignore="MissingConstraints" />
 
-    <ListView
-        android:id="@+id/recycler_messages"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="620dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="540dp"
+        android:fillViewport="true"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchtext"
-        tools:listitem="@layout/item_friend_add" />
+        app:layout_constraintTop_toBottomOf="@+id/searchtext">
 
-<!--    <androidx.appcompat.widget.AppCompatButton-->
-
-<!--        android:id="@+id/button2"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_marginTop="671dp"-->
-<!--        android:layout_marginBottom="6dp"-->
-<!--        android:background="@drawable/shape_for_circle_button"-->
-<!--        android:text="+"-->
-<!--        android:textColor="#000000"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/recycler_messages"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="1.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/imageView"-->
-<!--        app:layout_constraintVertical_bias="0.0"-->
-<!--        tools:ignore="MissingConstraints" />-->
+        <ListView
+            android:id="@+id/recycler_messages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:listitem="@layout/item_friend_add" />
+    </ScrollView>
 
     <EditText
         android:id="@+id/searchtext"
@@ -86,7 +76,7 @@
         android:background="@color/background_gray"
         android:ems="10"
         android:fontFamily="@font/a1009_2"
-        android:hint="검색할 닉네임"
+        android:hint="  검색할 닉네임"
         android:inputType="textPersonName"
         android:paddingLeft="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,22 +84,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         tools:ignore="MissingConstraints" />
 
-    <ImageButton
-        android:id="@+id/button"
-        android:layout_width="29dp"
-        android:layout_height="29dp"
-        android:layout_margin="3dp"
-        android:background="#DBDBDB"
-        android:scaleType="centerInside"
-        android:src="@drawable/search_black_24dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/searchtext"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.773"
-        app:layout_constraintStart_toStartOf="@+id/searchtext"
-        app:layout_constraintTop_toTopOf="@+id/searchtext"
-        app:layout_constraintVertical_bias="0.611"
-        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
