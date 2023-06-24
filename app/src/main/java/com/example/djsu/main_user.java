@@ -333,6 +333,7 @@ public class main_user extends AppCompatActivity {
                                     if (success.equals("1")) { // 회원등록에 성공한 경우
                                         text1.setText(text);
                                         System.out.println("!!!!!!!!!!!!!: " +text);
+                                        user.setState(text);
                                         Toast.makeText(getApplicationContext(), "한줄소개가 변경되었습니다.", Toast.LENGTH_SHORT).show();
                                     } else { // 회원등록에 실패한 경우
                                         Toast.makeText(getApplicationContext(), "회원 정보 변경에 실패하였습니다.", Toast.LENGTH_SHORT).show();
