@@ -94,9 +94,9 @@ public class login extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
                             if (success && UserID.equals("admin")) { // 로그인에 성공한 경우
-                                //String userName = jsonObject.getString("username");
                                 Toast.makeText(getApplicationContext(), "관리자로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                                new BackgroundTask2().execute();
+                                Intent intent = new Intent(login.this, AdminMainActivity.class);
+                                startActivity(intent);
                             }
                             else  if (success) {
                                 String name = jsonObject.getString("UserName");
@@ -125,51 +125,5 @@ public class login extends AppCompatActivity {
                 queue.add(loginrequest);
             }
         });
-    }
-
-
-    class BackgroundTask2 extends AsyncTask<Void, Void, String> {
-        String target;
-        @Override
-        protected void onPreExecute() {
-            //List.php은 파싱으로 가져올 웹페이지
-            target = "http://enejd0613.dothome.co.kr/userlist.php";
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-
-            try {
-                URL url = new URL(target);//URL 객체 생성
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String temp;StringBuilder stringBuilder = new StringBuilder();
-                while ((temp = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
-                }
-
-                //사용했던 것도 다 닫아줌
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-        @Override
-        protected void onPostExecute(String result) {
-            Intent intent = new Intent(login.this, AdminMainActivity.class);
-            intent.putExtra("userlist",result);
-            startActivity(intent);
-            login.this.startActivity(intent);
-        }
     }
 }
