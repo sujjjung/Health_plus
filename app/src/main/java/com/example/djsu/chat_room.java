@@ -98,9 +98,10 @@ public class chat_room extends AppCompatActivity {
 
         //chatList 에서 클릭된 아이템의 텍스트를 가져온다
         Intent intent = getIntent();
-        String roomId = intent.getStringExtra("chatRoomId");
+        String roomId = getIntent().getStringExtra("chatRoomId");
+        String RoomName = getIntent().getStringExtra("roomName");
 
-        roomName.setText(roomId);
+        roomName.setText(RoomName);
 
         ChatRoom chatRoom = new ChatRoom();
         String chatId = chatRoom.getChatRoomId();
@@ -109,35 +110,51 @@ public class chat_room extends AppCompatActivity {
         Button_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //DatabaseReference Room = FirebaseDatabase.getInstance().getReference("ChatRoom").child(roomId).child("chatRoomId");
-                DatabaseReference RoomRemove = FirebaseDatabase.getInstance().getReference("ChatRoom").child(roomId);
-                //DatabaseReference message = FirebaseDatabase.getInstance().getReference("ChatRoom").child(roomId).child("Message");
+                DatabaseReference roomRef = FirebaseDatabase.getInstance().getReference("ChatRoom").child(roomId);
+                DatabaseReference memberRef = roomRef.child("member");
 
-//                Room.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        if (dataSnapshot.exists()) {
-//                            String chatRoomId = dataSnapshot.getValue(String.class);
-//
-//                            // 현재 사용자 이름을 찾아 해당 부분 삭제
-//                            String name = user.getName();
-//                            chatRoomId = chatRoomId.replace(name, " ");
-//
-//                            //Toast.makeText(chat_room.this, chatRoomId + " 님 환영합니다.", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//                        System.out.println("Firebase 데이터베이스에서 chatRoomId 값을 가져오는 데 실패하였습니다.");
-//                    }
-//                });
+                // 현재 회원의 이름을 가져옵니다.
+                String currentUserName = user.getName();
 
-                RoomRemove.removeValue();
+                // member 노드에 대한 ValueEventListener를 추가합니다.
+                memberRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            boolean shouldDeleteRoom = false;
+
+                            for (DataSnapshot memberSnapshot : dataSnapshot.getChildren()) {
+                                String memberName = memberSnapshot.child("name").getValue(String.class);
+
+                                if (memberName != null && memberName.equals(currentUserName)) {
+                                    // 현재 회원의 이름과 동일한 값을 가진 노드를 삭제합니다.
+                                    memberSnapshot.getRef().removeValue();
+                                }
+                            }
+
+                            // 자식 노드가 1개 이하인지 확인합니다.
+                            if (dataSnapshot.getChildrenCount() <= 2) {
+                                shouldDeleteRoom = true;
+                            }
+
+                            if (shouldDeleteRoom) {
+                                // 채팅방 노드를 전체 삭제합니다.
+                                roomRef.removeValue();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Handle error
+                    }
+                });
+
                 Intent intent1 = new Intent(chat_room.this, chatList.class);
                 startActivity(intent1);
             }
         });
+
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();

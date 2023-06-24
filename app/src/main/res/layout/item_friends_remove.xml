@@ -7,22 +7,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="80dp"
         android:gravity="center_vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingLeft="14dp"
+        android:paddingRight="12dp"
+        >
 
         <!--프로필 사진-->
-<!--        <ImageView-->
-<!--            android:id="@+id/profile"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:src="@drawable/user"/>-->
+        <!--        <ImageView-->
+        <!--            android:id="@+id/profile"-->
+        <!--            android:layout_width="50dp"-->
+        <!--            android:layout_height="50dp"-->
+        <!--            android:src="@drawable/user"/>-->
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
             android:background="#00000000"
             android:src="@drawable/profile"
             />
@@ -50,11 +51,11 @@
         -->
 
         <androidx.appcompat.widget.AppCompatButton
-        android:background="@drawable/shape_yes_btn"
+            android:background="@drawable/shape_yes_btn"
             android:id="@+id/shape_yes_btn"
             android:layout_width="97dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="18dp"
+            android:layout_marginLeft="12dp"
             android:fontFamily="@font/a10091"
             android:gravity="center"
             android:text="팔로우"
