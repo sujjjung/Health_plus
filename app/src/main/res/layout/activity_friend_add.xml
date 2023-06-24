@@ -48,64 +48,40 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             tools:ignore="MissingConstraints" />
 
-        <!--    <androidx.recyclerview.widget.RecyclerView-->
-        <!--        android:id="@+id/UserListView"-->
-        <!--        android:layout_width="390dp"-->
-        <!--        android:layout_height="551dp"-->
-        <!--        android:layout_marginStart="20dp"-->
-        <!--        android:layout_marginTop="30dp"-->
-        <!--        android:layout_marginEnd="20dp"-->
-        <!--        app:layout_constraintEnd_toEndOf="parent"-->
-        <!--        app:layout_constraintStart_toStartOf="parent"-->
-        <!--        app:layout_constraintTop_toBottomOf="@+id/searchtext"-->
-        <!--        tools:listitem="@layout/item_friends_remove" />-->
-
-        <ListView
-            android:id="@+id/UserList"
-            android:layout_width="390dp"
-            android:layout_height="610dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="10dp"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="540dp"
+            android:fillViewport="true"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchtext"
-            app:layout_constraintVertical_bias="1.0"
-            tools:listitem="@layout/item_friends_remove" />
+            app:layout_constraintTop_toBottomOf="@+id/searchtext">
+
+            <ListView
+                android:id="@+id/UserList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:listitem="@layout/item_friends_remove" />
+        </ScrollView>
 
         <EditText
             android:id="@+id/searchtext"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:layout_marginStart="44dp"
             android:layout_marginTop="12dp"
             android:background="@color/background_gray"
             android:ems="10"
             android:fontFamily="@font/a1009_2"
-            android:hint="검색할 닉네임"
+            android:hint="  검색할 닉네임"
             android:inputType="textPersonName"
             android:paddingLeft="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
             tools:ignore="MissingConstraints" />
 
-        <ImageButton
-            android:id="@+id/button"
-            android:layout_width="29dp"
-            android:layout_height="29dp"
-            android:layout_margin="3dp"
-            android:scaleType="centerInside"
-            android:text="Button"
-            android:background="@color/background_gray"
-            android:src="@drawable/search_black_24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/searchtext"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.834"
-            app:layout_constraintStart_toStartOf="@+id/searchtext"
-            app:layout_constraintTop_toTopOf="@+id/searchtext"
-            app:layout_constraintVertical_bias="0.0"
-            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
