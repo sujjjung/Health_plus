@@ -92,6 +92,7 @@ public class comment extends AppCompatActivity {
             public void onClick(View v) {
                 String content = et.getText().toString();
                 saveComment(content);
+                et.setText(null);
             }
         });
 
