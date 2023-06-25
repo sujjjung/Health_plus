@@ -123,7 +123,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         NameText.setText(RoutineListResult.get(index).getExerciseName());
         PartText.setText(RoutineListResult.get(index).getExPart());
         ExCode = RoutineListResult.get(index).getExCode();
-        TextView unit = findViewById(R.id.unittext);
+        TextView unit = findViewById(R.id.textView53);
         exrecodeList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
