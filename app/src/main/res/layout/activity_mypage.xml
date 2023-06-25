@@ -38,26 +38,28 @@
             android:id="@+id/name_textView"
             android:layout_width="130dp"
             android:layout_height="41dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="48dp"
             android:fontFamily="@font/a10092"
+            android:gravity="center_vertical"
             android:text="이수정님"
             android:textColor="#444444"
             android:textSize="30dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="48dp"
+            android:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="@+id/profile"
             app:layout_constraintStart_toEndOf="@+id/profile"
             app:layout_constraintTop_toTopOf="@+id/profile" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Nondisclosure"
-            android:layout_width="120dp"
+            android:layout_width="100dp"
             android:layout_height="35dp"
             android:background="@drawable/shape_no_btn"
             android:fontFamily="@font/a10092"
-            android:text="계정 비공개"
+            android:text="공개"
+            android:layout_marginRight="18dp"
             app:layout_constraintBottom_toBottomOf="@+id/name_textView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/name_textView"
             app:layout_constraintTop_toTopOf="@+id/name_textView" />
 
         <androidx.appcompat.widget.AppCompatButton
