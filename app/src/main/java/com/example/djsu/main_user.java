@@ -407,6 +407,23 @@ public class main_user extends AppCompatActivity {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 ivImage.setImageBitmap(bitmap);
+
+                String userId = user.getId();
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
+
+                DatabaseReference userRef = databaseReference.child(userId);
+                userRef.child("profile").setValue(getStringImage(bitmap), new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        if (error == null) {
+                            // 변경 성공
+                            Toast.makeText(main_user.this, "프로필 사진을 성공적으로 변경(firebase).", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // 변경 실패
+                            Toast.makeText(main_user.this, "프로필 사진 변경에 실패(firebase).", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             } catch (IOException e) {
                 e.printStackTrace();
             }
