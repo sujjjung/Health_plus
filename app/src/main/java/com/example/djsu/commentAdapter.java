@@ -62,6 +62,10 @@ public class commentAdapter extends BaseAdapter {
         userComment = v.findViewById(R.id.userComment);
         userComment.setText(commentList.get(position).getCommentContent());
 
+        ImageView userProfileImage = v.findViewById(R.id.imageView2);
+        // Picasso 라이브러리를 사용하여 사용자 프로필 이미지를 로드합니다.
+        Picasso.get().load(commentList.get(position).getUserProfile()).into(userProfileImage);
+
         date = v.findViewById(R.id.date);
         date.setText(commentList.get(position).getCreatedTime());
         siren_btn =  v.findViewById(R.id.siren_btn);

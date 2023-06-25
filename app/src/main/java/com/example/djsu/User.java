@@ -19,11 +19,13 @@ import java.io.Serializable;
         static private String WalkGoal;
         // 커뮤니티관련 변수
         private String postid,content,image , postdate,friend;
+        private String profileImageUrl;
         private int postKey;
         // 댓글관련 변수
         private String commentContent,createdTime, commentUser;
         private int commentKey;
         static private String Nondisclosure;
+        private String userProfile;
 
         public User(int commentKey, int postKey, String commentContent, String createdTime,String commentUser) {
             this.commentKey = commentKey;
@@ -31,14 +33,16 @@ import java.io.Serializable;
             this.commentContent = commentContent;
             this.createdTime = createdTime;
             this.commentUser = commentUser;
+            this.userProfile = userProfile;
         }
 
-        public User(int postKey, String postid, String content, String image, String postdate) {
+        public User(int postKey, String postid, String content, String image, String postdate, String profileImageUrl) {
             this.postKey = postKey;
             this.postid = postid;
             this.content = content;
             this.image = image;
             this.postdate = postdate;
+            this.profileImageUrl = profileImageUrl;
         }
 
         public User(String routineName, String exerciseCode, String exercisePart,String exerciseName) {
@@ -46,6 +50,22 @@ import java.io.Serializable;
             ExerciseCode = exerciseCode;
             ExercisePart = exercisePart;
             ExerciseName = exerciseName;
+        }
+
+        public String getUserProfile() {
+            return userProfile;
+        }
+
+        public void setUserProfile(String userProfile) {
+            this.userProfile = userProfile;
+        }
+
+        public String getProfileImageUrl() {
+            return profileImageUrl;
+        }
+
+        public void setProfileImageUrl(String profileImageUrl) {
+            this.profileImageUrl = profileImageUrl;
         }
 
         public String getFriend() {

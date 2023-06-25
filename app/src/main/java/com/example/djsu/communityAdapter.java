@@ -31,7 +31,7 @@ public class communityAdapter extends BaseAdapter {
     private Context context;
     private List<User> Communitylist;
     private TextView name_textView,date,content;
-    private ImageView photo;
+    private ImageView photo, profile;
     private String Date = "";
     User user = new User();
     private ImageButton heart_btn,chat_bubble_btn,siren_btn;
@@ -73,6 +73,11 @@ public class communityAdapter extends BaseAdapter {
 
         content = v.findViewById(R.id.content);
         content.setText(Communitylist.get(position).getContent());
+
+        profile = v.findViewById(R.id.profile);
+        String profileImageUrl = Communitylist.get(position).getProfileImageUrl();
+        Picasso.get().load(profileImageUrl).into(profile);
+        // 추가된 부분 끝
 
         chat_bubble_btn =  v.findViewById(R.id.chat_bubble_btn);
         chat_bubble_btn.setOnClickListener(new View.OnClickListener() {

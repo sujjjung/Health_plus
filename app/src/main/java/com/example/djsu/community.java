@@ -74,6 +74,7 @@ public class community extends AppCompatActivity {
     private static final String TAG_postId = "postId";
     private static final String TAG_USER_ID = "user_id";
     private static final String TAG_following_id = "following_id";
+    private static final String TAG_UserProfile = "UserProfile";
     JSONArray peoples = null;
     JSONArray peoples1 = null;
     ListView list;
@@ -247,7 +248,8 @@ public class community extends AppCompatActivity {
                             String date = c.getString(TAG_DATE);
                             String content = c.getString(TAG_CONTENT);
                             String postId = c.getString(TAG_postId);
-                            User user = new User(Integer.parseInt(postId),id,content,image,date);
+                            String userProfile = c.getString(TAG_UserProfile);
+                            User user = new User(Integer.parseInt(postId),id,content,image,date,userProfile);
                             Communitylist.add(user);
                         }
                     }
@@ -261,7 +263,8 @@ public class community extends AppCompatActivity {
                         String date = c.getString(TAG_DATE);
                         String content = c.getString(TAG_CONTENT);
                         String postId = c.getString(TAG_postId);
-                        User user = new User(Integer.parseInt(postId),id,content,image,date);
+                        String userProfile = c.getString(TAG_UserProfile); // 추가된 부분
+                        User user = new User(Integer.parseInt(postId),id,content,image,date,userProfile);
                         Communitylist.add(user);
                     }
                 }

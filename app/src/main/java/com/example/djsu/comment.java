@@ -48,6 +48,7 @@ public class comment extends AppCompatActivity {
     private static final String TAG_USERID = "userId";
     private static final String TAG_postId = "postId";
     private static final String TAG_id = "id";
+    private static final String TAG_USERPROFILE = "UserProfile";
     JSONArray peoples = null;
     ListView list;
 
@@ -127,9 +128,10 @@ public class comment extends AppCompatActivity {
                     String created_at = c.getString(TAG_CREATED_AT);
                     String userId = c.getString(TAG_USERID);
                     int commentId = Integer.parseInt(c.getString(TAG_id));
-                    user = new User(commentId,postId,content,created_at,userId);
+                    String userProfile = c.getString(TAG_USERPROFILE);
+                    user = new User(commentId, postId, content, created_at, userId);
+                    user.setUserProfile(userProfile);
                     commentList.add(user);
-
                 }
 
             }
