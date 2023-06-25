@@ -22,6 +22,12 @@ package com.example.djsu.admin;
         import com.example.djsu.R;
         import com.example.djsu.UserFoodDelete;
         import com.example.djsu.declarationRequest;
+        import com.google.firebase.database.DataSnapshot;
+        import com.google.firebase.database.DatabaseError;
+        import com.google.firebase.database.DatabaseReference;
+        import com.google.firebase.database.FirebaseDatabase;
+        import com.google.firebase.database.Query;
+        import com.google.firebase.database.ValueEventListener;
         import com.squareup.picasso.Picasso;
 
         import org.json.JSONObject;
@@ -32,6 +38,7 @@ public class adminUserAdapter extends RecyclerView.Adapter<com.example.djsu.admi
     // creating variables for our ArrayList and context
     private ArrayList<adminUser> userArrayList;
     private Context context;
+    DatabaseReference databaseReference, userName;
 
 
     // creating constructor for our adapter class
@@ -56,6 +63,7 @@ public class adminUserAdapter extends RecyclerView.Adapter<com.example.djsu.admi
         Picasso.get().load(imageUrl).into(holder.userProfile);
         holder.Name =  userArrayList.get(position).getName();
         holder.Age =  userArrayList.get(position).getUserAge();
+        final String name = holder.Name;
         holder.detailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +89,33 @@ public class adminUserAdapter extends RecyclerView.Adapter<com.example.djsu.admi
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                databaseReference = FirebaseDatabase.getInstance().getReference();
+                userName = databaseReference.child("User");
+
+                String targetName = name;
+                System.out.println(targetName);
+
+                Query query = userName.orderByChild("name").equalTo(targetName);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        // onDataChange 메서드에서 조회 결과를 처리
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            String key = snapshot.getKey();
+                            // User 노드에서 해당 데이터를 삭제
+                            DatabaseReference targetUserRef = userName.child(key);
+                            targetUserRef.removeValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        // onCancelled 메서드에서 오류 처리
+                    }
+                });
+
+
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
