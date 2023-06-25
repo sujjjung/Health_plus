@@ -61,7 +61,7 @@ public class chat_room extends AppCompatActivity {
         Button_out = findViewById(R.id.backBtn);
         Button_send = findViewById(R.id.btn_submit);
         EditText_chat = findViewById(R.id.edt_message);
-        roomName = findViewById(R.id.txt_TItle);
+        roomName = findViewById(R.id.txt_Title);
 
         User user = new User();
         String userId = user.getId();
