@@ -338,7 +338,9 @@ public class mypage extends AppCompatActivity {
                 weightChart.getXAxis().setDrawGridLines(false);
                 weightChart.getAxisLeft().setDrawGridLines(false);
                 weightChart.getAxisRight().setDrawGridLines(false);
-                weightChart.getAxisLeft().setDrawLabels(false);
+                weightChart.getAxisLeft().setDrawLabels(true);
+                weightChart.getAxisRight().setDrawLabels(false);
+                weightChart.getAxisLeft().setAxisMinimum(0);
                 XAxis xAxis = weightChart.getXAxis();
                 xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -415,7 +417,10 @@ public class mypage extends AppCompatActivity {
                 fatChart.getXAxis().setDrawGridLines(false);
                 fatChart.getAxisLeft().setDrawGridLines(false);
                 fatChart.getAxisRight().setDrawGridLines(false);
-                fatChart.getAxisLeft().setDrawLabels(false);
+                fatChart.getAxisLeft().setDrawLabels(true);
+                fatChart.getAxisRight().setDrawLabels(false);
+                fatChart.getAxisLeft().setAxisMinimum(0);
+                fatChart.getLegend().setEnabled(false);
                 XAxis xAxis = fatChart.getXAxis();
                 xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -495,7 +500,10 @@ public class mypage extends AppCompatActivity {
                 muscleChart.getXAxis().setDrawGridLines(false);
                 muscleChart.getAxisLeft().setDrawGridLines(false);
                 muscleChart.getAxisRight().setDrawGridLines(false);
-                muscleChart.getAxisLeft().setDrawLabels(false);
+                muscleChart.getAxisLeft().setDrawLabels(true);
+                muscleChart.getAxisLeft().setAxisMinimum(0);
+                muscleChart.getAxisRight().setDrawLabels(false);
+                muscleChart.getLegend().setEnabled(false);
                 XAxis xAxis = muscleChart.getXAxis();
                 xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
