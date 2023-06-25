@@ -153,33 +153,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/timeView" />
 
-            <ImageButton
-                android:id="@+id/unitBtn"
-                android:layout_width="57dp"
-                android:layout_height="39dp"
-                android:layout_marginStart="90dp"
-                android:background="#00000000"
-                android:src="@drawable/background_card_round_white"
-                app:layout_constraintBottom_toBottomOf="@+id/textView51"
-                app:layout_constraintStart_toEndOf="@+id/textView51"
-                app:layout_constraintTop_toTopOf="@+id/textView51"
-                app:layout_constraintVertical_bias="0.562" />
 
             <TextView
                 android:id="@+id/unittext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="104dp"
                 android:fontFamily="@font/a10092"
-                android:text="kg"
+                android:text="회"
                 android:textColor="#323232"
                 android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/unitBtn"
-                app:layout_constraintEnd_toEndOf="@+id/unitBtn"
-                app:layout_constraintHorizontal_bias="0.382"
-                app:layout_constraintStart_toStartOf="@+id/unitBtn"
-                app:layout_constraintTop_toTopOf="@+id/unitBtn"
-                app:layout_constraintVertical_bias="0.437" />
+                app:layout_constraintBottom_toBottomOf="@+id/textView51"
+                app:layout_constraintStart_toEndOf="@+id/textView51"
+                app:layout_constraintTop_toTopOf="@+id/textView51"
 
+                app:layout_constraintVertical_bias="0.0" />
+            <ImageButton
+                android:id="@+id/unitBtn"
+                android:layout_width="57dp"
+                android:layout_height="39dp"
+                android:background="#00000000"
+                android:src="@drawable/background_card_round_white"
+                app:layout_constraintBottom_toBottomOf="@+id/textView53"
+                app:layout_constraintEnd_toEndOf="@+id/textView53"
+                app:layout_constraintStart_toStartOf="@+id/textView53"
+                app:layout_constraintTop_toTopOf="@+id/textView53" />
 
             <TextView
                 android:id="@+id/textView53"
@@ -187,7 +185,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
                 android:fontFamily="@font/a10092"
-                android:text="회"
+                android:text="kg"
                 android:textColor="#323232"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="@+id/unittext"
