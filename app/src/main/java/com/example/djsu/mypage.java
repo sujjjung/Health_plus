@@ -2,6 +2,7 @@ package com.example.djsu;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -39,11 +40,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,24 +73,49 @@ public class mypage extends AppCompatActivity {
     User user = new User();
     String ID = user.getId(); // 아이디
 
+    private static final String TAG_RESULTS = "result";
+    private static final String TAG_UserID  = "UserID";
+    private static final String TAG_UserProfile = "UserProfile";
+    String myJSON;
+    JSONArray peoples = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
-
+        getData("http://enejd0613.dothome.co.kr/getUser.php");
         // User Data 불러오기
         name = findViewById(R.id.name_textView);
         name.setText(user.getName());
 //        state = findViewById(R.id.Status_message_text);
 //        state.setText(user.getState());
 
-        profile = user.getProfile();
+        User user = new User();
+        String UserProfile = user.getUserProfile();
+        String UserId = user.getId();
+        // Firebase Realtime Database 설정
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("User").child(UserId).child("profile");
 
         ivImage = findViewById(R.id.profile);
 
-        // Glide로 이미지 표시하기
-        String imageUrl = profile;
-        Glide.with(this).load(imageUrl).into(ivImage);
+        // ValueEventListener를 사용하여 데이터베이스에서 프로필 이미지 URL 가져오기
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String imageUrl = dataSnapshot.getValue(String.class);
+
+                // Glide로 이미지 표시하기
+                Glide.with(mypage.this).load(imageUrl).into(ivImage);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // 에러 처리
+            }
+        };
+
+// ValueEventListener를 등록하여 데이터 변경 시 동작하도록 설정
+        databaseReference.addValueEventListener(valueEventListener);
 
         // 정보 변경 버튼
         Button user_edit = (Button) findViewById(R.id.change_btn);
@@ -155,6 +186,8 @@ public class mypage extends AppCompatActivity {
 
             }
         });
+
+
 
         // 회원 탈퇴 버튼
         Button user_delete = (Button) findViewById(R.id.secession_btn);
@@ -525,6 +558,51 @@ public class mypage extends AppCompatActivity {
         queue.add(request);
     }
 
+    public void getData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json).append("\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                } finally {
+                    if (bufferedReader != null) {
+                        try {
+                            bufferedReader.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+//                showList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+    }
     // 햄버거 버튼 구현부
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
