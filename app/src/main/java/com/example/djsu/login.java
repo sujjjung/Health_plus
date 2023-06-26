@@ -104,7 +104,7 @@ public class login extends AppCompatActivity {
                                 String profile = jsonObject.getString("UserProfile");
                                 String age = jsonObject.getString("UserAge");
                                 String password = jsonObject.getString("UserPassword");
-                                Toast.makeText(getApplicationContext(), "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(), "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 User user = new User();
                                 user.setName(name);
                                 user.setId(UserID);
