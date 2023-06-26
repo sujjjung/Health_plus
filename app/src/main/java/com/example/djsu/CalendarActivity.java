@@ -131,6 +131,8 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 WaterSum.setText("");
+                UnitSum.setText("");
+                ExkcalSum.setText("");
                 int year = date.getYear(); // 선택된 날짜의 연도 정보 추출
                 int month = date.getMonth() + 1; // 선택된 날짜의 월 정보 추출 (0부터 시작하므로 +1 필요)
                 int dayOfMonth = date.getDay(); // 선택된 날짜의 일 정보 추출

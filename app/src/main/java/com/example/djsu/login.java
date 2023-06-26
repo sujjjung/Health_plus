@@ -95,6 +95,8 @@ public class login extends AppCompatActivity {
                             boolean success = jsonObject.getBoolean("success");
                             if (success && UserID.equals("admin")) { // 로그인에 성공한 경우
                                 Toast.makeText(getApplicationContext(), "관리자로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                et_id.setText(null);
+                                et_pass.setText(null);
                                 Intent intent = new Intent(login.this, AdminMainActivity.class);
                                 startActivity(intent);
                             }
@@ -112,6 +114,8 @@ public class login extends AppCompatActivity {
                                 user.setProfile(profile);
                                 user.setAge(age);
                                 user.setPassword(password);
+                                et_id.setText(null);
+                                et_pass.setText(null);
                                 Intent Mainintent = new Intent(getApplicationContext(), main_user.class);
                                 startActivity(Mainintent);
                             }
