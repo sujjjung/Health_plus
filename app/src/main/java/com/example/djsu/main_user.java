@@ -63,6 +63,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -408,22 +411,22 @@ public class main_user extends AppCompatActivity {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 ivImage.setImageBitmap(bitmap);
 
-                String userId = user.getId();
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
-
-                DatabaseReference userRef = databaseReference.child(userId);
-                userRef.child("profile").setValue(getStringImage(bitmap), new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                        if (error == null) {
-                            // 변경 성공
-                            Toast.makeText(main_user.this, "프로필 사진을 성공적으로 변경(firebase).", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // 변경 실패
-                            Toast.makeText(main_user.this, "프로필 사진 변경에 실패(firebase).", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+//                String userId = user.getId();
+//                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
+//
+//                DatabaseReference userRef = databaseReference.child(userId);
+//                userRef.child("profile").setValue(getStringImage(bitmap), new DatabaseReference.CompletionListener() {
+//                    @Override
+//                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                        if (error == null) {
+//                            // 변경 성공
+//                            Toast.makeText(main_user.this, "프로필 사진을 성공적으로 변경(firebase).", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            // 변경 실패
+//                            Toast.makeText(main_user.this, "프로필 사진 변경에 실패(firebase).", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -438,6 +441,89 @@ public class main_user extends AppCompatActivity {
         // final ProgressDialog progressDialog = new ProgressDialog(this);
         // progressDialog.setMessage("Uploading...");
         // progressDialog.show();
+        String userID = user.getId();
+
+        // 파이어베이스 스토리지에 이미지 업로드
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("profile_images").child(userID + ".jpg");
+
+        byte[] imageBytes = Base64.decode(UserProfile, Base64.DEFAULT);
+        UploadTask uploadTask = storageReference.putBytes(imageBytes);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // 업로드 성공 후 이미지의 다운로드 URL 획득
+                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String downloadURL = uri.toString();
+
+                        // User 노드의 profile 값을 변경
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
+                        DatabaseReference userRef = databaseReference.child(userID).child("profile");
+
+//                        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("User");
+//
+//                        databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+//                                    String childUserID = childSnapshot.getKey();
+//                                    DatabaseReference friendRef = databaseReference.child(childUserID).child("friend").child(UserID);
+//                                    friendRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                        @Override
+//                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                            if (dataSnapshot.hasChild(UserID)) {
+//                                                DatabaseReference profileRef = friendRef.child("profile");
+//                                                profileRef.setValue(downloadURL, new DatabaseReference.CompletionListener() {
+//                                                    @Override
+//                                                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                                                        if (error == null) {
+//                                                            // 변경 성공
+//                                                            Toast.makeText(main_user.this, "프로필 사진을 성공적으로 변경(친구).", Toast.LENGTH_SHORT).show();
+//                                                        } else {
+//                                                            // 변경 실패
+//                                                            Toast.makeText(main_user.this, "프로필 사진 변경에 실패(친구).", Toast.LENGTH_SHORT).show();
+//                                                        }
+//                                                    }
+//                                                });
+//                                            }
+//                                        }
+//                                        @Override
+//                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//                                            // 취소 처리 시 동작할 내용
+//                                        }
+//                                    });
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError error) {
+//
+//                            }
+//                        });
+
+                        userRef.setValue(downloadURL, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                if (error == null) {
+                                    // 변경 성공
+                                    Toast.makeText(main_user.this, "프로필 사진을 성공적으로 변경(firebase).", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    // 변경 실패
+                                    Toast.makeText(main_user.this, "프로필 사진 변경에 실패(firebase).", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // 업로드 실패
+                Toast.makeText(main_user.this, "이미지 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD, new Response.Listener<String>() {
             @Override
