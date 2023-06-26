@@ -577,13 +577,13 @@ public class CalendarActivity extends AppCompatActivity {
                             String Time = c.getString(TAG_Time);
                             minute += Float.parseFloat(Time.substring(0, 2));
                             second += Float.parseFloat(Time.substring(3, 5));
+                            secondSum = second / 60;
+                            minute += secondSum;
+                            ExKcalNum = (float) (minute * (6 * 0.0175 * weight));
+                            ExkcalSum.setText(String.valueOf(ExKcalNum));
                         }
                     }
                 }
-                secondSum = second / 60;
-                minute += secondSum;
-                ExKcalNum = (float) (minute * (6 * 0.0175 * weight));
-                ExkcalSum.setText(String.valueOf(ExKcalNum));
             }
         } catch (JSONException e) {
             e.printStackTrace();
