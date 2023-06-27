@@ -554,36 +554,36 @@ public class main_user extends AppCompatActivity {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response)
-            {
+            public void onResponse(String response) {
                 Log.e(TAG, response.toString());
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String success = jsonObject.getString("success");
-                    if (success.equals("1"))
-                    {
-                        // progressDialog.dismiss();
+                    if (success.equals("1")) {
+                        // 이미지 업로드 및 데이터 업데이트 성공
                         Toast.makeText(main_user.this, "프로필 사진을 성공적으로 변경했습니다.", Toast.LENGTH_SHORT).show();
+
+                        // 'finalPath' 값을 추출하여 UserProfile 변수에 할당
+                        String finalPath = jsonObject.getString("finalPath");
+                        String UserProfile = finalPath;
+
+                        // 데이터 업데이트를 수행하는 함수 호출
+                        User user = new User();
+                        user.setUserProfile(UserProfile);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    // progressDialog.dismiss();
                     Toast.makeText(main_user.this, "프로필 사진 변경에 실패했습니다. 다시 시도해주세요." + e.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error)
-            {
-                // progressDialog.dismiss();
-                Toast.makeText(main_user.this, "Error : " + error.toString(), Toast.LENGTH_SHORT).show();
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(main_user.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
             }
-        }
-        )
-        {
+        }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError
-            {
+            protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("UserID", UserID);
                 params.put("UserProfile", UserProfile);
@@ -600,14 +600,22 @@ public class main_user extends AppCompatActivity {
 
     }
 
-    public String getStringImage(Bitmap bitmap)
-    {
+    public String getStringImage(Bitmap bitmap) {
+        // 이미지 크기 조정 및 압축
+        int maxWidth = 800;
+        int maxHeight = 800;
+        float scale = Math.min(((float) maxWidth / bitmap.getWidth()), ((float) maxHeight / bitmap.getHeight()));
+        int width = Math.round(scale * bitmap.getWidth());
+        int height = Math.round(scale * bitmap.getHeight());
+        bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);  // 압축 품질 조정 (0-100)
         byte[] imageByteArray = byteArrayOutputStream.toByteArray();
         String encodedImage = Base64.encodeToString(imageByteArray, Base64.DEFAULT);
         return encodedImage;
     }
+
 
     // 햄버거
     @Override
