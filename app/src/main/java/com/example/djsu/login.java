@@ -77,7 +77,7 @@ public class login extends AppCompatActivity {
                             Toast.makeText(login.this, "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
                             et_pass.setText(null);
                         }else{
-                            Toast.makeText(login.this, et_id.getText().toString() + " 님 환영합니다.", Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(login.this, et_id.getText().toString() + " 님 환영합니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
                     @Override

@@ -576,7 +576,7 @@ public class main_user extends AppCompatActivity {
             public void onErrorResponse(VolleyError error)
             {
                 // progressDialog.dismiss();
-                Toast.makeText(main_user.this, "Error : " + error.toString(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(main_user.this, "Error : " + error.toString(), Toast.LENGTH_SHORT).show();
             }
         }
         )

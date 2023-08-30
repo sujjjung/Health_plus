@@ -36,6 +36,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -137,8 +142,33 @@ public class community_mypage extends AppCompatActivity {
         ID = user.getId(); // 아이디
         profile = user.getProfile(); // 프로필 사진
 
-        String imageUrl = profile; // Glide로 이미지 표시하기
-        Glide.with(this).load(imageUrl).into(ivImage);
+        String UserProfile = user.getUserProfile();
+        String UserId = user.getId();
+        // Firebase Realtime Database 설정
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("User").child(UserId).child("profile");
+
+        //ivImage = findViewById(R.id.profile);
+
+        // ValueEventListener를 사용하여 데이터베이스에서 프로필 이미지 URL 가져오기
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String imageUrl = dataSnapshot.getValue(String.class);
+
+                // Glide로 이미지 표시하기
+                Glide.with(community_mypage.this).load(imageUrl).into(ivImage);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // 에러 처리
+            }
+        };
+
+// ValueEventListener를 등록하여 데이터 변경 시 동작하도록 설정
+        databaseReference.addValueEventListener(valueEventListener);
+
 
         // 팔로잉 팔로워 follower_int,folloing_int
         followingList = new ArrayList<>();
