@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +40,7 @@ public class chat_room extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private List<ChatRoom> chatList;
     private EditText EditText_chat;
-    private Button Button_send, Button_out;
+    private Button Button_send, Button_out, Button_back;
     private DatabaseReference myRef, backRoom;
     private TextView roomName;
 
@@ -62,6 +63,7 @@ public class chat_room extends AppCompatActivity {
         Button_send = findViewById(R.id.btn_submit);
         EditText_chat = findViewById(R.id.edt_message);
         roomName = findViewById(R.id.txt_Title);
+        Button_back = findViewById(R.id.backButton);
 
         User user = new User();
         String userId = user.getId();
@@ -71,6 +73,14 @@ public class chat_room extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        Button_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(chat_room.this, chatList.class);
+                startActivity(intent2);
+            }
+        });
 
         Button_send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +101,6 @@ public class chat_room extends AppCompatActivity {
             }
         });
 
-
         chatList = new ArrayList<>();
         mAdapter = new ChatRoomAdapter(chatList, chat_room.this, userName, mRecyclerView);
 
@@ -101,6 +110,10 @@ public class chat_room extends AppCompatActivity {
         Intent intent = getIntent();
         String roomId = getIntent().getStringExtra("chatRoomId");
         String RoomName = getIntent().getStringExtra("roomName");
+
+//        if(RoomName.length() >= 8) {
+//            RoomName = RoomName.substring(0, 13) + "...";
+//        }
 
         roomName.setText(RoomName);
 
@@ -130,6 +143,10 @@ public class chat_room extends AppCompatActivity {
                                 if (memberName != null && memberName.equals(currentUserName)) {
                                     // 현재 회원의 이름과 동일한 값을 가진 노드를 삭제합니다.
                                     memberSnapshot.getRef().removeValue();
+
+                                    // 채팅방에 나갔음을 메시지로 보냅니다.
+                                    String messageText = currentUserName + "님이 채팅방을 나갔습니다.";
+                                    sendMessageToChatRoom(roomId, "더하기톡 알림", messageText);
                                 }
                             }
 
@@ -155,8 +172,6 @@ public class chat_room extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
-
-
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("ChatRoom").child(roomId).child("Message");
@@ -189,4 +204,20 @@ public class chat_room extends AppCompatActivity {
             }
         });
     }
+
+    // 채팅방에 메시지를 보내는 함수 -> 나가기 버튼을 클릭하면 해당 회원이 나갔다는 메시지가 자동으로 보내짐
+    private void sendMessageToChatRoom(String roomId, String senderName, String messageText) {
+        DatabaseReference roomRef = FirebaseDatabase.getInstance().getReference("ChatRoom").child(roomId);
+        DatabaseReference messagesRef = roomRef.child("Message");
+
+//        long timestamp = System.currentTimeMillis();
+        ChatRoom chatMessage = new ChatRoom();
+        chatMessage.setUserName(senderName);
+        chatMessage.setMsg(messageText);
+        chatMessage.setDate(getCurrentTime());
+
+        // Firebase Realtime Database에 메시지 저장
+        messagesRef.push().setValue(chatMessage);
+    }
+
 }
