@@ -39,7 +39,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="18dp"
             android:background="#00000000"
-            android:src="@drawable/profile2"
+            android:src="@drawable/profile_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             />
@@ -52,7 +52,7 @@
             android:autoSizeTextType="uniform"
             android:fontFamily="@font/a1009_4"
             android:gravity="center_horizontal|center_vertical"
-            android:text="김수빈"
+            android:text="홍길동"
             android:textColor="@color/black"
             android:textSize="26dp"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -62,7 +62,7 @@
         <View
             android:id="@+id/view"
             android:layout_width="375dp"
-            android:layout_height="380dp"
+            android:layout_height="330dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="32dp"
             android:background="@drawable/roundsquare"
@@ -76,8 +76,8 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="32dp"
             android:fontFamily="@font/a10094"
             android:text="오늘의 더하기"
             android:textColor="#FF3B3B3B"
@@ -159,7 +159,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="25dp"
             android:fontFamily="@font/a10093"
             android:text="운동"
             android:textColor="#FF3B3B3B"
@@ -291,7 +291,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="44dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="25dp"
             android:fontFamily="@font/a10093"
             android:text="식단"
             android:textColor="#FF3B3B3B"
@@ -302,41 +302,39 @@
         <View
             android:id="@+id/view2"
             android:layout_width="375dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="36dp"
+            android:layout_height="190dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/roundsquare2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.461"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
-        <Button
+        <TextView
             android:id="@+id/announcement_btn"
-            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="#00000000"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="32dp"
             android:fontFamily="@font/a10094"
-            android:text="오늘의 공지사항"
+            android:text="어제의 더하기"
             android:textColor="#FF3B3B3B"
-            android:textSize="23dp"
+            android:textSize="22dp"
             app:layout_constraintStart_toStartOf="@+id/view2"
             app:layout_constraintTop_toTopOf="@+id/view2" />
 
-        <TextView
-            android:id="@+id/ann_txt"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/a10092"
-            android:gravity="center_horizontal"
-            android:text="ver 1 UI 업데이트"
-            android:textSize="18dp"
-            app:layout_constraintEnd_toEndOf="@+id/view2"
-            app:layout_constraintHorizontal_bias="0.411"
-            app:layout_constraintStart_toStartOf="@+id/view2"
-            app:layout_constraintTop_toBottomOf="@+id/announcement_btn" />
+        <!--        <TextView-->
+<!--            android:id="@+id/ann_txt"-->
+<!--            android:layout_width="350dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/a10092"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            android:text="ver 1 UI 업데이트"-->
+<!--            android:textSize="18dp"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/view2"-->
+<!--            app:layout_constraintHorizontal_bias="0.411"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/view2"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/announcement_btn" />-->
 
         <View
             android:id="@+id/view1"
@@ -364,6 +362,54 @@
             app:layout_constraintStart_toStartOf="@+id/view1"
             app:layout_constraintTop_toTopOf="@+id/view1"
             tools:ignore="DuplicateIds" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/a10093"
+            android:text="운동"
+            android:textColor="#FF3B3B3B"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="@+id/view2"
+            app:layout_constraintTop_toBottomOf="@+id/announcement_btn" />
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="108dp"
+            android:fontFamily="@font/a10092"
+            android:text="목표를 달성했습니다 !"
+            android:textSize="18dp"
+            app:layout_constraintStart_toStartOf="@+id/view2"
+            app:layout_constraintTop_toTopOf="@+id/textView22" />
+
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/a10093"
+            android:text="식단"
+            android:textColor="#FF3B3B3B"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="@+id/view2"
+            app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="108dp"
+            android:fontFamily="@font/a10092"
+            android:text="닭가슴살은 어떨까요 ?"
+            android:textSize="18dp"
+            app:layout_constraintStart_toStartOf="@+id/view2"
+            app:layout_constraintTop_toTopOf="@+id/textView23" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -60,10 +60,39 @@
         tools:ignore="MissingConstraints"
         android:visibility="invisible"/>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ex_btn"
+        android:layout_width="155dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_no_btn"
+        android:fontFamily="@font/a10092"
+        android:text="운동 불러오기"
+        android:textColor="#444444"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.821"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_view" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/food_btn"
+        android:layout_width="152dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_no_btn"
+        android:fontFamily="@font/a10092"
+        android:text="식단 불러오기"
+        android:textColor="#444444"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_view" />
+
     <EditText
         android:id="@+id/content_text"
         android:layout_width="350dp"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
         android:backgroundTint="#ffdc01"
         android:ems="15"
         android:fontFamily="@font/a1009_1"
@@ -73,8 +102,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.372"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_view"
-        app:layout_constraintVertical_bias="0.104" />
+        app:layout_constraintTop_toBottomOf="@+id/food_btn"
+        app:layout_constraintVertical_bias="0.147" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/upload_btn"
