@@ -1,6 +1,7 @@
 package com.example.djsu;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,8 +10,11 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -34,19 +38,22 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class community_post extends AppCompatActivity {
+    Bundle extras;
 
-    EditText content; // 내용
+    int num;
+    EditText content, DateText; // 내용
     Button submit; // 게시
     ImageView img; // 업로드한 이미지 view
     String encodeImage; // 뭘까
     Bitmap bitmap; // 비트맵
     String encodeImageString; // 진짜 뭘까
-
+    DatePickerDialog datePickerDialog;
     private static final String url="http://enejd0613.dothome.co.kr/fileupload.php";
 
     @Override
@@ -57,6 +64,42 @@ public class community_post extends AppCompatActivity {
         // 선언
         img=(ImageView)findViewById(R.id.image_view);
         submit=(Button)findViewById(R.id.upload_btn);
+        ImageButton calendarBtn = findViewById(R.id.calendarbtn);
+        DateText = (EditText) findViewById(R.id.DateText);
+        TextView text = findViewById(R.id.text_view);
+
+        DateText.setText(getTime());
+        extras = getIntent().getExtras();
+        num = extras.getInt("number");
+
+        if(num == 1){
+            calendarBtn.setVisibility(View.VISIBLE);
+            DateText.setVisibility(View.VISIBLE);
+            text.setVisibility(View.VISIBLE);
+        } else if(num == 0){
+            img.setVisibility(View.VISIBLE);
+        }
+        calendarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 오늘 날짜(년,월,일) 변수에 담기
+                Calendar calendar = Calendar.getInstance();
+                int pYear = calendar.get(Calendar.YEAR); // 년
+                int pMonth = calendar.get(Calendar.MONTH); // 월
+                int pDay = calendar.get(Calendar.DAY_OF_MONTH); // 일
+
+                datePickerDialog = new DatePickerDialog(community_post.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                month = month + 1;
+                                String selectedDate = year + "-" + month + "-" + day;
+                                DateText.setText(selectedDate);
+                            }
+                        }, pYear, pMonth, pDay);
+                datePickerDialog.show();
+            }
+        });
 
         // 이미지 누르면 갤러리 열리게
         img.setOnClickListener(new View.OnClickListener() {

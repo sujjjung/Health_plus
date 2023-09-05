@@ -1,11 +1,13 @@
 package com.example.djsu;
 
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +37,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
@@ -54,6 +58,16 @@ import java.util.HashMap;
 import java.util.List;
 
 public class community extends AppCompatActivity {
+    // 플로팅버튼 상태
+    private boolean fabMain_status = false;
+    private FloatingActionButton fabMain;
+    private FloatingActionButton fabHealth;
+    private FloatingActionButton fabFood;
+    private FloatingActionButton fabPhoto;
+
+    private int i  = 0;
+
+    private ScrollView scrollView;
     // 햄버거
     private Toolbar toolbar;
     private NavigationView navigationView;
@@ -93,17 +107,71 @@ public class community extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        // 플로팅 버튼 선언
+        fabMain = findViewById(R.id.floatingMain);
+        fabHealth = findViewById(R.id.floatingHealth);
+        fabFood = findViewById(R.id.floatingFood);
+        fabPhoto = findViewById(R.id.floatingPhoto);
+        scrollView = findViewById(R.id.bio_scroll);
 
-        // 포스트 추가
-        ImageButton plusBtn = (ImageButton) findViewById(R.id.button2);
-        plusBtn.setOnClickListener(new View.OnClickListener() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View view, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    // 스크롤 위치에 따라 버튼의 위치를 업데이트합니다.
+                    fabMain.setTranslationY(scrollY);
+                    fabMain.setTranslationX(scrollX);
+                    fabHealth.setTranslationY(scrollY);
+                    fabHealth.setTranslationX(scrollX);
+                    fabFood.setTranslationY(scrollY);
+                    fabFood.setTranslationX(scrollX);
+                    fabPhoto.setTranslationY(scrollY);
+                    fabPhoto.setTranslationX(scrollX);
+                }
+            });
+        }
 
+        // 메인플로팅 버튼 클릭
+        fabMain.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), community_post.class);
+            public void onClick(View v) {
+                toggleFab();
+            }
+        });
+
+        // 식단 플로팅 버튼 클릭
+        fabFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(community.this, community_post.class);
+                i = 1;
+                intent.putExtra("number", i);
                 startActivity(intent);
             }
         });
+
+        // 운동 플로팅 버튼 클릭
+        fabHealth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(community.this, community_post.class);
+                i = 1;
+                intent.putExtra("number", i);
+                startActivity(intent);
+            }
+        });
+
+        // 사진 플로팅 버튼 클릭
+        fabPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(community.this, community_post.class);
+                i = 0;
+                intent.putExtra("number", i);
+                startActivity(intent);
+            }
+        });
+        // 포스트 추가
 
         // 댓글
         // ImageButton commentButton=findViewById(R.id.chat_bubble_btn);
@@ -166,6 +234,34 @@ public class community extends AppCompatActivity {
 
         getFriendData("http://enejd0613.dothome.co.kr/FriendList.php");
         getData("http://enejd0613.dothome.co.kr/filedownload.php");
+    }
+    // 플로팅 액션 버튼 클릭시 애니메이션 효과
+    public void toggleFab() {
+        if (fabMain_status) {
+            // 플로팅 액션 버튼 닫기
+            // 애니메이션 추가
+            ObjectAnimator fk_animation = ObjectAnimator.ofFloat(fabPhoto, "translationY", fabMain.getTranslationY()-0f);
+            fk_animation.start();
+            ObjectAnimator fc_animation = ObjectAnimator.ofFloat(fabFood, "translationY", fabMain.getTranslationY()-0f);
+            fc_animation.start();
+            ObjectAnimator fe_animation = ObjectAnimator.ofFloat(fabHealth, "translationY", fabMain.getTranslationY()-0f);
+            fe_animation.start();
+            // 메인 플로팅 이미지 변경
+            fabMain.setImageResource(R.drawable.ic_action_plus);
+
+        } else {
+            // 플로팅 액션 버튼 열기
+            ObjectAnimator fc_animation = ObjectAnimator.ofFloat(fabFood, "translationY", fabMain.getTranslationY()-200f);
+            fc_animation.start();
+            ObjectAnimator fe_animation = ObjectAnimator.ofFloat(fabHealth, "translationY", fabMain.getTranslationY()-400f);
+            fe_animation.start();
+            ObjectAnimator fk_animation = ObjectAnimator.ofFloat(fabPhoto, "translationY", fabMain.getTranslationY()-600f);
+            fk_animation.start();
+            // 메인 플로팅 이미지 변경
+            fabMain.setImageResource(R.drawable.ic_action_plus);
+        }
+        // 플로팅 버튼 상태 변경
+        fabMain_status = !fabMain_status;
     }
     // 로그인한 유저의 친구리스트를 얻기위한 코드
     protected void FriendList() {
