@@ -22,16 +22,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <!--    <ImageView-->
-        <!--        android:id="@+id/imageView2"-->
-        <!--        android:layout_width="80dp"-->
-        <!--        android:layout_height="80dp"-->
-        <!--        android:layout_marginStart="16dp"-->
-        <!--        android:layout_marginTop="18dp"-->
-        <!--        android:background="@color/white"-->
-        <!--        app:layout_constraintStart_toStartOf="parent"-->
-        <!--        app:layout_constraintTop_toBottomOf="@+id/imageView" />-->
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView2"
             android:layout_width="90dp"
@@ -58,13 +48,12 @@
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
-
         <View
             android:id="@+id/view"
-            android:layout_width="375dp"
-            android:layout_height="330dp"
+            android:layout_width="369dp"
+            android:layout_height="396dp"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="28dp"
             android:background="@drawable/roundsquare"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.473"
@@ -77,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="28dp"
             android:fontFamily="@font/a10094"
             android:text="오늘의 더하기"
             android:textColor="#FF3B3B3B"
@@ -120,6 +109,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView4" />
 
         <TextView
+            android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
@@ -159,7 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/a10093"
             android:text="운동"
             android:textColor="#FF3B3B3B"
@@ -177,6 +167,27 @@
             app:layout_constraintBottom_toBottomOf="@+id/ExTime"
             app:layout_constraintStart_toEndOf="@+id/ExTime"
             app:layout_constraintTop_toTopOf="@+id/ExTime" />
+
+        <com.skydoves.progressview.ProgressView
+            android:id="@+id/progressView1"
+            android:layout_width="320dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:progressView_animation="normal"
+            app:progressView_autoAnimate="true"
+            app:progressView_colorBackground="@color/white"
+            app:progressView_colorProgress="#C8E6C9"
+            app:progressView_labelSize="10sp"
+            app:progressView_labelSpace="10dp"
+            app:progressView_labelTypeface="bold"
+            app:progressView_max="100"
+            app:progressView_min="0"
+            app:progressView_padding="1dp"
+            app:progressView_radius="10dp"
+            tools:ignore="MissingConstraints" />
 
         <ImageButton
             android:id="@+id/view_food"
@@ -285,44 +296,6 @@
             app:layout_constraintStart_toEndOf="@+id/water_tv"
             app:layout_constraintTop_toTopOf="@+id/water_tv" />
 
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="25dp"
-            android:fontFamily="@font/a10093"
-            android:text="식단"
-            android:textColor="#FF3B3B3B"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="@+id/view"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="375dp"
-            android:layout_height="190dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/roundsquare2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.461"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
-
-        <TextView
-            android:id="@+id/announcement_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/a10094"
-            android:text="어제의 더하기"
-            android:textColor="#FF3B3B3B"
-            android:textSize="22dp"
-            app:layout_constraintStart_toStartOf="@+id/view2"
-            app:layout_constraintTop_toTopOf="@+id/view2" />
-
         <!--        <TextView-->
 <!--            android:id="@+id/ann_txt"-->
 <!--            android:layout_width="350dp"-->
@@ -335,6 +308,40 @@
 <!--            app:layout_constraintHorizontal_bias="0.411"-->
 <!--            app:layout_constraintStart_toStartOf="@+id/view2"-->
 <!--            app:layout_constraintTop_toBottomOf="@+id/announcement_btn" />-->
+
+        <com.skydoves.progressview.ProgressView
+            android:id="@+id/progressView2"
+            android:layout_width="320dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            app:progressView_animation="normal"
+            app:progressView_autoAnimate="true"
+            app:progressView_colorBackground="@color/white"
+            app:progressView_colorProgress="#C8E6C9"
+            app:progressView_labelSize="10sp"
+            app:progressView_labelSpace="10dp"
+            app:progressView_labelTypeface="bold"
+            app:progressView_max="100"
+            app:progressView_min="0"
+            app:progressView_padding="1dp"
+            app:progressView_radius="10dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/a10093"
+            android:text="식단"
+            android:textColor="#FF3B3B3B"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/progressView1" />
 
         <View
             android:id="@+id/view1"
@@ -363,53 +370,29 @@
             app:layout_constraintTop_toTopOf="@+id/view1"
             tools:ignore="DuplicateIds" />
 
+        <View
+            android:id="@+id/view2"
+            android:layout_width="375dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/roundsquare2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.461"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
         <TextView
-            android:id="@+id/textView22"
+            android:id="@+id/textView37"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="25dp"
-            android:fontFamily="@font/a10093"
-            android:text="운동"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/a10094"
+            android:text="추천 더하기"
             android:textColor="#FF3B3B3B"
-            android:textSize="20dp"
+            android:textSize="22dp"
             app:layout_constraintStart_toStartOf="@+id/view2"
-            app:layout_constraintTop_toBottomOf="@+id/announcement_btn" />
-
-        <TextView
-            android:id="@+id/textView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="108dp"
-            android:fontFamily="@font/a10092"
-            android:text="목표를 달성했습니다 !"
-            android:textSize="18dp"
-            app:layout_constraintStart_toStartOf="@+id/view2"
-            app:layout_constraintTop_toTopOf="@+id/textView22" />
-
-        <TextView
-            android:id="@+id/textView23"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="25dp"
-            android:fontFamily="@font/a10093"
-            android:text="식단"
-            android:textColor="#FF3B3B3B"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="@+id/view2"
-            app:layout_constraintTop_toBottomOf="@+id/textView22" />
-
-        <TextView
-            android:id="@+id/textView25"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="108dp"
-            android:fontFamily="@font/a10092"
-            android:text="닭가슴살은 어떨까요 ?"
-            android:textSize="18dp"
-            app:layout_constraintStart_toStartOf="@+id/view2"
-            app:layout_constraintTop_toTopOf="@+id/textView23" />
+            app:layout_constraintTop_toTopOf="@+id/view2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

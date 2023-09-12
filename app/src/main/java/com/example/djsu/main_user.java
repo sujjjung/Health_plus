@@ -66,6 +66,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.skydoves.progressview.OnProgressChangeListener;
+import com.skydoves.progressview.ProgressView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,6 +86,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -132,6 +135,12 @@ public class main_user extends AppCompatActivity {
     // 공지
 //    String title;
 //    String detail;
+
+    // 프로그래스 바
+    ProgressView progressView1;
+    ProgressView progressView2;
+
+    String url = "http://enejd0613.dothome.co.kr/get_fat_main.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -403,6 +412,89 @@ public class main_user extends AppCompatActivity {
 //            }
 //
 //        });
+
+        // 프로그래스바
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // PHP 서버에서 응답을 받은 후 이곳에서 데이터 처리를 진행합니다.
+                        // 받은 데이터를 파싱하고 kg 값을 추출하여 프로그래스바 업데이트를 수행하세요.
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // 오류 처리
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("userID", ID);
+                return params;
+            }
+        };
+
+        queue.add(stringRequest);
+
+        progressView1 = findViewById(R.id.progressView1);
+        progressView2 = findViewById(R.id.progressView2);
+
+// 사용자 몸무게를 가져오기 위한 요청
+        RequestQueue queue1 = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // PHP 서버에서 응답을 받은 후 이곳에서 데이터 처리를 진행합니다.
+                try {
+                    float userWeight = Float.parseFloat(response); // PHP에서 받아온 몸무게 값
+                    progressView1.setMax((int) (userWeight * 24)); // kg * 24로 맥스값 설정
+                    progressView2.setMax((int) (userWeight * 30)); // kg * 30으로 맥스값 설정
+
+                    // 이후에 나머지 코드를 실행합니다.
+                    progressView1.setProgress(KcalNum); // 진행값 설정
+                    progressView2.setProgress(KcalNum); // 진행값 설정
+                    progressView1.setOnProgressChangeListener(new OnProgressChangeListener() {
+                        @Override
+                        public void onChange(float v) {
+                            // 상태값이 변하면 라벨에 현재값을 넣어준다.
+                            progressView1.setLabelText("진행률: " + v + "%");
+                        }
+                    });
+
+                    progressView2.setOnProgressChangeListener(new OnProgressChangeListener() {
+                        @Override
+                        public void onChange(float v) {
+                            // 상태값이 변하면 라벨에 현재값을 넣어준다.
+                            progressView2.setLabelText("진행률: " + v + "%");
+                        }
+                    });
+                } catch (NumberFormatException e) {
+                    // 몸무게 값을 파싱하는 도중 예외 처리
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // 오류 처리
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("userID", ID); // userID를 POST 파라미터로 보내서 PHP에서 해당 사용자의 몸무게를 가져오도록 함
+                return params;
+            }
+        };
+
+        queue1.add(stringRequest1);
     }
 
     private ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
