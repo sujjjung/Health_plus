@@ -11,7 +11,7 @@ import java.io.Serializable;
         // 루틴관련 변수
         private String RoutineName;
         // 사용자관련 변수
-        static private String Id, Name, State, Profile, Age, Password;
+        static private String Id, Name, State, Profile, Age, Password, EatTarget, BurnTarget;
         static private int CurrentSteps;
         // 물관련 변수
         static private String Water;
@@ -229,6 +229,15 @@ import java.io.Serializable;
             FoodName = foodName;
         }
 
+        // 목표
+        public static String getEatTarget() { return EatTarget; }
+
+        public void setEatTarget(String eatTarget) { EatTarget = eatTarget; }
+
+        public static String getBurnTarget() { return BurnTarget; }
+
+        public void setBurnTarget(String burnTarget) { BurnTarget = burnTarget; }
+
         public static String getId() {
             return Id;
         }
@@ -438,4 +447,5 @@ import java.io.Serializable;
         public void setCommentUser(String commentUser) {
             this.commentUser = commentUser;
         }
+
     }

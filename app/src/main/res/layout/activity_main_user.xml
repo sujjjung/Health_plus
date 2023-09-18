@@ -168,10 +168,12 @@
             app:layout_constraintStart_toEndOf="@+id/ExTime"
             app:layout_constraintTop_toTopOf="@+id/ExTime" />
 
-        <com.skydoves.progressview.ProgressView
+        <ProgressBar
             android:id="@+id/progressView1"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="320dp"
             android:layout_height="30dp"
+            android:layout_centerInParent="true"
             android:layout_marginStart="36dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -187,7 +189,9 @@
             app:progressView_min="0"
             app:progressView_padding="1dp"
             app:progressView_radius="10dp"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            android:progressDrawable="@drawable/progressbar_progressbar1" />
+
 
         <ImageButton
             android:id="@+id/view_food"
@@ -309,26 +313,18 @@
 <!--            app:layout_constraintStart_toStartOf="@+id/view2"-->
 <!--            app:layout_constraintTop_toBottomOf="@+id/announcement_btn" />-->
 
-        <com.skydoves.progressview.ProgressView
+
+        <ProgressBar
             android:id="@+id/progressView2"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="320dp"
             android:layout_height="30dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/textView11"
-            app:progressView_animation="normal"
-            app:progressView_autoAnimate="true"
-            app:progressView_colorBackground="@color/white"
-            app:progressView_colorProgress="#C8E6C9"
-            app:progressView_labelSize="10sp"
-            app:progressView_labelSpace="10dp"
-            app:progressView_labelTypeface="bold"
-            app:progressView_max="100"
-            app:progressView_min="0"
-            app:progressView_padding="1dp"
-            app:progressView_radius="10dp"
-            tools:ignore="MissingConstraints" />
+            android:progressDrawable="@drawable/progressbar_progressbar1" />
 
         <TextView
             android:id="@+id/textView8"
