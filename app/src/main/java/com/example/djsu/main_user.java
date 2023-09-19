@@ -24,6 +24,9 @@ import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -38,6 +41,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -136,11 +140,13 @@ public class main_user extends AppCompatActivity {
 //    String title;
 //    String detail;
 
-    // 프로그래스 바
-    ProgressView progressView1;
-    ProgressView progressView2;
-
     String url = "http://enejd0613.dothome.co.kr/get_fat_main.php";
+
+    // 프로그래스바 테스트
+
+    private ProgressBar progressBar, progressBar1;
+    private int progressStatus = 0;
+    private Handler handler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,11 +242,12 @@ public class main_user extends AppCompatActivity {
 
         String UserProfile = user.getUserProfile();
         String UserId = user.getId();
+
+        int eatTarget = Integer.parseInt(user.getEatTarget());
+        int burnTarget = Integer.parseInt(user.getBurnTarget());
         // Firebase Realtime Database 설정
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("User").child(UserId).child("profile");
-
-        //ivImage = findViewById(R.id.profile);
 
         // ValueEventListener를 사용하여 데이터베이스에서 프로필 이미지 URL 가져오기
         ValueEventListener valueEventListener = new ValueEventListener() {
@@ -392,109 +399,125 @@ public class main_user extends AppCompatActivity {
             }
         });
 
-        // 프로필 사진 변경
-        ivImage.setOnClickListener(new View.OnClickListener() {
+        // 프로그래스바의 최대 값 설정
+        int burnT = Integer.parseInt(user.getBurnTarget());
+
+        // 프로그래스바 초기화
+        progressBar1 = findViewById(R.id.progressView1);
+
+        // 최대값을 KcalNum으로 설정
+        int ExKcalNum = burnTarget;
+        progressBar1.setMax(ExKcalNum);
+
+        // 어떤 활동을 수행할 때 진행률을 업데이트하려면 아래와 같이 호출
+        // 예를 들어, 진행률을 eatT로 업데이트하려면
+        // updateProgressBar(burnT);
+
+        // 칼로리 목표 변경
+        progressBar1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseFile();
+                // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
+                String UserID = user.getId();
+                String text = text1.getText().toString();
+
+                dialog_status alert = new dialog_status(main_user.this,text);
+                alert.callFunction();
+                alert.setModifyReturnListener(new dialog_status.ModifyReturnListener() {
+                    @Override
+                    public void afterModify(String text) {
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    String success = jsonObject.getString("success");
+
+                                    if (success.equals("1")) { // 회원등록에 성공한 경우
+                                        text1.setText(text);
+                                        System.out.println("!!!!!!!!!!!!!: " +text);
+                                        user.setState(text);
+                                        Toast.makeText(getApplicationContext(), "한줄소개가 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                                    } else { // 회원등록에 실패한 경우
+                                        Toast.makeText(getApplicationContext(), "회원 정보 변경에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        // 서버로 Volley를 이용해서 요청을 함.
+                        StatusRequest stateRequest1 = new StatusRequest(UserID, text, responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(main_user.this);
+                        queue.add(stateRequest1);
+                    }
+                });
             }
         });
 
-        // fetchLatestAnnoncementTitle();
+        // 프로그래스바의 최대 값 설정
+        int eatT = Integer.parseInt(user.getEatTarget());
 
-        // 공지 누르기
-//        TextView textView = findViewById(R.id.ann_txt);
-//        textView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // 커스텀 다이얼로그를 생성하고 보여줍니다.
-//                showDialog();
-//            }
-//
-//        });
+        // 프로그래스바 초기화
+        progressBar = findViewById(R.id.progressView2);
 
-        // 프로그래스바
+        // 최대값을 KcalNum으로 설정
+                int KcalNum = eatTarget;
+                progressBar.setMax(KcalNum);
 
-        RequestQueue queue = Volley.newRequestQueue(this);
+        // 어떤 활동을 수행할 때 진행률을 업데이트하려면 아래와 같이 호출
+        // 예를 들어, 진행률을 eatT로 업데이트하려면
+                updateProgressBar(eatT);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+        // 칼로리 목표 변경
+        progressBar1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
+                String UserID = user.getId();
+                String text = text1.getText().toString();
+
+                dialog_status alert = new dialog_status(main_user.this,text);
+                alert.callFunction();
+                alert.setModifyReturnListener(new dialog_status.ModifyReturnListener() {
                     @Override
-                    public void onResponse(String response) {
-                        // PHP 서버에서 응답을 받은 후 이곳에서 데이터 처리를 진행합니다.
-                        // 받은 데이터를 파싱하고 kg 값을 추출하여 프로그래스바 업데이트를 수행하세요.
+                    public void afterModify(String text) {
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    String success = jsonObject.getString("success");
+
+                                    if (success.equals("1")) { // 회원등록에 성공한 경우
+                                        text1.setText(text);
+                                        System.out.println("!!!!!!!!!!!!!: " +text);
+                                        user.setState(text);
+                                        Toast.makeText(getApplicationContext(), "한줄소개가 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                                    } else { // 회원등록에 실패한 경우
+                                        Toast.makeText(getApplicationContext(), "회원 정보 변경에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        // 서버로 Volley를 이용해서 요청을 함.
+                        StatusRequest stateRequest1 = new StatusRequest(UserID, text, responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(main_user.this);
+                        queue.add(stateRequest1);
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // 오류 처리
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("userID", ID);
-                return params;
+                });
             }
-        };
+        });
 
-        queue.add(stringRequest);
 
-        progressView1 = findViewById(R.id.progressView1);
-        progressView2 = findViewById(R.id.progressView2);
+    }
 
-// 사용자 몸무게를 가져오기 위한 요청
-        RequestQueue queue1 = Volley.newRequestQueue(this);
-
-        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                // PHP 서버에서 응답을 받은 후 이곳에서 데이터 처리를 진행합니다.
-                try {
-                    float userWeight = Float.parseFloat(response); // PHP에서 받아온 몸무게 값
-                    progressView1.setMax((int) (userWeight * 24)); // kg * 24로 맥스값 설정
-                    progressView2.setMax((int) (userWeight * 30)); // kg * 30으로 맥스값 설정
-
-                    // 이후에 나머지 코드를 실행합니다.
-                    progressView1.setProgress(KcalNum); // 진행값 설정
-                    progressView2.setProgress(KcalNum); // 진행값 설정
-                    progressView1.setOnProgressChangeListener(new OnProgressChangeListener() {
-                        @Override
-                        public void onChange(float v) {
-                            // 상태값이 변하면 라벨에 현재값을 넣어준다.
-                            progressView1.setLabelText("진행률: " + v + "%");
-                        }
-                    });
-
-                    progressView2.setOnProgressChangeListener(new OnProgressChangeListener() {
-                        @Override
-                        public void onChange(float v) {
-                            // 상태값이 변하면 라벨에 현재값을 넣어준다.
-                            progressView2.setLabelText("진행률: " + v + "%");
-                        }
-                    });
-                } catch (NumberFormatException e) {
-                    // 몸무게 값을 파싱하는 도중 예외 처리
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // 오류 처리
-                error.printStackTrace();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("userID", ID); // userID를 POST 파라미터로 보내서 PHP에서 해당 사용자의 몸무게를 가져오도록 함
-                return params;
-            }
-        };
-
-        queue1.add(stringRequest1);
+    private void updateProgressBar(int newProgress) {
+        progressBar.setProgress(newProgress);
     }
 
     private ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
