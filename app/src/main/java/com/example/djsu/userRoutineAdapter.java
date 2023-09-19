@@ -26,12 +26,13 @@ public class userRoutineAdapter extends BaseAdapter {
     private List<User> routineList;
     TextView name;
     Button shape_yes_btn,detailBtn;
-    int num = 0,Exnum = 0;
+    int num = 0,Exnum = 0,communitynum;
     String RoutineName ="",Date,ExPart,ExName,ExCode,BtnText = "선택";
-    public userRoutineAdapter(Context context, List<User> routineList, String Date) {
+    public userRoutineAdapter(Context context, List<User> routineList, String Date,int communitynum) {
         this.context = context;
         this.routineList = routineList;
         this.Date = Date;
+        this.communitynum = communitynum;
     }
     @Override
     public int getCount () {
@@ -74,44 +75,51 @@ public class userRoutineAdapter extends BaseAdapter {
         shape_yes_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(BtnText.equals("선택")){
-                    Intent intent = new Intent(context, ExerciseRecordActivity.class);
-                    intent.putExtra("routineList", (Serializable) routineList);
-                    intent.putExtra("Date", Date);
-                    intent.putExtra("RoutineCount", 0);
-                    intent.putExtra("index", 0);
-                    if(routineList.get(position).getExercisePart().equals("유산소")){
-                        Exnum =1;
-                    }
-                    intent.putExtra("num", Exnum);
+                if(communitynum == 1){
+                    Intent intent = new Intent(context, community_post.class);
                     intent.putExtra("RoutineNameText", routineList.get(position).getRoutineName());
                     context.startActivity(intent);
-                } else if(BtnText.equals("삭제")){
-                    for(int i =0; i < routineList.size(); i++) {
-                        if(routineList.get(i).getRoutineName().equals(routineList.get(position).getRoutineName())) {
-                            Response.Listener<String> responseListener = new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    try {
-                                        JSONObject jsonResponse = new JSONObject(response);
-                                        boolean success = jsonResponse.getBoolean("success");
-                                        //받아온 값이 success면 정상적으로 서버로부터 값을 받은 것을 의미함
-                                        if (success) {
-                                            Toast.makeText(context.getApplicationContext(), "삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                                            routineList.remove(position);//리스트에서 해당부분을 지워줌
-                                            notifyDataSetChanged();//데이터가 변경된 것을 어댑터에 알려줌
+                } else if(communitynum != 1){
+                    if(BtnText.equals("선택")){
+                        Intent intent = new Intent(context, ExerciseRecordActivity.class);
+                        intent.putExtra("routineList", (Serializable) routineList);
+                        intent.putExtra("Date", Date);
+                        intent.putExtra("RoutineCount", 0);
+                        intent.putExtra("index", 0);
+                        if(routineList.get(position).getExercisePart().equals("유산소")){
+                            Exnum =1;
+                        }
+                        intent.putExtra("num", Exnum);
+                        intent.putExtra("RoutineNameText", routineList.get(position).getRoutineName());
+                        context.startActivity(intent);
+                    } else if(BtnText.equals("삭제")){
+                        for(int i =0; i < routineList.size(); i++) {
+                            if(routineList.get(i).getRoutineName().equals(routineList.get(position).getRoutineName())) {
+                                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        try {
+                                            JSONObject jsonResponse = new JSONObject(response);
+                                            boolean success = jsonResponse.getBoolean("success");
+                                            //받아온 값이 success면 정상적으로 서버로부터 값을 받은 것을 의미함
+                                            if (success) {
+                                                Toast.makeText(context.getApplicationContext(), "삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                                routineList.remove(position);//리스트에서 해당부분을 지워줌
+                                                notifyDataSetChanged();//데이터가 변경된 것을 어댑터에 알려줌
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
                                         }
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
                                     }
-                                }
-                            };
-                            UserRoutineDelete deleteRequest = new UserRoutineDelete(routineList.get(i).getRoutineName(), responseListener);
-                            RequestQueue queue = Volley.newRequestQueue(context);
-                            queue.add(deleteRequest);
+                                };
+                                UserRoutineDelete deleteRequest = new UserRoutineDelete(routineList.get(i).getRoutineName(), responseListener);
+                                RequestQueue queue = Volley.newRequestQueue(context);
+                                queue.add(deleteRequest);
+                            }
                         }
                     }
                 }
+
             }
         });
 

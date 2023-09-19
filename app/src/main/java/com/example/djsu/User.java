@@ -36,13 +36,14 @@ import java.io.Serializable;
             this.userProfile = userProfile;
         }
 
-        public User(int postKey, String postid, String content, String image, String postdate, String profileImageUrl) {
+        public User(int postKey, String postid, String content, String image, String postdate, String profileImageUrl,String rutineName) {
             this.postKey = postKey;
             this.postid = postid;
             this.content = content;
             this.image = image;
             this.postdate = postdate;
             this.profileImageUrl = profileImageUrl;
+            this.RoutineName = rutineName;
         }
 
         public User(String routineName, String exerciseCode, String exercisePart,String exerciseName) {

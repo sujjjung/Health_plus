@@ -240,7 +240,6 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         SaveBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                System.out.println("gggg11 " + RoutineCount);
                 Set set = new Set();
                 set.getSetArrayList();
                 ArrayList<Set> setList = set.getSetArrayList();

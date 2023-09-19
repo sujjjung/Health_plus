@@ -54,6 +54,7 @@ public class routine extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     String Date, searchName = "";
     Button RoutineAddBtn, editBtn;
+    int num;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,11 +63,11 @@ public class routine extends AppCompatActivity {
         search_list = new ArrayList<>();
         editText = findViewById(R.id.search_routine);
 
-
+        num = extras.getInt("num");
         Date = extras.getString("Date");
         routineList = new ArrayList<>();
         routineList.clear();
-        userRoutineAdapter = new userRoutineAdapter(this,routineList,Date);
+        userRoutineAdapter = new userRoutineAdapter(this,routineList,Date,num);
         ListView exView = (ListView) findViewById(R.id.recycler_routine);
         exView.setAdapter(userRoutineAdapter);
         editText.addTextChangedListener(new TextWatcher() {
@@ -149,6 +150,10 @@ public class routine extends AppCompatActivity {
                 userRoutineAdapter.ButtonChange(1);
             }
         });
+        if(num == 1){
+            editBtn.setVisibility(View.INVISIBLE);
+        }
+
         // 햄버거 버튼
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);

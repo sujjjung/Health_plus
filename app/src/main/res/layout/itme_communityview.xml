@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!--상태 메시지-->
+
+        <LinearLayout
+            android:layout_width="219dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/Name"
+                android:layout_width="199dp"
+                android:layout_height="50dp"
+                android:fontFamily="@font/a10092"
+                android:paddingLeft="5dp"
+                android:text="음식 이름"
+                android:textColor="#000"
+                android:textSize="25sp" />
+
+
+            <!--구분선-->
+        </LinearLayout>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/Detail"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_margin="70dp"
+            android:background="@drawable/shape_no_btn"
+            android:fontFamily="@font/a10091"
+            android:text="상세"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+</LinearLayout>
