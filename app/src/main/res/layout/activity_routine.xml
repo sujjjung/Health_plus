@@ -92,7 +92,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/search_routine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/search_routine"
-            app:layout_constraintTop_toTopOf="@+id/search_routine" />
+            app:layout_constraintTop_toTopOf="@+id/search_routine"
+            />
 
         <android.widget.Button
             android:id="@+id/RoutineAdd"

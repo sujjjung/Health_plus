@@ -45,12 +45,13 @@ import java.util.Map;
 
 public class community_post extends AppCompatActivity {
     Bundle extras;
-
     int num;
-    EditText content, DateText; // 내용
-    Button submit; // 게시
+    EditText content; // 내용
+
+    TextView routine_text;
+    Button submit, ex_btn; // 게시
     ImageView img; // 업로드한 이미지 view
-    String encodeImage; // 뭘까
+    String encodeImage,rutineName; // 뭘까
     Bitmap bitmap; // 비트맵
     String encodeImageString; // 진짜 뭘까
     DatePickerDialog datePickerDialog;
@@ -64,42 +65,19 @@ public class community_post extends AppCompatActivity {
         // 선언
         img=(ImageView)findViewById(R.id.image_view);
         submit=(Button)findViewById(R.id.upload_btn);
-        ImageButton calendarBtn = findViewById(R.id.calendarbtn);
-        DateText = (EditText) findViewById(R.id.DateText);
-        TextView text = findViewById(R.id.text_view);
+        ex_btn = findViewById(R.id.ex_btn);
+        routine_text = findViewById(R.id.routine_text);
 
-        DateText.setText(getTime());
         extras = getIntent().getExtras();
-        num = extras.getInt("number");
 
-        if(num == 1){
-            calendarBtn.setVisibility(View.VISIBLE);
-            DateText.setVisibility(View.VISIBLE);
-            text.setVisibility(View.VISIBLE);
-        } else if(num == 0){
-            img.setVisibility(View.VISIBLE);
+        rutineName = extras.getString("RoutineNameText");
+
+        if(rutineName.equals("")){
+
+        }else if(rutineName.equals("") == false){
+            routine_text.setText(rutineName);
         }
-        calendarBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 오늘 날짜(년,월,일) 변수에 담기
-                Calendar calendar = Calendar.getInstance();
-                int pYear = calendar.get(Calendar.YEAR); // 년
-                int pMonth = calendar.get(Calendar.MONTH); // 월
-                int pDay = calendar.get(Calendar.DAY_OF_MONTH); // 일
 
-                datePickerDialog = new DatePickerDialog(community_post.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                                month = month + 1;
-                                String selectedDate = year + "-" + month + "-" + day;
-                                DateText.setText(selectedDate);
-                            }
-                        }, pYear, pMonth, pDay);
-                datePickerDialog.show();
-            }
-        });
 
         // 이미지 누르면 갤러리 열리게
         img.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +113,15 @@ public class community_post extends AppCompatActivity {
             public void onClick(View view) {
                 uploaddatatodb();
                 finish();
+            }
+        });
+
+        ex_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), routine.class);
+                intent.putExtra("num",1);
+                startActivity(intent);
             }
         });
     }
@@ -199,6 +186,7 @@ public class community_post extends AppCompatActivity {
                 map.put("content_t",dsg);
                 map.put("image_t",encodeImageString);
                 map.put("date", getTime());
+                map.put("rutineName",routine_text.getText().toString());
                 return map;
             }
         };

@@ -307,7 +307,8 @@ public class main_user extends AppCompatActivity {
                             queue.add(waterRequest);
                             Intent mypageintent = new Intent(getApplicationContext(), mypage.class);
                             startActivity(mypageintent);
-                        }else{             Intent mypageintent = new Intent(getApplicationContext(), mypage.class);
+                        }else{
+                            Intent mypageintent = new Intent(getApplicationContext(), mypage.class);
                             startActivity(mypageintent);
                         }
                         return true;

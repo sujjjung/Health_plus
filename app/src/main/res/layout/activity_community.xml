@@ -6,109 +6,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-    <ScrollView
-        android:id="@+id/bio_scroll"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".community">
+        android:layout_height="match_parent"
+        tools:context=".community">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo3" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo3" />
 
-    <ListView
-        android:id="@+id/community"
-        android:layout_width="390dp"
-        android:layout_height="795dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/item_community" />
+        <ListView
+            android:id="@+id/community"
+            android:layout_width="390dp"
+            android:layout_height="795dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintVertical_bias="0.0"
+            tools:listitem="@layout/item_community" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingFood"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/btn_food"
-        app:fabSize="normal"
-        app:maxImageSize="46dp"
-        android:backgroundTint="#ff812d"
-        app:layout_constraintTop_toTopOf="@id/floatingMain"
-        app:layout_constraintBottom_toBottomOf="@id/floatingMain"
-        app:layout_constraintStart_toStartOf="@id/floatingMain"
-        app:layout_constraintEnd_toEndOf="@id/floatingMain"
-        />
+        <ImageButton
+            android:id="@+id/button2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="680dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/logo4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.867" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/btn_kg"
-        app:fabSize="normal"
-        app:maxImageSize="46dp"
-        android:backgroundTint="#ff812d"
-        app:layout_constraintTop_toTopOf="@id/floatingMain"
-        app:layout_constraintBottom_toBottomOf="@id/floatingMain"
-        app:layout_constraintStart_toStartOf="@id/floatingMain"
-        app:layout_constraintEnd_toEndOf="@id/floatingMain"
-        />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/mypage_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="330dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/mypage"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.069"
+            tools:ignore="MissingConstraints" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingHealth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/btn_ex"
-        app:fabSize="normal"
-        app:maxImageSize="50dp"
-        android:backgroundTint="#ff812d"
-        app:layout_constraintTop_toTopOf="@id/floatingMain"
-        app:layout_constraintBottom_toBottomOf="@id/floatingMain"
-        app:layout_constraintStart_toStartOf="@id/floatingMain"
-        app:layout_constraintEnd_toEndOf="@id/floatingMain"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingMain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="14dp"
-        android:layout_marginBottom="100dp"
-        android:src="@drawable/btn_plus"
-        app:backgroundTint="#ff812d"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_goneMarginBottom="30dp" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/mypage_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="330dp"
-        android:layout_marginTop="23dp"
-        android:background="@drawable/mypage"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.069"
-        tools:ignore="MissingConstraints" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

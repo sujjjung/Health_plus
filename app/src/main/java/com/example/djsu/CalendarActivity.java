@@ -317,6 +317,7 @@ public class CalendarActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarActivity.this, routine.class);
                 intent.putExtra("Date", Date);
+                intent.putExtra("num", 0);
                 startActivity(intent);
             }
         });
