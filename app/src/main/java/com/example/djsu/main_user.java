@@ -457,19 +457,6 @@ public class main_user extends AppCompatActivity {
             }
         });
 
-        // 프로그래스바의 최대 값 설정
-        int eatT = Integer.parseInt(user.getEatTarget());
-
-        // 프로그래스바 초기화
-        progressBar = findViewById(R.id.progressView2);
-
-        // 최대값을 KcalNum으로 설정
-                int KcalNum = eatTarget;
-                progressBar.setMax(KcalNum);
-
-        // 어떤 활동을 수행할 때 진행률을 업데이트하려면 아래와 같이 호출
-        // 예를 들어, 진행률을 eatT로 업데이트하려면
-                updateProgressBar(eatT);
 
         // 칼로리 목표 변경
         progressBar1.setOnClickListener(new View.OnClickListener() {
@@ -515,10 +502,6 @@ public class main_user extends AppCompatActivity {
         });
 
 
-    }
-
-    private void updateProgressBar(int newProgress) {
-        progressBar.setProgress(newProgress);
     }
 
     private ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
@@ -759,8 +742,29 @@ public class main_user extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        // 프로그래스바의 최대 값 설정
+        int eatT = Integer.parseInt(user.getEatTarget());
+
+// 프로그래스바와 TextView 초기화
+        progressBar = findViewById(R.id.progressView2);
+        TextView progressPercentTextView = findViewById(R.id.eat_per);
+        progressBar.setMax(eatT);
+
+// 어떤 활동을 수행할 때 진행률을 업데이트하려면 아래와 같이 호출
+// 예를 들어, 진행률을 ExKcalNum로 업데이트하려면
+        int currentProgress = (int) KcalNum;
+        progressBar.setProgress(currentProgress);
+
+// 진행률을 퍼센트로 계산하여 TextView에 업데이트
+        int progressPercent = (int) ((currentProgress * 100.0f) / eatT);
+        progressPercentTextView.setText(progressPercent + "%");
+
     }
 
+    private void updateProgressBar(int newProgress) {
+        progressBar.setProgress(newProgress);
+    }
 
     public void getFoodData(String url) {
         class GetDataJSON extends AsyncTask<String, Void, String> {
@@ -909,8 +913,26 @@ public class main_user extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
 
+
+        // 프로그래스바의 최대 값 설정
+        int burnT = Integer.parseInt(user.getBurnTarget());
+
+// 프로그래스바와 TextView 초기화
+        progressBar = findViewById(R.id.progressView1);
+        TextView progressPercentTextView = findViewById(R.id.ex_per);
+        progressBar.setMax(burnT);
+
+// 어떤 활동을 수행할 때 진행률을 업데이트하려면 아래와 같이 호출
+// 예를 들어, 진행률을 ExKcalNum로 업데이트하려면
+        int currentProgress = (int) ExKcalNum;
+        progressBar.setProgress(currentProgress);
+
+// 진행률을 퍼센트로 계산하여 TextView에 업데이트
+        int progressPercent = (int) ((currentProgress * 100.0f) / burnT);
+        progressPercentTextView.setText(progressPercent + "%");
+
+    }
 
     public void getExData(String url) {
         class GetDataJSON extends AsyncTask<String, Void, String> {
