@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="5dp"
+    android:background="#ffffff"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/burkcal_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/a1009_1"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="홍길동"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressView1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="280dp"
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:progressView_animation="normal"
+        app:progressView_autoAnimate="true"
+        app:progressView_colorBackground="@color/white"
+        app:progressView_colorProgress="#C8E6C9"
+        app:progressView_labelSize="10sp"
+        app:progressView_labelSpace="10dp"
+        app:progressView_labelTypeface="bold"
+        app:progressView_max="100"
+        app:progressView_min="0"
+        app:progressView_padding="1dp"
+        app:progressView_radius="10dp"
+        tools:ignore="MissingConstraints"
+        android:progressDrawable="@drawable/progressbar_progressbar1" />
+
+
+</LinearLayout>
