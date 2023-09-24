@@ -3,6 +3,7 @@ package com.example.djsu;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,7 +29,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +55,24 @@ public class ExerciseRecordActivity extends AppCompatActivity {
     TextView mTimeTextView;
     private Boolean isRunning = true;
     String number, unitnum,Date,ExCode,RoutineNameText;
-    int count = 1, RoutineCount = 0,num,setcount=1,index = 0,Exnum = 0;
+    int count = 1, RoutineCount = 0,num,setcount=1,index = 0,Exnum = 0 , excount = 0, setNum = 0;
+
+    private static final String TAG_RESULTS = "result";
+    private static final String TAG_Date = "Date";
+    private static final String TAG_UserId  = "UserId";
+    private static final String TAG_ExName = "ExerciseName";
+    private static final String TAG_ExerciseSetNumber = "ExerciseSetNumber";
+    private static final String TAG_ExerciseNumber = "ExerciseNumber";
+    private static final String TAG_ExerciseUnit= "ExerciseUnit";
+    private static final String TAG_EcCode = "EcCode";
+    String myJSON;
+    JSONArray peoples = null;
+
+    User user = new User();
+
+    TextView NameText;
+
+    private ArrayList<User> userList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +82,10 @@ public class ExerciseRecordActivity extends AppCompatActivity {
         index = extras.getInt("index");
         Exnum = extras.getInt("num");
         RoutineCount = extras.getInt("RoutineCount");
-        System.out.println("gggg" + RoutineCount);
         RoutineNameText = extras.getString("RoutineNameText");
         RoutineList = (ArrayList <User>) getIntent(). getSerializableExtra("routineList");
 
-        TextView NameText = (TextView) findViewById(R.id.exname);
+        NameText = findViewById(R.id.exname);
         TextView PartText = (TextView) findViewById(R.id.expart);
         TextView monthText = (TextView) findViewById(R.id.month);
         int dashIndex = Date.indexOf("-");
@@ -192,6 +217,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                                                 dialog1.dismiss();
                                                 dialog.dismiss();
                                                 setcount++;
+                                                setNum = setcount;
                                                 num = Integer.parseInt(unitnum);
 
                                             }
@@ -270,6 +296,20 @@ public class ExerciseRecordActivity extends AppCompatActivity {
             }
         });
 
+        Button LoadBtn = (Button)findViewById(R.id.Load);
+
+        LoadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(excount == 0) {
+                    getData("http://enejd0613.dothome.co.kr/excalendarlist.php");
+                }else{
+                    Toast.makeText(ExerciseRecordActivity.this, "이미 불러왔습니다!", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -308,6 +348,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                 return false;
             }
         });
+
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -368,5 +409,90 @@ public class ExerciseRecordActivity extends AppCompatActivity {
 
     private void updateAdapterTimerValue(String value) {
         exAdapter.setTimerValue(value);
+    }
+
+    protected void showList() {
+        String SubDate= "";
+        try {
+            if (myJSON != null && !myJSON.isEmpty()) {
+                JSONObject jsonObj = new JSONObject(myJSON);
+                peoples = jsonObj.getJSONArray(TAG_RESULTS);
+
+                for(int i = 0;i < peoples.length(); i++) {
+                    JSONObject c = peoples.getJSONObject(i);
+                    String UserId = c.getString(TAG_UserId);
+                    String ExerciseName = c.getString(TAG_ExName);
+                    if(UserId.equals(user.getId()) && ExerciseName.equals(NameText.getText().toString())) {
+                        String Date = c.getString(TAG_Date);
+                        if(excount == 0) {
+                            String EcCode = c.getString(TAG_EcCode);
+                            SubDate = Date;
+                            excount++;
+                        }
+                        if(SubDate.equals(Date)) {
+                            String ExerciseSetNumber = c.getString(TAG_ExerciseSetNumber);
+                            String ExerciseNumber = c.getString(TAG_ExerciseNumber);
+                            String ExerciseUnit = c.getString(TAG_ExerciseUnit);
+                            String result = ExerciseUnit.substring(0, ExerciseUnit.length() - 2);
+                            setcount = Integer.parseInt(ExerciseSetNumber);
+                            setcount += setNum;
+                            count = Integer.parseInt(ExerciseSetNumber);
+                            count += setNum;
+                            num = Integer.parseInt(result);
+                            number = ExerciseNumber;
+                            exrecode dict = new exrecode(ExerciseSetNumber, result,ExerciseNumber);
+                            exrecodeList.add(dict); //첫번째 줄에 삽입됨
+                        }
+                    }
+                }
+                exAdapter.notifyDataSetChanged();
+                setcount++;
+                count++;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getData(String url) {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while ((json = bufferedReader.readLine()) != null) {
+                        sb.append(json + "\n");
+                    }
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                myJSON = result;
+                showList();
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+
     }
 }
