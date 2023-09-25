@@ -70,6 +70,7 @@ public class community extends AppCompatActivity {
     private static final String TAG_ID = "id";
     private static final String TAG_IMAGE = "image";
     private static final String TAG_DATE = "date";
+    private static final String TAG_rutineName = "rutineName";
     private static final String TAG_FriendCode = "FriendCode";
     private static final String TAG_postId = "postId";
     private static final String TAG_USER_ID = "user_id";
@@ -101,6 +102,7 @@ public class community extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), community_post.class);
+                intent.putExtra("RoutineNameText", "");
                 startActivity(intent);
             }
         });
@@ -249,12 +251,12 @@ public class community extends AppCompatActivity {
                             String content = c.getString(TAG_CONTENT);
                             String postId = c.getString(TAG_postId);
                             String userProfile = c.getString(TAG_UserProfile);
-                            User user = new User(Integer.parseInt(postId),id,content,image,date,userProfile);
+                            String rutineName = c.getString(TAG_rutineName);
+                            User user = new User(Integer.parseInt(postId),id,content,image,date,userProfile,rutineName);
                             Communitylist.add(user);
                         }
                     }
                 }
-
                 for (int i = 0; i < peoples.length(); i++) {
                     JSONObject c = peoples.getJSONObject(i);
                     String id = c.getString(TAG_ID);
@@ -264,7 +266,8 @@ public class community extends AppCompatActivity {
                         String content = c.getString(TAG_CONTENT);
                         String postId = c.getString(TAG_postId);
                         String userProfile = c.getString(TAG_UserProfile); // 추가된 부분
-                        User user = new User(Integer.parseInt(postId),id,content,image,date,userProfile);
+                        String rutineName = c.getString(TAG_rutineName);
+                        User user = new User(Integer.parseInt(postId),id,content,image,date,userProfile,rutineName);
                         Communitylist.add(user);
                     }
                 }
@@ -333,7 +336,7 @@ public class community extends AppCompatActivity {
     private String getTime() {
         long now = System.currentTimeMillis();
         Date date = new Date(now);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d");
         String getTime = dateFormat.format(date);
 
         return getTime;

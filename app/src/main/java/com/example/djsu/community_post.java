@@ -1,6 +1,7 @@
 package com.example.djsu;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,8 +10,11 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -34,19 +38,23 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class community_post extends AppCompatActivity {
-
+    Bundle extras;
+    int num;
     EditText content; // 내용
-    Button submit; // 게시
+
+    TextView routine_text;
+    Button submit, ex_btn; // 게시
     ImageView img; // 업로드한 이미지 view
-    String encodeImage; // 뭘까
+    String encodeImage,rutineName; // 뭘까
     Bitmap bitmap; // 비트맵
     String encodeImageString; // 진짜 뭘까
-
+    DatePickerDialog datePickerDialog;
     private static final String url="http://enejd0613.dothome.co.kr/fileupload.php";
 
     @Override
@@ -57,6 +65,19 @@ public class community_post extends AppCompatActivity {
         // 선언
         img=(ImageView)findViewById(R.id.image_view);
         submit=(Button)findViewById(R.id.upload_btn);
+        ex_btn = findViewById(R.id.ex_btn);
+        routine_text = findViewById(R.id.routine_text);
+
+        extras = getIntent().getExtras();
+
+        rutineName = extras.getString("RoutineNameText");
+
+        if(rutineName.equals("")){
+
+        }else if(rutineName.equals("") == false){
+            routine_text.setText(rutineName);
+        }
+
 
         // 이미지 누르면 갤러리 열리게
         img.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +113,15 @@ public class community_post extends AppCompatActivity {
             public void onClick(View view) {
                 uploaddatatodb();
                 finish();
+            }
+        });
+
+        ex_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), routine.class);
+                intent.putExtra("num",1);
+                startActivity(intent);
             }
         });
     }
@@ -156,6 +186,7 @@ public class community_post extends AppCompatActivity {
                 map.put("content_t",dsg);
                 map.put("image_t",encodeImageString);
                 map.put("date", getTime());
+                map.put("rutineName",routine_text.getText().toString());
                 return map;
             }
         };

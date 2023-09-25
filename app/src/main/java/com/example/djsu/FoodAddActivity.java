@@ -104,31 +104,28 @@ public class FoodAddActivity extends AppCompatActivity {
                 int pDay = calendar.get(Calendar.DAY_OF_MONTH);//일
 
                 datePickerDialog = new DatePickerDialog(FoodAddActivity.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        (datePicker, year, month, day) -> {
 
-                                //1월은 0부터 시작하기 때문에 +1을 해준다.
-                                month = month + 1;
-                                Date = year + "-" + month + "-" + day;
-                                Datestr = Date;
-                                Intent intent = new Intent(FoodAddActivity.this, FoodAddActivity.class);
-                                intent.putExtra("FoodName", String.valueOf(NameText.getText()));
-                                intent.putExtra("FoodKcal", KcalText.getText().toString());
-                                intent.putExtra("FoodCarbohydrate", CarbohydratText.getText().toString());
-                                intent.putExtra("FoodProtein", ProteinText.getText().toString());
-                                intent.putExtra("FoodFat", FatText.getText().toString());
-                                intent.putExtra("FoodSodium", SodiumText.getText().toString());
-                                intent.putExtra("FoodSugar", SugarText.getText().toString());
-                                intent.putExtra("FoodKg", KgText.getText().toString());
-                                intent.putExtra("FoodCood", Cood);
-                                intent.putExtra("FcCode", FcCode);
-                                intent.putExtra("Time", Time);
-                                intent.putExtra("Date", Datestr);
-                                intent.putExtra("set", Integer.parseInt(setText.getText().toString()));
-                                startActivity(intent);
-                                finish();
-                            }
+                            //1월은 0부터 시작하기 때문에 +1을 해준다.
+                            month = month + 1;
+                            Date = year + "-" + month + "-" + day;
+                            Datestr = Date;
+                            Intent intent = new Intent(FoodAddActivity.this, FoodAddActivity.class);
+                            intent.putExtra("FoodName", String.valueOf(NameText.getText()));
+                            intent.putExtra("FoodKcal", KcalText.getText().toString());
+                            intent.putExtra("FoodCarbohydrate", CarbohydratText.getText().toString());
+                            intent.putExtra("FoodProtein", ProteinText.getText().toString());
+                            intent.putExtra("FoodFat", FatText.getText().toString());
+                            intent.putExtra("FoodSodium", SodiumText.getText().toString());
+                            intent.putExtra("FoodSugar", SugarText.getText().toString());
+                            intent.putExtra("FoodKg", KgText.getText().toString());
+                            intent.putExtra("FoodCood", Cood);
+                            intent.putExtra("FcCode", FcCode);
+                            intent.putExtra("Time", Time);
+                            intent.putExtra("Date", Datestr);
+                            intent.putExtra("set", Integer.parseInt(setText.getText().toString()));
+                            startActivity(intent);
+                            finish();
                         }, pYear, pMonth, pDay);
                 datePickerDialog.show();
             } //onClick

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="400dp"
+    android:layout_height="500dp"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="루틴"
+        android:textSize="23dp"
+        android:fontFamily="@font/a10092"/>
+
+    <ListView
+        android:id="@+id/ListView"
+        android:layout_width="match_parent"
+        android:layout_height="355dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        tools:listitem="@layout/item_communityrutine" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+            <android.widget.Button
+                android:id="@+id/backBtn"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginEnd="7dp"
+                android:layout_weight="1"
+                android:text="뒤로"
+                android:textSize="16dp"
+                android:textColor="#000000"
+                android:fontFamily="@font/a10092"
+                android:background="@drawable/shape_no_btn"
+                android:padding="2dp"/>
+
+            <android.widget.Button
+                android:id="@+id/conformBtn"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="추가"
+                android:textColor="#000000"
+                android:textSize="16dp"
+                android:fontFamily="@font/a10092"
+                android:background="@drawable/shape_yes_btn"
+                />
+            <android.widget.Button
+                android:id="@+id/okBtn"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="확인"
+                android:textColor="#000000"
+                android:textSize="16dp"
+                android:fontFamily="@font/a10092"
+                android:background="@drawable/shape_yes_btn"
+                android:visibility="gone"
+                />
+        </LinearLayout>
+
+</LinearLayout>
