@@ -370,34 +370,35 @@ public class main_user extends AppCompatActivity {
             }
         });
 
-        // 프로그래스바의 최대 값 설정
-        int burnT = Integer.parseInt(user.getBurnTarget());
-
-        // 프로그래스바 초기화
-        progressBar1 = findViewById(R.id.progressView1);
-
-        // 최대값을 KcalNum으로 설정
-        int ExKcalNum = burnTarget;
-        progressBar1.setMax(ExKcalNum);
-
-        // 어떤 활동을 수행할 때 진행률을 업데이트하려면 아래와 같이 호출
-        // 예를 들어, 진행률을 eatT로 업데이트하려면
-        // updateProgressBar(burnT);
-
         // 태운 칼로리
-        progressBar = findViewById(R.id.progressView2);
+        progressBar = findViewById(R.id.progressView1);
         progressBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
                 String UserID = user.getId();
-                String text = String.valueOf(eatTarget);
+                String text = String.valueOf(burnTarget);
 
                 dialog_burnkcal alert = new dialog_burnkcal(main_user.this, text);
                 alert.callFunction();
                 alert.setModifyReturnListener(new dialog_burnkcal.ModifyReturnListener() {
                     @Override
                     public void afterModify(String text) {
+
+                        int burnT = Integer.parseInt(text);
+                        progressBar.setMax(burnT);
+
+                        // 다이얼로그로부터 새로운 목표값을 받아와서 progressPercent를 다시 계산합니다.
+                        int currentProgress = (int) ExKcalNum;
+                        int progressPercent = (int) ((currentProgress * 100.0f) / burnT);
+
+
+                        TextView progressPercentTextView = findViewById(R.id.eat_per);
+
+                        // progressPercentTextView를 업데이트합니다.
+                        progressPercentTextView.setText(progressPercent + "%");
+
+
                         Response.Listener<String> responseListener = new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -427,20 +428,33 @@ public class main_user extends AppCompatActivity {
         });
 
         // 섭취 칼로리
-        progressBar1 = findViewById(R.id.progressView1);
+        progressBar1 = findViewById(R.id.progressView2);
       
         progressBar1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
                 String UserID = user.getId();
-                String text = String.valueOf(burnTarget);
+                String text = String.valueOf(eatTarget);
 
                 dialog_eatkcal alert = new dialog_eatkcal(main_user.this, text);
                 alert.callFunction();
                 alert.setModifyReturnListener(new dialog_eatkcal.ModifyReturnListener() {
                     @Override
                     public void afterModify(String text) {
+                        int eatT = Integer.parseInt(text);
+                        progressBar.setMax(eatT);
+
+                        // 다이얼로그로부터 새로운 목표값을 받아와서 progressPercent를 다시 계산합니다.
+                        int currentProgress = (int) KcalNum;
+                        int progressPercent = (int) ((currentProgress * 100.0f) / eatT);
+
+
+                        TextView progressPercentTextView = findViewById(R.id.eat_per);
+
+                        // progressPercentTextView를 업데이트합니다.
+                        progressPercentTextView.setText(progressPercent + "%");
+
                         Response.Listener<String> responseListener = new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
