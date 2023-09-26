@@ -313,17 +313,17 @@
             app:layout_constraintTop_toTopOf="@+id/water_tv" />
 
         <!--        <TextView-->
-<!--            android:id="@+id/ann_txt"-->
-<!--            android:layout_width="350dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:fontFamily="@font/a10092"-->
-<!--            android:gravity="center_horizontal"-->
-<!--            android:text="ver 1 UI 업데이트"-->
-<!--            android:textSize="18dp"-->
-<!--            app:layout_constraintEnd_toEndOf="@+id/view2"-->
-<!--            app:layout_constraintHorizontal_bias="0.411"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/view2"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/announcement_btn" />-->
+        <!--            android:id="@+id/ann_txt"-->
+        <!--            android:layout_width="350dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:fontFamily="@font/a10092"-->
+        <!--            android:gravity="center_horizontal"-->
+        <!--            android:text="ver 1 UI 업데이트"-->
+        <!--            android:textSize="18dp"-->
+        <!--            app:layout_constraintEnd_toEndOf="@+id/view2"-->
+        <!--            app:layout_constraintHorizontal_bias="0.411"-->
+        <!--            app:layout_constraintStart_toStartOf="@+id/view2"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/announcement_btn" />-->
 
 
         <ProgressBar

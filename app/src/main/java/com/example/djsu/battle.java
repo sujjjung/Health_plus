@@ -20,13 +20,6 @@ public class battle extends AppCompatActivity {
         customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
         customDialog.setContentView(R.layout.dialog_vs_goal_kg);             // xml 레이아웃 파일과 연결
 
-        // 버튼: 커스텀 다이얼로그 띄우기
-        findViewById(R.id.goals_setting_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog01(); // 아래 showDialog01() 함수 호출
-            }
-        });
     }
 
     // dialog01을 디자인하는 함수

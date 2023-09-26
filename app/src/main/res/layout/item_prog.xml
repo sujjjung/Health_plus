@@ -52,7 +52,6 @@
         app:progressView_min="0"
         app:progressView_padding="1dp"
         app:progressView_radius="10dp"
-        tools:ignore="MissingConstraints"
         android:progressDrawable="@drawable/progressbar_progressbar1" />
 
 
