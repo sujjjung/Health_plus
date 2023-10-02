@@ -20,6 +20,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +34,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class friend_invite extends AppCompatActivity {
     private Toolbar toolbar;
@@ -200,7 +206,11 @@ public class friend_invite extends AppCompatActivity {
                 for (String member : selectedMembers) {
                     membersRef.push().child("name").setValue(member);
                 }
-
+                for (int i = 0; i < selectedMembers.size(); i++) {
+                chttingRequest chttingRequest = new chttingRequest(selectedMembers.get(i),chatRoomId,0);
+                RequestQueue queue = Volley.newRequestQueue(friend_invite.this);
+                queue.add(chttingRequest);
+                }
                 // 채팅방 화면으로 이동
                 Intent intent = new Intent(friend_invite.this, chatList.class);
                 intent.putExtra("chatRooms", chatRoomId);
@@ -250,5 +260,21 @@ public class friend_invite extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public class chttingRequest  extends StringRequest {
+        final static private String URL = "http://enejd0613.dothome.co.kr/chtting.php";
+        private Map<String, String> map;
+
+        public chttingRequest(String userId ,String chttingName,int weight) {
+            super(Method.POST, URL, null, null);
+            map = new HashMap<>();
+            map.put("chttingName",chttingName);
+            map.put("userId",userId);
+            map.put("weight",weight + "");
+        }
+        @Override
+        protected Map<String, String> getParams() throws AuthFailureError {
+            return map;
+        }
     }
 }

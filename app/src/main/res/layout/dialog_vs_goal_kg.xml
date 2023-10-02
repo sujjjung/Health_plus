@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="160dp"
-            android:text="목표 설정"
+            android:text="몸무게 목표 설정"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="25sp"
