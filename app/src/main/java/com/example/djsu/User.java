@@ -21,11 +21,17 @@ import java.io.Serializable;
         private String postid,content,image , postdate,friend;
         private String profileImageUrl;
         private int postKey;
+
         // 댓글관련 변수
         private String commentContent,createdTime, commentUser;
         private int commentKey;
         static private String Nondisclosure;
-        private String userProfile;
+        private String userProfile, BattleUserName, SettingWeight;
+
+        public User(String BattleUserName,String SettingWeight){
+            this.BattleUserName = BattleUserName;
+            this.SettingWeight = SettingWeight;
+        }
 
         public User(int commentKey, int postKey, String commentContent, String createdTime,String commentUser) {
             this.commentKey = commentKey;
@@ -447,6 +453,22 @@ import java.io.Serializable;
 
         public void setCommentUser(String commentUser) {
             this.commentUser = commentUser;
+        }
+
+        public String getBattleUserName() {
+            return BattleUserName;
+        }
+
+        public void setBattleUserName(String battleUserName) {
+            BattleUserName = battleUserName;
+        }
+
+        public String getSettingWeight() {
+            return SettingWeight;
+        }
+
+        public void setSettingWeight(String settingWeight) {
+            SettingWeight = settingWeight;
         }
 
     }

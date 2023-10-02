@@ -440,7 +440,6 @@ public class CalendarActivity extends AppCompatActivity {
         }
     }
 
-
     public void getData(String url) {
         class GetDataJSON extends AsyncTask<String, Void, String> {
 

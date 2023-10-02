@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ public class chat_room extends AppCompatActivity {
     private List<ChatRoom> chatList;
     private EditText EditText_chat;
     private Button Button_send, Button_out, Button_back;
+    private ImageButton btn_Battle;
     private DatabaseReference myRef, backRoom;
     private TextView roomName;
 
@@ -59,6 +61,7 @@ public class chat_room extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
 
+        btn_Battle = findViewById(R.id.btn_plus);
         Button_out = findViewById(R.id.backBtn);
         Button_send = findViewById(R.id.btn_submit);
         EditText_chat = findViewById(R.id.edt_message);
@@ -169,6 +172,15 @@ public class chat_room extends AppCompatActivity {
                 });
 
                 Intent intent1 = new Intent(chat_room.this, chatList.class);
+                startActivity(intent1);
+            }
+        });
+
+        btn_Battle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(chat_room.this, battle.class);
+                intent1.putExtra("chatRoomId", roomId);
                 startActivity(intent1);
             }
         });
