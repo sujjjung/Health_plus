@@ -59,6 +59,7 @@ public class battle extends AppCompatActivity {
         customDialog = new Dialog(battle.this);       // Dialog 초기화
         customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
         customDialog.setContentView(R.layout.dialog_vs_goal_kg);             // xml 레이아웃 파일과 연결
+
         roomId = getIntent().getStringExtra("chatRoomId");
         // 버튼: 커스텀 다이얼로그 띄우기
         getData("http://enejd0613.dothome.co.kr/chttingList.php");
@@ -73,6 +74,7 @@ public class battle extends AppCompatActivity {
         weight_chart.setAdapter(battleAdapter);
 
         battleAdapter.notifyDataSetChanged();
+
     }
 
     // dialog01을 디자인하는 함수

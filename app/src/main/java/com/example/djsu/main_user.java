@@ -370,33 +370,35 @@ public class main_user extends AppCompatActivity {
             }
         });
 
-        // 프로그래스바의 최대 값 설정
-        int burnT = Integer.parseInt(user.getBurnTarget());
-
-        // 프로그래스바 초기화
-        progressBar1 = findViewById(R.id.progressView1);
-
-        // 최대값을 KcalNum으로 설정
-        int ExKcalNum = burnTarget;
-        progressBar1.setMax(ExKcalNum);
-
-        // 어떤 활동을 수행할 때 진행률을 업데이트하려면 아래와 같이 호출
-        // 예를 들어, 진행률을 eatT로 업데이트하려면
-        // updateProgressBar(burnT);
-
-        // 칼로리 목표 변경
-        progressBar1.setOnClickListener(new View.OnClickListener() {
+        // 태운 칼로리
+        progressBar = findViewById(R.id.progressView1);
+        progressBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
                 String UserID = user.getId();
-                String text = text1.getText().toString();
+                String text = String.valueOf(burnTarget);
 
-                dialog_status alert = new dialog_status(main_user.this,text);
+                dialog_burnkcal alert = new dialog_burnkcal(main_user.this, text);
                 alert.callFunction();
-                alert.setModifyReturnListener(new dialog_status.ModifyReturnListener() {
+                alert.setModifyReturnListener(new dialog_burnkcal.ModifyReturnListener() {
                     @Override
                     public void afterModify(String text) {
+
+                        int burnT = Integer.parseInt(text);
+                        progressBar.setMax(burnT);
+
+                        // 다이얼로그로부터 새로운 목표값을 받아와서 progressPercent를 다시 계산합니다.
+                        int currentProgress = (int) ExKcalNum;
+                        int progressPercent = (int) ((currentProgress * 100.0f) / burnT);
+
+
+                        TextView progressPercentTextView = findViewById(R.id.eat_per);
+
+                        // progressPercentTextView를 업데이트합니다.
+                        progressPercentTextView.setText(progressPercent + "%");
+
+
                         Response.Listener<String> responseListener = new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -405,12 +407,10 @@ public class main_user extends AppCompatActivity {
                                     String success = jsonObject.getString("success");
 
                                     if (success.equals("1")) { // 회원등록에 성공한 경우
-                                        text1.setText(text);
-                                        System.out.println("!!!!!!!!!!!!!: " +text);
-                                        user.setState(text);
-                                        Toast.makeText(getApplicationContext(), "한줄소개가 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                                        progressBar.setMax(Integer.parseInt(text));
+                                        Toast.makeText(getApplicationContext(), "목표값이 변경되었습니다", Toast.LENGTH_SHORT).show();
                                     } else { // 회원등록에 실패한 경우
-                                        Toast.makeText(getApplicationContext(), "회원 정보 변경에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "목표값 변경에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                 } catch (JSONException e) {
@@ -419,7 +419,7 @@ public class main_user extends AppCompatActivity {
                             }
                         };
                         // 서버로 Volley를 이용해서 요청을 함.
-                        StatusRequest stateRequest1 = new StatusRequest(UserID, text, responseListener);
+                        BurnTargetRequest stateRequest1 = new BurnTargetRequest(UserID, text, responseListener);
                         RequestQueue queue = Volley.newRequestQueue(main_user.this);
                         queue.add(stateRequest1);
                     }
@@ -427,20 +427,34 @@ public class main_user extends AppCompatActivity {
             }
         });
 
-
-        // 칼로리 목표 변경
+        // 섭취 칼로리
+        progressBar1 = findViewById(R.id.progressView2);
+      
         progressBar1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
                 String UserID = user.getId();
-                String text = text1.getText().toString();
+                String text = String.valueOf(eatTarget);
 
-                dialog_status alert = new dialog_status(main_user.this,text);
+                dialog_eatkcal alert = new dialog_eatkcal(main_user.this, text);
                 alert.callFunction();
-                alert.setModifyReturnListener(new dialog_status.ModifyReturnListener() {
+                alert.setModifyReturnListener(new dialog_eatkcal.ModifyReturnListener() {
                     @Override
                     public void afterModify(String text) {
+                        int eatT = Integer.parseInt(text);
+                        progressBar.setMax(eatT);
+
+                        // 다이얼로그로부터 새로운 목표값을 받아와서 progressPercent를 다시 계산합니다.
+                        int currentProgress = (int) KcalNum;
+                        int progressPercent = (int) ((currentProgress * 100.0f) / eatT);
+
+
+                        TextView progressPercentTextView = findViewById(R.id.eat_per);
+
+                        // progressPercentTextView를 업데이트합니다.
+                        progressPercentTextView.setText(progressPercent + "%");
+
                         Response.Listener<String> responseListener = new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -449,29 +463,27 @@ public class main_user extends AppCompatActivity {
                                     String success = jsonObject.getString("success");
 
                                     if (success.equals("1")) { // 회원등록에 성공한 경우
-                                        text1.setText(text);
-                                        System.out.println("!!!!!!!!!!!!!: " +text);
-                                        user.setState(text);
-                                        Toast.makeText(getApplicationContext(), "한줄소개가 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                                        progressBar1.setMax(Integer.parseInt(text));
+                                        Toast.makeText(getApplicationContext(), "목표값이 변경되었습니다", Toast.LENGTH_SHORT).show();
                                     } else { // 회원등록에 실패한 경우
-                                        Toast.makeText(getApplicationContext(), "회원 정보 변경에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "목표값 변경에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
+                                    // 에러 처리 추가: 서버 응답을 파싱하는 동안 오류 발생
+                                    Toast.makeText(getApplicationContext(), "서버 응답 파싱 오류", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         };
                         // 서버로 Volley를 이용해서 요청을 함.
-                        StatusRequest stateRequest1 = new StatusRequest(UserID, text, responseListener);
+                        EatTargetRequest stateRequest1 = new EatTargetRequest(UserID, text, responseListener);
                         RequestQueue queue = Volley.newRequestQueue(main_user.this);
                         queue.add(stateRequest1);
                     }
                 });
             }
         });
-
-
     }
 
     private ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
