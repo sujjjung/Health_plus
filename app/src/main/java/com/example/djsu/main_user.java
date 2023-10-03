@@ -89,7 +89,6 @@ public class main_user extends AppCompatActivity {
     private static final String TAG_water = "water";
     // 운동
     // 운동시간(분) * (6 X 0.0175 X 몸무게)
-    private static final String TAG_ExerciseUnit = "ExerciseUnit";
     private static final String TAG_weight = "weight";
     private static final String TAG_FatId  = "userId";
     private static final String TAG_Time  = "Time";
@@ -860,19 +859,6 @@ public class main_user extends AppCompatActivity {
             if (myJSON != null && !myJSON.isEmpty()) {
                 JSONObject jsonObj = new JSONObject(myJSON);
                 peoples = jsonObj.getJSONArray(TAG_RESULTS);
-                for(int i = 0;i < peoples.length(); i++) {
-                    JSONObject c = peoples.getJSONObject(i);
-                    String UserId = c.getString(TAG_FoodUserId);
-                    String Date1 = c.getString(TAG_FoodDate);
-                    if(UserId.equals(user.getId())) {
-                        if(date.equals(Date1)) {
-                            String ExerciseUnit = c.getString(TAG_ExerciseUnit);
-                            String numberString = ExerciseUnit.replace("kg", "");
-                            int number = Integer.parseInt(numberString);
-                        }
-                    }
-                }
-
                 for(int i = 0;i < peoples.length(); i++) {
                     JSONObject c = peoples.getJSONObject(i);
                     String UserId = c.getString(TAG_FoodUserId);

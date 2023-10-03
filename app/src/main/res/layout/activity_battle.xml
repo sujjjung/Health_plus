@@ -216,7 +216,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/a10092"
-        android:text="운동 시간"
+        android:text="섭취 칼로리"
         android:textColor="#000000"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
