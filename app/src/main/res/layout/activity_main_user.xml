@@ -402,18 +402,92 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
+
         <TextView
             android:id="@+id/textView37"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/a10094"
             android:text="추천 더하기"
             android:textColor="#FF3B3B3B"
             android:textSize="22dp"
             app:layout_constraintStart_toStartOf="@+id/view2"
             app:layout_constraintTop_toTopOf="@+id/view2" />
+
+        <TextView
+            android:id="@+id/randomEx_txt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/a10092"
+            android:text="오늘의 운동은"
+            android:textColor="#FF3B3B3B"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="@+id/textView37"
+            app:layout_constraintTop_toBottomOf="@+id/textView37" />
+
+        <TextView
+            android:id="@+id/randomEx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/a10093"
+            android:text="싯업"
+            android:textColor="#FF3B3B3B"
+            android:textSize="20dp"
+            app:layout_constraintStart_toEndOf="@+id/randomEx_txt1"
+            app:layout_constraintTop_toTopOf="@+id/randomEx_txt1" />
+
+        <TextView
+            android:id="@+id/randomEx_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:fontFamily="@font/a10092"
+            android:text="을 추천드려요 !"
+            android:textColor="#FF3B3B3B"
+            android:textSize="20dp"
+            app:layout_constraintStart_toEndOf="@+id/randomEx"
+            app:layout_constraintTop_toTopOf="@+id/randomEx" />
+
+        <TextView
+            android:id="@+id/randomF_txt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/a10092"
+            android:text="오늘의 음식은"
+            android:textColor="#FF3B3B3B"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="@+id/randomEx_txt1"
+            app:layout_constraintTop_toBottomOf="@+id/randomEx_txt1" />
+
+        <TextView
+            android:id="@+id/randomF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/a10093"
+            android:text="싯업"
+            android:textColor="#FF3B3B3B"
+            android:textSize="20dp"
+            app:layout_constraintStart_toEndOf="@+id/randomF_txt1"
+            app:layout_constraintTop_toTopOf="@+id/randomF_txt1" />
+
+        <TextView
+            android:id="@+id/randomF_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:fontFamily="@font/a10092"
+            android:text="을 추천드려요 !"
+            android:textColor="#FF3B3B3B"
+            android:textSize="20dp"
+            app:layout_constraintStart_toEndOf="@+id/randomF"
+            app:layout_constraintTop_toTopOf="@+id/randomF"
+            tools:ignore="DuplicateIds" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

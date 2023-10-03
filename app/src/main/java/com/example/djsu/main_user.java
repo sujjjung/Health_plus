@@ -483,6 +483,65 @@ public class main_user extends AppCompatActivity {
                 });
             }
         });
+        // Volley 요청을 통해 PHP 스크립트 호출
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://enejd0613.dothome.co.kr/randomEx.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String exerciseCode = jsonObject.getString("exerciseCode");
+                            String exerciseName = jsonObject.getString("exerciseName");
+
+                            // ExerciseName을 TextView에 설정
+                            TextView textView = findViewById(R.id.randomEx);
+                            textView.setText(exerciseName);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // 오류 처리
+                        Toast.makeText(getApplicationContext(), "네트워크 오류", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+        // Volley 요청을 통해 PHP 스크립트 호출
+        StringRequest stringRequest1 = new StringRequest(Request.Method.GET, "http://enejd0613.dothome.co.kr/randomF.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String foodCode = jsonObject.getString("foodCode");
+                            String foodName = jsonObject.getString("foodName");
+
+                            // FoodName을 TextView2에 설정
+                            TextView textView2 = findViewById(R.id.randomF);
+                            textView2.setText(foodName);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // 오류 처리
+                        Toast.makeText(getApplicationContext(), "네트워크 오류", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        RequestQueue requestQueue1 = Volley.newRequestQueue(this);
+        requestQueue1.add(stringRequest1);
+
+
     }
 
     private ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
