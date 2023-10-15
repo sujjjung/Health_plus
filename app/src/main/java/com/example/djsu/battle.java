@@ -64,7 +64,7 @@ public class battle extends AppCompatActivity {
     private float Exweight, minute,second,secondSum,ExKcalNum;
     JSONArray peoples = null;
     String roomId, date;
-    int ExTime,weight,KcalNum = 0,max = 0;
+    int ExTime,weight,KcalNum = 0,max = 0,foodMax = 0,exMax = 0 , foodNum = 0, num = 0,ExNum = 0;
     User user = new User(), user1;
     private ProgressBar progressBar;
     private ArrayList<String> UserNameList = new ArrayList<>(),UserIdList = new ArrayList<>(),UserProfileList = new ArrayList<>();
@@ -272,7 +272,6 @@ public class battle extends AppCompatActivity {
         @Override
         public View getView (final int position, View convertView, ViewGroup parent){
             View v = View.inflate(context, R.layout.item_prog, null);
-            System.out.println("dk;sfddspf");
             TextView burkcal_username = v.findViewById(R.id.burkcal_username);
             burkcal_username.setText(UserNameList.get(position));
 
@@ -284,6 +283,15 @@ public class battle extends AppCompatActivity {
 // 예를 들어, 진행률을 ExKcalNum로 업데이트하려면
             int currentProgress = (int)battleExList.get(position).getKcal();
             progressBar.setProgress(currentProgress);
+
+            if(exMax < currentProgress){
+                exMax = currentProgress;
+                ExNum = position;
+            }
+            burkcal_username.setText(UserNameList.get(ExNum));
+
+            String profileImageUrl = UserProfileList.get(ExNum);
+            Picasso.get().load(profileImageUrl).into(burnkcal);
             return v;
 
         }
@@ -317,19 +325,26 @@ public class battle extends AppCompatActivity {
         @Override
         public View getView (final int position, View convertView, ViewGroup parent){
             View v = View.inflate(context, R.layout.item_prog, null);
-            // final TextView noticeText = (TextView) v.findViewById(R.id.userContent);
-            System.out.println("dk;sfddspf");
             TextView burkcal_username = v.findViewById(R.id.burkcal_username);
             burkcal_username.setText(UserNameList.get(position));
 
 // 프로그래스바와 TextView 초기화
             progressBar = v.findViewById(R.id.progressView1);
-            progressBar.setMax(100);
+            progressBar.setMax(1500);
 
 // 어떤 활동을 수행할 때 진행률을 업데이트하려면 아래와 같이 호출
 // 예를 들어, 진행률을 ExKcalNum로 업데이트하려면
             int currentProgress = FoodKcalList.get(position).getFoodKcal();
             progressBar.setProgress(currentProgress);
+
+            if(foodMax < currentProgress){
+                foodMax = currentProgress;
+                foodNum = position;
+            }
+            eatkcal_username.setText(UserNameList.get(foodNum));
+
+            String profileImageUrl = UserProfileList.get(foodNum);
+            Picasso.get().load(profileImageUrl).into(eatKcal);
             return v;
 
         }
@@ -368,7 +383,6 @@ public class battle extends AppCompatActivity {
             burkcal_username.setText(UserNameList.get(position));
             int a;
             a = weight - Integer.parseInt(battleWeightList.get(position).getWeight());
-            int num = 0;
 
 
 // 프로그래스바와 TextView 초기화
