@@ -50,8 +50,7 @@ public class battle extends AppCompatActivity {
     private static final String TAG_chttingName = "chttingName";
     private static final String TAG_ID = "userId";
     private static final String TAG_weight = "weight";
-    private static final String TAG_UserId  = "UserID";
-    private static final String TAG_Date = "date";
+    private static final String TAG_UserId  = "UserId";
     private static final String TAG_Time  = "Time";
     private static final String TAG_FatId  = "userId";
     private static final String TAG_UserID  = "UserID";
@@ -67,14 +66,14 @@ public class battle extends AppCompatActivity {
     int ExTime,weight,KcalNum = 0,max = 0,foodMax = 0,exMax = 0 , foodNum = 0, num = 0,ExNum = 0;
     User user = new User(), user1;
     private ProgressBar progressBar;
-    private ArrayList<String> UserNameList = new ArrayList<>(),UserIdList = new ArrayList<>(),UserProfileList = new ArrayList<>();
+    private ArrayList<String> UserNameList = new ArrayList<>(),UserIdList = new ArrayList<>(),UserProfileList = new ArrayList<>(), ExList = new ArrayList<>();
     private ArrayList<User> battleList = new ArrayList<>();
     private ArrayList<Battle_Results> battleExList = new ArrayList<>(), battleWeightList = new ArrayList<>(),FoodKcalList = new ArrayList<>();
     battleAdapter battleAdapter;
     timeBattleAdapter timebattleAdapter;
     weightBattleAdapter weightbattleAdapter;
     Battle_Results battle_results = new Battle_Results();
-    TextView burkcal_username,eatkcal_username,kg_username;
+    TextView burkcal_username1,eatkcal_username,kg_username;
     ListView cal_chartlist,time_chart,weight_chart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +85,7 @@ public class battle extends AppCompatActivity {
         date = getTime();
         roomId = getIntent().getStringExtra("chatRoomId");
 
-        burkcal_username = findViewById(R.id.burkcal_username);
+        burkcal_username1 = findViewById(R.id.burkcal_username);
         eatkcal_username = findViewById(R.id.eatkcal_username);
         kg_username = findViewById(R.id.kg_username);
 
@@ -277,7 +276,7 @@ public class battle extends AppCompatActivity {
 
 // 프로그래스바와 TextView 초기화
             progressBar = v.findViewById(R.id.progressView1);
-            progressBar.setMax(100);
+            progressBar.setMax(exMax);
 
 // 어떤 활동을 수행할 때 진행률을 업데이트하려면 아래와 같이 호출
 // 예를 들어, 진행률을 ExKcalNum로 업데이트하려면
@@ -288,7 +287,7 @@ public class battle extends AppCompatActivity {
                 exMax = currentProgress;
                 ExNum = position;
             }
-            burkcal_username.setText(UserNameList.get(ExNum));
+            burkcal_username1.setText(UserNameList.get(ExNum));
 
             String profileImageUrl = UserProfileList.get(ExNum);
             Picasso.get().load(profileImageUrl).into(burnkcal);
@@ -408,16 +407,17 @@ public class battle extends AppCompatActivity {
 
     protected void showExList() {
         try {
+            String userid = "";
             if (myJSON != null && !myJSON.isEmpty()) {
                 JSONObject jsonObj = new JSONObject(myJSON);
                 peoples = jsonObj.getJSONArray(TAG_RESULTS);
-                for(int i = 0;i < peoples.length(); i++) {
-                    JSONObject c = peoples.getJSONObject(i);
-                    String UserId = c.getString(TAG_UserId);
-                    String Date1 = c.getString(TAG_Date);
-                    ExKcalNum = 0;
+                for(int j = 0;j < UserIdList.size(); j++) {
                     minute = 0;
-                    for(int j = 0;j < UserIdList.size(); j++) {
+                    ExKcalNum = 0 ;
+                    for(int i = 0;i < peoples.length(); i++) {
+                        JSONObject c = peoples.getJSONObject(i);
+                        String UserId = c.getString(TAG_UserId);
+                        String Date1 = c.getString(TAG_FoodDate);
                         if (UserId.equals(UserIdList.get(j))) {
                             if (date.equals(Date1)) {
                                 String Time = c.getString(TAG_Time);
@@ -425,13 +425,13 @@ public class battle extends AppCompatActivity {
                                 second += Float.parseFloat(Time.substring(3, 5));
                                 secondSum = second / 60;
                                 minute += secondSum;
-                                ExKcalNum = (float) (minute * (6 * 0.0175 * Exweight));
-                                ExTime = Math.round(minute);
-                                battle_results = new Battle_Results(UserIdList.get(j),ExKcalNum,ExTime);
-                                battleExList.add(battle_results);
+                                ExKcalNum += (float) (minute * (6 * 0.0175 * Exweight));
+                                ExTime += Math.round(minute);
                             }
                         }
                     }
+                    battle_results = new Battle_Results(UserIdList.get(j),ExKcalNum,ExTime);
+                    battleExList.add(battle_results);
                 }
             }
             battleAdapter.notifyDataSetChanged();
