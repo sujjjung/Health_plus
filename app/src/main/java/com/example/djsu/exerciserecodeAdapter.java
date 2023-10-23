@@ -18,7 +18,7 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
     // creating variables for our ArrayList and context
     private ArrayList<exrecode> exArrayList;
     private ArrayList<Set> setArrayList = new ArrayList<>();
-
+    private int positionnum = 0;
     private Context context;
        private String timerValue;
       // creating constructor for our adapter class
@@ -60,8 +60,9 @@ public class exerciserecodeAdapter extends RecyclerView.Adapter<exerciserecodeAd
                     String unit = holder.Unit.getText().toString();
                     String time = holder.timerValue;
                     holder.set = new Set(setNumber, number, unit,time);
-                    setArrayList.add(position,holder.set);
+                    setArrayList.add(positionnum,holder.set);
                     holder.set.setSetArrayList(setArrayList);
+                    positionnum++;
                 }
             }
         });

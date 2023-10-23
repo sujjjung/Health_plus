@@ -32,27 +32,43 @@
 
 
     </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_weight="1">
 
-    <ProgressBar
-        android:id="@+id/progressView1"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="280dp"
-        android:layout_height="30dp"
-        android:layout_centerInParent="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        app:progressView_animation="normal"
-        app:progressView_autoAnimate="true"
-        app:progressView_colorBackground="@color/white"
-        app:progressView_colorProgress="#C8E6C9"
-        app:progressView_labelSize="10sp"
-        app:progressView_labelSpace="10dp"
-        app:progressView_labelTypeface="bold"
-        app:progressView_max="100"
-        app:progressView_min="0"
-        app:progressView_padding="1dp"
-        app:progressView_radius="10dp"
-        android:progressDrawable="@drawable/progressbar_progressbar1" />
+        <ProgressBar
+            android:id="@+id/progressView1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="280dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:progressView_animation="normal"
+            app:progressView_autoAnimate="true"
+            app:progressView_colorBackground="@color/white"
+            app:progressView_colorProgress="#C8E6C9"
+            app:progressView_labelSize="10sp"
+            app:progressView_labelSpace="10dp"
+            app:progressView_labelTypeface="bold"
+            app:progressView_max="100"
+            app:progressView_min="0"
+            app:progressView_padding="1dp"
+            app:progressView_radius="10dp"
+            android:progressDrawable="@drawable/progressbar_progressbar1" />
 
+        <TextView
+            android:id="@+id/ex_per"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/a10092"
+            android:text="0"
+            android:textSize="18dp"
+            android:layout_gravity ="right"
+            android:gravity="center"
+            />
 
+    </FrameLayout>
 </LinearLayout>

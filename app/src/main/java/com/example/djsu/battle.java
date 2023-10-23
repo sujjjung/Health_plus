@@ -291,6 +291,10 @@ public class battle extends AppCompatActivity {
 
             String profileImageUrl = UserProfileList.get(ExNum);
             Picasso.get().load(profileImageUrl).into(burnkcal);
+            TextView progressPercentTextView = v.findViewById(R.id.ex_per);
+
+            // progressPercentTextView를 업데이트합니다.
+            progressPercentTextView.setText(String.valueOf(currentProgress));
             return v;
 
         }
@@ -344,6 +348,10 @@ public class battle extends AppCompatActivity {
 
             String profileImageUrl = UserProfileList.get(foodNum);
             Picasso.get().load(profileImageUrl).into(eatKcal);
+            TextView progressPercentTextView = v.findViewById(R.id.ex_per);
+
+            // progressPercentTextView를 업데이트합니다.
+            progressPercentTextView.setText(String.valueOf(currentProgress));
             return v;
 
         }
@@ -380,7 +388,7 @@ public class battle extends AppCompatActivity {
             View v = View.inflate(context, R.layout.item_prog, null);
             TextView burkcal_username = v.findViewById(R.id.burkcal_username);
             burkcal_username.setText(UserNameList.get(position));
-            int a;
+            int a = 0;
             a = weight - Integer.parseInt(battleWeightList.get(position).getWeight());
 
 
@@ -400,6 +408,10 @@ public class battle extends AppCompatActivity {
 
             String profileImageUrl = UserProfileList.get(num);
             Picasso.get().load(profileImageUrl).into(kg);
+            TextView progressPercentTextView = v.findViewById(R.id.ex_per);
+
+            // progressPercentTextView를 업데이트합니다.
+            progressPercentTextView.setText(String.valueOf(currentProgress));
             return v;
         }
 
