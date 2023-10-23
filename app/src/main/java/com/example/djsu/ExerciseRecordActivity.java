@@ -39,6 +39,7 @@ import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ExerciseRecordActivity extends AppCompatActivity {
@@ -247,7 +248,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                 }
                 else {
                     String unit = String.valueOf(num);
-                    String setnumber = String.valueOf(setcount);
+                    String setnumber = String.valueOf(setcount + 1);
 
                     // 5. ArrayList에 추가하고
                     exrecode dict = new exrecode(setnumber, unit,number);
@@ -425,7 +426,6 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                     if(UserId.equals(user.getId()) && ExerciseName.equals(NameText.getText().toString())) {
                         String Date = c.getString(TAG_Date);
                         if(excount == 0) {
-                            String EcCode = c.getString(TAG_EcCode);
                             SubDate = Date;
                             excount++;
                         }
@@ -445,6 +445,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                         }
                     }
                 }
+                Collections.reverse(exrecodeList);
                 exAdapter.notifyDataSetChanged();
                 setcount++;
                 count++;

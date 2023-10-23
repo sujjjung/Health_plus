@@ -30,7 +30,7 @@ public class AdminNoticeMain extends AppCompatActivity {
     private adminNoticeAdapter noticeAdapter;
     ImageButton noticeAddBtn;
     private static final String TAG_RESULTS = "result";
-    private static final String TAG_date = "date";
+    private static final String TAG_date = "anndate";
     private static final String TAG_title = "title";
     private static final String TAG_detail = "detail";
     private static final String TAG_emote = "emote";

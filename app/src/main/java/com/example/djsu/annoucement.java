@@ -53,11 +53,11 @@ public class annoucement extends AppCompatActivity {
     private NoticeAdapter noticeAdapter;
     private List<Notice> noticeList;
     // 게시글 출력
-    private static final String TAG_RESULTS = "result";
+    private static final String TAG_RESULTS = "response";
     private static final String TAG_emote = "emote";
     private static final String TAG_title = "title";
     private static final String TAG_detail = "detail";
-    private static final String TAG_DATE = "date";
+    private static final String TAG_DATE = "anndate";
     JSONArray peoples = null;
     String myJSON;
 
@@ -147,7 +147,7 @@ public class annoucement extends AppCompatActivity {
                 customDialog.show();
             }
         });
-        getData("http://enejd0613.dothome.co.kr/Announcementlist.php");
+        getData("http://enejd0613.dothome.co.kr/AnnouncementList.php");
     }
     protected void showList() {
 
