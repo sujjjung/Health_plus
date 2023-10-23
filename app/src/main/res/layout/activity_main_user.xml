@@ -6,6 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         tools:context=".main_user"
         android:layout_width="match_parent"
@@ -173,9 +177,9 @@
             android:layout_width="320dp"
             android:layout_height="30dp"
             android:layout_centerInParent="true"
-            android:layout_marginStart="36dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:progressDrawable="@drawable/progressbar_progressbar1"
+            app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
             app:progressView_animation="normal"
             app:progressView_autoAnimate="true"
@@ -188,8 +192,8 @@
             app:progressView_min="0"
             app:progressView_padding="1dp"
             app:progressView_radius="10dp"
-            tools:ignore="MissingConstraints"
-            android:progressDrawable="@drawable/progressbar_progressbar1" />
+            android:layout_marginStart="28dp"
+            tools:ignore="MissingConstraints" />
 
 
         <TextView
@@ -394,7 +398,7 @@
         <View
             android:id="@+id/view2"
             android:layout_width="375dp"
-            android:layout_height="130dp"
+            android:layout_height="230dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/roundsquare2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -420,11 +424,12 @@
             android:id="@+id/randomEx_txt1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="18dp"
             android:fontFamily="@font/a10092"
-            android:text="오늘의 운동은"
+            android:text="오늘의 추천 운동은?"
             android:textColor="#FF3B3B3B"
             android:textSize="20dp"
+            android:layout_marginStart="70dp"
             app:layout_constraintStart_toStartOf="@+id/textView37"
             app:layout_constraintTop_toBottomOf="@+id/textView37" />
 
@@ -432,64 +437,67 @@
             android:id="@+id/randomEx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:fontFamily="@font/a10093"
             android:text="싯업"
             android:textColor="#FF3B3B3B"
             android:textSize="20dp"
-            app:layout_constraintStart_toEndOf="@+id/randomEx_txt1"
-            app:layout_constraintTop_toTopOf="@+id/randomEx_txt1" />
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/randomEx_txt1"
+            app:layout_constraintStart_toStartOf="@+id/randomEx_txt1"
+            app:layout_constraintTop_toBottomOf="@+id/randomEx_txt1" />
 
-        <TextView
-            android:id="@+id/randomEx_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:fontFamily="@font/a10092"
-            android:text="을 추천드려요 !"
-            android:textColor="#FF3B3B3B"
-            android:textSize="20dp"
-            app:layout_constraintStart_toEndOf="@+id/randomEx"
-            app:layout_constraintTop_toTopOf="@+id/randomEx" />
+<!--        <TextView-->
+<!--            android:id="@+id/randomEx_txt"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="2dp"-->
+<!--            android:fontFamily="@font/a10092"-->
+<!--            android:text="을 추천드려요 !"-->
+<!--            android:textColor="#FF3B3B3B"-->
+<!--            android:textSize="20dp"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/randomEx"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/randomEx" />-->
 
         <TextView
             android:id="@+id/randomF_txt1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:fontFamily="@font/a10092"
-            android:text="오늘의 음식은"
+            android:text="오늘의 추천 음식은?"
             android:textColor="#FF3B3B3B"
             android:textSize="20dp"
+            android:layout_marginTop="26dp"
             app:layout_constraintStart_toStartOf="@+id/randomEx_txt1"
-            app:layout_constraintTop_toBottomOf="@+id/randomEx_txt1" />
+            app:layout_constraintTop_toBottomOf="@+id/randomEx" />
 
         <TextView
             android:id="@+id/randomF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:fontFamily="@font/a10093"
             android:text="싯업"
             android:textColor="#FF3B3B3B"
             android:textSize="20dp"
-            app:layout_constraintStart_toEndOf="@+id/randomF_txt1"
-            app:layout_constraintTop_toTopOf="@+id/randomF_txt1" />
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/randomF_txt1"
+            app:layout_constraintStart_toStartOf="@+id/randomF_txt1"
+            app:layout_constraintTop_toBottomOf="@+id/randomF_txt1" />
 
-        <TextView
-            android:id="@+id/randomF_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:fontFamily="@font/a10092"
-            android:text="을 추천드려요 !"
-            android:textColor="#FF3B3B3B"
-            android:textSize="20dp"
-            app:layout_constraintStart_toEndOf="@+id/randomF"
-            app:layout_constraintTop_toTopOf="@+id/randomF"
-            tools:ignore="DuplicateIds" />
+<!--        <TextView-->
+<!--            android:id="@+id/randomF_txt"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="2dp"-->
+<!--            android:fontFamily="@font/a10092"-->
+<!--            android:text="을 추천드려요 !"-->
+<!--            android:textColor="#FF3B3B3B"-->
+<!--            android:textSize="20dp"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/randomF"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/randomF"-->
+<!--            tools:ignore="DuplicateIds" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
