@@ -58,7 +58,7 @@ public class AdminNoticeMain extends AppCompatActivity {
         noticetView.setAdapter(noticeAdapter);
 
 
-        getData("http://enejd0613.dothome.co.kr/Announcementlist.php");
+        getData("http://enejd0613.dothome.co.kr/AnnouncementList.php");
     }
     protected void showList() {
         noticeAdapter.notifyDataSetChanged();
