@@ -1,7 +1,9 @@
 package com.example.djsu.admin;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -29,7 +31,6 @@ public class AdminFoodAdapter extends BaseAdapter {
     public AdminFoodAdapter(Context context, List<Food> foodList) {
         this.context = context;
         this.foodList = foodList;
-        this.parentActivity = parentActivity;
     }
     @Override
     public int getCount () {
@@ -57,6 +58,25 @@ public class AdminFoodAdapter extends BaseAdapter {
         TextView FoodName = (TextView) v.findViewById(R.id.FoodName);
         FoodName.setText(foodList.get(position).getFoodName());
         v.setTag(foodList.get(position).getFoodName());
+
+        Button detailBtn = (Button) v.findViewById(R.id.detail);
+        detailBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                AlertDialog.Builder dlg = new AlertDialog.Builder(context);
+                dlg.setTitle( foodList.get(position).getFoodName() + "상세성분"); //제목
+                dlg.setMessage("수량1 기준" + "\n칼로리:"+foodList.get(position).getFoodKcal()+"\n탄수화물:"+foodList.get(position).getFoodCarbohydrate()+"\n단백질:"+foodList.get(position).getFoodProtein()+"\n지방:"+foodList.get(position).getFoodFat()
+                        +"\n나트륨:"+foodList.get(position).getFoodSodium()+"\n당:"+foodList.get(position).getFoodSugar()+"\n무게:"+foodList.get(position).getFoodKg());
+                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int which) {
+                        //토스트 메시지
+                        Toast.makeText(context,"확인을 눌르셨습니다.",Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dlg.show();
+            }
+        });
+
         Button deleteBtn = (Button) v.findViewById(R.id.delete);
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override

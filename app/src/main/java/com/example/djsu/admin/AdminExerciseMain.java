@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -30,9 +33,10 @@ import java.util.List;
 
 public class AdminExerciseMain extends AppCompatActivity {
     private List<exerciseLsit> exerciselsit;
+    private ArrayList<exerciseLsit> search_list;
     private AdminExerciseAdapter exerciseAdapter;
     ImageButton ExerciseAddBtn;
-
+    private EditText editText;
     private static final String TAG_RESULTS = "result";
     private static final String TAG_ExName = "ExerciseName";
     String myJSON;
@@ -41,9 +45,39 @@ public class AdminExerciseMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_exercise_main);
-
+        search_list = new ArrayList<>();
+        editText = findViewById(R.id.searchtext);
         ExerciseAddBtn = (ImageButton)findViewById(R.id.exerciseaddBtn);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String searchText = editText.getText().toString();
+                search_list.clear();
+
+                if(searchText.equals("")){
+                    exerciseAdapter.setItems((ArrayList<exerciseLsit>) exerciselsit);
+                }
+                else {
+                    // 검색 단어를 포함하는지 확인
+                    for (int a = 0; a < exerciselsit.size(); a++) {
+                        if (exerciselsit.get(a).getExerciseName().toLowerCase().contains(searchText.toLowerCase())) {
+                            search_list.add(exerciselsit.get(a));
+                        }
+                        exerciseAdapter.setItems(search_list);
+                    }
+                }
+            }
+
+        });
         ExerciseAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

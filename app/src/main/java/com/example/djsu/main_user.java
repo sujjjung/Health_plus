@@ -208,7 +208,12 @@ public class main_user extends AppCompatActivity {
 
 //        String imageUrl = profile; // Glide로 이미지 표시하기
 //        Glide.with(this).load(imageUrl).into(ivImage);
-
+        ivImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseFile();
+            }
+        });
         String UserProfile = user.getUserProfile();
         String UserId = user.getId();
 
@@ -223,7 +228,6 @@ public class main_user extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String imageUrl = dataSnapshot.getValue(String.class);
-
                 // Glide로 이미지 표시하기
                 Glide.with(main_user.this).load(imageUrl).into(ivImage);
             }
@@ -483,6 +487,7 @@ public class main_user extends AppCompatActivity {
                 });
             }
         });
+
         // Volley 요청을 통해 PHP 스크립트 호출
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://enejd0613.dothome.co.kr/randomEx.php",
                 new Response.Listener<String>() {
@@ -541,8 +546,8 @@ public class main_user extends AppCompatActivity {
         RequestQueue requestQueue1 = Volley.newRequestQueue(this);
         requestQueue1.add(stringRequest1);
 
-
     }
+
 
     private ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
             new ActivityResultCallback<Uri>() {

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +18,7 @@ import com.example.djsu.Food;
 import com.example.djsu.FoodAdapter;
 import com.example.djsu.MainActivity;
 import com.example.djsu.R;
+import com.example.djsu.exerciseLsit;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,16 +33,58 @@ import java.util.List;
 
 public class AdminFoodMain extends AppCompatActivity {
     private List<Food>foodArrayList;
+    private ArrayList<Food> search_list;
     private AdminFoodAdapter foodAdapter;
     ImageButton foodAddBtn;
     private static final String TAG_RESULTS = "result";
+    private static final String TAG_FoodCode = "FoodCode";
     private static final String TAG_FoodName = "FoodName";
+    private static final String TAG_FoodKcal = "FoodKcal";
+    private static final String TAG_FoodCarbohydrate = "FoodCarbohydrate";
+    private static final String TAG_FoodProtein = "FoodProtein";
+    private static final String TAG_FoodFat = "FoodFat";
+    private static final String TAG_FoodSodium = "FoodSodium";
+    private static final String TAG_FoodSugar = "FoodSugar";
+    private static final String TAG_FoodKg = "FoodKg";
     String myJSON;
+    private EditText editText;
     JSONArray peoples = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_food_main);
+        search_list = new ArrayList<>();
+        editText = findViewById(R.id.searchtext);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String searchText = editText.getText().toString();
+                search_list.clear();
+
+                if (searchText.equals("")) {
+                    foodAdapter.setItems((ArrayList<Food>) foodArrayList);
+                } else {
+                    // 검색 단어를 포함하는지 확인
+                    for (int a = 0; a < foodArrayList.size(); a++) {
+                        if (foodArrayList.get(a).getFoodName().toLowerCase().contains(searchText.toLowerCase())) {
+                            search_list.add(foodArrayList.get(a));
+                        }
+                        foodAdapter.setItems(search_list);
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+        });
         foodAddBtn = (ImageButton)findViewById(R.id.foodaddBtn);
 
         foodAddBtn.setOnClickListener(new View.OnClickListener() {
@@ -67,8 +112,17 @@ public class AdminFoodMain extends AppCompatActivity {
 
                 for(int i = 0;i < peoples.length(); i++) {
                     JSONObject c = peoples.getJSONObject(i);
+                    String FoodCode = c.getString(TAG_FoodCode);
                     String FoodName = c.getString(TAG_FoodName);
-                    Food food = new Food(FoodName);
+                    String FoodKcal = c.getString(TAG_FoodKcal);
+                    String FoodCarbohydrate = c.getString(TAG_FoodCarbohydrate);
+                    String FoodProtein = c.getString(TAG_FoodProtein);
+                    String FoodFat = c.getString(TAG_FoodFat);
+                    String FoodSodium = c.getString(TAG_FoodSodium);
+                    String FoodSugar = c.getString(TAG_FoodSugar);
+                    String FoodKg = c.getString(TAG_FoodKg);
+                    Food food = new Food(Integer.parseInt(FoodCode),FoodName,Float.parseFloat(FoodKcal),Float.parseFloat(FoodCarbohydrate),Float.parseFloat(FoodProtein)
+                            ,Float.parseFloat(FoodFat),Float.parseFloat(FoodSodium),Float.parseFloat(FoodSugar),Float.parseFloat(FoodKg));
                     foodArrayList.add(food);
                 }
 

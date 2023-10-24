@@ -200,47 +200,31 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                                 final Button ButtonSubmit1 = (Button) viewCount.findViewById(R.id.button_dialog_submit);
                                 final EditText editTextID1 = (EditText) viewCount.findViewById(R.id.num);
                                 final AlertDialog dialog1 = countbuilder.create();
-                                if(Exnum == 0) {
-                                    ButtonSubmit1.setOnClickListener(new View.OnClickListener() {
-                                        public void onClick(View v) {
-                                            if (editTextID1.getText().toString().equals("")) {
-                                                Toast.makeText(ExerciseRecordActivity.this, "값을 입력해주세요", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                // 4. 사용자가 입력한 내용을 가져와서
-                                                String setnumber = String.valueOf(setcount);
-                                                number = editTextID1.getText().toString();
-                                                // 5. ArrayList에 추가하고
-                                                exrecode dict = new exrecode(setnumber, unitnum, number);
-                                                exrecodeList.add(dict); //첫번째 줄에 삽입됨
-                                                // 6. 어댑터에서 RecyclerView에 반영하도록 합니다.
-                                                exAdapter.notifyItemInserted(0);
-                                                //mAdapter.notifyDataSetChanged();
-                                                dialog1.dismiss();
-                                                dialog.dismiss();
-                                                setcount++;
-                                                setNum = setcount;
-                                                num = Integer.parseInt(unitnum);
 
-                                            }
+                                ButtonSubmit1.setOnClickListener(new View.OnClickListener() {
+                                    public void onClick(View v) {
+                                        if (editTextID1.getText().toString().equals("")) {
+                                            Toast.makeText(ExerciseRecordActivity.this, "값을 입력해주세요", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            // 4. 사용자가 입력한 내용을 가져와서
+                                            String setnumber = String.valueOf(setcount);
+                                            number = editTextID1.getText().toString();
+                                            // 5. ArrayList에 추가하고
+                                            exrecode dict = new exrecode(setnumber, unitnum, number);
+                                            exrecodeList.add(dict); //첫번째 줄에 삽입됨
+                                            // 6. 어댑터에서 RecyclerView에 반영하도록 합니다.
+                                            exAdapter.notifyItemInserted(0);
+                                            //mAdapter.notifyDataSetChanged();
+                                            dialog1.dismiss();
+                                            dialog.dismiss();
+                                            setcount++;
+                                            setNum = setcount;
+                                            num = Integer.parseInt(unitnum);
                                         }
-                                    });
-                                    dialog1.show();
-                                }else if(Exnum == 1){
-                                    String setnumber = String.valueOf(setcount);
-                                    number = "0";
-                                    // 5. ArrayList에 추가하고
-                                    exrecode dict = new exrecode(setnumber, unitnum, number);
-                                    exrecodeList.add(dict); //첫번째 줄에 삽입됨
-                                    // 6. 어댑터에서 RecyclerView에 반영하도록 합니다.
-                                    exAdapter.notifyItemInserted(0);
-                                    //mAdapter.notifyDataSetChanged();
-                                    dialog.dismiss();
-                                    setcount++;
-                                    num = Integer.parseInt(unitnum);
-                                }
-
-
-                        }
+                                    }
+                                });
+                                dialog1.show();
+                            }
                     });
 
                     dialog.show();
@@ -248,7 +232,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                 }
                 else {
                     String unit = String.valueOf(num);
-                    String setnumber = String.valueOf(setcount + 1);
+                    String setnumber = String.valueOf(setcount);
 
                     // 5. ArrayList에 추가하고
                     exrecode dict = new exrecode(setnumber, unit,number);
@@ -445,6 +429,7 @@ public class ExerciseRecordActivity extends AppCompatActivity {
                         }
                     }
                 }
+                setcount = Integer.parseInt(exrecodeList.get(0).getSetNumber());
                 Collections.reverse(exrecodeList);
                 exAdapter.notifyDataSetChanged();
                 setcount++;
