@@ -1,28 +1,44 @@
 package com.example.djsu;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 
 import android.view.View;
@@ -40,6 +56,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -47,6 +66,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -59,11 +80,11 @@ public class mypage extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-
+    private Bitmap bitmap;
     private TextView name, state, nondisclosure;
     private ImageView ivImage;
     private String profile;
-
+    private static final String URL_UPLOAD = "http://enejd0613.dothome.co.kr/upload_profile.php";
     //차트
     private BarChart weightChart;
     private BarChart muscleChart;
@@ -97,7 +118,12 @@ public class mypage extends AppCompatActivity {
         DatabaseReference databaseReference = firebaseDatabase.getReference("User").child(UserId).child("profile");
 
         ivImage = findViewById(R.id.profile);
-
+        ivImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseFile();
+            }
+        });
         // ValueEventListener를 사용하여 데이터베이스에서 프로필 이미지 URL 가져오기
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -227,6 +253,7 @@ public class mypage extends AppCompatActivity {
                 });
             }
         });
+
         // 몸무게
         // 차트
         weightChart = findViewById(R.id.weight_chart);
@@ -316,6 +343,208 @@ public class mypage extends AppCompatActivity {
         });
     }
 
+    private ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            new ActivityResultCallback<Uri>() {
+                @Override
+                public void onActivityResult(Uri uri) {
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                        ivImage.setImageBitmap(bitmap);
+                        uploadPicture(ID, getStringImage(bitmap));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+    private void chooseFile()
+    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null)
+        {
+            Uri filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                ivImage.setImageBitmap(bitmap);
+
+//                String userId = user.getId();
+//                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
+//
+//                DatabaseReference userRef = databaseReference.child(userId);
+//                userRef.child("profile").setValue(getStringImage(bitmap), new DatabaseReference.CompletionListener() {
+//                    @Override
+//                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                        if (error == null) {
+//                            // 변경 성공
+//                            Toast.makeText(main_user.this, "프로필 사진을 성공적으로 변경(firebase).", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            // 변경 실패
+//                            Toast.makeText(main_user.this, "프로필 사진 변경에 실패(firebase).", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            uploadPicture(ID, getStringImage(bitmap));
+
+        }
+    }
+
+    private void uploadPicture(final String UserID, final String UserProfile)
+    {
+        // final ProgressDialog progressDialog = new ProgressDialog(this);
+        // progressDialog.setMessage("Uploading...");
+        // progressDialog.show();
+        String userID = user.getId();
+
+        // 파이어베이스 스토리지에 이미지 업로드
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("profile_images").child(userID + ".jpg");
+
+        byte[] imageBytes = Base64.decode(UserProfile, Base64.DEFAULT);
+        UploadTask uploadTask = storageReference.putBytes(imageBytes);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // 업로드 성공 후 이미지의 다운로드 URL 획득
+                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String downloadURL = uri.toString();
+
+                        // User 노드의 profile 값을 변경
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
+                        DatabaseReference userRef = databaseReference.child(userID).child("profile");
+
+//                        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("User");
+//
+//                        databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+//                                    String childUserID = childSnapshot.getKey();
+//                                    DatabaseReference friendRef = databaseReference.child(childUserID).child("friend").child(UserID);
+//                                    friendRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                        @Override
+//                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                            if (dataSnapshot.hasChild(UserID)) {
+//                                                DatabaseReference profileRef = friendRef.child("profile");
+//                                                profileRef.setValue(downloadURL, new DatabaseReference.CompletionListener() {
+//                                                    @Override
+//                                                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                                                        if (error == null) {
+//                                                            // 변경 성공
+//                                                            Toast.makeText(main_user.this, "프로필 사진을 성공적으로 변경(친구).", Toast.LENGTH_SHORT).show();
+//                                                        } else {
+//                                                            // 변경 실패
+//                                                            Toast.makeText(main_user.this, "프로필 사진 변경에 실패(친구).", Toast.LENGTH_SHORT).show();
+//                                                        }
+//                                                    }
+//                                                });
+//                                            }
+//                                        }
+//                                        @Override
+//                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//                                            // 취소 처리 시 동작할 내용
+//                                        }
+//                                    });
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError error) {
+//
+//                            }
+//                        });
+
+                        userRef.setValue(downloadURL, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                if (error == null) {
+                                    // 변경 성공
+                                    //Toast.makeText(main_user.this, "프로필 사진을 성공적으로 변경(firebase).", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    // 변경 실패
+                                    //Toast.makeText(main_user.this, "프로필 사진 변경에 실패(firebase).", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // 업로드 실패
+                Toast.makeText(mypage.this, "이미지 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response)
+            {
+                Log.e(TAG, response.toString());
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    if (success.equals("1"))
+                    {
+                        // progressDialog.dismiss();
+                        Toast.makeText(mypage.this, "프로필 사진을 성공적으로 변경했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    // progressDialog.dismiss();
+                    Toast.makeText(mypage.this, "프로필 사진 변경에 실패했습니다. 다시 시도해주세요." + e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                // progressDialog.dismiss();
+                Toast.makeText(mypage.this, "Error : " + error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
+        )
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError
+            {
+                Map<String, String> params = new HashMap<>();
+                params.put("UserID", UserID);
+                params.put("UserProfile", UserProfile);
+
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new com.android.volley.DefaultRetryPolicy(20000 ,
+                com.android.volley.DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                com.android.volley.DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+    }
+    public String getStringImage(Bitmap bitmap)
+    {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] imageByteArray = byteArrayOutputStream.toByteArray();
+        String encodedImage = Base64.encodeToString(imageByteArray, Base64.DEFAULT);
+        return encodedImage;
+    }
     private void setWeightData() {
         String url = "http://enejd0613.dothome.co.kr/getMuscle.php";
         RequestQueue queue = Volley.newRequestQueue(this);

@@ -276,7 +276,7 @@ public class battle extends AppCompatActivity {
 
 // 프로그래스바와 TextView 초기화
             progressBar = v.findViewById(R.id.progressView1);
-            progressBar.setMax(exMax);
+            progressBar.setMax(100);
 
 // 어떤 활동을 수행할 때 진행률을 업데이트하려면 아래와 같이 호출
 // 예를 들어, 진행률을 ExKcalNum로 업데이트하려면
@@ -419,7 +419,6 @@ public class battle extends AppCompatActivity {
 
     protected void showExList() {
         try {
-            String userid = "";
             if (myJSON != null && !myJSON.isEmpty()) {
                 JSONObject jsonObj = new JSONObject(myJSON);
                 peoples = jsonObj.getJSONArray(TAG_RESULTS);
@@ -444,6 +443,7 @@ public class battle extends AppCompatActivity {
                     }
                     battle_results = new Battle_Results(UserIdList.get(j),ExKcalNum,ExTime);
                     battleExList.add(battle_results);
+                    System.out.println(battleExList.get(j).getKcal());
                 }
             }
             battleAdapter.notifyDataSetChanged();
@@ -505,6 +505,7 @@ public class battle extends AppCompatActivity {
                             String weight = c.getString(TAG_weight);
                             this.Exweight =  Float.parseFloat(weight);
                             Battle_Results battle_results1 = new Battle_Results(UserIdList.get(j),weight);
+
                             battleWeightList.add(battle_results1);
                         }
                     }
@@ -638,6 +639,7 @@ public class battle extends AppCompatActivity {
                     for(int j = 0;j < UserIdList.size(); j++) {
                         if (UserId.equals(UserIdList.get(j))) {
                             if(date.equals(Date)) {
+                                KcalNum = 0;
                                 String FoodKcal = c.getString(TAG_FoodKcal);
                                 KcalNum += Integer.parseInt(FoodKcal);
                                 Battle_Results battle_results1 = new Battle_Results(UserIdList.get(j),KcalNum);
