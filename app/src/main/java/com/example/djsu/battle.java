@@ -100,7 +100,7 @@ public class battle extends AppCompatActivity {
         getFoodData("http://enejd0613.dothome.co.kr/foodcalendarlist.php");
         battleAdapter =  new battleAdapter(battle.this, UserNameList);
         timebattleAdapter = new timeBattleAdapter(battle.this, UserNameList);
-        weightbattleAdapter = new weightBattleAdapter(battle.this, UserNameList);
+        weightbattleAdapter = new weightBattleAdapter(battle.this, battleList);
 
         cal_chartlist = (ListView) findViewById(R.id.cal_chart);
         time_chart = (ListView) findViewById(R.id.time_chart);
@@ -330,8 +330,6 @@ public class battle extends AppCompatActivity {
             View v = View.inflate(context, R.layout.item_prog, null);
             TextView burkcal_username = v.findViewById(R.id.burkcal_username);
             burkcal_username.setText(UserNameList.get(position));
-            System.out.println("sdkn" + UserNameList.size());
-            System.out.println("ssdssddsdsdkn" + battleList.size());
 // 프로그래스바와 TextView 초기화
             progressBar = v.findViewById(R.id.progressView1);
             progressBar.setMax(1500);
@@ -360,27 +358,27 @@ public class battle extends AppCompatActivity {
 
     public class weightBattleAdapter extends BaseAdapter {
         private Context context;
-        private ArrayList<String> battleList;
+        private ArrayList<User> battleList1;
 
-        public weightBattleAdapter(Context context, ArrayList<String> battleList) {
+        public weightBattleAdapter(Context context, ArrayList<User> battleList) {
             this.context = context;
-            this.battleList = battleList;
+            this.battleList1 = battleList;
         }
         @Override
         public int getCount () {
-            return battleList.size();//리스트뷰의 총 갯수
+            return battleList1.size();//리스트뷰의 총 갯수
         }
 
         @Override
         public Object getItem (int position){
-            return battleList.get(position);//해당 위치의 값을 리스트뷰에 뿌려줌
+            return battleList1.get(position);//해당 위치의 값을 리스트뷰에 뿌려줌
         }
         @Override
         public long getItemId (int position){
             return position;
         }
-        public void setItems(ArrayList<String> list) {
-            battleList = list;
+        public void setItems(ArrayList<User> list) {
+            battleList1 = list;
             notifyDataSetChanged();
         }
         //리스트뷰에서 실질적으로 뿌려주는 부분임
@@ -390,10 +388,7 @@ public class battle extends AppCompatActivity {
             TextView burkcal_username = v.findViewById(R.id.burkcal_username);
             burkcal_username.setText(UserNameList.get(position));
             int a = 0;
-            a = weight - Integer.parseInt(battleWeightList.get(position).getWeight());
-
-
-
+            a = Integer.parseInt(battleList.get(position).getSettingWeight()) - Integer.parseInt(battleWeightList.get(position).getWeight());
 // 프로그래스바와 TextView 초기화
             progressBar = v.findViewById(R.id.progressView1);
             progressBar.setMax(100);

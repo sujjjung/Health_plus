@@ -66,7 +66,6 @@ public class chat_room extends AppCompatActivity {
         Button_back = findViewById(R.id.backButton);
 
         User user = new User();
-        String userId = user.getId();
         String userName = user.getName();
 
         mRecyclerView = findViewById(R.id.recycler_messages);
