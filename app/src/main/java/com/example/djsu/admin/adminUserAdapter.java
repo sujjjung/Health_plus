@@ -1,38 +1,38 @@
 package com.example.djsu.admin;
 
-        import android.annotation.SuppressLint;
-        import android.app.AlertDialog;
-        import android.content.Context;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.ImageView;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import androidx.annotation.NonNull;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-        import com.android.volley.RequestQueue;
-        import com.android.volley.Response;
-        import com.android.volley.toolbox.Volley;
-        import com.bumptech.glide.Glide;
-        import com.example.djsu.R;
-        import com.example.djsu.UserFoodDelete;
-        import com.example.djsu.declarationRequest;
-        import com.google.firebase.database.DataSnapshot;
-        import com.google.firebase.database.DatabaseError;
-        import com.google.firebase.database.DatabaseReference;
-        import com.google.firebase.database.FirebaseDatabase;
-        import com.google.firebase.database.Query;
-        import com.google.firebase.database.ValueEventListener;
-        import com.squareup.picasso.Picasso;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.example.djsu.R;
+import com.example.djsu.UserFoodDelete;
+import com.example.djsu.declarationRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
-        import org.json.JSONObject;
+import org.json.JSONObject;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class adminUserAdapter extends RecyclerView.Adapter<com.example.djsu.admin.adminUserAdapter.ViewHolder> {
     // creating variables for our ArrayList and context
@@ -64,25 +64,31 @@ public class adminUserAdapter extends RecyclerView.Adapter<com.example.djsu.admi
         holder.Name =  userArrayList.get(position).getName();
         holder.Age =  userArrayList.get(position).getUserAge();
         final String name = holder.Name;
-        holder.detailBtn.setOnClickListener(new View.OnClickListener() {
+        holder.    detailBtn.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                view = LayoutInflater.from(context).inflate(R.layout.dialog_value, null, false);
-                builder.setView(view);
-                final TextView userName = (TextView) view.findViewById(R.id.userName);
-                final TextView userAge = (TextView) view.findViewById(R.id.userAge);
-                userName.setText("유저 이름: " + holder.Name);
-                userAge.setText("유저 나이: " +  holder.Age);
-                final Button conformBtn = (Button) view.findViewById(R.id.conformBtn);
-                final AlertDialog dialog = builder.create();
-                conformBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view){
+                AlertDialog.Builder dlg = new AlertDialog.Builder(context);
+                AlertDialog ad = dlg.create();
+                view = LayoutInflater.from(context).inflate(R.layout.dialog_admin_user, null, false);
+                ad.setView(view);
+                TextView userName = view.findViewById(R.id.userName);
+                TextView userId = view.findViewById(R.id.userId);
+                TextView userPassrd = view.findViewById(R.id.userPassrd);
+                TextView userAge = view.findViewById(R.id.userAge);
+                TextView userComment = view.findViewById(R.id.userComment);
+                Button backBtn = view.findViewById(R.id.backBtn);
+                userName.setText(userArrayList.get(position).getName().toString()); //제목
+                userId.setText(String.valueOf(userArrayList.get(position).getUserID()));
+                userPassrd.setText(String.valueOf(userArrayList.get(position).getUserPassword()));
+                userAge.setText(String.valueOf(userArrayList.get(position).getUserAge()));
+                userComment.setText(String.valueOf(userArrayList.get(position).getState()));
+                backBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialog.dismiss();
+                        ad.dismiss();
                     }
                 });
-                dialog.show();
+                ad.show();
             }
         });
 

@@ -52,7 +52,9 @@ public class AdminUserListActivity extends AppCompatActivity {
     private static final String TAG_RESULTS = "result";
     private static final String TAG_UserID  = "UserID";
     private static final String TAG_UserName  = "UserName";
+    private static final String TAG_UserPassword  = "UserPassword";
     private static final String TAG_UserAge = "UserAge";
+    private static final String TAG_State  = "State";
     private static final String TAG_UserProfile = "UserProfile";
     String myJSON;
     JSONArray peoples = null;
@@ -85,9 +87,11 @@ public class AdminUserListActivity extends AppCompatActivity {
                     String UserID = c.getString(TAG_UserID);
                     if(UserID.equals("admin") == false) {
                         String UserName = c.getString(TAG_UserName);
+                        String UserPassword = c.getString(TAG_UserPassword);
                         String UserAge = c.getString(TAG_UserAge);
+                        String State = c.getString(TAG_State);
                         String UserProfile = c.getString(TAG_UserProfile);
-                        adminUser adminUser = new adminUser(UserID, UserProfile, UserName, UserAge);
+                        adminUser adminUser = new adminUser(UserProfile,UserName,UserID,UserPassword , UserAge,State);
                         userArrayList.add(adminUser);
                     }
                 }
