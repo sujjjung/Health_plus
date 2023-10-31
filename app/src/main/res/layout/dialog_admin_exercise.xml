@@ -18,7 +18,7 @@
         android:layout_marginStart="30dp" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/exeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
@@ -27,7 +27,9 @@
         android:fontFamily="@font/a1009_2"
         android:text="김수빈"
         android:textColor="#303030"
-        android:textSize="26dp" />
+        android:textSize="26dp"
+        android:autoSizeMaxTextSize="26dp"
+        />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -38,14 +40,15 @@
         >
 
         <TextView
-            android:id="@+id/textView39"
+            android:id="@+id/textview11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/a1009_1"
-            android:text="아이디 : "
+            android:text="운동 부위 : "
             android:textSize="20dp" />
 
         <TextView
+            android:id="@+id/ExPart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/a1009_1"
@@ -65,65 +68,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/a1009_1"
-            android:text="비밀번호 : "
+            android:text="운동 설명 : "
             android:textSize="20dp" />
 
         <TextView
+            android:id="@+id/ExExplanation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/a1009_1"
             android:text="12345678"
             android:textSize="20dp"
             android:layout_marginStart="6dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="14dp" >
-        <TextView
-            android:id="@+id/textView41"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/a1009_1"
-            android:text="생년월일 : "
-            android:textSize="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/a1009_1"
-            android:text="20011017"
-            android:textSize="20dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginBottom="12dp">
-
-        <TextView
-            android:id="@+id/textView42"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/a1009_1"
-            android:text="한줄소개 : "
-            android:textSize="20dp" />
-
-        <TextView
-            android:id="@+id/textView43"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:autoText="true"
-            android:fontFamily="@font/a1009_1"
-            android:text="안녕하세요"
-            android:textSize="20dp" />
     </LinearLayout>
 
     <android.widget.Button

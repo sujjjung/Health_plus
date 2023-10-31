@@ -1,7 +1,9 @@
 package com.example.djsu.admin;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -58,6 +60,31 @@ public class AdminExerciseAdapter extends BaseAdapter {
         ExName.setText(exerciseLsit.get(position).getExerciseName());
         v.setTag(exerciseLsit.get(position).getExerciseName());
         Button deleteBtn = (Button) v.findViewById(R.id.delete);
+        Button detailBtn = (Button) v.findViewById(R.id.detail);
+
+        detailBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                AlertDialog.Builder dlg = new AlertDialog.Builder(context);
+                AlertDialog ad = dlg.create();
+                view = LayoutInflater.from(context).inflate(R.layout.dialog_admin_exercise, null, false);
+                ad.setView(view);
+                TextView exeName = view.findViewById(R.id.exeName);
+                TextView ExPart = view.findViewById(R.id.ExPart);
+                TextView ExExplanation = view.findViewById(R.id.ExExplanation);
+                Button backBtn = view.findViewById(R.id.backBtn);
+                exeName.setText(exerciseLsit.get(position).getExerciseName().toString()); //제목
+                ExPart.setText(String.valueOf(exerciseLsit.get(position).getExPart()));
+                ExExplanation.setText(String.valueOf(exerciseLsit.get(position).getExerciseExplanation()));
+                backBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ad.dismiss();
+                    }
+                });
+                ad.show();
+            }
+        });
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
