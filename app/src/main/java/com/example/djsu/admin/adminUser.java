@@ -2,15 +2,17 @@ package com.example.djsu.admin;
 
 public class adminUser {
     private String profile;
-    private String Name,UserID,UserAge;
+    private String Name,UserID,userPassword,UserAge,State;
 
     public adminUser() {}
 
-    public adminUser(String userID, String profile, String name, String userAge) {
-        UserID = userID;
+    public adminUser(String profile, String name, String userID, String userPassword, String userAge, String state) {
         this.profile = profile;
         Name = name;
+        UserID = userID;
+        this.userPassword = userPassword;
         UserAge = userAge;
+        State = state;
     }
 
     public String getProfile() {
@@ -43,5 +45,21 @@ public class adminUser {
 
     public void setUserAge(String userAge) {
         UserAge = userAge;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public String getState() {
+        return State;
+    }
+
+    public void setState(String state) {
+        State = state;
     }
 }
