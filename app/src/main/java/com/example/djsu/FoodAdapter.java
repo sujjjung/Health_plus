@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -88,22 +89,38 @@ public class FoodAdapter extends BaseAdapter {
             };
         });
         Button DetailBtn = (Button) v.findViewById(R.id.Detail);
-        DetailBtn.setOnClickListener(new View.OnClickListener() {
+        DetailBtn.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
                 AlertDialog.Builder dlg = new AlertDialog.Builder(context);
-                dlg.setTitle( foodList.get(position).getFoodName() + "상세성분"); //제목
-                dlg.setMessage("수량1 기준" + "\n칼로리:"+foodList.get(position).getFoodKcal()+"\n탄수화물:"+foodList.get(position).getFoodCarbohydrate()+"\n단백질:"+foodList.get(position).getFoodProtein()+"\n지방:"+foodList.get(position).getFoodFat()
-                        +"\n나트륨:"+foodList.get(position).getFoodSodium()+"\n당:"+foodList.get(position).getFoodSugar()+"\n무게:"+foodList.get(position).getFoodKg());
-                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
-                    public void onClick(DialogInterface dialog, int which) {
-                        //토스트 메시지
-                        Toast.makeText(context,"확인을 눌르셨습니다.",Toast.LENGTH_SHORT).show();
+                AlertDialog ad = dlg.create();
+                view = LayoutInflater.from(context).inflate(R.layout.dialog_admin_food, null, false);
+                ad.setView(view);
+                TextView foodName = view.findViewById(R.id.FoodName);
+                TextView foodKcal = view.findViewById(R.id.FoodKcal);
+                TextView foodCarbohydrate = view.findViewById(R.id.FoodCarbohydrate);
+                TextView foodProtein = view.findViewById(R.id.FoodProtein);
+                TextView foodFat = view.findViewById(R.id.FoodFat);
+                TextView foodSodium = view.findViewById(R.id.FoodSodium);
+                TextView foodSugar = view.findViewById(R.id.FoodSugar);
+                TextView foodKg = view.findViewById(R.id.FoodKg);
+                Button backBtn = view.findViewById(R.id.backBtn);
+                foodName.setText(foodList.get(position).getFoodName().toString()); //제목
+                foodKcal.setText(String.valueOf(foodList.get(position).getFoodKcal()));
+                foodCarbohydrate.setText(String.valueOf(foodList.get(position).getFoodCarbohydrate()));
+                foodProtein.setText(String.valueOf(foodList.get(position).getFoodProtein()));
+                foodFat.setText(String.valueOf(foodList.get(position).getFoodFat()));
+                foodSodium.setText(String.valueOf(foodList.get(position).getFoodSodium()));
+                foodSugar.setText(String.valueOf(foodList.get(position).getFoodSugar()));
+                foodKg.setText(String.valueOf(foodList.get(position).getFoodKg()));
+                backBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ad.dismiss();
                     }
                 });
-                dlg.show();
+                ad.show();
             }
-
         });
 
         return v;
