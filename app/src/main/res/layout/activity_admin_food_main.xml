@@ -43,10 +43,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="640dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:orientation="vertical"
-        android:padding="8dp"
         app:layout_constraintTop_toBottomOf="@+id/textView15"
         tools:layout_editor_absoluteX="0dp">
         <EditText
@@ -54,19 +53,20 @@
             android:layout_width="320dp"
             android:layout_height="34dp"
             android:background="#DBDBDB"
+            android:layout_marginTop="14dp"
             android:layout_gravity="center"
             android:hint="　음식 이름 검색" />
         <ListView
             android:id="@+id/FoodView"
-            android:layout_width="match_parent"
-            android:layout_height="800dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="0dp"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="98dp"
+            android:layout_marginTop="12dp"
             android:layout_weight="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
