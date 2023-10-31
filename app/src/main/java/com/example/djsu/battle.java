@@ -132,9 +132,9 @@ public class battle extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 원하는 기능 구현
-                Intent intent1 = new Intent(battle.this, chat_room.class);
-                intent1.putExtra("chatRoomId", roomId);
-                startActivity(intent1);
+                Intent intent = new Intent(battle.this, chat_room.class);
+                intent.putExtra("chatRoomId", roomId);
+                startActivity(intent);
                 finish();
                 customDialog.dismiss(); // 다이얼로그 닫기
             }
