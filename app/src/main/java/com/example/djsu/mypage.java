@@ -194,37 +194,41 @@ public class mypage extends AppCompatActivity {
         user_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog_del alert = new dialog_del(mypage.this, UserID);
-                alert.callFunction();
-                alert.setModifyReturnListener(new dialog_del.ModifyReturnListener() {
-                    @Override
-                    public void afterModify(String text) {
-                        Response.Listener<String> responseListener = new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                try {
-                                    JSONObject jsonObject = new JSONObject(response);
-                                    String success = jsonObject.getString("success");
-
-                                    if (success.equals("1")) { // 회원 삭제에 성공한 경우
-                                        Toast.makeText(getApplicationContext(), "회원 정보가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(mypage.this, MainActivity.class);
-                                        startActivity(intent);  //intent를 넣어 실행시키게 됩니다.
-                                    } else { // 회원 삭제에 실패한 경우
-                                        Toast.makeText(getApplicationContext(), "회원 탈퇴에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                                        return;
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        };
-                        // 서버로 Volley를 이용해서 요청을 함.
-                        delUserRequest delUserRequest1 = new delUserRequest(UserID, responseListener);
-                        RequestQueue queue = Volley.newRequestQueue(mypage.this);
-                        queue.add(delUserRequest1);
-                    }
-                });
+                Toast.makeText(mypage.this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(mypage.this, login.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(i);
+//                dialog_del alert = new dialog_del(mypage.this, UserID);
+//                alert.callFunction();
+//                alert.setModifyReturnListener(new dialog_del.ModifyReturnListener() {
+//                    @Override
+//                    public void afterModify(String text) {
+//                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+//                            @Override
+//                            public void onResponse(String response) {
+//                                try {
+//                                    JSONObject jsonObject = new JSONObject(response);
+//                                    String success = jsonObject.getString("success");
+//
+//                                    if (success.equals("1")) { // 회원 삭제에 성공한 경우
+//                                        Toast.makeText(getApplicationContext(), "회원 정보가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+//                                        Intent intent = new Intent(mypage.this, MainActivity.class);
+//                                        startActivity(intent);  //intent를 넣어 실행시키게 됩니다.
+//                                    } else { // 회원 삭제에 실패한 경우
+//                                        Toast.makeText(getApplicationContext(), "회원 탈퇴에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+//                                        return;
+//                                    }
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        };
+//                        // 서버로 Volley를 이용해서 요청을 함.
+//                        delUserRequest delUserRequest1 = new delUserRequest(UserID, responseListener);
+//                        RequestQueue queue = Volley.newRequestQueue(mypage.this);
+//                        queue.add(delUserRequest1);
+//                    }
+//                });
             }
         });
         // 몸무게
