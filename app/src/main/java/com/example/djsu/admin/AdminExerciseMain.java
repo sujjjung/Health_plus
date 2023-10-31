@@ -39,7 +39,10 @@ public class AdminExerciseMain extends AppCompatActivity {
     private EditText editText;
     private static final String TAG_RESULTS = "result";
     private static final String TAG_ExName = "ExerciseName";
+    private static final String TAG_ExercisePart = "ExercisePart";
+    private static final String TAG_ExerciseExplanation = "ExerciseExplanation";
     String myJSON;
+
     JSONArray peoples = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,11 +104,12 @@ public class AdminExerciseMain extends AppCompatActivity {
             if (myJSON != null && !myJSON.isEmpty()) {
                 JSONObject jsonObj = new JSONObject(myJSON);
                 peoples = jsonObj.getJSONArray(TAG_RESULTS);
-
                 for(int i = 0;i < peoples.length(); i++) {
                     JSONObject c = peoples.getJSONObject(i);
                     String ExName = c.getString(TAG_ExName);
-                    exerciseLsit exlsit = new exerciseLsit(ExName);
+                    String ExercisePart = c.getString(TAG_ExercisePart);
+                    String ExerciseExplanation = c.getString(TAG_ExerciseExplanation);
+                    exerciseLsit exlsit = new exerciseLsit(ExName,ExercisePart,ExerciseExplanation);
                     exerciselsit.add(exlsit);
                 }
 

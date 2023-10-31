@@ -11,6 +11,11 @@ public class exerciseLsit {
         this.exerciseName = exerciseName;
         this.exerciseExplanation = exerciseExplanation;
     }
+    public exerciseLsit(String exerciseName, String exPart, String exerciseExplanation) {
+        ExPart = exPart;
+        this.exerciseName = exerciseName;
+        this.exerciseExplanation = exerciseExplanation;
+    }
 
     public exerciseLsit(String exerciseName, String exerciseExplanation) {
         this.exerciseName = exerciseName;
