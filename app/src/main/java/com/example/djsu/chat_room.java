@@ -43,12 +43,9 @@ public class chat_room extends AppCompatActivity {
     private EditText EditText_chat;
     private Button Button_send, Button_out, Button_back;
     private ImageButton btn_Battle;
-    private DatabaseReference myRef, backRoom;
+    private DatabaseReference myRef;
     private TextView roomName;
 
-    private FirebaseDatabase firebase;
-
-    private DatabaseReference database, sourceRef, destinationRef;
 
     public static String getCurrentTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -110,7 +107,6 @@ public class chat_room extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         //chatList 에서 클릭된 아이템의 텍스트를 가져온다
-        Intent intent = getIntent();
         String roomId = getIntent().getStringExtra("chatRoomId");
         String RoomName = getIntent().getStringExtra("roomName");
 
