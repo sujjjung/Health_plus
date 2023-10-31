@@ -84,7 +84,7 @@
             android:layout_height="35dp"
             android:background="@drawable/shape_no_btn"
             android:fontFamily="@font/a10092"
-            android:text="회원탈퇴"
+            android:text="로그아웃"
             android:textColor="#444444"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
