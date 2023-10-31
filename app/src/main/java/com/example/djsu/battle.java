@@ -98,9 +98,9 @@ public class battle extends AppCompatActivity {
         getFatData("http://enejd0613.dothome.co.kr/getWeight.php");
         getExData("http://enejd0613.dothome.co.kr/excalendarlist.php");
         getFoodData("http://enejd0613.dothome.co.kr/foodcalendarlist.php");
-        battleAdapter =  new battleAdapter(battle.this, battleExList);
-        timebattleAdapter = new timeBattleAdapter(battle.this, FoodKcalList);
-        weightbattleAdapter = new weightBattleAdapter(battle.this, battleWeightList);
+        battleAdapter =  new battleAdapter(battle.this, UserNameList);
+        timebattleAdapter = new timeBattleAdapter(battle.this, UserNameList);
+        weightbattleAdapter = new weightBattleAdapter(battle.this, UserNameList);
 
         cal_chartlist = (ListView) findViewById(R.id.cal_chart);
         time_chart = (ListView) findViewById(R.id.time_chart);
@@ -182,7 +182,7 @@ public class battle extends AppCompatActivity {
                 for(int i = 0;i < peoples.length(); i++) {
                     JSONObject c = peoples.getJSONObject(i);
                     String chttingName = c.getString(TAG_chttingName);
-                    if(chttingName.equals(roomId) ) {
+                    if(chttingName.equals(roomId)) {
                         String userId = c.getString(TAG_ID);
                         String weight = c.getString(TAG_weight);
                         user1 = new User(userId, weight);
@@ -244,9 +244,9 @@ public class battle extends AppCompatActivity {
 
     public class battleAdapter extends BaseAdapter {
         private Context context;
-        private ArrayList<Battle_Results> battleList;
+        private ArrayList<String> battleList;
 
-        public battleAdapter(Context context, ArrayList<Battle_Results> battleList) {
+        public battleAdapter(Context context, ArrayList<String> battleList) {
             this.context = context;
             this.battleList = battleList;
         }
@@ -263,7 +263,7 @@ public class battle extends AppCompatActivity {
         public long getItemId (int position){
             return position;
         }
-        public void setItems(ArrayList<Battle_Results> list) {
+        public void setItems(ArrayList<String> list) {
             battleList = list;
             notifyDataSetChanged();
         }
@@ -301,9 +301,9 @@ public class battle extends AppCompatActivity {
     }
     public class timeBattleAdapter extends BaseAdapter {
         private Context context;
-        private ArrayList<Battle_Results> battleList;
+        private ArrayList<String> battleList;
 
-        public timeBattleAdapter(Context context, ArrayList<Battle_Results> battleList) {
+        public timeBattleAdapter(Context context, ArrayList<String> battleList) {
             this.context = context;
             this.battleList = battleList;
         }
@@ -320,7 +320,7 @@ public class battle extends AppCompatActivity {
         public long getItemId (int position){
             return position;
         }
-        public void setItems(ArrayList<Battle_Results> list) {
+        public void setItems(ArrayList<String> list) {
             battleList = list;
             notifyDataSetChanged();
         }
@@ -330,7 +330,8 @@ public class battle extends AppCompatActivity {
             View v = View.inflate(context, R.layout.item_prog, null);
             TextView burkcal_username = v.findViewById(R.id.burkcal_username);
             burkcal_username.setText(UserNameList.get(position));
-
+            System.out.println("sdkn" + UserNameList.size());
+            System.out.println("ssdssddsdsdkn" + battleList.size());
 // 프로그래스바와 TextView 초기화
             progressBar = v.findViewById(R.id.progressView1);
             progressBar.setMax(1500);
@@ -359,9 +360,9 @@ public class battle extends AppCompatActivity {
 
     public class weightBattleAdapter extends BaseAdapter {
         private Context context;
-        private ArrayList<Battle_Results> battleList;
+        private ArrayList<String> battleList;
 
-        public weightBattleAdapter(Context context, ArrayList<Battle_Results> battleList) {
+        public weightBattleAdapter(Context context, ArrayList<String> battleList) {
             this.context = context;
             this.battleList = battleList;
         }
@@ -378,7 +379,7 @@ public class battle extends AppCompatActivity {
         public long getItemId (int position){
             return position;
         }
-        public void setItems(ArrayList<Battle_Results> list) {
+        public void setItems(ArrayList<String> list) {
             battleList = list;
             notifyDataSetChanged();
         }
@@ -390,6 +391,7 @@ public class battle extends AppCompatActivity {
             burkcal_username.setText(UserNameList.get(position));
             int a = 0;
             a = weight - Integer.parseInt(battleWeightList.get(position).getWeight());
+
 
 
 // 프로그래스바와 TextView 초기화
@@ -443,7 +445,6 @@ public class battle extends AppCompatActivity {
                     }
                     battle_results = new Battle_Results(UserIdList.get(j),ExKcalNum,ExTime);
                     battleExList.add(battle_results);
-                    System.out.println(battleExList.get(j).getKcal());
                 }
             }
             battleAdapter.notifyDataSetChanged();
