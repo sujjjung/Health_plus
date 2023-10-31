@@ -396,7 +396,7 @@ public class battle extends AppCompatActivity {
 // 어떤 활동을 수행할 때 진행률을 업데이트하려면 아래와 같이 호출
 // 예를 들어, 진행률을 ExKcalNum로 업데이트하려면
             int currentProgress = a;
-            progressBar.setProgress(currentProgress);
+            progressBar.setProgress(Math.abs(currentProgress));
             if(max < a){
                 max = a;
                 num = position;
