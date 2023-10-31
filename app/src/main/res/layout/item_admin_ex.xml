@@ -1,43 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="20dp">
+        android:padding="5dp">
+
 
         <TextView
             android:id="@+id/ExName"
-            android:layout_width="140dp"
+            android:layout_width="118dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="10dp"
             android:text="이름"
             android:textColor="#000"
             android:textSize="20sp"
             android:fontFamily="@font/a10091" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/select"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:background="@drawable/shape_yes_btn"
+            android:id="@+id/detail"
+            android:layout_width="60dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="44dp"
+            android:fontFamily="@font/a10091"
+            android:text="상세"
+            android:textColor="@color/black"
+            android:textSize="13dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:background="@drawable/shape_no_btn"
+            android:id="@+id/select"
+            android:layout_width="60dp"
+            android:layout_height="46dp"
+            android:layout_margin="5dp"
             android:fontFamily="@font/a10091"
             android:text="수정"
             android:textColor="@color/black" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/delete"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:background="@drawable/shape_yes_btn"
+            android:id="@+id/delete"
+            android:layout_width="60dp"
+            android:layout_height="46dp"
+            android:layout_margin="5dp"
             android:fontFamily="@font/a10091"
             android:text="삭제"
             android:textColor="@color/black"
