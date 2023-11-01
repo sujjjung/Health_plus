@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="800dp"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true">
     <ScrollView
         android:id="@+id/bio_scroll"
@@ -27,39 +27,24 @@
                 android:id="@+id/calendarView"
                 android:layout_width="390dp"
                 android:layout_height="400dp"
-                android:layout_marginBottom="36dp"
+                android:layout_marginTop="16dp"
                 android:theme="@style/CalenderViewCustom"
-                app:layout_constraintBottom_toTopOf="@+id/view3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.333"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView"
-                app:layout_constraintVertical_bias="0.552"
                 app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
                 app:mcv_selectionColor="#d2d2d2"
                 app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
-
-            <View
-                android:id="@+id/view3"
-                android:layout_width="417dp"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
-                app:layout_constraintVertical_bias="0.58" />
 
             <ImageView
                 android:id="@+id/imageView5"
                 android:layout_width="380dp"
                 android:layout_height="290dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
                 android:src="@drawable/roundsquare2"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.461"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
@@ -67,30 +52,32 @@
                 android:id="@+id/FoodGoBtn"
                 android:layout_width="121dp"
                 android:layout_height="32dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginRight="12dp"
                 android:background="@drawable/shape_no_btn"
                 android:fontFamily="@font/a10091"
                 android:gravity="center"
                 android:text="당일 음식목록"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toTopOf="@+id/SodiumSum"
-                app:layout_constraintEnd_toEndOf="@+id/imageView"
+                app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="@+id/textView3"
                 tools:ignore="MissingConstraints" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/ExGoBtn"
                 android:layout_width="121dp"
                 android:layout_height="32dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginRight="12dp"
                 android:background="@drawable/shape_no_btn"
                 android:fontFamily="@font/a10091"
                 android:gravity="center"
                 android:text="당일 운동목록"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toTopOf="@+id/UnitSum"
-                app:layout_constraintEnd_toEndOf="@+id/imageView"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_exercise"
+                app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="@+id/btn_exercise"
                 tools:ignore="MissingConstraints" />
+
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
@@ -325,27 +312,23 @@
                 android:text="0"
                 android:textColor="#393939"
                 android:textSize="16dp"
-
                 app:layout_constraintBottom_toBottomOf="@+id/exkari"
                 app:layout_constraintEnd_toStartOf="@+id/weight"
-                app:layout_constraintHorizontal_bias="0.263"
                 app:layout_constraintStart_toEndOf="@+id/exkari"
-                app:layout_constraintTop_toTopOf="@+id/exkari"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toTopOf="@+id/exkari" />
 
             <TextView
                 android:id="@+id/weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
-                android:layout_marginTop="104dp"
                 android:text="총 무게"
                 android:textColor="#393939"
                 android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ExkcalSum"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.524"
                 app:layout_constraintStart_toStartOf="@+id/exkari"
-                app:layout_constraintTop_toBottomOf="@+id/textView21" />
+                app:layout_constraintTop_toTopOf="@+id/ExkcalSum" />
 
             <TextView
                 android:id="@+id/UnitSum"
@@ -410,16 +393,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="14dp"
-                android:layout_marginBottom="52dp"
                 android:src="@drawable/btn_plus"
                 app:backgroundTint="#ff812d"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="150dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView5"
                 app:layout_goneMarginBottom="30dp" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
