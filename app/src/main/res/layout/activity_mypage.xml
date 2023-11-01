@@ -120,6 +120,22 @@
             app:layout_constraintTop_toBottomOf="@+id/weight_chart"
             tools:ignore="MissingConstraints" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dateBtn2"
+            android:layout_width="118dp"
+            android:layout_height="28dp"
+            android:background="@drawable/shape_no_btn"
+            android:fontFamily="@font/a10092"
+            android:text="일주일"
+            android:textColor="#444444"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.928"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.546" />
+
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/weight_chart"
             android:layout_width="390dp"
@@ -133,17 +149,33 @@
             android:id="@+id/weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:fontFamily="@font/a10092"
             android:gravity="center"
             android:text="체중 그래프"
             android:textColor="#444444"
             android:textSize="25dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.061"
+            app:layout_constraintHorizontal_bias="0.057"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/change_btn"
             tools:ignore="MissingConstraints" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dateBtn1"
+            android:layout_width="118dp"
+            android:layout_height="28dp"
+            android:background="@drawable/shape_no_btn"
+            android:fontFamily="@font/a10092"
+            android:text="일주일"
+            android:textColor="#444444"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.935"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.279" />
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/fat_chart"
@@ -170,6 +202,21 @@
             app:layout_constraintTop_toBottomOf="@+id/muscles_chart"
             tools:ignore="MissingConstraints" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dateBtn3"
+            android:layout_width="118dp"
+            android:layout_height="28dp"
+            android:background="@drawable/shape_no_btn"
+            android:fontFamily="@font/a10092"
+            android:text="일주일"
+            android:textColor="#444444"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.928"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.815" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
