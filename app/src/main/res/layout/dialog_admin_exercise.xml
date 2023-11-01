@@ -15,27 +15,27 @@
         android:textSize="20dp"
         android:fontFamily="@font/a1009_1"
         android:layout_marginTop="12dp"
-        android:layout_marginStart="30dp" />
+        android:layout_marginStart="24dp" />
 
     <TextView
         android:id="@+id/exeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="24dp"
         android:autoText="true"
         android:fontFamily="@font/a1009_2"
         android:text="김수빈"
         android:textColor="#303030"
-        android:textSize="26dp"
-        android:autoSizeMaxTextSize="26dp"
+        android:textSize="22dp"
+        android:autoSizeMaxTextSize="22dp"
         />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="14dp"
         >
 
@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="14dp">
         <TextView
             android:id="@+id/textView40"
