@@ -57,7 +57,7 @@ public class commentAdapter extends BaseAdapter {
         View v = View.inflate(context, R.layout.item_comment, null);
         Date = getTime();
         userName = v.findViewById(R.id.userName);
-        userName.setText(user.getId());
+        userName.setText(commentList.get(position).getCommentUser());
 
         userComment = v.findViewById(R.id.userComment);
         userComment.setText(commentList.get(position).getCommentContent());
@@ -86,7 +86,7 @@ public class commentAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View view) {
                         declarationRequest declarationRequest = new declarationRequest(user.getId(),String.valueOf(commentList.get(position).getCommentKey()),
-                        commentList.get(position).getCommentUser(),declarationText.getText().toString(),Date,"댓글");
+                                commentList.get(position).getCommentUser(),declarationText.getText().toString(),Date,"댓글");
                         RequestQueue queue = Volley.newRequestQueue(context);
                         queue.add(declarationRequest);
                         Toast.makeText(context, "신고되었습니다.", Toast.LENGTH_SHORT).show();
