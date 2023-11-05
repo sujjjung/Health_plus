@@ -6,82 +6,85 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".comment">
-
-    <ImageView
-        android:id="@+id/imageView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo3" />
-
-    <ListView
-        android:id="@+id/comment_list"
-        android:layout_width="427dp"
-        android:layout_height="616dp"
-        android:layout_weight="0"
-        android:divider="#ffffff"
-        android:dividerHeight="0dp"
-        tools:listitem="@layout/item_comment" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="4dp"
-        android:gravity="center_vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".comment">
 
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="58dp"
-            android:layout_height="45dp"
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            android:gravity="left" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo3" />
 
-        <EditText
-            android:id="@+id/et"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bolder"
-            android:hint="댓글..."
-            android:fontFamily="@font/a10091"
-            android:inputType="textMultiLine"
-            android:maxLines="3"
-            android:padding="10dp" />
+        <ListView
+            android:id="@+id/comment_list"
+            android:layout_width="match_parent"
+            android:layout_height="520dp"
+            android:divider="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            tools:listitem="@layout/item_comment" />
 
-        <Button
-            android:id="@+id/post"
-            android:layout_width="65dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:backgroundTint="#ffdd00"
-            android:onClick="clickSend"
-            android:text="게시"
-            android:textColor="@color/black"
-            android:fontFamily="@font/a10091"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="10dp"
+            >
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="58dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="left" />
+
+            <EditText
+                android:id="@+id/et"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bolder"
+                android:fontFamily="@font/a10091"
+                android:hint="댓글..."
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                android:padding="10dp" />
+
+            <Button
+                android:id="@+id/post"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:backgroundTint="#ffdd00"
+                android:fontFamily="@font/a10091"
+                android:onClick="clickSend"
+                android:text="게시"
+                android:textColor="@color/black" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar" />
     </LinearLayout>
-</LinearLayout>
-<LinearLayout
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical">
-
-<include layout="@layout/toolbar" />
-</LinearLayout>
-<com.google.android.material.navigation.NavigationView
-android:layout_width="wrap_content"
-android:layout_height="match_parent"
-android:fitsSystemWindows="true"
-android:id="@+id/navigationView"
-android:layout_gravity="left"
-app:menu="@menu/hamburger"
-tools:ignore="MissingConstraints" />
-    </androidx.drawerlayout.widget.DrawerLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:id="@+id/navigationView"
+        android:layout_gravity="left"
+        app:menu="@menu/hamburger"
+        tools:ignore="MissingConstraints" />
+</androidx.drawerlayout.widget.DrawerLayout>

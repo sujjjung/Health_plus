@@ -26,7 +26,7 @@ import java.util.List;
 public class commentAdapter extends BaseAdapter {
     private Context context;
     private List<User> commentList;
-    private ImageButton siren_btn;
+    private Button siren_btn;
     private String Date = "";
     User user = new User();
     private TextView userName,userComment,date;
