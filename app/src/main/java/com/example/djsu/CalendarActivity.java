@@ -398,6 +398,7 @@ public class CalendarActivity extends AppCompatActivity {
         FatSum.setText("");
         sodiumSum.setText("");
         SugarSum.setText("");
+        WaterSum.setText("");
         try {
             if (myJSON != null && !myJSON.isEmpty()) {
                 JSONObject jsonObj = new JSONObject(myJSON);

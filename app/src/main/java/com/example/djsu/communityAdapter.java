@@ -121,7 +121,8 @@ public class communityAdapter extends BaseAdapter {
                 final Button okBtn = (Button) view.findViewById(R.id.okBtn);
                 final ListView rutineView = (ListView) view.findViewById(R.id.ListView);
                 final AlertDialog dialog = builder.create();
-                communityRutineAdapter = new communityRutineAdapter(context,Rutinelist);
+                communityRutineAdapter = new communityRutineAdapter(context,UserRoutinelist);
+                System.out.println(UserRoutinelist.size() + "kdsnksfd");
                 communityRutineAdapter.setListView(rutineView);
                 rutineView.setAdapter(communityRutineAdapter);
                 if(user.getId().equals(Communitylist.get(position).getPostid())){
@@ -130,7 +131,7 @@ public class communityAdapter extends BaseAdapter {
                     okBtn.setVisibility(View.VISIBLE);
                 }
 
-                Rutinelist.clear();
+                UserRoutinelist.clear();
                 okBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -154,7 +155,7 @@ public class communityAdapter extends BaseAdapter {
                         final Button BackButton = (Button) view.findViewById(R.id.backBtn);
                         final EditText RoutineNameText = (EditText) view.findViewById(R.id.RoutineName);
                         final AlertDialog dialog = builder.create();
-                        RoutineNameText.setText(Communitylist.get(position).getRoutineName());
+                        RoutineNameText.setText(UserRoutinelist.get(position).getRoutineName());
                         SaveButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -264,6 +265,7 @@ public class communityAdapter extends BaseAdapter {
                         String ExerciseCode = c.getString(TAG_ExerciseCode);
                         userRoutine = new UserRoutine(RoutineName,ExerciseCode,ExercisePart,ExerciseName);
                         UserRoutinelist.add(userRoutine);
+
                         Rutinelist.add(ExerciseName);
                     }
 

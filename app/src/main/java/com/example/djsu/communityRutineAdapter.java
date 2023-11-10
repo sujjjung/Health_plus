@@ -24,7 +24,7 @@ import java.util.List;
 
 public class communityRutineAdapter extends BaseAdapter {
     private Context context;
-    private List<String> Rutinelist;
+    private List<UserRoutine> Rutinelist;
     private TextView name;
     ImageView profile;
     private static final String TAG_RESULTS = "result";
@@ -32,7 +32,7 @@ public class communityRutineAdapter extends BaseAdapter {
     JSONArray peoples = null;
     private ListView listView;
 
-    public communityRutineAdapter(Context context, List<String> Rutinelist) {
+    public communityRutineAdapter(Context context, List<UserRoutine> Rutinelist) {
         this.context = context;
         this.Rutinelist = Rutinelist;
     }
@@ -43,32 +43,31 @@ public class communityRutineAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return Rutinelist.size();
+        return 1;
     }
 
     @Override
     public Object getItem(int position) {
-        return Rutinelist.get(position);
+        return 1;
     }
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return 1;
     }
 
-    public void setItems(ArrayList<String> list) {
+    public void setItems(ArrayList<UserRoutine> list) {
         Rutinelist = list;
         notifyDataSetChanged();
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View v = View.inflate(context, R.layout.item_friend, null);
-        name = v.findViewById(R.id.name);
-        name.setText(Rutinelist.get(position));
-
-        ImageView imageView = v.findViewById(R.id.profile);
-        imageView.setVisibility(View.GONE);
+        View v = View.inflate(context, R.layout.item_communityrutine, null);
+        name = v.findViewById(R.id.rutineName);
+        name.setText(Rutinelist.get(position).getRoutineName());
+        System.out.println(Rutinelist.size());
+        System.out.println(Rutinelist.get(position).getRoutineName());
         return v;
     }
 }

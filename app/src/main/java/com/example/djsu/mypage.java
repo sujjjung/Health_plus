@@ -572,7 +572,7 @@ public class mypage extends AppCompatActivity {
                             // Extract month and day from the date string
                             String[] dateParts = date.split("-");
                             String formattedDate = dateParts[1] + "-" + dateParts[2];
-                            labels.add(formattedDate);
+                            labels.add(formattedDate.trim());
                             index++; // Increment the index for the next entry
                         }
                     } catch (JSONException e) {
@@ -651,7 +651,7 @@ public class mypage extends AppCompatActivity {
                             String date = jsonObject.getString("date");
                             String[] dateParts = date.split("-");
                             String formattedDate = dateParts[1] + "-" + dateParts[2];
-                            labels.add(formattedDate);
+                            labels.add(formattedDate.trim());
                             index++; // Increment the index for the next entry
                         }
                     } catch (JSONException e) {
@@ -691,7 +691,7 @@ public class mypage extends AppCompatActivity {
                 xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                 xAxis.setGranularity(1f);
-                xAxis.setLabelCount(labels.size());
+                xAxis.setLabelCount(Math.min(7, labels.size())); // Set maximum of 7 labels
                 xAxis.setTextSize(12f);
                 xAxis.setTextColor(Color.BLACK);
                 xAxis.setDrawGridLines(false);
@@ -774,11 +774,11 @@ public class mypage extends AppCompatActivity {
                 xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                 xAxis.setGranularity(1f);
-                xAxis.setLabelCount(labels.size());
+                xAxis.setLabelCount(Math.min(7, labels.size())); // Set maximum of 7 labels
                 xAxis.setTextSize(12f);
                 xAxis.setTextColor(Color.BLACK);
                 xAxis.setDrawGridLines(false);
-                xAxis.setCenterAxisLabels(true);
+                xAxis.setCenterAxisLabels(true); // Center the labels between the bars
                 muscleChart.getLegend().setEnabled(false);
             }
         }, new Response.ErrorListener() {
