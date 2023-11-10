@@ -119,7 +119,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="년-월-일"
+                    android:text="연도-월-일"
                     android:textSize="18dp"
                     android:layout_marginRight="6dp"
                     android:fontFamily="@font/a1009_1"
@@ -146,7 +146,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="년-월-일"
+                    android:text="연도-월-일"
                     android:textSize="18dp"
                     android:layout_marginRight="6dp"
                     android:fontFamily="@font/a1009_1"
