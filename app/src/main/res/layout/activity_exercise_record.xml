@@ -197,59 +197,77 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="410dp"
+                android:layout_height="300dp"
                 android:layout_marginTop="104dp"
                 android:scrollbarFadeDuration="0"
                 android:scrollbarSize="5dp"
                 android:scrollbarThumbVertical="@android:color/darker_gray"
                 android:scrollbars="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/timeView"
                 tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="0dp"
-                tools:listitem="@layout/item_exerciserecord"/>
+                tools:listitem="@layout/item_exerciserecord" />
 
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/add"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/shape_no_btn"
-                android:fontFamily="@font/a10092"
-                android:text="세트 추가"
-                android:textColor="#393939"
-                android:textSize="20dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerview">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Save"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/shape_yes_btn"
-                android:fontFamily="@font/a10092"
-                android:text="세트 저장"
-                android:textColor="#393939"
-                android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/add" />
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Load"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/shape_no_btn"
-                android:fontFamily="@font/a10092"
-                android:text="불러오기"
-                android:textColor="#393939"
-                android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/add"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/shape_no_btn"
+                    android:fontFamily="@font/a10092"
+                    android:text="세트 추가"
+                    android:textColor="#393939"
+                    android:textSize="20dp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Save"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/shape_yes_btn"
+                    android:fontFamily="@font/a10092"
+                    android:text="세트 저장"
+                    android:textColor="#393939"
+                    android:textSize="20dp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Load"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/shape_no_btn"
+                    android:fontFamily="@font/a10092"
+                    android:text="불러오기"
+                    android:textColor="#393939"
+                    android:textSize="20dp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
