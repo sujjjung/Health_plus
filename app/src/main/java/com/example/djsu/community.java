@@ -268,7 +268,6 @@ public class community extends AppCompatActivity {
                         String userProfile = c.getString(TAG_UserProfile); // 추가된 부분
                         String rutineName = c.getString(TAG_rutineName);
                         User user = new User(Integer.parseInt(postId),id,content,image,date,userProfile,rutineName);
-                        System.out.println(Communitylist.size());
                         Communitylist.add(user);
                     }
                 }
