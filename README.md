@@ -5,9 +5,9 @@
 <br/> 
 
 ## ⚙️ 기술 스택
-Backend - Java, PHP
-DB - MySQL, Firebase
-Server - Apache Tomcat
+Backend - Java, PHP  
+DB - MySQL, Firebase  
+Server - Apache Tomcat  
 Tools - IntelliJ IDEA, Visual Studio Code
 <br/>
 
@@ -24,11 +24,12 @@ Tools - IntelliJ IDEA, Visual Studio Code
 SNS(채팅)을 통한 타 유저와의 소통
 
 ## 🖊️ 기획 및 설계
-* 시스템 기능도
-![image](https://github.com/user-attachments/assets/b299c85a-da3a-427e-9f12-cf46794e68f6)
-![image](https://github.com/user-attachments/assets/8ce719c0-c947-469c-9bd1-b56873156448)
+* 기능도
 
-* 페이지 기획서 
+  ![image](https://github.com/user-attachments/assets/b299c85a-da3a-427e-9f12-cf46794e68f6)
+  ![image](https://github.com/user-attachments/assets/8ce719c0-c947-469c-9bd1-b56873156448)
+* 페이지 기획서
+  
 ![1107140024856505 복사](https://github.com/user-attachments/assets/eaad0593-a56f-4ee7-a236-ef8bf78f69ed)
 
 * DB 명세서
